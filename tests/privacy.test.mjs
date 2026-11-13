@@ -66,9 +66,10 @@ test('privacy: an email fails; a git remote and a noreply address pass', () => {
   assert.deepEqual(privacyProblems(run, { localIds }), ['email someone@example.com']);
 });
 
-test('privacy: the pack targets name 6 local-only ids, and a seeded one fails', () => {
+test('privacy: the pack targets name 5 local-only ids, and a seeded one fails', () => {
   const ids = localOnlyIds([fileURLToPath(new URL('../targets/', import.meta.url))]);
-  assert.equal(ids.size, 6);
+  assert.equal(ids.size, 5, 'credits.registry_age_days reads the committed catalog');
+  assert.ok(!ids.has('credits.registry_age_days'));
   const run = { mode: 'ci', metrics: { 'credits.highest_used_share': { value: 62, source: 'usage file' } } };
   assert.ok(ids.has('credits.highest_used_share'));
   assert.deepEqual(privacyProblems(run, { localIds: ids }), ['credits.highest_used_share needs local files but carries a value']);

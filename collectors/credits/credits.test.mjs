@@ -91,7 +91,25 @@ test('targets: one per metric on the Credits tab, each goal cited', () => {
     assert.match(d.goal_source, /^(goal from |template goal, no public benchmark: )/, d.id);
   }
   // The template names no service of any org: no allowance, registry or file.
-  assert.deepEqual([template.allowances, template.registry, template.systems_file, template.usage_file], [[], '', '', '']);
+  assert.deepEqual([template.allowances, template.registry, template.systems_file, template.usage_file, template.catalog_file], [[], '', '', '', '']);
+});
+
+test('collect: a committed catalog gives credits.registry_age_days its read dates, in CI and locally', async () => {
+  const kit = fs.mkdtempSync(path.join(os.tmpdir(), 'credits-catalog-'));
+  try {
+    write(path.join(kit, 'catalog', 'plans.json'), { rows: [{ provider: 'P', name: 'Old', checked: '2026-10-25' }, { provider: 'Q', name: 'New', checked: '2026-11-02' }] });
+    const cat = { catalog_file: 'catalog/plans.json' };
+    const ci = await collect({ mode: 'ci', now, home, kit, providers: { env: {} }, params: cat });
+    assert.equal(ci['credits.registry_age_days'].value, 9, 'read 2026-10-25');
+    assert.deepEqual(ci['credits.registry_age_days'].detail.map((d) => d.label), ['P: Old', 'Q: New']);
+    for (const id of metricIds.filter((m) => m !== 'credits.registry_age_days')) assert.match(ci[id].could_not_check, /refreshed by a --local collect/, id);
+    const local = await collect({ ...base, kit, params: { ...params, ...cat } });
+    assert.equal(local['credits.registry_age_days'].value, 14, 'the GPU limit, read 2026-10-20, is older than the catalog');
+    const gone = await collect({ mode: 'ci', now, home, kit, providers: { env: {} }, params: { catalog_file: 'catalog/none.json' } });
+    assert.match(gone['credits.registry_age_days'].could_not_check, /catalog is missing or unreadable/);
+  } finally {
+    fs.rmSync(kit, { recursive: true, force: true });
+  }
 });
 
 test('usage: a running total, a floor when a repo is unread, and no reader', () => {

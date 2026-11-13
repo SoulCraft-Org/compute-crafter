@@ -1,0 +1,71 @@
+{
+ "comment": "Compute Crafter's Process page config, and its maps file too (docs.maps names it): Git Crafter templates/process/config.json at v6.0.0. Its one map is the Spend map, maps/spend.json, with only the steps whose metric this repo's Quality page shows (quality/targets/): the other steps' metrics need local files, which CI never reads. tests/pack.test.mjs checks the two agree. Keys: Git Crafter actions/pages/action.yml; maps: pages/maps/README.md.",
+ "repos": [
+  "compute-crafter"
+ ],
+ "docs": {
+  "maps": "quality/process/config.json"
+ },
+ "repo_url": "https://github.com/SoulCraft-Org/compute-crafter/blob/main",
+ "maps": [
+  {
+   "id": "spend",
+   "name": "Spend",
+   "why": "Compute Crafter's compute and credits, from free allowances first to idle capacity dropped",
+   "ideal": "Use free and included allowances before anything that bills, read their use the same day, and never idle free capacity in a lane over budget.",
+   "sources": [
+    {
+     "title": "GitHub Actions billing",
+     "url": "https://docs.github.com/en/billing/concepts/product-billing/github-actions",
+     "date": "2026-11-04"
+    },
+    {
+     "title": "REST API endpoints for billing usage",
+     "url": "https://docs.github.com/en/rest/billing/usage",
+     "date": "2026-11-04"
+    }
+   ],
+   "critical_path": [
+    "fresh"
+   ],
+   "steps": [
+    {
+     "id": "fresh",
+     "name": "Re-read",
+     "tools": [
+      "The plan catalog",
+      "Provider pricing pages"
+     ],
+     "rule": "Re-read each free-tier figure on its provider's own page, and record the date.",
+     "rule_ref": "https://github.com/SoulCraft-Org/compute-crafter/blob/main/CONTRIBUTING.md",
+     "metric": "credits.registry_age_days"
+    }
+   ]
+  }
+ ],
+ "data": "quality/process/data/org.json",
+ "history": null,
+ "out": "quality/dist",
+ "pages": {
+  "process": "process.html"
+ },
+ "tabs": [
+  "build",
+  "ci",
+  "testing"
+ ],
+ "heading": "compute-crafter",
+ "collector": "Git Crafter actions/pages",
+ "nav": [
+  {
+   "href": "index.html",
+   "label": "Quality, Speed and Consumption",
+   "icon": "speed"
+  },
+  {
+   "page": "process",
+   "label": "Process",
+   "icon": "plan"
+  }
+ ]
+}

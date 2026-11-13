@@ -4,4 +4,5 @@ __pycache__/
 quality/data/
 quality/history/
 quality/dist/
+quality/process/data/
 node_modules/
