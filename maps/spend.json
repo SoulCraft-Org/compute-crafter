@@ -1,0 +1,71 @@
+{
+ "id": "spend",
+ "name": "Spend",
+ "why": "Compute Crafter's compute and credits, from free allowances first to idle capacity dropped",
+ "ideal": "Use free and included allowances before anything that bills, read their use the same day, and never idle free capacity in a lane over budget.",
+ "sources": [
+  {
+   "title": "GitHub Actions billing",
+   "url": "https://docs.github.com/en/billing/concepts/product-billing/github-actions",
+   "date": "2026-11-04"
+  },
+  {
+   "title": "REST API endpoints for billing usage",
+   "url": "https://docs.github.com/en/rest/billing/usage",
+   "date": "2026-11-04"
+  }
+ ],
+ "critical_path": [
+  "free",
+  "read",
+  "pool",
+  "idle"
+ ],
+ "steps": [
+  {
+   "id": "free",
+   "name": "Free first",
+   "tools": [
+    "Free tiers",
+    "Subscription credits"
+   ],
+   "rule": "Claim every free allowance before anything that bills.",
+   "rule_ref": "https://github.com/SoulCraft-Org/git-crafter/blob/main/rules/compute.md",
+   "metric": "credits.unclaimed_free"
+  },
+  {
+   "id": "read",
+   "name": "Read",
+   "tools": [
+    "Usage reports",
+    "The credits registry"
+   ],
+   "rule": "Each allowance's use is read the same day.",
+   "rule_ref": "https://github.com/SoulCraft-Org/git-crafter/blob/main/rules/compute.md",
+   "metric": "credits.usage_read_share"
+  },
+  {
+   "id": "pool",
+   "name": "Stay under",
+   "tools": [
+    "GitHub Actions included minutes"
+   ],
+   "rule": "CI stays under the included minutes; no overage, no larger runners.",
+   "rule_ref": "https://github.com/SoulCraft-Org/git-crafter/blob/main/rules/compute.md",
+   "metric": "credits.actions_pool_used",
+   "gates": [
+    "Spend past the included amount waits for the owner's yes (Git Crafter rules/compute.md)"
+   ]
+  },
+  {
+   "id": "idle",
+   "name": "Drop idle",
+   "tools": [
+    "The credits registry"
+   ],
+   "rule": "Free capacity in a lane over budget never sits idle; swap in a cheaper lane.",
+   "rule_ref": "https://github.com/SoulCraft-Org/git-crafter/blob/main/rules/compute.md",
+   "metric": "credits.idle_replaceable"
+  }
+ ]
+}
