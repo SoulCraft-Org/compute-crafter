@@ -19,7 +19,7 @@ flowchart LR
 | tools | 24 | 4 | 4 |
 | **All** | **128** | **55** | **35** |
 
-Counts are by each row's first lane, from `plans.json` as built on 2026-11-12. Rows were read between 2026-10-25 and 2026-11-02.
+Counts are by each row's first lane, from `plans.json` as built on 2026-11-12. Rows were read between 2026-10-25 and 2026-11-13.
 
 ## Fields
 

@@ -1,7 +1,7 @@
 {
  "version": 1,
  "about": "Free tiers and plans for compute, CI and AI inference, public fields only. Built by tools/catalog.py; every row names the vendor page it was read on and the date. verified: true means every figure was read on that first-party page on that date; false means it was not re-read since.",
- "checked": "2026-11-02",
+ "checked": "2026-11-13",
  "lanes": [
   "ci",
   "cpu",
@@ -1882,12 +1882,12 @@
    "overage": "bills",
    "trains_on_data": false,
    "commercial_use": null,
-   "limits": "Limits reset at 00:00 UTC. On Workers Free, use past the allocation fails with an error. On Workers Paid, it bills at $0.011 per 1,000 Neurons. Some models (Kimi K2.6, Kimi K2.7 Code, a GLM model) require a paid billing method.",
+   "limits": "Limits reset at 00:00 UTC. On Workers Free, use past the allocation fails with an error. On Workers Paid, it bills at $0.011 per 1,000 Neurons. Nine models (two Kimi, three GLM, three DeepSeek and Inkling 2 Small) require a paid billing method: Workers Paid or prepaid AI Gateway credits.",
    "source": "https://developers.cloudflare.com/workers-ai/platform/pricing/",
    "sources_extra": [
     "https://developers.cloudflare.com/workers-ai/platform/data-usage/"
    ],
-   "checked": "2026-11-02",
+   "checked": "2026-11-13",
    "verified": true
   },
   {
@@ -2349,7 +2349,7 @@
    "sources_extra": [
     "https://openrouter.ai/docs/guides/privacy/provider-logging"
    ],
-   "checked": "2026-11-02",
+   "checked": "2026-11-13",
    "verified": true
   },
   {
