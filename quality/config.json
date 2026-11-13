@@ -1,0 +1,5 @@
+{
+  "comment": "Compute Crafter's own Quality page: the Credits tab. Keys: Git Crafter quality/CONFIG.md. At engine pin 8efee36 (v5.0.1) the engine still ships the credits tab, its targets and its collector, so the page names it by id and takes only this repo's ideal (ideals/credits.json). Once the engine drops the tab, this config reads this repo's targets and collectors too.",
+  "tabs": ["credits"],
+  "ideals": "ideals"
+}

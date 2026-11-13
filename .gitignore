@@ -1,2 +1,7 @@
 __pycache__/
 .DS_Store
+# What a collect writes. A --local run reads this machine's files; it stays here, never committed.
+quality/data/
+quality/history/
+quality/dist/
+node_modules/

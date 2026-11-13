@@ -2,7 +2,7 @@ name: ci
 
 # The Git Crafter CI standard (SoulCraft-Org/git-crafter templates/ci/README.md): this repo calls Git Crafter's
 # reusable workflow, which runs each job on GitHub's standard hosted runners. Dependabot's github-actions entry bumps
-# the pin.
+# the pin, together with the engine pin in pages.yml.
 on:
   pull_request:
   push:
@@ -18,11 +18,15 @@ concurrency:
 
 jobs:
   ci:
-    uses: SoulCraft-Org/git-crafter/.github/workflows/ci-standard.yml@dd03762898c5cbd816b7a093307c643dcc80a5c3 # v4.0.0
+    uses: SoulCraft-Org/git-crafter/.github/workflows/ci-standard.yml@8efee362526579f93e9537ef5944200908a68f67 # v5.0.1
     with:
       paths: ""
+      node-version: "26"
       short: |
         python3 -I tools/catalog.py --self-test
         python3 -I tools/catalog.py --check
         python3 -I tools/voice_lint.py --self-test
         git ls-files -z '*.md' | xargs -0 python3 -I tools/voice_lint.py --rules tools/voice_rules.json
+        node --test tests/*.test.mjs
+      # Fidelity of the moved Credits files, then their own tests beside the engine at this pin (tests/engine-tests.sh).
+      standard: bash tests/engine-tests.sh

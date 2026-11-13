@@ -17,6 +17,9 @@ flowchart LR
 | [guides/local-models.md](guides/local-models.md) | MLX and LM Studio serving a model on your own port |
 | [catalog/](catalog/README.md) | `plans.json`, 128 plans across CI, CPU, GPU, inference, hosting and AI tools, each with its vendor page and the date read |
 | [tools/catalog.py](tools/catalog.py) | The field allowlist, the merge and the self-test |
+| Credits pack: `pack.json`, `targets/`, `ideals/`, `maps/`, `collectors/credits/` | Git Crafter's Credits Quality tab and Spend map, moved from Git Crafter ([NOTICE](NOTICE), [tests/moved.json](tests/moved.json)) |
+| Add the pack to another repo | In its `quality/config.json`, set `"packs": ["SoulCraft-Org/compute-crafter@<40-hex sha>"]` (Git Crafter `quality/CONFIG.md`), on an engine that no longer ships the credits tab |
+| [quality/config.json](quality/config.json), [pages.yml](.github/workflows/pages.yml) | This repo's public Quality page, built by Git Crafter's `actions/pages` in CI mode, after the [privacy gate](tests/privacy.mjs) |
 
 ## Rules every page follows
 

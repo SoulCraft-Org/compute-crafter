@@ -1,0 +1,12 @@
+Compute Crafter
+Copyright 2026 The Compute Crafter Authors. Published by SoulCraft-Org.
+
+The Credits pack's targets, ideal, Spend map, collectors and tests come from
+Git Crafter (https://github.com/SoulCraft-Org/git-crafter), at commit
+8efee362526579f93e9537ef5944200908a68f67, licensed under the Apache License, Version 2.0.
+Git Crafter: Copyright 2026 The Git Crafter Authors. Published by SoulCraft.
+Each moved file and each edit is listed in tests/moved.json.
+
+The pack's test tooling (collectors/lib/engine.mjs, tests/engine-tests.sh, tests/engine-lib.mjs,
+tests/pack.test.mjs, tests/privacy.mjs, tests/privacy.test.mjs) is adapted from Claudius
+(https://github.com/Colorado-Startups/claudius), licensed under the Apache License, Version 2.0.
