@@ -16,12 +16,24 @@
   }
  ],
  "critical_path": [
+  "fresh",
   "free",
   "read",
   "pool",
   "idle"
  ],
  "steps": [
+  {
+   "id": "fresh",
+   "name": "Re-read",
+   "tools": [
+    "The plan catalog",
+    "Provider pricing pages"
+   ],
+   "rule": "Re-read each free-tier figure on its provider's own page, and record the date.",
+   "rule_ref": "https://github.com/SoulCraft-Org/compute-crafter/blob/main/CONTRIBUTING.md",
+   "metric": "credits.registry_age_days"
+  },
   {
    "id": "free",
    "name": "Free first",

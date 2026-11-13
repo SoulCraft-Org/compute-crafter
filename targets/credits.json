@@ -15,9 +15,10 @@
     "needs": "local-files",
     "chart": "credits",
     "params": {
-      "comment": "The org's allowances and what each could take over; the template lists none, so every metric is not measured until a repo names them. systems_file and usage_file: a relative path is from the Git Crafter checkout, ~/ is home. registry: a folder of free-tier registry files (registry_files), each { rows: [{ id, name, provider, lane, price_month, status, org_status, resets, checked, source }] }. claim_lanes: lanes whose unclaimed free rows are listed. lane_alias: row id to lane. lane_work: what an allowance in a lane could take over. allowances: [{ id, name, system, registry ('file#row'), allowance ({ label, value, unit, source, read }), usage (a usage_file metric id), used, status_override, lane, pool, resets, could_take_over, claim_needs }]. reader: how a --local collect reads its use, { github_billing: org, product } (gh api's org billing usage summary, gross USD this month), { plan_file, window } (the get_usage block a session writes; a day old is not read) or { provider: modal, huggingface, groq or openrouter } (that provider's own usage or limits call, its key from the collect's environment: MODAL_TOKEN_ID and MODAL_TOKEN_SECRET, HF_TOKEN, GROQ_API_KEY or OPENROUTER_API_KEY; a missing key is not read, never 0). A CI collect reads only huggingface and openrouter, with the HF_TOKEN and OPENROUTER_API_KEY that actions/pages' hf-token and openrouter-api-key pass, into credits.highest_used_share alone; every other metric stays not measured in CI. pool_metrics: metric id to the allowance id it reports. no_usage_api: allowance id or registry row ('file#row') to why no API reads its use; such a row needs no key made to read it, and counts as unreadable, never as pending a key. status_field: the registry field holding the org's claim status (could_claim, have or use), default org_status; status_override uses the same key.",
+      "comment": "The org's allowances and what each could take over; the template lists none, so every metric is not measured until a repo names them. systems_file and usage_file: a relative path is from the Git Crafter checkout, ~/ is home. registry: a folder of free-tier registry files (registry_files), each { rows: [{ id, name, provider, lane, price_month, status, org_status, resets, checked, source }] }. claim_lanes: lanes whose unclaimed free rows are listed. lane_alias: row id to lane. lane_work: what an allowance in a lane could take over. allowances: [{ id, name, system, registry ('file#row'), allowance ({ label, value, unit, source, read }), usage (a usage_file metric id), used, status_override, lane, pool, resets, could_take_over, claim_needs }]. reader: how a --local collect reads its use, { github_billing: org, product } (gh api's org billing usage summary, gross USD this month), { plan_file, window } (the get_usage block a session writes; a day old is not read) or { provider: modal, huggingface, groq or openrouter } (that provider's own usage or limits call, its key from the collect's environment: MODAL_TOKEN_ID and MODAL_TOKEN_SECRET, HF_TOKEN, GROQ_API_KEY or OPENROUTER_API_KEY; a missing key is not read, never 0). A CI collect reads only huggingface and openrouter, with the HF_TOKEN and OPENROUTER_API_KEY that actions/pages' hf-token and openrouter-api-key pass, into credits.highest_used_share, and params.catalog_file into credits.registry_age_days; every other metric stays not measured in CI. catalog_file: a committed plan catalog, { rows: [{ provider, name, checked }] } (Compute Crafter catalog/plans.json), its path from the pack checkout; its rows' checked dates join credits.registry_age_days in both modes. pool_metrics: metric id to the allowance id it reports. no_usage_api: allowance id or registry row ('file#row') to why no API reads its use; such a row needs no key made to read it, and counts as unreadable, never as pending a key. status_field: the registry field holding the org's claim status (could_claim, have or use), default org_status; status_override uses the same key.",
       "systems_file": "",
       "usage_file": "",
+      "catalog_file": "",
       "registry": "",
       "registry_files": [],
       "claim_lanes": [],
@@ -101,14 +102,14 @@
     "kind": "speed",
     "group": "Freshness",
     "label": "Oldest allowance figure",
-    "means": "Days since the oldest allowance on this tab was read on its provider's own page.",
+    "means": "Days since the oldest allowance figure on this tab or in its catalog was read on its provider's own page.",
     "unit": "days",
     "goal": 7,
     "near": 31,
     "direction": "lower",
     "goal_source": "template goal, no public benchmark: free tiers change often, so a figure is re-read on its provider's page within a week; near: a month",
-    "source": "read dates on the limits in params.systems_file and params.allowances, and the registry rows' checked field",
-    "needs": "local-files",
+    "source": "read dates on the limits in params.systems_file and params.allowances, the registry rows' checked field, and each row's checked field in params.catalog_file, a committed file CI reads",
+    "needs": "none",
     "chart": "bar"
   }
 ]

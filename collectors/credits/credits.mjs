@@ -11,6 +11,9 @@
 //   - registry and registry_files: a free-tier registry's rows (name, lane,
 //     resets, card and the org's claim status only: the field
 //     params.status_field names, default org_status)
+//   - catalog_file: a committed plan catalog ({ rows: [{ provider, name,
+//     checked }] }, the shape of Compute Crafter catalog/plans.json). Its
+//     read dates join credits.registry_age_days in CI and in a --local run
 // A relative path is from the pack checkout this file runs from; ~/ is
 // home. Each is optional. The allowances to show, what each could take over
 // and what claiming one needs are params.allowances, so this file holds no
@@ -322,8 +325,9 @@ async function gather({ mode, now = new Date(), home = os.homedir(), kit = KIT_R
   // A repo's own pool metrics (params.pool_metrics) are answered too, read or not.
   const ids = [...new Set([...metricIds, ...Object.keys(p.pool_metrics ?? {})])];
   const every = (reason, source) => Object.fromEntries(ids.map((id) => [id, cnc(reason, source)]));
-  if (mode !== 'local') return ciGather(p, { named, every, home, kit, root, now, exec, providers });
-  if (!p.allowances?.length && !p.registry) return every('no allowance to read: list them in params.allowances on targets/credits.json, or name a registry', named);
+  const aged = (out, rows = []) => withCatalogAge(out, p, { rows, home, kit, now });
+  if (mode !== 'local') return aged(await ciGather(p, { named, every, home, kit, root, now, exec, providers }));
+  if (!p.allowances?.length && !p.registry) return aged(every('no allowance to read: list them in params.allowances on targets/credits.json, or name a registry', named));
   let files;
   try {
     files = readSources(p, home, kit);
@@ -337,7 +341,21 @@ async function gather({ mode, now = new Date(), home = os.homedir(), kit = KIT_R
     return every(err.message, 'targets/credits.json');
   }
   const rows = allowances({ ...files, params: { ...p, allowances: await withReaders(p, { exec, root, now, providers }) } });
-  return metricsFrom(rows, { p, src: usageSource(p, named, files.org), now });
+  return aged(metricsFrom(rows, { p, src: usageSource(p, named, files.org), now }), rows);
+}
+
+// credits.registry_age_days over the allowance rows and params.catalog_file's
+// rows, a committed file both modes read; out as it is when no catalog is named.
+function withCatalogAge(out, p, { rows, home, kit, now }) {
+  if (!p.catalog_file) return out;
+  const src = `${p.catalog_file} (each row's checked date)`;
+  let catalog;
+  try {
+    catalog = (readJson(resolveFrom(p.catalog_file, home, kit)).rows ?? []).map((r) => ({ label: `${r.provider}: ${r.name}`, checked: r.checked ?? null }));
+  } catch (err) {
+    return { ...out, 'credits.registry_age_days': cnc(`the catalog is missing or unreadable (${String(err.message).split('\n')[0].slice(0, 160)})`, src) };
+  }
+  return { ...out, 'credits.registry_age_days': metricsFrom([...rows, ...catalog], { p: {}, src, now })['credits.registry_age_days'] };
 }
 
 // Readers run here; a spec that already gives used keeps it.
@@ -351,7 +369,8 @@ function withReaders(p, { exec, root, now, providers }) {
 
 // A CI collect reads only the provider allowances ciReadable passes, whose keys
 // are repo secrets in its env, and reports them in credits.highest_used_share
-// alone. Every other metric keeps CI_REASON; none is partly read.
+// alone. Every other metric keeps CI_REASON, none partly read, until
+// withCatalogAge gives credits.registry_age_days a committed catalog's dates.
 async function ciGather(p, { named, every, home, kit, root, now, exec, providers }) {
   const keyed = (p.allowances ?? []).filter((s) => s.reader && !s.used && ciReadable(s.reader, providers.env ?? process.env));
   if (!keyed.length) return every(CI_REASON, named);

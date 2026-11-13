@@ -1,8 +1,9 @@
 {
- "comment": "The Credits pack move: each [Git Crafter path, Compute Crafter path] from source_commit. A path in edited has changed since: it takes engine names from lib (collectors/lib/engine.mjs), owns its paths, or drops a plan-tier source (ideals/credits.json); collectors/credits/redact.test.mjs keeps only the Credits case. Every other file matches byte for byte. maps/spend.json is the spend entry of Git Crafter maps.json at source_commit, with absolute rule links and no plan-tier source. tests/engine-tests.sh checks the files, then runs the pack tests beside the engine at the ci.yml pin.",
+ "comment": "The Credits pack move: each [Git Crafter path, Compute Crafter path] from source_commit. A path in edited has changed since: it takes engine names from lib (collectors/lib/engine.mjs), owns its paths, drops a plan-tier source (ideals/credits.json), or reads a committed catalog (targets/credits.json: credits.registry_age_days and params.catalog_file); collectors/credits/redact.test.mjs keeps only the Credits case. Every other file matches byte for byte. maps/spend.json is the spend entry of Git Crafter maps.json at source_commit, with absolute rule links, no plan-tier source, and a first step, fresh, scored by credits.registry_age_days. tests/engine-tests.sh checks the files, then runs the pack tests beside the engine at the ci.yml pin.",
  "source_repo": "SoulCraft-Org/git-crafter",
  "source_commit": "8efee362526579f93e9537ef5944200908a68f67",
  "edited": [
+  "targets/credits.json",
   "ideals/credits.json",
   "collectors/credits/credits.mjs",
   "collectors/credits/credits.test.mjs",

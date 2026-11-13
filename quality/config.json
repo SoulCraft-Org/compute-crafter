@@ -1,7 +1,7 @@
 {
-  "comment": "Compute Crafter's own Quality page: the Credits tab, read from this repo's own targets, collectors and ideals. Keys: Git Crafter quality/CONFIG.md. The engine dropped its own credits tab at v6.0.0.",
+  "comment": "Compute Crafter's own Quality page: the Credits tab, read from this repo's collectors and ideals, built in CI only. Its targets are quality/targets/: the pack's one metric CI reads, credits.registry_age_days, from catalog/plans.json. The pack's other five Credits metrics (idle_replaceable, unclaimed_free, highest_used_share, actions_pool_used, usage_read_share) need local files, so they stay off this public page; targets/ keeps all six for a repo that adds the pack. tests/pack.test.mjs checks the two agree. Keys: Git Crafter quality/CONFIG.md. The engine dropped its own credits tab at v6.0.0.",
   "tabs": [["credits", "Credits"]],
-  "targets": "targets",
+  "targets": "quality/targets",
   "collectors": "collectors",
   "ideals": "ideals"
 }

@@ -1,7 +1,8 @@
 name: pages
 
-# Compute Crafter's public Quality page (the Credits tab), built by Git Crafter's actions/pages at a full commit SHA (Git Crafter
-# templates/ci/pages.yml). A pull request builds it and runs the privacy gate; only a push to main publishes.
+# Compute Crafter's public pages, built by Git Crafter's actions/pages at a full commit SHA (Git Crafter
+# templates/ci/pages.yml): the Quality page (the Credits tab) and the Process page (the Spend map). A pull request builds
+# both and runs the privacy gate; only a push to main publishes.
 # The build runs in CI mode, so it holds no reading from a maintainer's machine; tests/privacy.mjs checks.
 on:
   push:
@@ -21,10 +22,15 @@ jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    # The Credits collector reads only local files and provider keys; CI passes neither, so it needs no read past the checkout.
-    # No provider token and no secret: every Credits metric shows as not measured here.
+    # The Credits collector reads catalog/plans.json from the checkout, and no provider key: CI passes none.
+    # The Process page's collector reads this repo's pull requests, runs, checks and issues (Git Crafter
+    # actions/pages/action.yml); a read refused is not measured.
     permissions:
       contents: read
+      actions: read
+      checks: read
+      issues: read
+      pull-requests: read
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -37,7 +43,8 @@ jobs:
 
       - uses: SoulCraft-Org/git-crafter/actions/pages@dd999dcac64873f77165609f3cc9fde4da49d332 # v6.0.0
         with:
-          pages: quality
+          pages: process quality
+          config: quality/process/config.json
           quality-config: quality/config.json
 
       # The run the page is drawn from: CI mode, no local-only value, no home path or email. CI sets no account names.

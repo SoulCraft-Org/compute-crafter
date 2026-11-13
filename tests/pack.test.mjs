@@ -24,6 +24,22 @@ test('pack: no other file builds an import() path', () => {
   assert.deepEqual(files.filter((f) => BUILT.test(readFileSync(join(ROOT, f), 'utf8'))), ['tests/engine-lib.mjs', 'tests/pack.test.mjs']);
 });
 
+// This repo's public pages (quality/config.json, quality/process/config.json) show only what CI reads: each
+// metric in quality/targets is the pack's own, every pack metric left off needs local files, and the Spend map
+// is maps/spend.json less the steps whose metric is off.
+test('pages: the public page keeps the pack metrics CI reads, and the Spend map the steps they score', () => {
+  const read = (f) => JSON.parse(readFileSync(join(ROOT, f), 'utf8'));
+  const pack = new Map(read('targets/credits.json').map(({ params, ...d }) => [d.id, d]));
+  const page = read('quality/targets/credits.json');
+  for (const { params, ...d } of page) assert.deepEqual(d, pack.get(d.id), d.id);
+  const shown = new Set(page.map((d) => d.id));
+  assert.deepEqual([...pack.values()].filter((d) => shown.has(d.id) === (d.needs === 'local-files')).map((d) => d.id), []);
+  const map = read('maps/spend.json');
+  const steps = map.steps.filter((s) => shown.has(s.metric));
+  assert.ok(steps.length, 'the Spend map keeps a step');
+  assert.deepEqual(read('quality/process/config.json').maps, [{ ...map, critical_path: map.critical_path.filter((id) => steps.some((s) => s.id === id)), steps }]);
+});
+
 test('pack: every collector file imports with no engine beside it', async () => {
   for (const f of files.filter((x) => x.startsWith('collectors/') && !x.endsWith('.test.mjs'))) {
     const mod = await import(pathToFileURL(join(ROOT, f)).href);
