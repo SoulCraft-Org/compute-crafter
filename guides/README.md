@@ -18,6 +18,7 @@ flowchart LR
 | [OpenRouter](openrouter.md) | Inference | One OpenAI-compatible API over many vendors, with `:free` variants |
 | [Together AI](together.md) | Inference | Prepaid per-token open-weight models |
 | [Cloudflare Workers AI](cloudflare-workers-ai.md) | Inference | A free daily Neurons allocation and hosted MCP servers |
+| [Ollama](ollama.md) | Inference, Local | Cloud models paid from usage credits on a $0 plan, local models, and launchers for Claude Code and OpenCode |
 | [Modal](modal.md) | GPU | Serverless GPUs for your own code, and Shared Endpoints |
 | [RunPod](runpod.md) | GPU | Prepaid GPU pods and Serverless endpoints, the RunPod MCP server |
 | [AMD](amd.md) | GPU | ROCm, and one-time AMD Developer Cloud credit |
