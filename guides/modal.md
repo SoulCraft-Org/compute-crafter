@@ -26,7 +26,7 @@ Modal gives a Claude Code or OpenCode user serverless GPUs for their own code, p
    modal workspace proxy-tokens create
    ```
 
-6. Join the token ID and secret with a period, and keep the result in your password manager. Set `MODAL_PROXY_TOKEN` in the shell that starts OpenCode from that store, never in a dotfile.
+6. Join the token ID and secret with a period, and keep the result in your password manager. Set `MODAL_PROXY_TOKEN` from that store in one shell, never in a dotfile. Start OpenCode there with `opencode --standalone`: the shared background service cannot see the variable ([CLI providers](https://opencode.ai/docs/cli/providers), read 2026-11-20).
 7. In OpenCode, run `/connect`, pick Modal, then `/models` and pick the endpoint by its hostname ([Endpoint integrations](https://modal.com/docs/guide/endpoint-integrations), read 2026-11-12).
 8. Claude Code can use the same gateway through `ANTHROPIC_BASE_URL=https://inference.us-west.modal.direct` and `ANTHROPIC_AUTH_TOKEN`. The endpoint's model must support tool calling ([Endpoint integrations](https://modal.com/docs/guide/endpoint-integrations), read 2026-11-12). Set both per command: they outrank a subscription login ([Authentication](https://code.claude.com/docs/en/iam), read 2026-11-12).
 
@@ -59,4 +59,5 @@ Modal gives a Claude Code or OpenCode user serverless GPUs for their own code, p
 | [Modal service users](https://modal.com/docs/guide/service-users) | 2026-11-12 |
 | [models.dev provider catalog](https://models.dev/api.json) | 2026-11-12 |
 | [OpenCode providers](https://opencode.ai/docs/providers) | 2026-11-12 |
+| [OpenCode CLI providers](https://opencode.ai/docs/cli/providers) | 2026-11-20 |
 | [Claude Code authentication](https://code.claude.com/docs/en/iam) | 2026-11-12 |

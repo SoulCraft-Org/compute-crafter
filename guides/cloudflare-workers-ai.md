@@ -33,10 +33,14 @@ claude mcp add --transport http cloudflare-docs https://docs.mcp.cloudflare.com/
 4. Connect Workers AI as a model provider in OpenCode. In the dashboard, open Workers AI, select **Use REST API**, then **Create a Workers AI API Token** ([REST API](https://developers.cloudflare.com/workers-ai/get-started/rest-api/), read 2026-11-12). Copy the Account ID from the same screen.
 
 ```bash
-opencode auth login
+opencode auth login cloudflare-workers-ai --method key
 ```
 
-Pick Cloudflare Workers AI and enter the token at the hidden prompt. OpenCode's catalog reads `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_KEY` ([models.dev](https://models.dev), read 2026-11-12); set the account ID in your shell.
+Enter the token at the hidden prompt. OpenCode's catalog reads `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_KEY` ([models.dev](https://models.dev), read 2026-11-20). OpenCode's shared background service does not see your shell, so give it the account ID, which is an identifier, not a secret ([CLI providers](https://opencode.ai/docs/cli/providers), read 2026-11-20). See [OpenCode 2](README.md#opencode-2).
+
+```bash
+opencode service set env CLOUDFLARE_ACCOUNT_ID <account-id>
+```
 
 5. Any other OpenAI-compatible tool uses base URL `https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/v1` with the token as a bearer header ([OpenAI compatible API endpoints](https://developers.cloudflare.com/workers-ai/configuration/open-ai-compatibility/), read 2026-11-12).
 
@@ -62,4 +66,5 @@ Pick Cloudflare Workers AI and enter the token at the hidden prompt. OpenCode's 
 | [OpenAI compatible API endpoints](https://developers.cloudflare.com/workers-ai/configuration/open-ai-compatibility/) | 2026-11-12 |
 | [models.dev](https://models.dev) | 2026-11-12 |
 | [OpenCode providers](https://opencode.ai/docs/providers) | 2026-11-12 |
+| [OpenCode CLI providers](https://opencode.ai/docs/cli/providers) | 2026-11-20 |
 | [Claude Code MCP](https://code.claude.com/docs/en/mcp) | 2026-11-12 |
