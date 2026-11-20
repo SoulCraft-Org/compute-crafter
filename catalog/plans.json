@@ -1,7 +1,7 @@
 {
  "version": 1,
  "about": "Free tiers and plans for compute, CI and AI inference, public fields only. Built by tools/catalog.py; every row names the vendor page it was read on and the date. verified: true means every figure was read on that first-party page on that date; false means it was not re-read since.",
- "checked": "2026-11-13",
+ "checked": "2026-11-20",
  "lanes": [
   "ci",
   "cpu",
@@ -23,19 +23,20 @@
    "price_month": 0,
    "currency": "USD",
    "price_note": "Free minutes each month, then pay as you go.",
-   "includes": "3,000 x64 2vCPU minutes per month per organization. ARM, Windows, macOS and larger runners draw these down at conversion rates: 1 ARM 2vCPU minute = 0.625, 1 Windows 2vCPU minute = 2, and macOS uses a 6.67 price ratio with a 6 vCPU minimum.",
+   "includes": "3,000 x64 2vCPU minutes per month per organization, worth $12 at the $0.004 Ubuntu x64 list rate (computed). ARM, Windows, macOS and larger runners draw these down at conversion rates: 1 ARM 2vCPU minute = 0.625, 1 Windows 2vCPU minute = 2, and 1 macOS 6vCPU minute = 20 x64 2vCPU minutes. The smallest macOS runner has 6 vCPUs.",
    "resets": "monthly",
    "unit_cost_vs_payg": "Paid per minute: Ubuntu x64 $0.004, Ubuntu ARM $0.0025, Windows x64 $0.008, macOS M4 $0.08. Docker layer caching and sticky disks are $0.50/GB per month; static IPs are $100/IP per month.",
    "card": false,
-   "overage": "unknown",
+   "overage": "bills",
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": "Blacksmith docs state no concurrency limit on jobs or vCPUs. The pages do not say what happens when the free minutes run out.",
+   "limits": "No concurrency limit on jobs or vCPUs. The pages read show no spend limit for CI runners: the monthly spend limit in Settings covers [code]smith only. If a charge fails, [code]smith may be restricted, but CI runners continue to run and accrue charges.",
    "source": "https://www.blacksmith.sh/pricing",
    "sources_extra": [
-    "https://docs.blacksmith.sh/blacksmith-runners/overview"
+    "https://docs.blacksmith.sh/blacksmith-runners/overview",
+    "https://docs.blacksmith.sh/codesmith/pricing-and-faqs"
    ],
-   "checked": "2026-11-02",
+   "checked": "2026-11-20",
    "verified": true
   },
   {
