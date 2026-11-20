@@ -26,13 +26,13 @@ claude mcp login hf-mcp-server
 
 Pick extra tools and Spaces at [MCP settings](https://huggingface.co/settings/mcp). That page also prints a snippet for each client.
 
-3. Connect OpenCode to Inference Providers. Make a fine-grained token at [Access Tokens](https://huggingface.co/settings/tokens), then paste it at OpenCode's hidden prompt.
+3. Connect OpenCode to Inference Providers. Make a fine-grained token at [Access Tokens](https://huggingface.co/settings/tokens), then paste it at OpenCode's hidden prompt ([OpenCode 2](README.md#opencode-2)).
 
 ```bash
-opencode auth login
+opencode auth login huggingface --method key
 ```
 
-Pick Hugging Face. Calls fail on a free account until it holds purchased credits.
+Calls fail on a free account until it holds purchased credits.
 
 4. Host a ZeroGPU Space. Pick the Gradio SDK and ZeroGPU hardware, then decorate each GPU function with `@spaces.GPU` ([ZeroGPU](https://huggingface.co/docs/hub/spaces-zerogpu), read 2026-11-12). The default `large` size is half an RTX Pro 6000 Blackwell, 48 GB ([ZeroGPU](https://huggingface.co/docs/hub/spaces-zerogpu), read 2026-11-12).
 

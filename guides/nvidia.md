@@ -10,13 +10,13 @@ NVIDIA gives a Claude Code or OpenCode user trial access to hosted open-weight m
 
 1. Get an API catalog key. Open any model page on [build.nvidia.com](https://build.nvidia.com/), click **Get API Key**, sign in or create an NVIDIA account, then **Copy Key** ([API quickstart](https://docs.api.nvidia.com/nim/docs/api-quickstart), read 2026-11-12).
 
-2. Connect OpenCode. Paste the key at the hidden prompt, never on a command line.
+2. Connect OpenCode. Paste the key at the hidden prompt, never on a command line ([OpenCode 2](README.md#opencode-2)).
 
 ```bash
-opencode auth login
+opencode auth login nvidia --method key
 ```
 
-Pick Nvidia, then choose a model with `/models`. Any other OpenAI-compatible tool uses `https://integrate.api.nvidia.com/v1` with the key as a bearer header ([LLM APIs](https://docs.api.nvidia.com/nim/reference/llm-apis), read 2026-11-12).
+Then choose a model with `/models`. Any other OpenAI-compatible tool uses `https://integrate.api.nvidia.com/v1` with the key as a bearer header ([LLM APIs](https://docs.api.nvidia.com/nim/reference/llm-apis), read 2026-11-12).
 
 3. Add NVIDIA's CUDA docs MCP server to Claude Code. It signs in with your NVIDIA Developer account on first connection.
 

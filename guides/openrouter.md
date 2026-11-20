@@ -20,17 +20,19 @@ The login creates a dedicated key that expires within 7 days and starts with a $
 2. Connect OpenRouter as a model provider in OpenCode.
 
 ```bash
-opencode auth login
+opencode auth login openrouter
 ```
 
-Pick OpenRouter, then run `/models` inside OpenCode. A model reference is the provider prefix plus the full OpenRouter ID, such as `openrouter/<vendor>/<model>:free`.
+Pick a method, then run `/models` inside OpenCode. A key goes in at the hidden prompt, never on the command line ([OpenCode 2](README.md#opencode-2)). A model reference is the provider prefix plus the full OpenRouter ID, such as `openrouter/<vendor>/<model>:free`.
 
-3. Add the same MCP server to OpenCode, if you want its tools there. Put this in `~/.config/opencode/opencode.json`; OpenCode runs the OAuth flow on first use.
+3. Add the same MCP server to OpenCode, if you want its tools there. OpenCode 2 lists servers under `mcp.servers` ([MCP servers](https://opencode.ai/docs/mcp-servers), read 2026-11-20). Put this in `~/.config/opencode/opencode.jsonc`; OpenCode runs the OAuth flow on first use.
 
 ```json
 {
   "mcp": {
-    "openrouter": { "type": "remote", "url": "https://mcp.openrouter.ai/mcp", "enabled": true }
+    "servers": {
+      "openrouter": { "type": "remote", "url": "https://mcp.openrouter.ai/mcp" }
+    }
   }
 }
 ```
@@ -57,4 +59,5 @@ Pick OpenRouter, then run `/models` inside OpenCode. A model reference is the pr
 | [MCP](https://openrouter.ai/docs/guides/overview/mcp-server) | 2026-11-12 |
 | [Management API Keys](https://openrouter.ai/docs/guides/overview/auth/provisioning-api-keys) | 2026-11-12 |
 | [OpenCode providers](https://opencode.ai/docs/providers) | 2026-11-12 |
+| [OpenCode MCP servers](https://opencode.ai/docs/mcp-servers) | 2026-11-20 |
 | [Claude Code MCP](https://code.claude.com/docs/en/mcp) | 2026-11-12 |
