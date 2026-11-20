@@ -5,7 +5,7 @@ Wire open-source and open-weight compute to Claude Code and OpenCode, on free ti
 ```mermaid
 flowchart LR
   Y[You, in Claude Code<br/>or OpenCode] --> G[guides/<br/>one page per provider]
-  Y --> C[catalog/plans.json<br/>128 free tiers and plans]
+  Y --> C[catalog/plans.json<br/>129 free tiers and plans]
   G --> L[Log in with the CLI<br/>no key in a command]
   L --> S[Set the vendor's<br/>own spend stop]
   S --> R[Run on the free tier]
@@ -15,7 +15,7 @@ flowchart LR
 | --- | --- |
 | [guides/](guides/README.md) | One page per provider, one table shape: account, free tier with its source and date, login or key, Claude connector, OpenCode, guard |
 | [guides/local-models.md](guides/local-models.md) | MLX and LM Studio serving a model on your own port |
-| [catalog/](catalog/README.md) | `plans.json`, 128 plans across CI, CPU, GPU, inference, hosting and AI tools, each with its vendor page and the date read |
+| [catalog/](catalog/README.md) | `plans.json`, 129 plans across CI, CPU, GPU, inference, hosting and AI tools, each with its vendor page and the date read |
 | [tools/catalog.py](tools/catalog.py) | The field allowlist, the merge and the self-test |
 | Credits pack: `pack.json`, `targets/`, `ideals/`, `maps/`, `collectors/credits/` | Git Crafter's Credits Quality tab and Spend map, moved from Git Crafter ([NOTICE](NOTICE), [tests/moved.json](tests/moved.json)) |
 | Add the pack to another repo | In its `quality/config.json`, set `"packs": ["SoulCraft-Org/compute-crafter@<40-hex sha>"]` (Git Crafter `quality/CONFIG.md`), on an engine that no longer ships the credits tab |
