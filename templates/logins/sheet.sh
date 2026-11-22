@@ -44,7 +44,9 @@ rows() {
       | {id: $site.id, vendor: $site.vendor, name: ($site.name // $v.name // $site.vendor), stage: ($site.stage // null),
          known: ($v != null), root: $root,
          slots: [$O[] | . as $m | {method: $m, offered: ($in | any(. == $m))}],
-         top: $top, email: ($site.email // $v.family // "primary"), passkey: ($v.passkey // null), codes: $codes,
+         # A social sign-in brings the email of that provider; own credentials use the family email, else your primary.
+         top: $top, email: ($site.email // (if (["github", "apple", "microsoft", "google"] | any(. == $top)) then $top
+                                            else ($v.family // "primary") end)), passkey: ($v.passkey // null), codes: $codes,
          link: ($v.link // null), email_change: ($v.email_change // null), verified: ($v.verified // false),
          security_url: ($v.security_url // null),
          checks: {
