@@ -91,11 +91,10 @@
         const v = r.checks[k];
         tr.append(el('td', v == null ? '·' : v ? '✅' : '⬜', v == null ? 'na' : v ? 'ok' : 'todo'));
       }
-      const td = el('td');
-      if (typeof r.security_url === 'string' && r.security_url.startsWith('https://')) {
-        const a = el('a', 'Open ↗'); a.href = r.security_url; a.target = '_blank'; a.rel = 'noopener noreferrer'; td.append(a);
-      } else td.textContent = '·';
-      tr.append(td); table.append(tr);
+      // The settings page is shown as text, never as a link: the file is data, so no value becomes a URL here.
+      let host = '·';
+      try { if (typeof r.security_url === 'string') host = new URL(r.security_url).host || '·'; } catch { host = '·'; }
+      tr.append(el('td', host, 'na')); table.append(tr);
     }
   }
 
