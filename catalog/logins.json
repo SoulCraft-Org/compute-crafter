@@ -1,0 +1,1252 @@
+{
+  "version": 1,
+  "about": "What each vendor offers for signing in: methods, passkeys, 2FA, linking and email change. Vendor facts only, each read on the vendor's own pages on the date in checked.",
+  "checked": "2026-11-22",
+  "rows": [
+    {
+      "id": "amd-developer-cloud",
+      "name": "AMD Developer Cloud",
+      "provider": "Advanced Micro Devices, Inc.",
+      "family": null,
+      "lanes": [
+        "gpu"
+      ],
+      "signin": null,
+      "passkey": null,
+      "twofa": null,
+      "own_2fa": null,
+      "recovery_codes": null,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": null,
+      "source": "https://devcloud.amd.com/login",
+      "sources_extra": [],
+      "checked": "2026-11-22",
+      "verified": false
+    },
+    {
+      "id": "anthropic-claude",
+      "name": "Claude (claude.ai and the Claude Console)",
+      "provider": "Anthropic",
+      "family": null,
+      "lanes": [
+        "inference",
+        "tools"
+      ],
+      "signin": [
+        "google",
+        "email-link",
+        "sso"
+      ],
+      "passkey": null,
+      "twofa": null,
+      "own_2fa": null,
+      "recovery_codes": null,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": "Claude and Console accounts are separate even with the same email, and no dedicated password can be created.",
+      "source": "https://support.claude.com/en/articles/13189465-log-in-to-your-claude-account",
+      "sources_extra": [
+        "https://support.claude.com/en/articles/13371040-log-in-to-your-console-account"
+      ],
+      "checked": "2026-11-22",
+      "verified": true
+    },
+    {
+      "id": "antigravity",
+      "name": "Google Antigravity",
+      "provider": "Google",
+      "family": "google",
+      "lanes": [
+        "tools"
+      ],
+      "signin": null,
+      "passkey": null,
+      "twofa": null,
+      "own_2fa": null,
+      "recovery_codes": null,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": null,
+      "source": "https://antigravity.google/docs/get-started",
+      "sources_extra": [],
+      "checked": "2026-11-22",
+      "verified": false
+    },
+    {
+      "id": "apple",
+      "name": "Apple Account",
+      "provider": "Apple",
+      "family": "apple",
+      "lanes": [
+        "identity"
+      ],
+      "signin": null,
+      "passkey": null,
+      "twofa": [
+        "push",
+        "sms",
+        "security-key"
+      ],
+      "own_2fa": null,
+      "recovery_codes": null,
+      "link": null,
+      "email_change": true,
+      "security_url": null,
+      "trap": "Security keys require registering at least two keys (up to six); keep spares so a lost key does not lock you out.",
+      "source": "https://support.apple.com/en-us/102660",
+      "sources_extra": [
+        "https://support.apple.com/en-us/102637",
+        "https://support.apple.com/en-us/102641",
+        "https://support.apple.com/en-us/102529"
+      ],
+      "checked": "2026-11-22",
+      "verified": true
+    },
+    {
+      "id": "aws",
+      "name": "Amazon Web Services (root and IAM users)",
+      "provider": "Amazon Web Services",
+      "family": null,
+      "lanes": [
+        "cpu",
+        "gpu",
+        "inference",
+        "hosting"
+      ],
+      "signin": null,
+      "passkey": "2fa",
+      "twofa": [
+        "passkey",
+        "security-key",
+        "totp"
+      ],
+      "own_2fa": null,
+      "recovery_codes": null,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": "Register several MFA devices (up to eight) so a lost one does not force the account recovery procedure.",
+      "source": "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_mfa.html",
+      "sources_extra": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/console_sign-in-mfa.html"
+      ],
+      "checked": "2026-11-22",
+      "verified": true
+    },
+    {
+      "id": "blacksmith",
+      "name": "Blacksmith",
+      "provider": "Blacksmith",
+      "family": null,
+      "lanes": [
+        "ci"
+      ],
+      "signin": [
+        "github"
+      ],
+      "passkey": null,
+      "twofa": null,
+      "own_2fa": null,
+      "recovery_codes": null,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": "If the GitHub organization enforces SSO, authenticate with the SSO provider inside GitHub first, then refresh the Blacksmith dashboard.",
+      "source": "https://docs.blacksmith.sh/introduction/quickstart",
+      "sources_extra": [
+        "https://docs.blacksmith.sh/blacksmith-administration/github-app"
+      ],
+      "checked": "2026-11-22",
+      "verified": true
+    },
+    {
+      "id": "cerebras",
+      "name": "Cerebras Cloud",
+      "provider": "Cerebras Systems",
+      "family": null,
+      "lanes": [
+        "inference"
+      ],
+      "signin": [
+        "github",
+        "google",
+        "sso"
+      ],
+      "passkey": null,
+      "twofa": null,
+      "own_2fa": null,
+      "recovery_codes": null,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": null,
+      "source": "https://cloud.cerebras.ai/",
+      "sources_extra": [
+        "https://inference-docs.cerebras.ai/quickstart"
+      ],
+      "checked": "2026-11-22",
+      "verified": false
+    },
+    {
+      "id": "civitai",
+      "name": "Civitai",
+      "provider": "Civitai",
+      "family": null,
+      "lanes": [
+        "inference"
+      ],
+      "signin": [
+        "github",
+        "google",
+        "other",
+        "email-link"
+      ],
+      "passkey": null,
+      "twofa": null,
+      "own_2fa": null,
+      "recovery_codes": null,
+      "link": "settings",
+      "email_change": null,
+      "security_url": null,
+      "trap": null,
+      "source": "https://education.civitai.com/using-civitai-a-guide/",
+      "sources_extra": [],
+      "checked": "2026-11-22",
+      "verified": false
+    },
+    {
+      "id": "cline",
+      "name": "Cline",
+      "provider": "Cline",
+      "family": null,
+      "lanes": [
+        "tools"
+      ],
+      "signin": [
+        "github",
+        "google",
+        "other"
+      ],
+      "passkey": null,
+      "twofa": null,
+      "own_2fa": null,
+      "recovery_codes": null,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": null,
+      "source": "https://docs.cline.bot/getting-started/authorizing-with-cline",
+      "sources_extra": [],
+      "checked": "2026-11-22",
+      "verified": false
+    },
+    {
+      "id": "cloudflare",
+      "name": "Cloudflare dashboard",
+      "provider": "Cloudflare, Inc.",
+      "family": null,
+      "lanes": [
+        "hosting",
+        "inference",
+        "cpu"
+      ],
+      "signin": [
+        "email-password",
+        "google",
+        "apple",
+        "github",
+        "sso"
+      ],
+      "passkey": null,
+      "twofa": [
+        "totp",
+        "security-key",
+        "email"
+      ],
+      "own_2fa": true,
+      "recovery_codes": true,
+      "link": "email-match",
+      "email_change": true,
+      "security_url": null,
+      "trap": "Changing the account email unlinks Apple login; signing in with that Apple ID afterward creates a new Cloudflare account.",
+      "source": "https://developers.cloudflare.com/fundamentals/user-profiles/login/",
+      "sources_extra": [
+        "https://developers.cloudflare.com/fundamentals/user-profiles/2fa/",
+        "https://developers.cloudflare.com/fundamentals/user-profiles/change-password-or-email/"
+      ],
+      "checked": "2026-11-22",
+      "verified": true
+    },
+    {
+      "id": "colab",
+      "name": "Google Colab",
+      "provider": "Google",
+      "family": "google",
+      "lanes": [
+        "cpu",
+        "gpu"
+      ],
+      "signin": [
+        "google"
+      ],
+      "passkey": null,
+      "twofa": [
+        "via-provider"
+      ],
+      "own_2fa": false,
+      "recovery_codes": null,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": null,
+      "source": "https://colab.research.google.com/",
+      "sources_extra": [
+        "https://support.google.com/accounts/answer/185839"
+      ],
+      "checked": "2026-11-22",
+      "verified": true
+    },
+    {
+      "id": "comfy",
+      "name": "Comfy Cloud",
+      "provider": "Comfy Org",
+      "family": null,
+      "lanes": [
+        "gpu",
+        "inference"
+      ],
+      "signin": [
+        "email-password",
+        "google",
+        "github",
+        "sso"
+      ],
+      "passkey": null,
+      "twofa": null,
+      "own_2fa": null,
+      "recovery_codes": null,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": "SSO accounts cannot use the desktop app or accept workspace invite links yet; an admin must add them directly.",
+      "source": "https://docs.comfy.org/account/login",
+      "sources_extra": [],
+      "checked": "2026-11-22",
+      "verified": true
+    },
+    {
+      "id": "devin",
+      "name": "Devin",
+      "provider": "Cognition",
+      "family": null,
+      "lanes": [
+        "tools"
+      ],
+      "signin": null,
+      "passkey": null,
+      "twofa": null,
+      "own_2fa": null,
+      "recovery_codes": null,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": null,
+      "source": "https://app.devin.ai/login",
+      "sources_extra": [
+        "https://docs.devin.ai/get-started/devin-intro"
+      ],
+      "checked": "2026-11-22",
+      "verified": false
+    },
+    {
+      "id": "digitalocean",
+      "name": "DigitalOcean",
+      "provider": "DigitalOcean",
+      "family": null,
+      "lanes": [
+        "cpu",
+        "gpu",
+        "hosting",
+        "inference"
+      ],
+      "signin": [
+        "email-password",
+        "google",
+        "github"
+      ],
+      "passkey": null,
+      "twofa": [
+        "totp",
+        "sms"
+      ],
+      "own_2fa": false,
+      "recovery_codes": true,
+      "link": "no",
+      "email_change": true,
+      "security_url": "https://cloud.digitalocean.com/account/profile",
+      "trap": "DigitalOcean 2FA covers email-password logins only; with Google or GitHub sign-in, 2FA must be enabled on that provider account.",
+      "source": "https://docs.digitalocean.com/platform/accounts/2fa/",
+      "sources_extra": [
+        "https://docs.digitalocean.com/support/logging-in/",
+        "https://docs.digitalocean.com/platform/accounts/settings/"
+      ],
+      "checked": "2026-11-22",
+      "verified": true
+    },
+    {
+      "id": "docker",
+      "name": "Docker account (Docker Hub)",
+      "provider": "Docker",
+      "family": null,
+      "lanes": [
+        "tools",
+        "hosting"
+      ],
+      "signin": [
+        "google",
+        "github",
+        "email-password"
+      ],
+      "passkey": null,
+      "twofa": [
+        "totp"
+      ],
+      "own_2fa": null,
+      "recovery_codes": true,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": null,
+      "source": "https://app.docker.com/signup",
+      "sources_extra": [
+        "https://docs.docker.com/security/for-developers/2fa/"
+      ],
+      "checked": "2026-11-22",
+      "verified": true
+    },
+    {
+      "id": "elevenlabs",
+      "name": "ElevenLabs",
+      "provider": "ElevenLabs",
+      "family": null,
+      "lanes": [
+        "inference"
+      ],
+      "signin": [
+        "apple",
+        "google",
+        "sso",
+        "email-password"
+      ],
+      "passkey": null,
+      "twofa": [
+        "totp"
+      ],
+      "own_2fa": null,
+      "recovery_codes": true,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": "The one backup code is shown once and cannot be viewed again; it only removes 2FA, so store it during setup.",
+      "source": "https://elevenlabs.io/app/sign-in",
+      "sources_extra": [
+        "https://elevenlabs.io/docs/help-center/account/general/how-do-i-add-two-factor-authentication-2-fa-to-my-account"
+      ],
+      "checked": "2026-11-22",
+      "verified": true
+    },
+    {
+      "id": "github",
+      "name": "GitHub",
+      "provider": "GitHub, Inc.",
+      "family": "microsoft",
+      "lanes": [
+        "identity",
+        "ci",
+        "tools"
+      ],
+      "signin": [
+        "email-password",
+        "passkey"
+      ],
+      "passkey": "both",
+      "twofa": [
+        "passkey",
+        "security-key",
+        "totp",
+        "push",
+        "sms"
+      ],
+      "own_2fa": null,
+      "recovery_codes": true,
+      "link": null,
+      "email_change": true,
+      "security_url": null,
+      "trap": "If you lose your 2FA credentials and recovery methods, GitHub Support cannot restore your account.",
+      "source": "https://github.com/login",
+      "sources_extra": [
+        "https://docs.github.com/en/authentication/securing-your-account-with-two-factor-authentication-2fa/about-two-factor-authentication",
+        "https://docs.github.com/en/authentication/authenticating-with-a-passkey/about-passkeys",
+        "https://docs.github.com/en/account-and-profile/how-tos/email-preferences/changing-your-primary-email-address"
+      ],
+      "checked": "2026-11-22",
+      "verified": true
+    },
+    {
+      "id": "google",
+      "name": "Google Account",
+      "provider": "Google LLC",
+      "family": "google",
+      "lanes": [
+        "identity"
+      ],
+      "signin": [
+        "email-password",
+        "passkey"
+      ],
+      "passkey": "both",
+      "twofa": [
+        "passkey",
+        "security-key",
+        "push",
+        "totp",
+        "sms"
+      ],
+      "own_2fa": null,
+      "recovery_codes": true,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": "A newly added passkey or security key can take up to 7 days to become available at sign-in.",
+      "source": "https://support.google.com/accounts/answer/185839?hl=en",
+      "sources_extra": [
+        "https://accounts.google.com/signin",
+        "https://support.google.com/accounts/answer/13548313",
+        "https://support.google.com/accounts/answer/6103523?hl=en"
+      ],
+      "checked": "2026-11-22",
+      "verified": true
+    },
+    {
+      "id": "google-ai-studio",
+      "name": "Google AI Studio",
+      "provider": "Google",
+      "family": "google",
+      "lanes": [
+        "inference",
+        "tools"
+      ],
+      "signin": [
+        "google"
+      ],
+      "passkey": null,
+      "twofa": [
+        "via-provider"
+      ],
+      "own_2fa": false,
+      "recovery_codes": null,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": null,
+      "source": "https://aistudio.google.com/",
+      "sources_extra": [
+        "https://support.google.com/accounts/answer/185839"
+      ],
+      "checked": "2026-11-22",
+      "verified": false
+    },
+    {
+      "id": "google-cloud",
+      "name": "Google Cloud console",
+      "provider": "Google LLC",
+      "family": "google",
+      "lanes": [
+        "cpu",
+        "gpu",
+        "inference",
+        "hosting"
+      ],
+      "signin": [
+        "google",
+        "sso"
+      ],
+      "passkey": null,
+      "twofa": [
+        "via-provider"
+      ],
+      "own_2fa": false,
+      "recovery_codes": null,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": "Console requires 2-Step Verification, personal accounts since 2025-05-12; super admins bypass SSO, so identity provider MFA does not apply to them.",
+      "source": "https://docs.cloud.google.com/docs/authentication/mfa-requirement",
+      "sources_extra": [],
+      "checked": "2026-11-22",
+      "verified": true
+    },
+    {
+      "id": "greptile",
+      "name": "Greptile",
+      "provider": "Greptile",
+      "family": null,
+      "lanes": [
+        "tools"
+      ],
+      "signin": [
+        "github",
+        "google",
+        "other"
+      ],
+      "passkey": null,
+      "twofa": null,
+      "own_2fa": null,
+      "recovery_codes": null,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": null,
+      "source": "https://www.greptile.com/docs/quickstart",
+      "sources_extra": [],
+      "checked": "2026-11-22",
+      "verified": true
+    },
+    {
+      "id": "groq",
+      "name": "GroqCloud",
+      "provider": "Groq",
+      "family": null,
+      "lanes": [
+        "inference"
+      ],
+      "signin": null,
+      "passkey": null,
+      "twofa": null,
+      "own_2fa": null,
+      "recovery_codes": null,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": null,
+      "source": "https://console.groq.com/login",
+      "sources_extra": [],
+      "checked": "2026-11-22",
+      "verified": false
+    },
+    {
+      "id": "hugging-face",
+      "name": "Hugging Face",
+      "provider": "Hugging Face, Inc.",
+      "family": null,
+      "lanes": [
+        "inference",
+        "gpu",
+        "hosting",
+        "tools"
+      ],
+      "signin": [
+        "email-password",
+        "passkey",
+        "sso"
+      ],
+      "passkey": "both",
+      "twofa": [
+        "passkey",
+        "totp"
+      ],
+      "own_2fa": null,
+      "recovery_codes": true,
+      "link": null,
+      "email_change": null,
+      "security_url": "https://huggingface.co/settings/authentication",
+      "trap": "With 2FA on and no authenticator app, set one up or turn off 2FA before removing your last passkey.",
+      "source": "https://huggingface.co/docs/hub/security-2fa",
+      "sources_extra": [
+        "https://huggingface.co/login",
+        "https://huggingface.co/docs/hub/security-passkeys"
+      ],
+      "checked": "2026-11-22",
+      "verified": true
+    },
+    {
+      "id": "jules",
+      "name": "Google Jules",
+      "provider": "Google",
+      "family": "google",
+      "lanes": [
+        "tools"
+      ],
+      "signin": [
+        "google"
+      ],
+      "passkey": null,
+      "twofa": [
+        "via-provider"
+      ],
+      "own_2fa": false,
+      "recovery_codes": null,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": "Sign-in is Google only; repository access is a separate GitHub connection that must also be granted.",
+      "source": "https://jules.google/docs",
+      "sources_extra": [
+        "https://support.google.com/accounts/answer/185839"
+      ],
+      "checked": "2026-11-22",
+      "verified": true
+    },
+    {
+      "id": "kaggle",
+      "name": "Kaggle",
+      "provider": "Kaggle (Google LLC)",
+      "family": "google",
+      "lanes": [
+        "gpu",
+        "tools"
+      ],
+      "signin": null,
+      "passkey": null,
+      "twofa": null,
+      "own_2fa": null,
+      "recovery_codes": null,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": null,
+      "source": "https://www.kaggle.com/account/login",
+      "sources_extra": [],
+      "checked": "2026-11-22",
+      "verified": false
+    },
+    {
+      "id": "kilo",
+      "name": "Kilo Code",
+      "provider": "Kilo Code",
+      "family": null,
+      "lanes": [
+        "tools"
+      ],
+      "signin": [
+        "apple",
+        "github",
+        "google",
+        "other",
+        "sso"
+      ],
+      "passkey": null,
+      "twofa": null,
+      "own_2fa": null,
+      "recovery_codes": null,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": null,
+      "source": "https://kilo.ai/docs/getting-started/setup-authentication",
+      "sources_extra": [],
+      "checked": "2026-11-22",
+      "verified": true
+    },
+    {
+      "id": "kiro",
+      "name": "Kiro",
+      "provider": "Kiro (AWS)",
+      "family": null,
+      "lanes": [
+        "tools"
+      ],
+      "signin": [
+        "github",
+        "google",
+        "other",
+        "sso"
+      ],
+      "passkey": null,
+      "twofa": null,
+      "own_2fa": null,
+      "recovery_codes": null,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": "GitHub, Google or Builder ID sign-in makes you an individual subscriber, separate from organization sign-in through IAM Identity Center.",
+      "source": "https://kiro.dev/docs/getting-started/authentication/",
+      "sources_extra": [],
+      "checked": "2026-11-22",
+      "verified": true
+    },
+    {
+      "id": "lambda",
+      "name": "Lambda Cloud",
+      "provider": "Lambda, Inc.",
+      "family": null,
+      "lanes": [
+        "gpu",
+        "cpu"
+      ],
+      "signin": [
+        "sso"
+      ],
+      "passkey": null,
+      "twofa": null,
+      "own_2fa": null,
+      "recovery_codes": null,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": null,
+      "source": "https://docs.lambda.com/public-cloud/enabling-sso/",
+      "sources_extra": [
+        "https://docs.lambda.com/public-cloud/console/"
+      ],
+      "checked": "2026-11-22",
+      "verified": false
+    },
+    {
+      "id": "lightning-ai",
+      "name": "Lightning AI",
+      "provider": "Lightning AI",
+      "family": null,
+      "lanes": [
+        "gpu",
+        "cpu",
+        "hosting"
+      ],
+      "signin": [
+        "google",
+        "github",
+        "sso"
+      ],
+      "passkey": null,
+      "twofa": [
+        "via-provider"
+      ],
+      "own_2fa": null,
+      "recovery_codes": null,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": null,
+      "source": "https://lightning.ai/docs/platform/security/security-features/",
+      "sources_extra": [],
+      "checked": "2026-11-22",
+      "verified": false
+    },
+    {
+      "id": "lm-studio",
+      "name": "LM Studio Hub account",
+      "provider": "LM Studio",
+      "family": null,
+      "lanes": [
+        "tools",
+        "inference"
+      ],
+      "signin": [
+        "apple",
+        "github",
+        "google",
+        "sso",
+        "other"
+      ],
+      "passkey": null,
+      "twofa": null,
+      "own_2fa": null,
+      "recovery_codes": null,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": null,
+      "source": "https://lmstudio.ai/login",
+      "sources_extra": [],
+      "checked": "2026-11-22",
+      "verified": true
+    },
+    {
+      "id": "microsoft",
+      "name": "Microsoft account",
+      "provider": "Microsoft",
+      "family": "microsoft",
+      "lanes": [
+        "identity"
+      ],
+      "signin": null,
+      "passkey": "signin",
+      "twofa": [
+        "passkey",
+        "security-key",
+        "totp",
+        "email",
+        "sms"
+      ],
+      "own_2fa": null,
+      "recovery_codes": null,
+      "link": null,
+      "email_change": null,
+      "security_url": "https://account.microsoft.com/security",
+      "trap": "Losing your only passkey could lock you out; Microsoft recommends passkeys in two storage locations, and is phasing out SMS for personal accounts.",
+      "source": "https://support.microsoft.com/en-us/accounts-billing/manage/how-to-help-keep-your-microsoft-account-secure",
+      "sources_extra": [
+        "https://support.microsoft.com/en-us/accounts-billing/manage/microsoft-account-security-info-verification-codes"
+      ],
+      "checked": "2026-11-22",
+      "verified": true
+    },
+    {
+      "id": "modal",
+      "name": "Modal",
+      "provider": "Modal Labs",
+      "family": null,
+      "lanes": [
+        "gpu",
+        "cpu",
+        "inference"
+      ],
+      "signin": null,
+      "passkey": null,
+      "twofa": null,
+      "own_2fa": null,
+      "recovery_codes": null,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": "Google sign-in beyond the standard buttons is arranged through Modal support; SAML SSO needs an Enterprise plan workspace.",
+      "source": "https://modal.com/docs/guide/workspaces",
+      "sources_extra": [
+        "https://modal.com/docs/guide/modal-user-account-setup"
+      ],
+      "checked": "2026-11-22",
+      "verified": true
+    },
+    {
+      "id": "nvidia",
+      "name": "NVIDIA account (build.nvidia.com and NGC)",
+      "provider": "NVIDIA",
+      "family": null,
+      "lanes": [
+        "gpu",
+        "inference"
+      ],
+      "signin": [
+        "email-password",
+        "sso"
+      ],
+      "passkey": null,
+      "twofa": null,
+      "own_2fa": null,
+      "recovery_codes": null,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": null,
+      "source": "https://docs.nvidia.com/ngc/latest/ngc-user-guide.html",
+      "sources_extra": [],
+      "checked": "2026-11-22",
+      "verified": true
+    },
+    {
+      "id": "ollama",
+      "name": "Ollama (ollama.com account and cloud models)",
+      "provider": "Ollama",
+      "family": null,
+      "lanes": [
+        "inference",
+        "tools"
+      ],
+      "signin": null,
+      "passkey": null,
+      "twofa": null,
+      "own_2fa": null,
+      "recovery_codes": null,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": null,
+      "source": "https://docs.ollama.com/faq",
+      "sources_extra": [
+        "https://docs.ollama.com/cloud/faq.md"
+      ],
+      "checked": "2026-11-22",
+      "verified": false
+    },
+    {
+      "id": "opencode",
+      "name": "OpenCode Zen (opencode.ai)",
+      "provider": "Anomaly (OpenCode)",
+      "family": null,
+      "lanes": [
+        "inference",
+        "tools"
+      ],
+      "signin": null,
+      "passkey": null,
+      "twofa": null,
+      "own_2fa": null,
+      "recovery_codes": null,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": null,
+      "source": "https://opencode.ai/docs/zen/",
+      "sources_extra": [
+        "https://opencode.ai/auth"
+      ],
+      "checked": "2026-11-22",
+      "verified": false
+    },
+    {
+      "id": "openrouter",
+      "name": "OpenRouter",
+      "provider": "OpenRouter",
+      "family": null,
+      "lanes": [
+        "inference"
+      ],
+      "signin": null,
+      "passkey": null,
+      "twofa": null,
+      "own_2fa": null,
+      "recovery_codes": null,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": null,
+      "source": "https://openrouter.ai/sign-in",
+      "sources_extra": [
+        "https://openrouter.ai/docs/faq"
+      ],
+      "checked": "2026-11-22",
+      "verified": false
+    },
+    {
+      "id": "oracle-cloud",
+      "name": "Oracle Cloud Infrastructure",
+      "provider": "Oracle",
+      "family": null,
+      "lanes": [
+        "cpu",
+        "gpu",
+        "hosting",
+        "inference"
+      ],
+      "signin": null,
+      "passkey": "2fa",
+      "twofa": [
+        "push",
+        "totp",
+        "security-key",
+        "sms",
+        "email"
+      ],
+      "own_2fa": null,
+      "recovery_codes": null,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": null,
+      "source": "https://docs.oracle.com/en-us/iaas/Content/Identity/mfa/configure-authentication-factors.htm",
+      "sources_extra": [],
+      "checked": "2026-11-22",
+      "verified": true
+    },
+    {
+      "id": "replicate",
+      "name": "Replicate",
+      "provider": "Replicate",
+      "family": null,
+      "lanes": [
+        "inference",
+        "gpu"
+      ],
+      "signin": [
+        "github"
+      ],
+      "passkey": null,
+      "twofa": [
+        "via-provider"
+      ],
+      "own_2fa": false,
+      "recovery_codes": null,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": null,
+      "source": "https://replicate.com/signin",
+      "sources_extra": [],
+      "checked": "2026-11-22",
+      "verified": false
+    },
+    {
+      "id": "resend",
+      "name": "Resend",
+      "provider": "Resend",
+      "family": null,
+      "lanes": [
+        "tools"
+      ],
+      "signin": null,
+      "passkey": null,
+      "twofa": [
+        "totp"
+      ],
+      "own_2fa": null,
+      "recovery_codes": true,
+      "link": null,
+      "email_change": null,
+      "security_url": "https://resend.com/profile",
+      "trap": "MFA is per account and cannot be enforced for a team; keep the one-time recovery code away from the authenticator device.",
+      "source": "https://resend.com/docs/knowledge-base/how-can-i-add-mfa",
+      "sources_extra": [
+        "https://resend.com/login"
+      ],
+      "checked": "2026-11-22",
+      "verified": true
+    },
+    {
+      "id": "runpod",
+      "name": "RunPod",
+      "provider": "Runpod",
+      "family": null,
+      "lanes": [
+        "gpu",
+        "cpu",
+        "inference"
+      ],
+      "signin": [
+        "email-link",
+        "email-password",
+        "github",
+        "passkey",
+        "sso"
+      ],
+      "passkey": "signin",
+      "twofa": null,
+      "own_2fa": null,
+      "recovery_codes": null,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": "Accounts migrated to email-code sign-in lost earlier MFA settings; users who had MFA before the migration must add it again.",
+      "source": "https://www.runpod.io/blog/runpod-login-update",
+      "sources_extra": [
+        "https://docs.runpod.io/release-notes",
+        "https://www.runpod.io/legal/privacy-policy"
+      ],
+      "checked": "2026-11-22",
+      "verified": true
+    },
+    {
+      "id": "together",
+      "name": "Together AI",
+      "provider": "Together AI",
+      "family": null,
+      "lanes": [
+        "inference",
+        "gpu"
+      ],
+      "signin": [
+        "google",
+        "github",
+        "sso"
+      ],
+      "passkey": null,
+      "twofa": null,
+      "own_2fa": null,
+      "recovery_codes": null,
+      "link": "no",
+      "email_change": false,
+      "security_url": "https://api.together.ai/settings/profile",
+      "trap": "Sign in only with the provider used at signup; a different one gives an already-linked error, and email cannot be changed directly.",
+      "source": "https://api.together.ai/signin",
+      "sources_extra": [
+        "https://docs.together.ai/docs/account-management"
+      ],
+      "checked": "2026-11-22",
+      "verified": true
+    },
+    {
+      "id": "vast-ai",
+      "name": "Vast.ai",
+      "provider": "Vast.ai",
+      "family": null,
+      "lanes": [
+        "gpu"
+      ],
+      "signin": [
+        "google",
+        "github"
+      ],
+      "passkey": null,
+      "twofa": [
+        "totp",
+        "sms",
+        "email"
+      ],
+      "own_2fa": null,
+      "recovery_codes": true,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": "With no recovery codes and no phone, only support can verify identity and restore access; regenerating codes invalidates all earlier ones.",
+      "source": "https://docs.vast.ai/guides/reference/two-factor-authentication",
+      "sources_extra": [
+        "https://vast.ai/article/january-product-update"
+      ],
+      "checked": "2026-11-22",
+      "verified": true
+    },
+    {
+      "id": "verda",
+      "name": "Verda",
+      "provider": "Verda (formerly DataCrunch)",
+      "family": null,
+      "lanes": [
+        "gpu",
+        "cpu",
+        "inference"
+      ],
+      "signin": null,
+      "passkey": null,
+      "twofa": null,
+      "own_2fa": null,
+      "recovery_codes": null,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": null,
+      "source": "https://console.verda.com/signin",
+      "sources_extra": [],
+      "checked": "2026-11-22",
+      "verified": false
+    },
+    {
+      "id": "zed",
+      "name": "Zed",
+      "provider": "Zed Industries",
+      "family": null,
+      "lanes": [
+        "tools"
+      ],
+      "signin": [
+        "github"
+      ],
+      "passkey": null,
+      "twofa": [
+        "via-provider"
+      ],
+      "own_2fa": false,
+      "recovery_codes": null,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": "Zed account email is copied from GitHub; billing in Stripe does not update automatically when it changes.",
+      "source": "https://zed.dev/docs/authentication",
+      "sources_extra": [],
+      "checked": "2026-11-22",
+      "verified": true
+    }
+  ]
+}

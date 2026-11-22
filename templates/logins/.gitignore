@@ -1,0 +1,4 @@
+# Your progress and the board's input name your accounts: they stay on your machine, never in git.
+status.json
+board.json
+local/
