@@ -29,6 +29,7 @@ flowchart LR
 | A code in Passwords | Edit the site's entry, choose Set Up Code, paste the setup key | [Verification codes](https://support.apple.com/guide/passwords/mchl873a6e72/mac), read 2026-11-22 |
 | Passkeys made in Chrome | iCloud Keychain, once Chrome is allowed to use it | [Passkeys on iCloud Keychain](https://developer.chrome.com/blog/passkeys-on-icloud-keychain), read 2026-11-22 |
 | Recovery codes | The site's Passwords entry, plus one printed copy per identity provider | Print it: it is the way in when the vault is locked |
+| One entry per site | Give the password entry exactly the passkey entry's user name, capitals included: the two join. A Sign in with Apple entry stays apart and holds no code | Seen in the Passwords app, 2026-11-22 |
 
 ## One account, six steps
 
@@ -57,6 +58,9 @@ Harden the identity providers first: every vendor you reach through one inherits
 | Social sign-in at DigitalOcean | Its 2FA covers password sign-ins only; with Google or GitHub, 2FA lives at that provider | [DigitalOcean 2FA](https://docs.digitalocean.com/platform/accounts/2fa/), read 2026-11-22 |
 | Changing the email at Cloudflare | It unlinks Apple; signing in with Apple again makes a new account | [Cloudflare login](https://developers.cloudflare.com/fundamentals/user-profiles/login/), read 2026-11-22 |
 | Together AI | Sign in only with the provider you signed up with; the email cannot be changed directly | [Together AI sign-in](https://api.together.ai/signin), read 2026-11-22 |
+| A social button on a site you have not used | DigitalOcean, Vast.ai and NVIDIA make a new account at once, with no question. Sign in the way you signed up | Seen 2026-11-22 |
+| A second provider at NVIDIA | Apple or Google under another email makes a second, empty account; its settings can only unlink | [NVIDIA security settings](https://profile.nvgs.nvidia.com/security), seen 2026-11-22 |
+| Extra accounts for more free use | NVIDIA's terms forbid using it "to avoid incurring fees or exceeding use limits or quotas" | [NVIDIA Technology Access Terms](https://developer.nvidia.com/legal/terms) 5(n), read 2026-11-22 |
 | Testing in the same browser profile | The session cookie signs you in, so the test proves nothing | Use a private window (step 6) |
 
 Every vendor's own trap is in the `trap` column of [catalog/logins.json](../catalog/logins.json).

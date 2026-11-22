@@ -157,6 +157,25 @@ test('sheet.sh --json scores each site: the identity provider uses its own passk
   assert.equal(by.gone.known, false);
 });
 
+test('sheet.sh --json leaves codes and recovery to the provider when the vendor 2FA skips social sign-ins', () => {
+  const dir = mkdtempSync(join(tmpdir(), 'logins-'));
+  const row = { ...good(), id: 'skips-social', signin: ['github', 'email-password'], passkey: null, own_2fa: false };
+  writeFileSync(join(dir, 'catalog.json'), JSON.stringify({ version: 1, about: 'fixture', checked: '2026-11-22', rows: [row] }));
+  writeFileSync(join(dir, 'sites.json'), JSON.stringify({ version: 1, sites: [
+    { id: 'social', vendor: 'skips-social' }, { id: 'password', vendor: 'skips-social' }] }));
+  writeFileSync(join(dir, 'status.json'), JSON.stringify({ version: 1, rows: {
+    social: { login_method: 'github', email_ok: 'yes', codes_app: 'none', recovery: 'missing', tested: '2026-11-22' },
+    password: { login_method: 'email-password', email_ok: 'yes', codes_app: 'none', recovery: 'missing', tested: '2026-11-22' } } }));
+  const out = sheet(join(dir, 'catalog.json'), join(dir, 'sites.json'), '--json', join(dir, 'status.json'));
+  assert.equal(out.status, 0, out.stderr);
+  const by = Object.fromEntries(JSON.parse(out.stdout).map((r) => [r.id, r]));
+  assert.equal(by.social.checks.codes, null);
+  assert.equal(by.social.checks.recovery, null);
+  assert.equal(by.social.green, true, JSON.stringify(by.social.checks));
+  assert.equal(by.password.checks.codes, false);
+  assert.equal(by.password.checks.recovery, false);
+});
+
 test('sheet.sh --write replaces only the part between the markers', () => {
   const dir = fixture();
   const readme = join(dir, 'README.md');
