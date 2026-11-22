@@ -41,6 +41,8 @@ rows() {
          elif (($v.twofa // []) | any(. == "totp")) then ($site.codes // $S.codes[$v.family // "default"] // $S.codes.default // "passwords")
          else null end) as $codes
       | ($ST[$site.id] // {}) as $x
+      # The vendor says its own 2FA skips social sign-ins, and you sign in through one: the 2FA of that provider is the guard.
+      | (($v | if . == null then null else .own_2fa end) == false and (["github", "apple", "microsoft", "google"] | any(. == ($x.login_method // "")))) as $guarded
       | {id: $site.id, vendor: $site.vendor, name: ($site.name // $v.name // $site.vendor), stage: ($site.stage // null),
          known: ($v != null), root: $root,
          slots: [$O[] | . as $m | {method: $m, offered: ($in | any(. == $m))}],
@@ -57,8 +59,8 @@ rows() {
                  else null end),
            email: (if $x.email_ok == "na" then null else ($x.email_ok == "yes") end),
            passkey: (if (["signin", "both", "2fa"] | any(. == ($v.passkey // ""))) then ($x.passkey == "passwords") else null end),
-           codes: (if ($codes == null or $codes == "via-provider") then null else ($x.codes_app == $codes) end),
-           recovery: (if ($v.recovery_codes // false) then (["passwords", "printed"] | any(. == ($x.recovery // ""))) else null end),
+           codes: (if ($codes == null or $codes == "via-provider" or $guarded) then null else ($x.codes_app == $codes) end),
+           recovery: (if $guarded then null elif ($v.recovery_codes // false) then (["passwords", "printed"] | any(. == ($x.recovery // ""))) else null end),
            tested: (($x.tested // null) != null)}}
       | .green = ([.checks[] | select(. != null)] | all)]'
 }

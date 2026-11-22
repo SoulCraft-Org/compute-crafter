@@ -931,19 +931,28 @@
         "inference"
       ],
       "signin": [
+        "google",
+        "apple",
+        "microsoft",
         "email-password",
-        "sso"
+        "passkey",
+        "other"
       ],
-      "passkey": null,
-      "twofa": null,
+      "passkey": "signin",
+      "twofa": [
+        "totp",
+        "security-key"
+      ],
       "own_2fa": null,
-      "recovery_codes": null,
+      "recovery_codes": false,
       "link": null,
       "email_change": null,
-      "security_url": null,
-      "trap": null,
+      "security_url": "https://profile.nvgs.nvidia.com/security",
+      "trap": "Log in with Apple or Google under another email makes a second, empty account; settings can only unlink providers.",
       "source": "https://docs.nvidia.com/ngc/latest/ngc-user-guide.html",
-      "sources_extra": [],
+      "sources_extra": [
+        "https://profile.nvgs.nvidia.com/security"
+      ],
       "checked": "2026-11-22",
       "verified": true
     },
@@ -1177,7 +1186,8 @@
       ],
       "signin": [
         "google",
-        "github"
+        "github",
+        "email-password"
       ],
       "passkey": null,
       "twofa": [
@@ -1189,11 +1199,12 @@
       "recovery_codes": true,
       "link": null,
       "email_change": null,
-      "security_url": null,
-      "trap": "With no recovery codes and no phone, only support can verify identity and restore access; regenerating codes invalidates all earlier ones.",
+      "security_url": "https://cloud.vast.ai/settings/",
+      "trap": "Forgot password sends nothing to an account made through GitHub. With no recovery codes or phone, only support restores access.",
       "source": "https://docs.vast.ai/guides/reference/two-factor-authentication",
       "sources_extra": [
-        "https://vast.ai/article/january-product-update"
+        "https://vast.ai/article/january-product-update",
+        "https://docs.vast.ai/guides/reference/account-settings"
       ],
       "checked": "2026-11-22",
       "verified": true
