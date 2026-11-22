@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "rows": {
+    "apple": {"login_method": "email-password", "email_ok": "yes", "passkey": "na", "codes_app": "na", "recovery": "na", "links": [], "tested": "2026-11-22"},
+    "github": {"login_method": "email-password", "email_ok": "yes", "passkey": "passwords", "codes_app": "passwords", "recovery": "printed", "links": ["google"], "tested": "2026-11-22"},
+    "microsoft": {"login_method": "email-password", "email_ok": "yes", "passkey": "passwords", "codes_app": "microsoft-authenticator", "recovery": "passwords", "links": [], "tested": null},
+    "hugging-face": {"login_method": "email-password", "email_ok": "no", "passkey": "none", "codes_app": "google-authenticator", "recovery": "missing", "links": [], "tested": null},
+    "modal": {"login_method": "github", "email_ok": "yes", "passkey": "na", "codes_app": "na", "recovery": "na", "links": [], "tested": "2026-11-22"}
+  }
+}

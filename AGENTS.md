@@ -12,4 +12,5 @@ Instructions for every coding agent in this repo. OpenCode reads this file, and 
 | Secrets | Never print, copy or commit a key value. Use each CLI's own login. Commands name env vars, never values |
 | Figures | Every free-tier figure cites the vendor's own page and the date it was read. A third-party page never verifies a figure |
 | Writing | One idea per sentence, no em dashes. Attribute every figure in its sentence |
+| Logins catalog | Edit `catalog/logins.json` by hand. Keys and values follow `FIELDS` in `tests/logins.test.mjs`; run `node --test tests/logins.test.mjs`. Vendor facts only: never an account, an email or progress |
 | Catalog | Edit `catalog/plans.json` by hand or with `tools/catalog.py merge`; keep only `PUBLIC_FIELDS`; run `--format` then `--check` |

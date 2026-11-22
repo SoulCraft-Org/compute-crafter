@@ -1,0 +1,45 @@
+name: Sign-in facts changed
+description: "A vendor's sign-in methods, passkey, 2FA, linking or email change differ from catalog/logins.json."
+title: "Logins: vendor id, what changed"
+labels: ["documentation"]
+body:
+  - type: input
+    id: vendor
+    attributes:
+      label: Vendor id
+      description: "The row's id in catalog/logins.json, or a new id for a vendor not listed yet."
+      placeholder: hugging-face
+    validations:
+      required: true
+  - type: textarea
+    id: change
+    attributes:
+      label: Change
+      description: "A table: Field, Now, Should be. One row per field. No paragraphs."
+      placeholder: |
+        | Field | Now | Should be |
+        |---|---|---|
+        | passkey | null | both |
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Vendor's own page
+      description: "An https link on the vendor's own site. A third-party page cannot verify a fact."
+    validations:
+      required: true
+  - type: input
+    id: read
+    attributes:
+      label: Date read
+      placeholder: "2026-11-22"
+    validations:
+      required: true
+  - type: checkboxes
+    id: private
+    attributes:
+      label: Privacy
+      options:
+        - label: "This issue holds no email, username, account id or screenshot of an account"
+          required: true
