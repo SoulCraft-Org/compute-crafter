@@ -27,7 +27,7 @@ bash sheet.sh logins.json sites.json --json status.json > board.json
 | --- | --- |
 | `order` | Sign-in methods, in the order you prefer |
 | `codes` | The app for codes: `default`, then one per identity family (`apple`, `google`, `microsoft`) |
-| `sites[]` | `id`, `vendor` (a catalog id) and `stage`; optional `codes`, `email` and `top` override one site |
+| `sites[]` | `id`, `vendor` (a catalog id) and `stage`; optional `name`, `codes`, `email` and `top` override one site, so two accounts at one vendor stay apart |
 
 ## status.json
 

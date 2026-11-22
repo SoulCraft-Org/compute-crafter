@@ -41,7 +41,7 @@ rows() {
          elif (($v.twofa // []) | any(. == "totp")) then ($site.codes // $S.codes[$v.family // "default"] // $S.codes.default // "passwords")
          else null end) as $codes
       | ($ST[$site.id] // {}) as $x
-      | {id: $site.id, vendor: $site.vendor, name: ($v.name // $site.vendor), stage: ($site.stage // null),
+      | {id: $site.id, vendor: $site.vendor, name: ($site.name // $v.name // $site.vendor), stage: ($site.stage // null),
          known: ($v != null), root: $root,
          slots: [$O[] | . as $m | {method: $m, offered: ($in | any(. == $m))}],
          top: $top, email: ($site.email // $v.family // "primary"), passkey: ($v.passkey // null), codes: $codes,
