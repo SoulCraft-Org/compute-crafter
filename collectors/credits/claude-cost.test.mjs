@@ -59,6 +59,13 @@ test('claude_cost: a refusal, an offline call, a bad amount or endless pages is 
   const offline = await read(async () => { throw new TypeError(`fetch failed, auth ${KEY}`); });
   assert.equal(offline.why, 'claude_cost: fetch failed, auth [key]');
   assert.match((await read(pages([{ data: [day('02', 'abc')], has_more: false }]))).why, /not a USD amount/);
+  for (const amount of ['', null, undefined, 12, ' 5', '1e3']) {
+    assert.match((await read(pages([{ data: [{ starting_at: '2026-11-02T00:00:00Z', results: [{ amount, currency: 'USD' }] }], has_more: false }]))).why, /not a USD amount/, `amount ${JSON.stringify(amount)}`);
+  }
+  assert.match((await read(pages([{ data: [day('02', '1')], has_more: true, next_page: null }]))).why, /has_more is true but the report gave no next_page/);
+  const calls = [];
+  assert.match((await read(pages([{ data: [day('02', '1')], has_more: true }], calls))).why, /no next_page/);
+  assert.equal(calls.length, 1, 'page 1 is not read again');
   assert.match((await read(pages([{ data: [{ starting_at: '2026-11-02T00:00:00Z', results: [{ amount: '1', currency: 'EUR' }] }], has_more: false }]))).why, /not a USD amount/);
   assert.match((await read(pages([{ nope: 1 }]))).why, /no data array/);
   const endless = Array.from({ length: 9 }, () => ({ data: [day('02', '1')], has_more: true, next_page: 'p' }));

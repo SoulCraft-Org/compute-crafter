@@ -30,6 +30,7 @@ export async function readClaudeCost(reader, { env = process.env, fetch = global
       const body = await getPage(fetch, key, { starting_at: start.toISOString(), ending_at: end.toISOString(), limit: '31', ...(page && { page }) });
       cents += sumCents(body, start);
       if (!body.has_more) return { used: { value: round(cents / 100, 2), source: costSource(start, now) } };
+      if (typeof body.next_page !== 'string' || !body.next_page) throw new Error('has_more is true but the report gave no next_page');
       page = body.next_page;
     }
     throw new Error(`more than ${MAX_PAGES} pages of daily buckets`);
@@ -49,13 +50,13 @@ async function getPage(fetch, key, query) {
   return body;
 }
 
-// The cents in one page's buckets that start this month; a result that is not USD or has no number throws.
+// The cents in one page's buckets that start this month; 
 function sumCents(body, start) {
   let cents = 0;
   for (const bucket of body.data) {
     if (Date.parse(bucket.starting_at) < start.getTime()) continue;
     for (const r of bucket.results ?? []) {
-      const amount = Number(r.amount);
+      const amount = typeof r.amount === 'string' && /^-?\d+(\.\d+)?$/.test(r.amount) ? Number(r.amount) : NaN;
       if (r.currency !== 'USD' || !finite(amount)) throw new Error('the cost report gave a result that is not a USD amount');
       cents += amount;
     }
