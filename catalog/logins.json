@@ -929,7 +929,7 @@
       ],
       "passkey": null,
       "twofa": null,
-      "own_2fa": null,
+      "own_2fa": true,
       "recovery_codes": true,
       "link": null,
       "email_change": null,
