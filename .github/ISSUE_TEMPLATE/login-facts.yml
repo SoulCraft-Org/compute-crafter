@@ -1,6 +1,7 @@
 name: Sign-in facts changed
 description: "A vendor's sign-in methods, passkey, 2FA, linking or email change differ from catalog/logins.json."
 title: "Logins: vendor id, what changed"
+type: Task
 labels: ["documentation"]
 body:
   - type: input
