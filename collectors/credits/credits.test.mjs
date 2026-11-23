@@ -425,6 +425,15 @@ test('readers: GitHub billing sums the product gross less public repositories, s
   assert.doesNotMatch(r.used.source, /in no repository list/);
 });
 
+test('readers: the usage report spells the product in lower case; only the product asked for is summed', async () => {
+  const line = (product, repositoryName, grossAmount) => ({ product, sku: product, grossAmount, repositoryName });
+  const bill = { usageItems: [line('actions', 'app', 40.5), line('actions', 'docs-site', 300), line('code_quality', 'app', 2), line('copilot', 'tools', 1)] };
+  const r = await readUse(acme, { exec: ghApi(bill), now });
+  assert.equal(r.used.value, 40.5, 'actions in a private repository only: code_quality and copilot are other products');
+  assert.match(r.used.source, /1 SKUs counted; 1 SKUs of public repositories left out/);
+  assert.equal((await readUse({ github_billing: 'acme', product: 'copilot' }, { exec: ghApi(bill), now })).used.value, 1);
+});
+
 test('readers: a renamed repository is counted, never dropped; a public larger runner is left out, a private one counted', async () => {
   const bill = { usageItems: [item('app', 10), item('renamed-away', 4), item(undefined, 1), item('docs-site', 50, { sku: 'Actions Linux 4-core' }), item('tools', 20, { sku: 'Actions Linux 4-core' })] };
   const r = await readUse(acme, { exec: ghApi(bill), now });
