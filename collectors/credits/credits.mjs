@@ -63,8 +63,16 @@ const CI_REASON = 'reads local files named in params; refreshed by a --local col
 const CLAIMED = new Set(['have', 'use']);
 
 const expand = (p, home) => String(p ?? '').replace(/^~(?=\/|$)/, home);
-// ~/ is home; any other relative path is from the repo root, the folder the engine scores.
-const resolveFrom = (p, home, root) => path.resolve(root, expand(p, home));
+// Three path forms. ~/ is home. pack:<path> is from the pack checkout (kit), such as pack:catalog/plans.json, and
+// must stay inside it. Any other relative path is from the repo root, the folder the engine scores.
+function resolveFrom(p, home, { root, kit }) {
+  const text = String(p ?? '');
+  if (!text.startsWith('pack:')) return path.resolve(root, expand(text, home));
+  const file = path.resolve(kit, text.slice('pack:'.length));
+  const rel = path.relative(kit, file);
+  if (rel === '..' || rel.startsWith(`..${path.sep}`) || path.isAbsolute(rel)) throw new Error(`${text} leaves the pack checkout`);
+  return file;
+}
 const readJson = (file) => JSON.parse(fs.readFileSync(file, 'utf8'));
 
 // "free.json#some-provider" -> that row of the registry, or null.
@@ -326,12 +334,12 @@ async function gather({ mode, now = new Date(), home = os.homedir(), kit = KIT_R
   // A repo's own pool metrics (params.pool_metrics) are answered too, read or not.
   const ids = [...new Set([...metricIds, ...Object.keys(p.pool_metrics ?? {})])];
   const every = (reason, source) => Object.fromEntries(ids.map((id) => [id, cnc(reason, source)]));
-  const aged = (out, rows = []) => withCatalogAge(out, p, { rows, home, root, now });
-  if (mode !== 'local') return aged(await ciGather(p, { named, every, home, root, now, exec, providers }));
+  const aged = (out, rows = []) => withCatalogAge(out, p, { rows, home, kit, root, now });
+  if (mode !== 'local') return aged(await ciGather(p, { named, every, home, kit, root, now, exec, providers }));
   if (!p.allowances?.length && !p.registry) return aged(every('no allowance to read: list them in params.allowances on targets/credits.json, or name a registry', named));
   let files;
   try {
-    files = readSources(p, home, root);
+    files = readSources(p, home, { root, kit });
   } catch (err) {
     return aged(every(`a source file is missing or unreadable (${String(err.message).split('\n')[0].slice(0, 160)})`, named));
   }
@@ -347,12 +355,12 @@ async function gather({ mode, now = new Date(), home = os.homedir(), kit = KIT_R
 
 // credits.registry_age_days over the allowance rows and params.catalog_file's
 // rows, a committed file both modes read; out as it is when no catalog is named.
-function withCatalogAge(out, p, { rows, home, root, now }) {
+function withCatalogAge(out, p, { rows, home, kit, root, now }) {
   if (!p.catalog_file) return out;
   const src = `${p.catalog_file} (each row's checked date)`;
   let catalog;
   try {
-    catalog = (readJson(resolveFrom(p.catalog_file, home, root)).rows ?? []).map((r) => ({ label: `${r.provider}: ${r.name}`, checked: r.checked ?? null }));
+    catalog = (readJson(resolveFrom(p.catalog_file, home, { root, kit })).rows ?? []).map((r) => ({ label: `${r.provider}: ${r.name}`, checked: r.checked ?? null }));
   } catch (err) {
     return { ...out, 'credits.registry_age_days': cnc(`the catalog is missing or unreadable (${String(err.message).split('\n')[0].slice(0, 160)})`, src) };
   }
@@ -372,7 +380,7 @@ function withReaders(p, { exec, root, now, providers }) {
 // are repo secrets in its env, and reports them in credits.highest_used_share
 // alone. Every other metric keeps CI_REASON, none partly read, until
 // withCatalogAge gives credits.registry_age_days a committed catalog's dates.
-async function ciGather(p, { named, every, home, root, now, exec, providers }) {
+async function ciGather(p, { named, every, home, kit, root, now, exec, providers }) {
   // An allowance whose key is set here is one the org uses, whatever the registry (not read in CI) says; an
   // override the params state stays.
   const field = p.status_field || 'org_status';
@@ -383,7 +391,7 @@ async function ciGather(p, { named, every, home, root, now, exec, providers }) {
   const src = `${named}; in CI only ${keyed.map((s) => s.id).join(', ')}, read with repo secrets; a --local collect reads every allowance`;
   let systems = {};
   try {
-    if (p.systems_file) systems = readJson(resolveFrom(p.systems_file, home, root));
+    if (p.systems_file) systems = readJson(resolveFrom(p.systems_file, home, { root, kit }));
   } catch (err) {
     return { ...every(CI_REASON, named), 'credits.highest_used_share': cnc(`a source file is missing or unreadable (${String(err.message).split('\n')[0].slice(0, 160)})`, src) };
   }
@@ -405,12 +413,12 @@ function sourceNames(p) {
 }
 
 // The systems, usage and registry files the params name; throws when one is unreadable.
-function readSources(p, home, root) {
+function readSources(p, home, dirs) {
   let systems = {};
   let org = {};
   const registry = {};
-  if (p.systems_file) systems = readJson(resolveFrom(p.systems_file, home, root));
-  if (p.usage_file) org = readJson(resolveFrom(p.usage_file, home, root));
-  for (const f of p.registry_files ?? []) registry[f] = readJson(path.join(resolveFrom(p.registry, home, root), f));
+  if (p.systems_file) systems = readJson(resolveFrom(p.systems_file, home, dirs));
+  if (p.usage_file) org = readJson(resolveFrom(p.usage_file, home, dirs));
+  for (const f of p.registry_files ?? []) registry[f] = readJson(path.join(resolveFrom(p.registry, home, dirs), f));
   return { systems, org, registry };
 }

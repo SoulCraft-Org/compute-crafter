@@ -347,6 +347,35 @@ test('collect: a relative path is read from root, the adopting repo, never from 
   }
 });
 
+test('collect: a pack: path is read from kit even when root differs, and one that leaves kit is refused without a crash', async () => {
+  const outer = fs.mkdtempSync(path.join(os.tmpdir(), 'credits-pack-'));
+  const kit = path.join(outer, 'kit');
+  const root = path.join(outer, 'repo');
+  try {
+    write(path.join(kit, 'catalog', 'plans.json'), { rows: [{ provider: 'P', name: 'Old', checked: '2026-10-25' }] });
+    // The same relative name under root holds a newer date: reading it would give 1, reading kit's gives 9.
+    write(path.join(root, 'catalog', 'plans.json'), { rows: [{ provider: 'P', name: 'New', checked: '2026-11-02' }] });
+    write(path.join(root, 'systems.json'), { systems: [] });
+    write(path.join(outer, 'outside.json'), { rows: [{ provider: 'P', name: 'Outside', checked: '2026-11-02' }], systems: [] });
+    const ci = (catalog_file) => collect({ mode: 'ci', now, home, root, kit, providers: { env: {} }, params: { catalog_file } });
+    assert.equal((await ci('pack:catalog/plans.json'))['credits.registry_age_days'].value, 9, 'pack: reads kit');
+    assert.equal((await ci('catalog/plans.json'))['credits.registry_age_days'].value, 1, 'a plain path reads root');
+    for (const bad of ['pack:../outside.json', 'pack:catalog/../../outside.json', `pack:${path.join(outer, 'outside.json')}`]) {
+      const out = await ci(bad);
+      assert.match(out['credits.registry_age_days'].could_not_check, /leaves the pack checkout/, bad);
+      assert.equal(out['credits.registry_age_days'].value, undefined, bad);
+    }
+    // In a local collect the same refusal is the reason for every metric of a source file, and the catalog's age is still given.
+    const local = await collect({ ...base, root, kit, params: { ...params, systems_file: 'pack:../outside.json', catalog_file: 'pack:catalog/plans.json' } });
+    assert.match(local['credits.idle_replaceable'].could_not_check, /leaves the pack checkout/);
+    assert.equal(local['credits.registry_age_days'].value, 9);
+    const reg = await collect({ ...base, root, kit, params: { ...params, systems_file: 'systems.json', usage_file: 'systems.json', registry: 'pack:..' } });
+    assert.match(reg['credits.unclaimed_free'].could_not_check, /leaves the pack checkout|missing or unreadable/);
+  } finally {
+    fs.rmSync(outer, { recursive: true, force: true });
+  }
+});
+
 test('collect: with no root, a relative registry is read from the checkout, never from the working directory', async () => {
   const kit = fs.mkdtempSync(path.join(os.tmpdir(), 'credits-kit-'));
   const cwd = fs.mkdtempSync(path.join(os.tmpdir(), 'credits-cwd-'));

@@ -114,7 +114,8 @@ test('quality starter: every path is plain and from the repo\'s root, with no cl
   assert.match(readme, /from your repo's root/);
   const { params } = userRepo();
   for (const key of ['systems_file', 'usage_file', 'registry']) assert.match(params[key], /^quality\/inputs\//, key);
-  assert.equal(params.catalog_file, '.code-os-packs/SoulCraft-Org/compute-crafter/catalog/plans.json');
+  assert.equal(params.catalog_file, 'pack:catalog/plans.json');
+  assert.doesNotMatch(targets, /\.code-os-packs/);
 });
 
 test('quality starter: a CI collect reads no file of yours, so only the age of the catalog is measured', async () => {
