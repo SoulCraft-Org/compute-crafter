@@ -3462,30 +3462,6 @@
    "verified": true
   },
   {
-   "id": "cursor-plus",
-   "name": "Cursor Plus (Premium $30)",
-   "provider": "Anysphere (Cursor)",
-   "provider_hq": null,
-   "lanes": [
-    "tools"
-   ],
-   "price_month": 8,
-   "currency": "USD",
-   "price_note": null,
-   "includes": "Grok models only; Premium 4x usage, third-party models at API list price",
-   "resets": null,
-   "unit_cost_vs_payg": "No discount on Claude/GPT",
-   "card": true,
-   "overage": "bills",
-   "trains_on_data": null,
-   "commercial_use": null,
-   "limits": null,
-   "source": "https://cursor.com/pricing",
-   "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
-  },
-  {
    "id": "cerebras-code-pro",
    "name": "Cerebras Code Pro",
    "provider": "Cerebras",
@@ -3808,54 +3784,6 @@
    "sources_extra": [],
    "checked": "2026-11-23",
    "verified": true
-  },
-  {
-   "id": "chatgpt-plus",
-   "name": "ChatGPT Plus (Codex)",
-   "provider": "OpenAI",
-   "provider_hq": null,
-   "lanes": [
-    "tools"
-   ],
-   "price_month": 20,
-   "currency": "USD",
-   "price_note": null,
-   "includes": "Codex local msgs/5h: GPT-6 Luna 350-3,000, GPT-6.1 Sol 15-160, Astra 5-45; weekly limits; GPT-Image-2",
-   "resets": null,
-   "unit_cost_vs_payg": "Unquantified",
-   "card": true,
-   "overage": "stops",
-   "trains_on_data": null,
-   "commercial_use": null,
-   "limits": null,
-   "source": "https://learn.chatgpt.com/docs/pricing",
-   "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
-  },
-  {
-   "id": "chatgpt-pro-100",
-   "name": "ChatGPT Pro $100",
-   "provider": "OpenAI",
-   "provider_hq": null,
-   "lanes": [
-    "tools"
-   ],
-   "price_month": 100,
-   "currency": "USD",
-   "price_note": null,
-   "includes": "No five-hour Codex limit; weekly limits may apply",
-   "resets": null,
-   "unit_cost_vs_payg": "Unquantified",
-   "card": true,
-   "overage": "stops",
-   "trains_on_data": null,
-   "commercial_use": null,
-   "limits": null,
-   "source": "https://learn.chatgpt.com/docs/pricing",
-   "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
   },
   {
    "id": "perplexity-pro",
