@@ -92,7 +92,9 @@ function fidelity(drop) {
 test('fidelity: every moved file present passes', () => {
   const out = fidelity(null);
   assert.equal(out.status, 0, out.stdout + out.stderr);
-  assert.match(out.stdout, /^fidelity: 3 files match [0-9a-f]{40}, 5 edited$/m);
+  const moved = JSON.parse(readFileSync(join(ROOT, 'tests', 'moved.json'), 'utf8'));
+  const same = moved.files.length - moved.edited.length;
+  assert.match(out.stdout, new RegExp(`^fidelity: ${same} files match [0-9a-f]{40}, ${moved.edited.length} edited$`, 'm'));
 });
 
 test('fidelity: an edited moved file that is gone fails', () => {

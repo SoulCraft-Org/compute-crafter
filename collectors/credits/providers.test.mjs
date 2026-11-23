@@ -59,6 +59,19 @@ test('modal: billing summary metered_cost this month, keys in the CLI env only; 
   assert.match((await read('modal', { exec: async () => '{"billed_cost":"1"}' })).why, /no metered_cost/);
 });
 
+test('a key that crosses the 160 character cut is taken out before the reason is cut, never shown in part', async () => {
+  const secret = ENV.MODAL_TOKEN_SECRET;
+  const line = `${'a'.repeat(150)}${secret} tail ${'b'.repeat(40)}`;
+  assert.ok(line.indexOf(secret) < 160 && line.indexOf(secret) + secret.length > 160, 'the key straddles character 160');
+  const exec = async () => { throw Object.assign(new Error('x'), { stderr: `${line}\nmore` }); };
+  const r = await read('modal', { exec });
+  assert.ok(!r.why.includes('fake-'), 'no first part of the key survives the cut');
+  assert.match(r.why, /^modal: a{150}\[key\]/);
+  assert.ok(r.why.length <= 'modal: '.length + 160);
+  const viaMessage = await read('modal', { exec: async () => { throw new Error(line); } });
+  assert.ok(!viaMessage.why.includes('fake-'), 'a message is cut the same way');
+});
+
 test('huggingface: ZeroGPU base less current, in minutes; a refused or odd answer is not read', async () => {
   const url = 'https://huggingface.co/api/spaces/zero-gpu/quota';
   const calls = [];
