@@ -332,13 +332,13 @@ async function gather({ mode, now = new Date(), home = os.homedir(), kit = KIT_R
   try {
     files = readSources(p, home, kit);
   } catch (err) {
-    return every(`a source file is missing or unreadable (${String(err.message).split('\n')[0].slice(0, 160)})`, named);
+    return aged(every(`a source file is missing or unreadable (${String(err.message).split('\n')[0].slice(0, 160)})`, named));
   }
   try {
     checkNoUsageApi(p, files.registry);
   } catch (err) {
     if (!(err instanceof ConfigError)) throw err;
-    return every(err.message, 'targets/credits.json');
+    return aged(every(err.message, 'targets/credits.json'));
   }
   const rows = allowances({ ...files, params: { ...p, allowances: await withReaders(p, { exec, root, now, providers }) } });
   return aged(metricsFrom(rows, { p, src: usageSource(p, named, files.org), now }), rows);
@@ -372,7 +372,12 @@ function withReaders(p, { exec, root, now, providers }) {
 // alone. Every other metric keeps CI_REASON, none partly read, until
 // withCatalogAge gives credits.registry_age_days a committed catalog's dates.
 async function ciGather(p, { named, every, home, kit, root, now, exec, providers }) {
-  const keyed = (p.allowances ?? []).filter((s) => s.reader && !s.used && ciReadable(s.reader, providers.env ?? process.env));
+  // An allowance whose key is set here is one the org uses, whatever the registry (not read in CI) says; an
+  // override the params state stays.
+  const field = p.status_field || 'org_status';
+  const keyed = (p.allowances ?? [])
+    .filter((s) => s.reader && !s.used && ciReadable(s.reader, providers.env ?? process.env))
+    .map((s) => ({ ...s, status_override: { [field]: 'use', ...s.status_override } }));
   if (!keyed.length) return every(CI_REASON, named);
   const src = `${named}; in CI only ${keyed.map((s) => s.id).join(', ')}, read with repo secrets; a --local collect reads every allowance`;
   let systems = {};
