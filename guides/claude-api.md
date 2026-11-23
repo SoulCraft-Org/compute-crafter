@@ -1,6 +1,6 @@
 # Claude API
 
-The Claude API gives a Claude Code or OpenCode user two things to set up first. One is the API credits in a Max, Ultra or Team plan. The other is keyless CI through workload identity federation (WIF).
+Set up two things first: the API credits in a Max, Ultra or Team plan, and keyless CI through workload identity federation (WIF).
 
 | Account | Free tier | Login or key | Claude connector | OpenCode | Guard |
 | --- | --- | --- | --- | --- | --- |
@@ -10,7 +10,7 @@ The Claude API gives a Claude Code or OpenCode user two things to set up first. 
 
 The plan credits cover the Claude API, Managed Agents, the Agent SDK and the Console Playground. They do not cover Claude Code. Unused credits expire at the end of each billing cycle ([API credits](https://platform.claude.com/docs/en/about-claude/api-credits-for-subscribers), read 2026-11-23).
 
-The Console's [Billing page](https://platform.claude.com/settings/billing) lists them under **Promotional credits**, each with its amount and expiry date. Read that page before a long run. It is the source for your dates.
+The Console's [Billing page](https://platform.claude.com/settings/billing) lists them under **Promotional credits**, each with its amount and expiry date. Read it before a long run.
 
 ## CI without a key
 
@@ -30,7 +30,7 @@ sequenceDiagram
 ## Set up
 
 1. As an organization admin, open [Workload identity](https://platform.claude.com/settings/workload-identity-federation) in the Console and choose **Connect workload**, then the GitHub Actions tile. It creates the issuer, a service account and a rule, and tests the exchange ([WIF](https://platform.claude.com/docs/en/manage-claude/workload-identity-federation), read 2026-11-23).
-2. Give the job `id-token: write` and pass the three IDs the wizard shows. They name identities, not secrets ([Setup](https://github.com/anthropics/claude-code-action/blob/main/docs/setup.md), read 2026-11-23).
+2. Give the job `id-token: write` and pass the three IDs the wizard shows. They name identities, not secrets ([Setup](https://github.com/anthropics/claude-code-action/blob/main/docs/setup.md), read 2026-11-23). Plan credits cannot pay for the action, which runs Claude Code: give it bought credits or `claude_code_oauth_token`.
 
    ```yaml
    permissions:
