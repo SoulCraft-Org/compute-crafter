@@ -2,12 +2,41 @@ name: pages
 
 # Compute Crafter's public pages, built by Git Crafter's actions/pages at a full commit SHA (Git Crafter
 # templates/ci/pages.yml): the Quality page (the 11 library tabs and Credits) and the Process page (the library maps and the Spend map). A pull request builds
-# both and runs the privacy gate; only a push to main publishes.
+# both and runs the privacy gate; only a push to main publishes. Both triggers list the paths the pages read (the doc
+# globs among them, for the docs.unmapped gate); workflow_dispatch builds on demand.
 # The build runs in CI mode, so it holds no reading from a maintainer's machine; tests/privacy.mjs checks.
 on:
   push:
     branches: [main]
+    paths:
+      - "collectors/**"
+      - "tools/**"
+      - "tests/**"
+      - "catalog/**"
+      - "guides/**"
+      - "ideals/**"
+      - "maps/**"
+      - "targets/**"
+      - "templates/**"
+      - "quality/**"
+      - "pack.json"
+      - "**/*.md"
+      - ".github/workflows/pages.yml"
   pull_request:
+    paths:
+      - "collectors/**"
+      - "tools/**"
+      - "tests/**"
+      - "catalog/**"
+      - "guides/**"
+      - "ideals/**"
+      - "maps/**"
+      - "targets/**"
+      - "templates/**"
+      - "quality/**"
+      - "pack.json"
+      - "**/*.md"
+      - ".github/workflows/pages.yml"
   workflow_dispatch:
 
 permissions:
@@ -20,7 +49,7 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     timeout-minutes: 15
     # The Credits collector reads catalog/plans.json from the checkout, and no provider key: CI passes none.
     # The Process page's collector reads this repo's pull requests, runs, checks and issues (Git Crafter

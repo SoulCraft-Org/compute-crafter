@@ -1,0 +1,12 @@
+[
+  {
+    "id": "code.loc_change_pct",
+    "params": {
+      "areas": ["collectors", "tools"],
+      "test_suites": [
+        { "label": "Collectors", "runner": "node", "workflow": "ci.yml", "job": "ci / standard", "cover": ["collectors"] }
+      ],
+      "check": { "workflow": "ci.yml", "job": "ci / standard" }
+    }
+  }
+]

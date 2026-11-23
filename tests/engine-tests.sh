@@ -28,4 +28,10 @@ echo "fidelity: $(node -p 'const m = require("./tests/moved.json"); `${m.files.l
 
 git -C "$eng" checkout -q --detach "$pin"
 npm ci --prefix "$eng" --ignore-scripts --no-audit --no-fund --loglevel=error
-GIT_CRAFTER="$eng" node --import ./tests/engine-lib.mjs --test collectors/*/*.test.mjs
+# The suite runs once, with coverage: the spec reporter prints every case to the job log, and the engine's code-lcov.mjs
+# prints the lcov summary there too, where the Quality page's code.test_coverage_pct reads it (quality/targets/code.json
+# params.test_suites, label Collectors).
+cov="$(mktemp -d)"
+trap 'rm -rf "$cov"' EXIT
+GIT_CRAFTER="$eng" node --import ./tests/engine-lib.mjs --test --experimental-test-coverage "--test-coverage-exclude=**/*.test.mjs" --test-reporter=spec --test-reporter-destination=stdout --test-reporter=lcov --test-reporter-destination="$cov/collectors.lcov" collectors/*/*.test.mjs
+node "$eng/quality/collectors/code/code-lcov.mjs" Collectors "$cov/collectors.lcov"
