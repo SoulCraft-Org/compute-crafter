@@ -1,5 +1,5 @@
 {
- "comment": "Compute Crafter's Process page config, and its maps file too (docs.maps names it): Git Crafter templates/process/config.json at v6.0.0. Its one map is the Spend map, maps/spend.json, with only the steps whose metric this repo's Quality page shows (quality/targets/): the other steps' metrics need local files, which CI never reads. tests/pack.test.mjs checks the two agree. Keys: Git Crafter actions/pages/action.yml; maps: pages/maps/README.md.",
+ "comment": "Compute Crafter's Process page config, and its maps file too (docs.maps names it): Git Crafter templates/process/config.json at v7.0.2. Its maps are the library maps whose steps sit on this repo's Quality tabs (delivery, triage, contribute, board, adopt, measure, code, secure, document) and the Spend map, maps/spend.json, with all 5 steps. Left out: deploy (all 4 steps score on the Pages tab, dropped: no site but this page). Dropped steps, each on a tab this repo drops: board card, start, done and watch (Projects: no Project board), triage card (projects.latest_cycle_hours) and contribute deploy (deploy.failure_rate_last10). A Spend step whose metric needs local files shows not measured in CI. tests/pack.test.mjs checks the Spend map agrees with maps/spend.json. Keys: Git Crafter actions/pages/action.yml; maps: pages/maps/README.md.",
  "repos": [
   "compute-crafter"
  ],
@@ -8,6 +8,57 @@
  },
  "repo_url": "https://github.com/SoulCraft-Org/compute-crafter/blob/main",
  "maps": [
+  {
+   "use": "delivery"
+  },
+  {
+   "use": "triage",
+   "steps": {
+    "card": {
+     "drop": true
+    }
+   }
+  },
+  {
+   "use": "contribute",
+   "steps": {
+    "deploy": {
+     "drop": true
+    }
+   }
+  },
+  {
+   "use": "board",
+   "steps": {
+    "card": {
+     "drop": true
+    },
+    "start": {
+     "drop": true
+    },
+    "done": {
+     "drop": true
+    },
+    "watch": {
+     "drop": true
+    }
+   }
+  },
+  {
+   "use": "adopt"
+  },
+  {
+   "use": "measure"
+  },
+  {
+   "use": "code"
+  },
+  {
+   "use": "secure"
+  },
+  {
+   "use": "document"
+  },
   {
    "id": "spend",
    "name": "Spend",
@@ -26,7 +77,11 @@
     }
    ],
    "critical_path": [
-    "fresh"
+    "fresh",
+    "free",
+    "read",
+    "pool",
+    "idle"
    ],
    "steps": [
     {
@@ -39,6 +94,51 @@
      "rule": "Re-read each free-tier figure on its provider's own page, and record the date.",
      "rule_ref": "https://github.com/SoulCraft-Org/compute-crafter/blob/main/CONTRIBUTING.md",
      "metric": "credits.registry_age_days"
+    },
+    {
+     "id": "free",
+     "name": "Free first",
+     "tools": [
+      "Free tiers",
+      "Subscription credits"
+     ],
+     "rule": "Claim every free allowance before anything that bills.",
+     "rule_ref": "https://github.com/SoulCraft-Org/git-crafter/blob/main/rules/compute.md",
+     "metric": "credits.unclaimed_free"
+    },
+    {
+     "id": "read",
+     "name": "Read",
+     "tools": [
+      "Usage reports",
+      "The credits registry"
+     ],
+     "rule": "Each allowance's use is read the same day.",
+     "rule_ref": "https://github.com/SoulCraft-Org/git-crafter/blob/main/rules/compute.md",
+     "metric": "credits.usage_read_share"
+    },
+    {
+     "id": "pool",
+     "name": "Stay under",
+     "tools": [
+      "GitHub Actions included minutes"
+     ],
+     "rule": "CI stays under the included minutes; no overage, no larger runners.",
+     "rule_ref": "https://github.com/SoulCraft-Org/git-crafter/blob/main/rules/compute.md",
+     "metric": "credits.actions_pool_used",
+     "gates": [
+      "Spend past the included amount waits for the owner's yes (Git Crafter rules/compute.md)"
+     ]
+    },
+    {
+     "id": "idle",
+     "name": "Drop idle",
+     "tools": [
+      "The credits registry"
+     ],
+     "rule": "Free capacity in a lane over budget never sits idle; swap in a cheaper lane.",
+     "rule_ref": "https://github.com/SoulCraft-Org/git-crafter/blob/main/rules/compute.md",
+     "metric": "credits.idle_replaceable"
     }
    ]
   }

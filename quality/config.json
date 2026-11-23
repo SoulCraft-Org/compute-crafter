@@ -1,6 +1,22 @@
 {
-  "comment": "Compute Crafter's own Quality page: the Credits tab, read from this repo's collectors and ideals, built in CI only. Its targets are quality/targets/: the pack's one metric CI reads, credits.registry_age_days, from catalog/plans.json. The pack's other five Credits metrics (idle_replaceable, unclaimed_free, highest_used_share, actions_pool_used, usage_read_share) need local files, so they stay off this public page; targets/ keeps all six for a repo that adds the pack. tests/pack.test.mjs checks the two agree. Keys: Git Crafter quality/CONFIG.md. The engine dropped its own credits tab at v6.0.0.",
-  "tabs": [["credits", "Credits"]],
+  "comment": "Compute Crafter's own Quality page: the 11 tabs Git Crafter's templates/quality/README.md keeps for a Library, and this repo's own Credits tab, read from this repo's collectors and ideals, built in CI only. Pages is dropped (the only site is this score page) and so is Projects (no Project board). Credits targets are quality/targets/credits.json: the pack's six metrics from targets/credits.json, with params.catalog_file set so credits.registry_age_days reads catalog/plans.json; the five that need local files show not measured in CI. A template goal is overridden only in quality/targets/ with a cited goal_source. tests/pack.test.mjs checks the pack and the page agree. Keys: Git Crafter quality/CONFIG.md.",
+  "tabs": [
+    "code",
+    "documentation",
+    "issues",
+    "pull-requests",
+    "discussions",
+    "actions",
+    "security",
+    "dependabot",
+    "scanning",
+    "insights",
+    "settings",
+    [
+      "credits",
+      "Credits"
+    ]
+  ],
   "targets": "quality/targets",
   "collectors": "collectors",
   "ideals": "ideals"

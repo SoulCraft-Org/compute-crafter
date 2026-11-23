@@ -8,7 +8,7 @@ import { join } from 'node:path';
 import { test } from 'node:test';
 import { fileURLToPath } from 'node:url';
 
-import { localOnlyIds, privacyProblems, textProblems } from './privacy.mjs';
+import { localOnlyIds, noSecretsByDesign, privacyProblems, termsPattern, textProblems } from './privacy.mjs';
 
 // A targets folder with one local-only metric and one read from GitHub.
 function targetsDir() {
@@ -93,10 +93,74 @@ test('privacy: the gate fails a home path planted in a file under --dist', () =>
   writeFileSync(join(root, 'latest.json'), JSON.stringify(cleanRun()));
   mkdirSync(join(root, 'dist', 'tab'), { recursive: true });
   writeFileSync(join(root, 'dist', 'index.html'), '<p>clean</p>');
-  const gate = () => spawnSync(process.execPath, [fileURLToPath(new URL('./privacy.mjs', import.meta.url)), join(root, 'latest.json'), '--dist', join(root, 'dist')], { encoding: 'utf8', env: { PATH: process.env.PATH } });
+  const gate = () => spawnSync(process.execPath, [fileURLToPath(new URL('./privacy.mjs', import.meta.url)), join(root, 'latest.json'), '--dist', join(root, 'dist')], { encoding: 'utf8', env: { PATH: process.env.PATH, PRIVACY_TERMS: 'no-such-term-here' } });
   assert.equal(gate().status, 0);
   writeFileSync(join(root, 'dist', 'tab', 'page.html'), '<p class="src">/Users/example/project</p>');
   const run = gate();
   assert.equal(run.status, 1);
   assert.match(run.stderr, /page\.html: home path \/Users\/example/);
+});
+
+// The gate as CI runs it: PRIVACY_TERMS holds the org secret PRIVATE_TERMS, one regex, and no log line quotes a match.
+function gateWith(extra) {
+  const root = mkdtempSync(join(tmpdir(), 'privacy-terms-'));
+  writeFileSync(join(root, 'latest.json'), JSON.stringify(cleanRun()));
+  mkdirSync(join(root, 'dist'), { recursive: true });
+  writeFileSync(join(root, 'dist', 'index.html'), '<p>Credits for exampleterm and another</p>');
+  const args = [fileURLToPath(new URL('./privacy.mjs', import.meta.url)), join(root, 'latest.json'), '--dist', join(root, 'dist')];
+  return spawnSync(process.execPath, args, { encoding: 'utf8', env: { PATH: process.env.PATH, ...extra } });
+}
+
+test('privacy: PRIVACY_TERMS reads the PRIVATE_TERMS regex, case-insensitive, with or without a leading (?i)', () => {
+  assert.equal(termsPattern(''), null);
+  assert.equal(termsPattern(undefined), null);
+  for (const value of ['exampleterm', '(?i)EXAMPLETERM', 'other|ExampleTerm']) assert.deepEqual(textProblems('an exampleterm here', [], termsPattern(value)), ['private term'], value);
+  assert.deepEqual(textProblems('nothing here', [], termsPattern('exampleterm')), []);
+  assert.deepEqual(privacyProblems(cleanRun(), { localIds, terms: termsPattern('fixture') }), ['private term']);
+});
+
+test('privacy: the gate fails a private term in a --dist file and prints the file, never the match', () => {
+  const run = gateWith({ PRIVACY_TERMS: 'exampleterm|nomatch' });
+  assert.equal(run.status, 1);
+  assert.match(run.stderr, /index\.html: private term/);
+  assert.ok(!/exampleterm/.test(run.stderr + run.stdout), 'the log holds no match');
+});
+
+// An event file as GitHub writes it, with the head repo of the pull request.
+function eventFile(head) {
+  const file = join(mkdtempSync(join(tmpdir(), 'privacy-event-')), 'event.json');
+  writeFileSync(file, JSON.stringify({ pull_request: { head: { repo: { full_name: head } } } }));
+  return file;
+}
+
+test('privacy: no secret is expected only on a pull_request from a fork or Dependabot', () => {
+  const own = { GITHUB_REPOSITORY: 'owner/repo' };
+  assert.equal(noSecretsByDesign({ ...own, GITHUB_EVENT_NAME: 'pull_request', GITHUB_EVENT_PATH: eventFile('someone/repo') }), true, 'a fork');
+  assert.equal(noSecretsByDesign({ ...own, GITHUB_EVENT_NAME: 'pull_request', GITHUB_ACTOR: 'dependabot[bot]' }), true, 'Dependabot');
+  assert.equal(noSecretsByDesign({ ...own, GITHUB_EVENT_NAME: 'pull_request', GITHUB_EVENT_PATH: eventFile('owner/repo') }), false, 'a branch of this repo');
+  assert.equal(noSecretsByDesign({ ...own, GITHUB_EVENT_NAME: 'pull_request' }), false, 'no event file');
+  assert.equal(noSecretsByDesign({ ...own, GITHUB_EVENT_NAME: 'push', GITHUB_ACTOR: 'dependabot[bot]' }), false, 'a push');
+  assert.equal(noSecretsByDesign({}), false, 'a local run');
+});
+
+test('privacy: with PRIVACY_TERMS unset the gate skips, with a notice, only on a fork or Dependabot pull request', () => {
+  const fork = gateWith({ GITHUB_EVENT_NAME: 'pull_request', GITHUB_REPOSITORY: 'owner/repo', GITHUB_EVENT_PATH: eventFile('someone/repo') });
+  assert.equal(fork.status, 0);
+  assert.match(fork.stdout, /PRIVACY_TERMS is not available to this pull request/);
+  assert.equal(gateWith({ GITHUB_EVENT_NAME: 'pull_request', GITHUB_ACTOR: 'dependabot[bot]' }).status, 0);
+});
+
+test('privacy: with PRIVACY_TERMS unset the gate exits 2 on a push, on a pull request of this repo and on a local run', () => {
+  for (const extra of [{ GITHUB_EVENT_NAME: 'push', GITHUB_REPOSITORY: 'owner/repo' }, { GITHUB_EVENT_NAME: 'pull_request', GITHUB_REPOSITORY: 'owner/repo', GITHUB_EVENT_PATH: eventFile('owner/repo') }, {}]) {
+    const run = gateWith(extra);
+    assert.equal(run.status, 2, JSON.stringify(extra));
+    assert.match(run.stderr, /PRIVACY_TERMS is empty/);
+  }
+});
+
+test('privacy: an invalid PRIVACY_TERMS is a usage error that quotes none of it', () => {
+  const run = gateWith({ PRIVACY_TERMS: 'secretname(' });
+  assert.equal(run.status, 2);
+  assert.match(run.stderr, /PRIVACY_TERMS is not a valid regex/);
+  assert.ok(!/secretname/.test(run.stderr + run.stdout));
 });

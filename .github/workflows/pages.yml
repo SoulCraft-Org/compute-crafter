@@ -1,13 +1,29 @@
 name: pages
 
 # Compute Crafter's public pages, built by Git Crafter's actions/pages at a full commit SHA (Git Crafter
-# templates/ci/pages.yml): the Quality page (the Credits tab) and the Process page (the Spend map). A pull request builds
-# both and runs the privacy gate; only a push to main publishes.
+# templates/ci/pages.yml): the Quality page (the 11 library tabs and Credits) and the Process page (the library maps and the Spend map). A pull request builds
+# both and runs the privacy gate; only a push to main publishes. A pull request lists the paths the pages read (the doc
+# globs among them, for the docs.unmapped gate); every push to main builds, as the pages read live pull requests, issues,
+# runs and alerts.
 # The build runs in CI mode, so it holds no reading from a maintainer's machine; tests/privacy.mjs checks.
 on:
   push:
     branches: [main]
   pull_request:
+    paths:
+      - "collectors/**"
+      - "tools/**"
+      - "tests/**"
+      - "catalog/**"
+      - "guides/**"
+      - "ideals/**"
+      - "maps/**"
+      - "targets/**"
+      - "templates/**"
+      - "quality/**"
+      - "pack.json"
+      - "**/*.md"
+      - ".github/workflows/pages.yml"
   workflow_dispatch:
 
 permissions:
@@ -20,7 +36,7 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     timeout-minutes: 15
     # The Credits collector reads catalog/plans.json from the checkout, and no provider key: CI passes none.
     # The Process page's collector reads this repo's pull requests, runs, checks and issues (Git Crafter
@@ -31,6 +47,8 @@ jobs:
       checks: read
       issues: read
       pull-requests: read
+      # Dependabot's open alerts, read live on every run; without it they come from the last local snapshot.
+      vulnerability-alerts: read
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -41,16 +59,30 @@ jobs:
         with:
           node-version: 26
 
-      - uses: SoulCraft-Org/git-crafter/actions/pages@dd999dcac64873f77165609f3cc9fde4da49d332 # v6.0.0
+      - uses: SoulCraft-Org/git-crafter/actions/pages@8023bd4683416f6d420bd20d137960b09c06b91e # v7.0.2
         with:
           pages: process quality
           config: quality/process/config.json
           quality-config: quality/config.json
 
-      # The run the page is drawn from: CI mode, no local-only value, no home path or email. CI sets no account names.
+      # The run the page is drawn from: CI mode, no local-only value, no home path or email, no private term.
       # Every file the deploy uploads, quality/dist, gets the same home path and email checks.
+      # PRIVACY_TERMS is the org secret PRIVATE_TERMS, one regex (tests/privacy.mjs). A fork's or Dependabot's pull
+      # request gets no secret, so the term check notes the skip there; a log line never quotes a match.
       - name: Privacy gate
+        env:
+          PRIVACY_TERMS: ${{ secrets.PRIVATE_TERMS }}
         run: node tests/privacy.mjs quality/data/latest.json targets --dist quality/dist
+
+      # A pull request keeps the page it built for a week, so its score can be read before the merge.
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: github.event_name == 'pull_request'
+        with:
+          name: pages-preview
+          path: |
+            quality/dist
+            quality/data/latest.json
+          retention-days: 7
 
       - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'

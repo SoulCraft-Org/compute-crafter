@@ -2,7 +2,8 @@ name: ci
 
 # The Git Crafter CI standard (SoulCraft-Org/git-crafter templates/ci/README.md): this repo calls Git Crafter's
 # reusable workflow, which runs each job on GitHub's standard hosted runners. Dependabot's github-actions entry bumps
-# the pin, together with the engine pin in pages.yml.
+# the pin, together with the engine pin in pages.yml. paths names what a change must touch to run the jobs; a change to
+# any other file (a licence, a CODEOWNERS line) skips them, and ci-ok still reports.
 on:
   pull_request:
   push:
@@ -18,9 +19,24 @@ concurrency:
 
 jobs:
   ci:
-    uses: SoulCraft-Org/git-crafter/.github/workflows/ci-standard.yml@dd999dcac64873f77165609f3cc9fde4da49d332 # v6.0.0
+    uses: SoulCraft-Org/git-crafter/.github/workflows/ci-standard.yml@8023bd4683416f6d420bd20d137960b09c06b91e # v7.0.2
     with:
-      paths: ""
+      paths: |
+        collectors/**
+        tools/**
+        tests/**
+        catalog/**
+        guides/**
+        ideals/**
+        maps/**
+        targets/**
+        templates/**
+        quality/**
+        pack.json
+        **/*.md
+        .github/workflows/ci.yml
+        .github/workflows/pages.yml
+        .github/dependabot.yml
       node-version: "26"
       short: |
         python3 -I tools/catalog.py --self-test
