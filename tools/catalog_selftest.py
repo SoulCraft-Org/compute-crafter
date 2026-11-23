@@ -110,6 +110,7 @@ v = lambda **kw: (lambda d: d["rows"][0].update(kw))
 ids = lambda doc: [r["id"] for r in doc["rows"]]
 names = lambda doc: [r["name"] for r in doc["rows"]]
 row = lambda doc, rid: next(r for r in doc["rows"] if r["id"] == rid)
+reported = lambda word, *dirs_rows: any(word in f for f in merge_findings(*dirs_rows) or [])
 
 # Mutations of the clean catalog, each of which must produce a finding.
 FAILING = [
@@ -179,3 +180,47 @@ def check_cases():
         ("a catalog file holding Infinity is not JSON",
          any("not JSON" in f for f in check_file(render(CLEAN).replace('"price_month": 0,', '"price_month": Infinity,', 1).encode()))),
     ] + [(name, bool(checked(CLEAN, mutate))) for name, mutate in FAILING]
+
+
+def source_cases():
+    """Samples for source rows that are wrong: a finding, not a crash (issues 20 and 23)."""
+    return [
+        ("a source row with an unknown lane is reported, not a crash", reported("lanes", [dict(NEW, lane="storage")])),
+        ("a source row with no lane is reported, not a crash", reported("lanes", [{k: x for k, x in NEW.items() if k != "lane"}])),
+        ("an unknown lane beside a known one keeps the known lane first",
+         build([NEW], [dict(OLD, lane="storage")])["rows"][0]["lanes"] == ["gpu", "storage"]),
+        ("a source row with no checked date is reported, not a crash", reported("checked", [NEW, dict(OTHER, id="beta-free", checked=None)])),
+        ("a source row with no checked key is reported, not a crash",
+         reported("checked", [NEW, {k: x for k, x in OTHER.items() if k != "checked"}])),
+        ("a row with a null checked never beats a dated row", names(build([NEW], [dict(OLD, checked=None)])) == ["Acme Free"]),
+        ("the top-level checked is the newest valid date when another row has none",
+         build([NEW, dict(OTHER, checked=None)])["checked"] == "2026-11-02"),
+    ]
+
+
+def file_cases():
+    """Samples for the catalog file: not UTF-8 or not JSON is infrastructure (exit 2), never a traceback (issues 21 and 25)."""
+    return [
+        ("a catalog with a byte that is not UTF-8 cannot be checked (exit 2)",
+         check_file(render(CLEAN).encode().replace(b"Acme", b"Acm\xe9", 1)) == "cannot check"),
+        ("a catalog that is a UTF-8 file still checks", check_file(render(CLEAN).encode()) == []),
+        ("--format on a missing catalog cannot check (exit 2)", format_file(None) == ("cannot check", None)),
+        ("--format on a catalog that is not JSON cannot check (exit 2)", format_file(b"{not json") == ("cannot check", b"{not json")),
+        ("--format on a catalog that is not UTF-8 cannot check (exit 2)", format_file(b"\xe9") == ("cannot check", b"\xe9")),
+        ("--format on a catalog with no rows list leaves it for --check", format_file(NO_ROWS) == ("ok", NO_ROWS) and bool(check_file(NO_ROWS))),
+        ("--format on a catalog whose rows are not objects leaves it for --check",
+         format_file(b'{"version": 1, "rows": [5]}\n') == ("ok", b'{"version": 1, "rows": [5]}\n')),
+        ("--format sorts a catalog's rows and writes it canonically", format_file(SHUFFLED) == ("ok", render(CLEAN).encode())),
+        # infrastructure: a missing catalog must say "could not check", never look like a finding
+        ("a missing catalog is infrastructure (exit 2)", check_file(None) == "cannot check"),
+    ]
+
+
+def run():
+    """Print one line for each sample. Return 0 when every sample behaves, 1 when one does not."""
+    cases = merge_cases() + check_cases() + source_cases() + file_cases()
+    for name, good in cases:
+        print(f"self-test: {'ok   ' if good else 'WRONG'} {name}")
+    bad = not all(good for _, good in cases)
+    print("self-test FAILED" if bad else "self-test passed")
+    return int(bad)
