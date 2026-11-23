@@ -8,7 +8,7 @@ workflows:
     '.github/workflows/ci.yml': []
     '.github/workflows/claude-review.yml':
         - 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1'
-        - 'anthropics/claude-code-action@aa8a7738e48bf30a40ee499ce818bef081c5ab5e'
+        - 'anthropics/claude-code-action@9eb012b6d0900c2b9eede65ee1758cec4d2973e9'
     '.github/workflows/gemini-review.yml': []
     '.github/workflows/pages.yml':
         - 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1'
@@ -57,9 +57,9 @@ dependencies:
         repo_id: 496012378
         uses:
             - 'actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f'
-    'anthropics/claude-code-action@aa8a7738e48bf30a40ee499ce818bef081c5ab5e':
-        ref: 'v1.0.257'
-        commit: 'sha1-aa8a7738e48bf30a40ee499ce818bef081c5ab5e'
+    'anthropics/claude-code-action@9eb012b6d0900c2b9eede65ee1758cec4d2973e9':
+        ref: 'v1.0.270'
+        commit: 'sha1-9eb012b6d0900c2b9eede65ee1758cec4d2973e9'
         owner_id: 76263028
         repo_id: 986421638
         uses:
