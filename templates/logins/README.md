@@ -7,7 +7,7 @@ Your own logins sheet and board, built from [catalog/logins.json](../../catalog/
 | 1 | Make a private repository and copy this folder into it, with its `.gitignore` |
 | 2 | Copy `catalog/logins.json` from a Compute Crafter commit, and write that commit down |
 | 3 | Copy `sites.example.json` to `sites.json`: one row per account, with the catalog id as `vendor` |
-| 4 | Put the lines `<!-- sheet:start -->` and `<!-- sheet:end -->` in your README, then run the sheet |
+| 4 | Put one `<!-- sheet:start -->` line in your README, and one `<!-- sheet:end -->` line after it. Then run the sheet. With the markers missing, repeated or out of order, `--write` leaves the file as it was and exits 2 |
 | 5 | Keep `status.json` on your machine, build `board.json`, open `board.html` in a browser and pick `board.json` |
 
 ```bash

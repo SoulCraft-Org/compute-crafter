@@ -26,7 +26,7 @@ Counts are by each row's first lane, from `plans.json` as built on 2026-11-23. R
 | Field | Holds |
 | --- | --- |
 | `id` | Lowercase, unique |
-| `name`, `provider`, `provider_hq` | The plan, its vendor, and the vendor's home country |
+| `name`, `provider`, `provider_hq` | The plan, its vendor, and the vendor's home country. `provider_hq` is an ISO 3166-1 alpha-2 code, or `null` |
 | `lanes` | One or more of `ci`, `cpu`, `gpu`, `inference`, `hosting`, `tools` |
 | `price_month`, `currency` | The monthly price in the currency the page states (ISO 4217), or `null` |
 | `price_note`, `includes`, `resets`, `limits` | What the page says the plan gives, and when it resets |
@@ -35,7 +35,7 @@ Counts are by each row's first lane, from `plans.json` as built on 2026-11-23. R
 | `overage` | `stops`, `bills` or `unknown`: what happens at the limit |
 | `trains_on_data`, `commercial_use` | What the terms say, or `null` when not read |
 | `source`, `sources_extra` | The first-party `https://` pages read |
-| `checked` | The date the row was read, `YYYY-MM-DD` |
+| `checked` | The date the row was read, `YYYY-MM-DD`. It is a real calendar date, no later than tomorrow (UTC) |
 | `verified` | `true`: every figure was read on `source` on `checked`. `false`: from older research, not re-read since. A `(3p)` mark in a `false` row means a third-party page |
 
 `tools/catalog.py` keeps only these fields, in this order. A column a source adds never reaches this file.

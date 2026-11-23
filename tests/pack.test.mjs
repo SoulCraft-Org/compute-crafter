@@ -1,7 +1,9 @@
 // The pack loads from its own checkout, with no engine beside it: no file reaches past the pack
 // root or to a file it lacks, and every collector file imports. Engine names arrive as lib (collectors/lib/engine.mjs).
 import assert from 'node:assert/strict';
-import { existsSync, readdirSync, readFileSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
+import { cpSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import { dirname, join, relative, resolve } from 'node:path';
 import { test } from 'node:test';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -45,4 +47,57 @@ test('pack: every collector file imports with no engine beside it', async () => 
     const mod = await import(pathToFileURL(join(ROOT, f)).href);
     assert.ok(!('collect' in mod) || typeof mod.collect === 'function', f);
   }
+});
+
+// tests/engine-tests.sh fidelity, against a local stand-in for Git Crafter at a stand-in source_commit: a moved file
+// that is gone fails, even when it is in edited. The script runs only up to fidelity's verdict here.
+function fidelity(drop) {
+  const tmp = mkdtempSync(join(tmpdir(), 'fidelity-'));
+  try {
+    const moved = JSON.parse(readFileSync(join(ROOT, 'tests', 'moved.json'), 'utf8'));
+    const eng = join(tmp, 'engine');
+    const git = (cwd, ...args) => spawnSync('git', ['-c', 'user.name=fidelity', '-c', 'user.email=', '-c', 'commit.gpgsign=false', ...args], { cwd, encoding: 'utf8' });
+    mkdirSync(eng);
+    git(eng, 'init', '-q');
+    for (const [from, to] of moved.files) {
+      mkdirSync(dirname(join(eng, from)), { recursive: true });
+      const text = readFileSync(join(ROOT, to), 'utf8');
+      writeFileSync(join(eng, from), moved.edited.includes(to) ? `${text}\n// engine copy\n` : text);
+    }
+    git(eng, 'add', '-A');
+    git(eng, 'commit', '-q', '-m', 'stand-in');
+    const sha = git(eng, 'rev-parse', 'HEAD').stdout.trim();
+    const pack = join(tmp, 'pack');
+    for (const [, to] of moved.files) if (to !== drop) cpSync(join(ROOT, to), join(pack, to));
+    // The script up to and including fidelity's verdict line: the engine install and the pack tests after it need npm.
+    const script = readFileSync(join(ROOT, 'tests', 'engine-tests.sh'), 'utf8');
+    const verdict = script.indexOf('echo "fidelity:');
+    mkdirSync(join(pack, 'tests'), { recursive: true });
+    writeFileSync(join(pack, 'tests', 'fidelity.sh'), script.slice(0, script.indexOf('\n', verdict) + 1));
+    writeFileSync(join(pack, 'tests', 'moved.json'), JSON.stringify({ ...moved, source_commit: sha }));
+    for (const f of ['ci.yml', 'pages.yml']) {
+      const yml = readFileSync(join(ROOT, '.github', 'workflows', f), 'utf8').replace(/(git-crafter\/[^@\s]+@)[0-9a-f]{40}/g, `$1${sha}`);
+      mkdirSync(join(pack, '.github', 'workflows'), { recursive: true });
+      writeFileSync(join(pack, '.github', 'workflows', f), yml);
+    }
+    mkdirSync(join(tmp, 'runner'));
+    const env = { ...process.env, RUNNER_TEMP: join(tmp, 'runner'), GIT_CONFIG_COUNT: '1',
+      GIT_CONFIG_KEY_0: `url.file://${eng}.insteadOf`, GIT_CONFIG_VALUE_0: 'https://github.com/SoulCraft-Org/git-crafter' };
+    return spawnSync('bash', ['tests/fidelity.sh'], { cwd: pack, env, encoding: 'utf8' });
+  } finally {
+    rmSync(tmp, { recursive: true, force: true });
+  }
+}
+
+test('fidelity: every moved file present passes', () => {
+  const out = fidelity(null);
+  assert.equal(out.status, 0, out.stdout + out.stderr);
+  assert.match(out.stdout, /^fidelity: 3 files match [0-9a-f]{40}, 5 edited$/m);
+});
+
+test('fidelity: an edited moved file that is gone fails', () => {
+  const out = fidelity('collectors/credits/redact.test.mjs');
+  assert.equal(out.status, 1, out.stdout + out.stderr);
+  assert.match(out.stdout, /::error::collectors\/credits\/redact\.test\.mjs is listed in tests\/moved\.json but missing/);
+  assert.doesNotMatch(out.stdout, /^fidelity:/m);
 });

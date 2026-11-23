@@ -31,6 +31,7 @@ A connector can't reach `127.0.0.1`, so a loopback app needs a desktop extension
 | Bridge behavior | Detail |
 | --- | --- |
 | Loopback only | It forwards only to `127.0.0.1`, `localhost` or `[::1]`. Any other host, or a missing `MCP_URL`, exits with code 2 |
+| No redirects | It never follows a redirect. A `3xx` reply fails the request, as a closed app does |
 | App closed | It still starts. `tools/list` returns no tools, and a tool call returns "`<App name>` is not running at `<url>`. Open it, then try again." |
 | App opens later | It retries every 5 seconds (source: the template's code), then sends `notifications/tools/list_changed` so the tools appear |
 | App restarts | A `404` on the old session opens a new one and retries the request once |

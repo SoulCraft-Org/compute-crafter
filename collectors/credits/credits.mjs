@@ -405,6 +405,6 @@ function readSources(p, home, kit) {
   const registry = {};
   if (p.systems_file) systems = readJson(resolveFrom(p.systems_file, home, kit));
   if (p.usage_file) org = readJson(resolveFrom(p.usage_file, home, kit));
-  for (const f of p.registry_files ?? []) registry[f] = readJson(path.join(expand(p.registry, home), f));
+  for (const f of p.registry_files ?? []) registry[f] = readJson(path.join(resolveFrom(p.registry, home, kit), f));
   return { systems, org, registry };
 }

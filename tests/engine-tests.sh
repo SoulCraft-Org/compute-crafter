@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # The moved pack against Git Crafter, in CI (ci.yml standard job). No engine code is committed here.
-#   1 Fidelity: each file in tests/moved.json matches its Git Crafter path at source_commit, byte for byte,
+#   1 Fidelity: each file in tests/moved.json exists here, and matches its Git Crafter path at source_commit, byte for byte,
 #     unless it is in edited; an edited file still has its source there, and differs from it.
 #   2 Tests: the engine at the ci.yml pin is fetched beside this checkout, and the pack's *.test.mjs files run
 #     here, given the engine's lib (tests/engine-lib.mjs, GIT_CRAFTER), as collect.mjs gives each collector.
@@ -17,7 +17,8 @@ if [ "$pin" != "$src" ]; then git -C "$eng" fetch -q --depth 1 https://github.co
 
 bad=0
 while IFS=$'\t' read -r from to edited; do
-  if ! git -C "$eng" cat-file -e "$src:$from" 2>/dev/null; then echo "::error::$to: Git Crafter $from is not at $src"; bad=1
+  if [ ! -f "$to" ]; then echo "::error::$to is listed in tests/moved.json but missing"; bad=1
+  elif ! git -C "$eng" cat-file -e "$src:$from" 2>/dev/null; then echo "::error::$to: Git Crafter $from is not at $src"; bad=1
   elif [ "$edited" = 1 ] && git -C "$eng" show "$src:$from" | cmp -s - "$to"; then echo "::error::$to is in edited but matches $from at $src"; bad=1
   elif [ "$edited" = 0 ] && ! git -C "$eng" show "$src:$from" | cmp -s - "$to"; then echo "::error::$to differs from Git Crafter $from at $src; list it in edited"; bad=1; fi
 done < <(node -e 'const m = require("./tests/moved.json"); for (const [a, b] of m.files) console.log(`${a}\t${b}\t${m.edited.includes(b) ? 1 : 0}`)')
