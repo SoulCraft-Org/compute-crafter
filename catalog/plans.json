@@ -2548,6 +2548,33 @@
    "verified": true
   },
   {
+   "id": "ollama-payg",
+   "name": "Ollama Pay as you go",
+   "provider": "Ollama",
+   "provider_hq": "US",
+   "lanes": [
+    "inference"
+   ],
+   "price_month": 0,
+   "currency": "USD",
+   "price_note": "$0 a month and no subscription. Every cloud model is paid per token from usage credits you buy.",
+   "includes": "Unlimited models on your own hardware, 3 concurrent cloud requests and no service fees. No cloud usage is included: each cloud request is paid with usage credits.",
+   "resets": "none",
+   "unit_cost_vs_payg": "This plan is the pay-as-you-go rate.",
+   "card": null,
+   "overage": "stops",
+   "trains_on_data": false,
+   "commercial_use": null,
+   "limits": "One account per person. Requests past 3 concurrent queue, and a full queue rejects them. Cloud requests draw only on purchased usage credits, so buying none keeps a hard stop. Prompt and response data is never logged or trained on.",
+   "source": "https://ollama.com/pricing",
+   "sources_extra": [
+    "https://docs.ollama.com/cloud/faq",
+    "https://docs.ollama.com/cloud/models"
+   ],
+   "checked": "2026-11-20",
+   "verified": true
+  },
+  {
    "id": "ollama-pro",
    "name": "Ollama Pro",
    "provider": "Ollama",

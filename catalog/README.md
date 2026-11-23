@@ -11,15 +11,15 @@ flowchart LR
 
 | Lane | Rows | Verified | Price 0 |
 | --- | --- | --- | --- |
-| ci | 3 | 3 | 2 |
-| cpu | 29 | 6 | 7 |
-| gpu | 35 | 16 | 6 |
-| inference | 30 | 19 | 9 |
-| hosting | 7 | 7 | 7 |
-| tools | 24 | 4 | 4 |
-| **All** | **128** | **55** | **35** |
+| ci | 11 | 11 | 7 |
+| cpu | 31 | 27 | 9 |
+| gpu | 35 | 35 | 6 |
+| inference | 32 | 31 | 11 |
+| hosting | 16 | 16 | 10 |
+| tools | 27 | 23 | 6 |
+| **All** | **152** | **143** | **49** |
 
-Counts are by each row's first lane, from `plans.json` as built on 2026-11-12. Rows were read between 2026-10-25 and 2026-11-13.
+Counts are by each row's first lane, from `plans.json` as built on 2026-11-23. Rows were read between 2026-10-25 and 2026-11-23.
 
 ## Fields
 
