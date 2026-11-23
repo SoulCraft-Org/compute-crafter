@@ -165,6 +165,36 @@
       "verified": true
     },
     {
+      "id": "baseten",
+      "name": "Baseten",
+      "provider": "Baseten",
+      "family": null,
+      "lanes": [
+        "inference",
+        "gpu"
+      ],
+      "signin": [
+        "google",
+        "github",
+        "sso",
+        "other"
+      ],
+      "passkey": null,
+      "twofa": null,
+      "own_2fa": null,
+      "recovery_codes": null,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": "Once SSO is on, it is required for every sign-in to the organization, and addresses outside its domains cannot sign in.",
+      "source": "https://app.baseten.co/login",
+      "sources_extra": [
+        "https://docs.baseten.co/organization/sso"
+      ],
+      "checked": "2026-11-23",
+      "verified": true
+    },
+    {
       "id": "blacksmith",
       "name": "Blacksmith",
       "provider": "Blacksmith",
@@ -194,6 +224,36 @@
       "verified": true
     },
     {
+      "id": "buildkite",
+      "name": "Buildkite",
+      "provider": "Buildkite",
+      "family": null,
+      "lanes": [
+        "ci"
+      ],
+      "signin": [
+        "email-password",
+        "github",
+        "sso"
+      ],
+      "passkey": null,
+      "twofa": [
+        "totp"
+      ],
+      "own_2fa": null,
+      "recovery_codes": true,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": null,
+      "source": "https://buildkite.com/login",
+      "sources_extra": [
+        "https://buildkite.com/changelog/31-two-factor-authentication"
+      ],
+      "checked": "2026-11-23",
+      "verified": true
+    },
+    {
       "id": "cerebras",
       "name": "Cerebras Cloud",
       "provider": "Cerebras Systems",
@@ -217,6 +277,65 @@
       "sources_extra": [
         "https://inference-docs.cerebras.ai/quickstart",
         "https://inference-docs.cerebras.ai/console/account-billing"
+      ],
+      "checked": "2026-11-23",
+      "verified": true
+    },
+    {
+      "id": "cerebrium",
+      "name": "Cerebrium",
+      "provider": "Cerebrium",
+      "family": null,
+      "lanes": [
+        "inference",
+        "gpu"
+      ],
+      "signin": [
+        "email-password",
+        "github",
+        "google"
+      ],
+      "passkey": null,
+      "twofa": null,
+      "own_2fa": null,
+      "recovery_codes": null,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": null,
+      "source": "https://dashboard.cerebrium.ai/login",
+      "sources_extra": [
+        "https://cerebrium.ai/docs/security"
+      ],
+      "checked": "2026-11-23",
+      "verified": true
+    },
+    {
+      "id": "circleci",
+      "name": "CircleCI",
+      "provider": "CircleCI",
+      "family": null,
+      "lanes": [
+        "ci"
+      ],
+      "signin": [
+        "email-password",
+        "github",
+        "other"
+      ],
+      "passkey": null,
+      "twofa": [
+        "totp"
+      ],
+      "own_2fa": false,
+      "recovery_codes": true,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": "MFA is required for email and password sign-ins; GitHub and Bitbucket sign-ins use that provider's MFA instead.",
+      "source": "https://app.circleci.com/vcs-authorize",
+      "sources_extra": [
+        "https://circleci.com/docs/guides/permissions-authentication/mfa/"
       ],
       "checked": "2026-11-23",
       "verified": true
@@ -317,6 +436,32 @@
       "verified": true
     },
     {
+      "id": "cohere",
+      "name": "Cohere",
+      "provider": "Cohere",
+      "family": null,
+      "lanes": [
+        "inference"
+      ],
+      "signin": [
+        "email-password",
+        "google",
+        "github"
+      ],
+      "passkey": null,
+      "twofa": null,
+      "own_2fa": null,
+      "recovery_codes": null,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": null,
+      "source": "https://dashboard.cohere.com/welcome/login",
+      "sources_extra": [],
+      "checked": "2026-11-23",
+      "verified": true
+    },
+    {
       "id": "colab",
       "name": "Google Colab",
       "provider": "Google",
@@ -375,6 +520,70 @@
       "source": "https://docs.comfy.org/account/login",
       "sources_extra": [
         "https://docs.comfy.org/account/create-account"
+      ],
+      "checked": "2026-11-23",
+      "verified": true
+    },
+    {
+      "id": "comfy-registry",
+      "name": "ComfyUI Registry",
+      "provider": "Comfy Org",
+      "family": null,
+      "lanes": [
+        "tools"
+      ],
+      "signin": [
+        "email-password",
+        "google",
+        "github"
+      ],
+      "passkey": null,
+      "twofa": null,
+      "own_2fa": null,
+      "recovery_codes": null,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": null,
+      "source": "https://registry.comfy.org/auth/login",
+      "sources_extra": [
+        "https://docs.comfy.org/account/login"
+      ],
+      "checked": "2026-11-23",
+      "verified": true
+    },
+    {
+      "id": "crusoe",
+      "name": "Crusoe Cloud",
+      "provider": "Crusoe Technologies LLC",
+      "family": null,
+      "lanes": [
+        "gpu",
+        "cpu",
+        "inference"
+      ],
+      "signin": [
+        "email-password",
+        "google",
+        "github",
+        "sso"
+      ],
+      "passkey": "2fa",
+      "twofa": [
+        "passkey",
+        "security-key",
+        "totp"
+      ],
+      "own_2fa": null,
+      "recovery_codes": true,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": "Recovery codes work only as a supplement to a first MFA method.",
+      "source": "https://console.crusoecloud.com/",
+      "sources_extra": [
+        "https://docs.crusoe.ai/identity-and-security/mfa",
+        "https://docs.crusoe.ai/identity-and-security/sso"
       ],
       "checked": "2026-11-23",
       "verified": true
@@ -707,6 +916,33 @@
       "verified": false
     },
     {
+      "id": "hetzner",
+      "name": "Hetzner",
+      "provider": "Hetzner",
+      "family": null,
+      "lanes": [
+        "cpu",
+        "hosting"
+      ],
+      "signin": [
+        "email-password"
+      ],
+      "passkey": null,
+      "twofa": null,
+      "own_2fa": true,
+      "recovery_codes": true,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": "A lost 2FA recovery key is replaced only after Hetzner reviews and verifies your request by hand.",
+      "source": "https://docs.hetzner.com/general/security-and-identify/two-factor-authentication/",
+      "sources_extra": [
+        "https://docs.hetzner.com/general/billing-and-account-management/account-getting-started/"
+      ],
+      "checked": "2026-11-23",
+      "verified": true
+    },
+    {
       "id": "hugging-face",
       "name": "Hugging Face",
       "provider": "Hugging Face, Inc.",
@@ -738,6 +974,33 @@
         "https://huggingface.co/login",
         "https://huggingface.co/docs/hub/security-passkeys",
         "https://huggingface.co/docs/hub/security-sso"
+      ],
+      "checked": "2026-11-23",
+      "verified": true
+    },
+    {
+      "id": "intel-cloud",
+      "name": "Intel Tiber AI Cloud",
+      "provider": "Intel",
+      "family": null,
+      "lanes": [
+        "gpu",
+        "cpu"
+      ],
+      "signin": [
+        "email-password"
+      ],
+      "passkey": null,
+      "twofa": null,
+      "own_2fa": null,
+      "recovery_codes": null,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": "A new phone or device means you must reset Intel's multi-factor authentication.",
+      "source": "https://cloud.intel.com/docs/how_to_register.html",
+      "sources_extra": [
+        "https://www.intel.com/content/www/us/en/support/topics/azure-sign-in-faq.html"
       ],
       "checked": "2026-11-23",
       "verified": true
@@ -855,6 +1118,39 @@
       "source": "https://kiro.dev/docs/getting-started/authentication/",
       "sources_extra": [
         "https://kiro.dev/llms.txt"
+      ],
+      "checked": "2026-11-23",
+      "verified": true
+    },
+    {
+      "id": "koyeb",
+      "name": "Koyeb",
+      "provider": "Koyeb",
+      "family": null,
+      "lanes": [
+        "hosting",
+        "cpu",
+        "gpu"
+      ],
+      "signin": [
+        "email-password",
+        "passkey",
+        "google",
+        "github"
+      ],
+      "passkey": "signin",
+      "twofa": [
+        "totp"
+      ],
+      "own_2fa": null,
+      "recovery_codes": null,
+      "link": "settings",
+      "email_change": false,
+      "security_url": null,
+      "trap": "The account email cannot be changed, so sign up with the address you plan to keep.",
+      "source": "https://www.koyeb.com/docs/reference/accounts",
+      "sources_extra": [
+        "https://app.koyeb.com/auth/signin"
       ],
       "checked": "2026-11-23",
       "verified": true
@@ -1002,6 +1298,63 @@
       "verified": true
     },
     {
+      "id": "minimax",
+      "name": "MiniMax API Platform",
+      "provider": "MiniMax",
+      "family": null,
+      "lanes": [
+        "inference"
+      ],
+      "signin": [
+        "google",
+        "github",
+        "other"
+      ],
+      "passkey": null,
+      "twofa": null,
+      "own_2fa": null,
+      "recovery_codes": null,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": null,
+      "source": "https://platform.minimax.io/login",
+      "sources_extra": [],
+      "checked": "2026-11-23",
+      "verified": true
+    },
+    {
+      "id": "mistral",
+      "name": "Mistral AI",
+      "provider": "Mistral AI",
+      "family": null,
+      "lanes": [
+        "inference"
+      ],
+      "signin": [
+        "apple",
+        "google",
+        "microsoft",
+        "email-password"
+      ],
+      "passkey": null,
+      "twofa": [
+        "totp"
+      ],
+      "own_2fa": null,
+      "recovery_codes": true,
+      "link": null,
+      "email_change": true,
+      "security_url": null,
+      "trap": null,
+      "source": "https://console.mistral.ai/",
+      "sources_extra": [
+        "https://help.mistral.ai/en/articles/448331-how-do-i-update-my-account-information-email-password-and-2fa"
+      ],
+      "checked": "2026-11-23",
+      "verified": true
+    },
+    {
       "id": "modal",
       "name": "Modal",
       "provider": "Modal Labs",
@@ -1124,6 +1477,33 @@
       "verified": false
     },
     {
+      "id": "openhands",
+      "name": "OpenHands Cloud",
+      "provider": "OpenHands",
+      "family": null,
+      "lanes": [
+        "tools"
+      ],
+      "signin": [
+        "github",
+        "other"
+      ],
+      "passkey": null,
+      "twofa": null,
+      "own_2fa": null,
+      "recovery_codes": null,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": null,
+      "source": "https://app.all-hands.dev/login",
+      "sources_extra": [
+        "https://docs.openhands.dev/openhands/usage/cloud/openhands-cloud"
+      ],
+      "checked": "2026-11-23",
+      "verified": true
+    },
+    {
       "id": "openrouter",
       "name": "OpenRouter",
       "provider": "OpenRouter",
@@ -1191,6 +1571,65 @@
       "verified": true
     },
     {
+      "id": "polar",
+      "name": "Polar",
+      "provider": "Polar",
+      "family": null,
+      "lanes": [
+        "tools"
+      ],
+      "signin": [
+        "apple",
+        "github",
+        "google",
+        "other"
+      ],
+      "passkey": null,
+      "twofa": null,
+      "own_2fa": null,
+      "recovery_codes": null,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": null,
+      "source": "https://polar.sh/",
+      "sources_extra": [
+        "https://polar.sh/docs/introduction"
+      ],
+      "checked": "2026-11-23",
+      "verified": true
+    },
+    {
+      "id": "proton",
+      "name": "Proton Account",
+      "provider": "Proton",
+      "family": null,
+      "lanes": [
+        "tools"
+      ],
+      "signin": [
+        "email-password"
+      ],
+      "passkey": null,
+      "twofa": [
+        "totp",
+        "security-key"
+      ],
+      "own_2fa": null,
+      "recovery_codes": true,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": "A security key is only a second step: you still enter your username and password first.",
+      "source": "https://account.proton.me/login",
+      "sources_extra": [
+        "https://proton.me/support/two-factor-authentication-2fa",
+        "https://proton.me/support/2fa-security-key"
+      ],
+      "checked": "2026-11-23",
+      "verified": true
+    },
+    {
       "id": "replicate",
       "name": "Replicate",
       "provider": "Replicate",
@@ -1253,6 +1692,34 @@
       "verified": true
     },
     {
+      "id": "rive",
+      "name": "Rive",
+      "provider": "Rive",
+      "family": null,
+      "lanes": [
+        "tools"
+      ],
+      "signin": [
+        "email-password",
+        "google",
+        "sso"
+      ],
+      "passkey": null,
+      "twofa": null,
+      "own_2fa": null,
+      "recovery_codes": null,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": null,
+      "source": "https://rive.app/login/",
+      "sources_extra": [
+        "https://rive.app/login/sso/"
+      ],
+      "checked": "2026-11-23",
+      "verified": true
+    },
+    {
       "id": "runpod",
       "name": "RunPod",
       "provider": "Runpod",
@@ -1289,6 +1756,83 @@
       "verified": true
     },
     {
+      "id": "saturn-cloud",
+      "name": "Saturn Cloud",
+      "provider": "Saturn Cloud",
+      "family": null,
+      "lanes": [
+        "gpu",
+        "cpu"
+      ],
+      "signin": [
+        "google",
+        "github",
+        "other"
+      ],
+      "passkey": null,
+      "twofa": null,
+      "own_2fa": null,
+      "recovery_codes": null,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": "Enterprise on AWS signs in through its own Saturn Cloud domain, not the hosted login.",
+      "source": "https://app.community.saturnenterprise.io/auth/login",
+      "sources_extra": [],
+      "checked": "2026-11-23",
+      "verified": true
+    },
+    {
+      "id": "tensorwave",
+      "name": "TensorWave",
+      "provider": "TensorWave",
+      "family": null,
+      "lanes": [
+        "gpu"
+      ],
+      "signin": [
+        "other"
+      ],
+      "passkey": null,
+      "twofa": null,
+      "own_2fa": null,
+      "recovery_codes": null,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": null,
+      "source": "https://cloud.tensorwave.com/",
+      "sources_extra": [],
+      "checked": "2026-11-23",
+      "verified": true
+    },
+    {
+      "id": "tetrate",
+      "name": "Tetrate Agent Router Service",
+      "provider": "Tetrate",
+      "family": null,
+      "lanes": [
+        "inference"
+      ],
+      "signin": [
+        "google",
+        "github",
+        "other"
+      ],
+      "passkey": null,
+      "twofa": null,
+      "own_2fa": null,
+      "recovery_codes": null,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": "New accounts start with Google or GitHub; email sign-in is for existing accounts only.",
+      "source": "https://router.tetrate.ai/sign-in",
+      "sources_extra": [],
+      "checked": "2026-11-23",
+      "verified": true
+    },
+    {
       "id": "together",
       "name": "Together AI",
       "provider": "Together AI",
@@ -1314,6 +1858,36 @@
       "sources_extra": [
         "https://api.together.ai/signin",
         "https://docs.together.ai/docs/sso"
+      ],
+      "checked": "2026-11-23",
+      "verified": true
+    },
+    {
+      "id": "ubicloud",
+      "name": "Ubicloud",
+      "provider": "Ubicloud",
+      "family": null,
+      "lanes": [
+        "cpu",
+        "hosting"
+      ],
+      "signin": [
+        "email-password",
+        "google",
+        "github",
+        "sso"
+      ],
+      "passkey": null,
+      "twofa": null,
+      "own_2fa": null,
+      "recovery_codes": null,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": "Sign-in asks for the email first, then shows only the methods set up for that account.",
+      "source": "https://console.ubicloud.com/login",
+      "sources_extra": [
+        "https://www.ubicloud.com/docs/changelog/2025-07"
       ],
       "checked": "2026-11-23",
       "verified": true
@@ -1374,6 +1948,39 @@
       "sources_extra": [],
       "checked": "2026-11-22",
       "verified": false
+    },
+    {
+      "id": "vultr",
+      "name": "Vultr",
+      "provider": "Vultr",
+      "family": null,
+      "lanes": [
+        "cpu",
+        "gpu",
+        "hosting"
+      ],
+      "signin": [
+        "email-password",
+        "github",
+        "google",
+        "sso"
+      ],
+      "passkey": null,
+      "twofa": [
+        "totp"
+      ],
+      "own_2fa": null,
+      "recovery_codes": null,
+      "link": null,
+      "email_change": null,
+      "security_url": null,
+      "trap": null,
+      "source": "https://console.vultr.com/",
+      "sources_extra": [
+        "https://docs.vultr.com/platform/general/authentication/two-factor-authentication/add-two-factor-authentication"
+      ],
+      "checked": "2026-11-23",
+      "verified": true
     },
     {
       "id": "zed",
