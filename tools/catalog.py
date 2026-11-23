@@ -32,9 +32,9 @@ CURRENCY = re.compile(r"^[A-Z]{3}$")  # ISO 4217: a price stays in the currency 
 ID = re.compile(r"^[a-z0-9][a-z0-9.-]*$")
 EMAIL = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}")
 DASHES = ("\u2014", "\u2013")  # em and en dash
-# Words that name the private sources' accounts, people or paths. The catalog is facts about vendors only.
-PRIVATE = re.compile(r"soul[\s_-]?craft|colorado|paulfoley|generateai|\bpaul\b|/Users/|API-Key-|keys\.toml|"
-                     r"workspace#\d|\bcs_|\bour\b", re.I)
+# Generic shapes of a private source's name, path or wording. The catalog is facts about vendors only; the private
+# names themselves are the org secret PRIVATE_TERMS, which .github/workflows/private-terms.yml scans every file for.
+PRIVATE = re.compile(r"soul[\s_-]?craft|/Users/|workspace#\d|\bcs_|\bour\b", re.I)
 
 # Rows a source holds that are not public plan facts, each with its reason (the claims ledger for the merge).
 DROP = {

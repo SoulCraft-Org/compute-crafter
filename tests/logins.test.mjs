@@ -83,7 +83,7 @@ test('a clean row passes and each seeded fault fails', () => {
     { ...good(), trap: `Write to ${['help', 'example.org'].join('@')} first.` },
     { ...good(), source: 'http://example.com' },
     { ...good(), trap: `Seen in ${['', 'Users', 'someone', 'Desktop'].join('/')}.` },
-    { ...good(), name: 'API-Key-Example' },
+    { ...good(), name: 'SoulCraft Example' },
   ];
   for (const row of faults) assert.notDeepEqual(rowProblems(row), [], JSON.stringify(row));
 });
