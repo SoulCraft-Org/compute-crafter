@@ -27,6 +27,7 @@ flowchart LR
 | [GitHub](github.md) | CI, tools | Actions, `gh` login, the GitHub MCP server, the App manifest flow, Copilot in OpenCode |
 | [Local models](local-models.md) | Local | MLX and LM Studio serving a model on your own port |
 | [Logins](logins.md) | Accounts | One sign-in order, passkeys and codes in Apple Passwords, the logins catalog and starter |
+| [Training](training.md) | GPU | LoRA, then RL such as GRPO, on free and subscription credits: jobs by GPU size, lanes with their terms and card guards, lanes to avoid |
 | [Zed](zed.md) | Client | An editor that runs open-weight models on your own keys, and Claude Code, OpenCode and Goose over ACP |
 | [Goose](goose.md) | Client | An open-source agent, CLI and desktop app, that keeps provider keys in the system keyring |
 
