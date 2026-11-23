@@ -1527,6 +1527,33 @@
    "verified": true
   },
   {
+   "id": "hf-jobs-pro-credit",
+   "name": "Hugging Face Jobs (PRO monthly credit)",
+   "provider": "Hugging Face",
+   "provider_hq": "US",
+   "lanes": [
+    "gpu"
+   ],
+   "price_month": 9,
+   "currency": "USD",
+   "price_note": "PRO is $9 per month. Jobs bill per minute against a credit balance.",
+   "includes": "Hugging Face's PRO page lists $2 of monthly usage, and the PRO docs say the included monthly compute credits count toward the balance Jobs spend from. Jobs hardware per hour: 1x L4 24 GB $0.80, 1x L40S 48 GB $1.80, A100 large 80 GB $2.50, RTX PRO 6000 96 GB $2.75, H200 141 GB $5.00, up to 8 GPUs per Job.",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "$2 buys about 2.5 h on 1x L4 or 0.8 h on A100 large (derived from the hourly prices).",
+   "card": true,
+   "overage": "stops",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "Jobs are open to any user or organization with a positive credit balance. A Job bills only while Starting or Running, by the minute. The default timeout is 30 minutes and a Job that reaches it is stopped. The two PRO pages word the credit differently (a $2 inference line on huggingface.co/pro, all compute services in the docs): read both before relying on it for Jobs.",
+   "source": "https://huggingface.co/docs/hub/jobs-pricing",
+   "sources_extra": [
+    "https://huggingface.co/docs/hub/pro",
+    "https://huggingface.co/pro"
+   ],
+   "checked": "2026-11-23",
+   "verified": true
+  },
+  {
    "id": "hf-pro",
    "name": "Hugging Face PRO",
    "provider": "Hugging Face",
@@ -1683,6 +1710,54 @@
    ],
    "checked": "2026-11-23",
    "verified": true
+  },
+  {
+   "id": "lightning-free",
+   "name": "Lightning AI Free",
+   "provider": "Lightning AI",
+   "provider_hq": "US",
+   "lanes": [
+    "gpu"
+   ],
+   "price_month": 0,
+   "currency": "USD",
+   "price_note": "$0. The page does not say whether credits are one-time or recurring.",
+   "includes": "Up to 30 free credits to start, which the page says is about 50 GPU hours on interruptible machines (prices may vary). 5 credits at registration and 25 more for adding a card. Single GPUs, up to 2 concurrent. 1 free Studio with 4-hour restarts.",
+   "resets": null,
+   "unit_cost_vs_payg": "Up to 80% off on interruptible machines. Additional credits are pay as you go.",
+   "card": false,
+   "overage": "unknown",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "A100, H100 and H200 sessions are capped at 4 hours. Free credits expire in 12 months. A phone number is required to prevent abuse. The page does not say what happens at zero credits, and the billing docs returned HTTP 403, so the stop behaviour with a card on file is unread.",
+   "source": "https://lightning.ai/pricing",
+   "sources_extra": [],
+   "checked": "2026-11-23",
+   "verified": false
+  },
+  {
+   "id": "lightning-pro",
+   "name": "Lightning AI Pro",
+   "provider": "Lightning AI",
+   "provider_hq": "US",
+   "lanes": [
+    "gpu"
+   ],
+   "price_month": null,
+   "currency": "USD",
+   "price_note": "The pricing page text is garbled: the card shows $50 per month and the comparison table shows $20 per month.",
+   "includes": "The card lists 240 annual credits and the comparison table lists 40 monthly or 240 annually. Multi-GPU, up to 6 concurrent GPUs, unlimited A100, H100 and H200 sessions, 1 free 24/7 Studio.",
+   "resets": null,
+   "unit_cost_vs_payg": null,
+   "card": null,
+   "overage": "unknown",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "Purchased credits expire after 12 months. The page conflicts with itself on price and credits, so confirm before relying on it.",
+   "source": "https://lightning.ai/pricing",
+   "sources_extra": [],
+   "checked": "2026-11-23",
+   "verified": false
   },
   {
    "id": "machine-dev",
@@ -1878,6 +1953,32 @@
    "limits": null,
    "source": "https://www.thinkdiffusion.com/pricing",
    "sources_extra": [],
+   "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "tinker-payg",
+   "name": "Tinker (Thinking Machines)",
+   "provider": "Thinking Machines",
+   "provider_hq": "US",
+   "lanes": [
+    "gpu"
+   ],
+   "price_month": null,
+   "currency": "USD",
+   "price_note": "Per million tokens, by model and context length. The page names no free credit and no plan fee.",
+   "includes": "LoRA training through create_lora_training_client. Train price per million tokens, for example $0.396 for GPT-OSS-20B, $0.44 for Qwen3-8B, $4.103 for Qwen3.8-27B at 64K and $1.50 for Inkling 2 Small at 64K. Checkpoint storage is $0.10 per GB per month.",
+   "resets": null,
+   "unit_cost_vs_payg": "Mixture-of-experts models are priced by active parameters.",
+   "card": null,
+   "overage": "bills",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "Billing model, card requirement and data terms are not stated on the pricing pages read.",
+   "source": "https://thinkingmachines.ai/tinker/pricing/",
+   "sources_extra": [
+    "https://tinker-docs.thinkingmachines.ai/tinker/models/"
+   ],
    "checked": "2026-11-23",
    "verified": true
   },

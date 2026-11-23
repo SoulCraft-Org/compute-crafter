@@ -25,6 +25,7 @@ flowchart LR
 | [ComfyUI](comfyui.md) | GPU | Comfy Cloud, comfy-cli, and the [comfyui-base](https://github.com/SoulCraft-Org/comfyui-base) installer |
 | [Claude Desktop MCP](claude-desktop-mcp.md) | Client | One MCP server for the Code tab and Cowork: a custom connector, or a desktop extension that bridges a loopback app |
 | [GitHub](github.md) | CI, tools | Actions, `gh` login, the GitHub MCP server, the App manifest flow, Copilot in OpenCode |
+| [Training](training.md) | GPU | LoRA, then RL such as GRPO, on free and subscription credits: jobs by GPU size, lanes with their terms and card guards, lanes to avoid |
 | [Local models](local-models.md) | Local | MLX and LM Studio serving a model on your own port |
 | [Logins](logins.md) | Accounts | One sign-in order, passkeys and codes in Apple Passwords, the logins catalog and starter |
 | [Zed](zed.md) | Client | An editor that runs open-weight models on your own keys, and Claude Code, OpenCode and Goose over ACP |
