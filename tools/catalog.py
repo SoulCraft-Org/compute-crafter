@@ -277,48 +277,8 @@ def format_catalog(root):
 def self_test():
     """--self-test: seeded samples that must pass and must fail. Exit 0 all behave, 1 one does not."""
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))  # -I keeps the script's folder off the path
-    from catalog_selftest import CLEAN as clean, NEW as new, NO_ROWS as no_rows, OLD as old, OTHER as other, SHUFFLED as shuffled_bytes
-    from catalog_selftest import build, check_cases, check_file, format_file, merge_cases, merge_findings
-    cases = merge_cases() + check_cases() + [
-        # Issue 20: a source row with no lane, or a lane the catalog does not know, is a finding, not a crash.
-        ("a source row with an unknown lane is reported, not a crash",
-         any("lanes" in f for f in merge_findings([dict(new, lane="storage")]) or [])),
-        ("a source row with no lane is reported, not a crash",
-         any("lanes" in f for f in merge_findings([{k: x for k, x in new.items() if k != "lane"}]) or [])),
-        ("an unknown lane beside a known one keeps the known lane first",
-         build([new], [dict(old, lane="storage")])["rows"][0]["lanes"] == ["gpu", "storage"]),
-        # Issue 23: a source row with no checked date is a finding, not a crash.
-        ("a source row with no checked date is reported, not a crash",
-         any("checked" in f for f in merge_findings([new, dict(other, id="beta-free", checked=None)]) or [])),
-        ("a source row with no checked key is reported, not a crash",
-         any("checked" in f for f in merge_findings([new, {k: x for k, x in other.items() if k != "checked"}]) or [])),
-        ("a row with a null checked never beats a dated row",
-         [r["name"] for r in build([new], [dict(old, checked=None)])["rows"]] == ["Acme Free"]),
-        ("the top-level checked is the newest valid date when another row has none",
-         build([new, dict(other, checked=None)])["checked"] == "2026-11-02"),
-        # Issue 25: a catalog that is not UTF-8 is infrastructure (exit 2), not a traceback.
-        ("a catalog with a byte that is not UTF-8 cannot be checked (exit 2)",
-         check_file(render(clean).encode().replace(b"Acme", b"Acm\xe9", 1)) == "cannot check"),
-        ("a catalog that is a UTF-8 file still checks", check_file(render(clean).encode()) == []),
-        # Issue 21: --format never tracebacks: a bad or missing catalog is exit 2, a wrong shape is left for --check.
-        ("--format on a missing catalog cannot check (exit 2)", format_file(None) == ("cannot check", None)),
-        ("--format on a catalog that is not JSON cannot check (exit 2)", format_file(b"{not json") == ("cannot check", b"{not json")),
-        ("--format on a catalog that is not UTF-8 cannot check (exit 2)", format_file(b"\xe9") == ("cannot check", b"\xe9")),
-        ("--format on a catalog with no rows list leaves it for --check",
-         format_file(no_rows) == ("ok", no_rows) and bool(check_file(no_rows))),
-        ("--format on a catalog whose rows are not objects leaves it for --check",
-         format_file(b'{"version": 1, "rows": [5]}\n') == ("ok", b'{"version": 1, "rows": [5]}\n')),
-        ("--format sorts a catalog's rows and writes it canonically",
-         format_file(shuffled_bytes) == ("ok", render(clean).encode())),
-        # infrastructure: a missing catalog must say "could not check", never look like a finding
-        ("a missing catalog is infrastructure (exit 2)", check_file(None) == "cannot check"),
-    ]
-    bad = 0
-    for name, good in cases:
-        bad |= not good
-        print(f"self-test: {'ok   ' if good else 'WRONG'} {name}")
-    print("self-test passed" if not bad else "self-test FAILED")
-    return 1 if bad else 0
+    import catalog_selftest
+    return catalog_selftest.run()
 
 
 def main(argv):
