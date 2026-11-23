@@ -271,7 +271,7 @@ function knownAllowanceKeys(params, registry) {
 }
 
 const execAsync = promisify(execFile);
-const defaultExec = async (cmd, args) => (await execAsync(cmd, args, { maxBuffer: 16 * 1024 * 1024 })).stdout;
+const defaultExec = async (cmd, args) => (await execAsync(cmd, args, { maxBuffer: 16 * 1024 * 1024, timeout: 60_000 })).stdout;
 const PLAN_FRESH_MS = DAY;
 
 // An allowance's reader, run in a local collect (in CI, a ci provider's alone,

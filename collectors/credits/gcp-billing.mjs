@@ -21,13 +21,15 @@ const TABLE = /^[A-Za-z0-9_-]+\.[A-Za-z0-9_]+\.[A-Za-z0-9_]+$/;
 // bq runs on the owner's own gcloud login in a --local collect, so no key is read. The figure is cost before credits,
 // the gross the credit is spent against (as the GitHub and Modal readers do); credits and net cost go in the source text.
 // The invoice month is the UTC month of `now`; usage near a month's edge can land in the neighbouring invoice month.
-// A missing bq, a table that cannot be read, no rows for the month or several currencies is a why, never 0. The table's
+// A first usage after the 1st means the export began mid-month (a regional dataset is not backfilled), so the month
+// is partial and not measured; one on or before the 1st is whole. A missing bq, a table that cannot be read, no rows
+// for the month or several currencies is a why, never 0. The table's
 // name is cut from every reason, because the text is published and the table id holds the billing account id.
 export async function readGcpBilling(reader, exec, now) {
   const table = String(reader.gcp_billing_export ?? '');
   if (!TABLE.test(table)) return { why: 'gcp_billing_export must name the standard export table as <project>.<dataset>.<table>, such as one beginning gcp_billing_export_v1_' };
   const month = `${now.getUTCFullYear()}${String(now.getUTCMonth() + 1).padStart(2, '0')}`;
-  const sql = `SELECT currency, SUM(cost) AS cost, SUM(IFNULL((SELECT SUM(c.amount) FROM UNNEST(credits) AS c), 0)) AS credits FROM \`${table}\` WHERE invoice.month = @month GROUP BY currency`;
+  const sql = `SELECT currency, FORMAT_TIMESTAMP('%Y-%m-%d', MIN(usage_start_time), 'UTC') AS first_usage, SUM(cost) AS cost, SUM(IFNULL((SELECT SUM(c.amount) FROM UNNEST(credits) AS c), 0)) AS credits FROM \`${table}\` WHERE invoice.month = @month GROUP BY currency`;
   const args = ['--headless', '--quiet', '--format=json', `--project_id=${table.split('.')[0]}`, 'query', '--use_legacy_sql=false', `--parameter=month:STRING:${month}`, sql];
   try {
     return rowsToUse(JSON.parse(await exec('bq', args)), month);
@@ -42,7 +44,9 @@ export async function readGcpBilling(reader, exec, now) {
 function rowsToUse(rows, month) {
   if (!Array.isArray(rows) || !rows.length) return { why: `gcp_billing_export: the table has no cost rows for invoice month ${month}; the export may not have reached it yet` };
   if (rows.length > 1) return { why: `gcp_billing_export: ${rows.length} currencies in invoice month ${month}, so no one total` };
-  const [{ currency, cost: c, credits: k }] = rows;
+  const [{ currency, first_usage: first, cost: c, credits: k }] = rows;
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(String(first))) return { why: 'gcp_billing_export: the query gave no first usage date' };
+  if (first > `${month.slice(0, 4)}-${month.slice(4)}-01`) return { why: `gcp_billing_export: not measured: the first usage in the export for invoice month ${month} is ${first}, so the month is partial (a regional dataset starts when the export is turned on)` };
   const [cost, credits] = [Number(c), Number(k ?? 0)];
   if (!finite(cost) || !finite(credits)) return { why: 'gcp_billing_export: the query gave no numeric cost' };
   const net = round(cost + credits, 2);

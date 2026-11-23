@@ -18,7 +18,7 @@ const failing = (props) => async () => {
 
 test('gcp_billing_export: cost before credits this invoice month, credits and net in the source, one bq query on the user login', async () => {
   const calls = [];
-  const r = await read(async (cmd, args) => (calls.push({ cmd, args }), rows({ currency: 'USD', cost: '301.456', credits: '-300.1' })));
+  const r = await read(async (cmd, args) => (calls.push({ cmd, args }), rows({ currency: 'USD', first_usage: '2026-11-01', cost: '301.456', credits: '-300.1' })));
   assert.equal(r.used.value, 301.46);
   assert.match(r.used.source, /invoice month 202611: cost before credits in USD, credits applied -300.1, net cost 1.36$/);
   assert.equal(calls.length, 1);
@@ -29,12 +29,13 @@ test('gcp_billing_export: cost before credits this invoice month, credits and ne
   const sql = args.at(-1);
   assert.match(sql, /FROM `fake-proj-1234\.billing_data\.gcp_billing_export_v1_AAAAAA_BBBBBB_CCCCCC`/);
   assert.match(sql, /UNNEST\(credits\)/);
+  assert.match(sql, /MIN\(usage_start_time\)/);
   assert.match(sql, /WHERE invoice\.month = @month/);
   assert.doesNotMatch(JSON.stringify(r), /fake-proj|AAAAAA|billing_data/, 'the published source holds no table id');
 });
 
 test('gcp_billing_export: a month with no credits column value reads cost alone', async () => {
-  const r = await read(async () => rows({ currency: 'USD', cost: '12.5', credits: null }));
+  const r = await read(async () => rows({ currency: 'USD', first_usage: '2026-10-30', cost: '12.5', credits: null }));
   assert.equal(r.used.value, 12.5);
   assert.match(r.used.source, /credits applied 0, net cost 12.5/);
 });
@@ -45,12 +46,20 @@ test('gcp_billing_export: bq missing, a refused table, or a bad answer is not re
   assert.match(denied.why, /^gcp_billing_export: BigQuery error in query operation: Access Denied: Table \[key\]/);
   assert.doesNotMatch(denied.why, /fake-proj|AAAAAA|billing_data/);
   assert.match((await read(async () => 'not json')).why, /^gcp_billing_export: /);
-  assert.match((await read(async () => rows({ currency: 'USD', cost: 'x', credits: '0' }))).why, /no numeric cost/);
+  assert.match((await read(async () => rows({ currency: 'USD', first_usage: '2026-11-01', cost: 'x', credits: '0' }))).why, /no numeric cost/);
+});
+
+test('gcp_billing_export: an export that began after the 1st is a partial month, not measured, naming its first usage date', async () => {
+  const r = await read(async () => rows({ currency: 'USD', first_usage: '2026-11-04', cost: '40', credits: '-40' }));
+  assert.equal(r.used, undefined);
+  assert.match(r.why, /not measured: the first usage in the export for invoice month 202611 is 2026-11-04, so the month is partial/);
+  assert.match((await read(async () => rows({ currency: 'USD', first_usage: '2026-11-01', cost: '40', credits: '0' }))).used.source, /invoice month 202611/, 'the 1st itself is whole');
+  for (const first_usage of [null, undefined, '', 'soon']) assert.match((await read(async () => rows({ currency: 'USD', first_usage, cost: '1', credits: '0' }))).why, /no first usage date/, String(first_usage));
 });
 
 test('gcp_billing_export: no rows for the month, or several currencies, is not read, never 0', async () => {
   assert.match((await read(async () => '[]')).why, /no cost rows for invoice month 202611/);
-  assert.match((await read(async () => rows({ currency: 'USD', cost: '1', credits: '0' }, { currency: 'EUR', cost: '2', credits: '0' }))).why, /2 currencies in invoice month 202611/);
+  assert.match((await read(async () => rows({ currency: 'USD', first_usage: '2026-11-01', cost: '1', credits: '0' }, { currency: 'EUR', first_usage: '2026-11-01', cost: '2', credits: '0' }))).why, /2 currencies in invoice month 202611/);
 });
 
 test('gcp_billing_export: a name that is not project.dataset.table, or has a backtick, never reaches bq', async () => {
