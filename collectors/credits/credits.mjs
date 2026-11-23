@@ -298,7 +298,8 @@ export async function readUse(reader, { exec = defaultExec, root = '.', now = ne
 // standard GitHub-hosted runners in public repositories are free and never draw on the plan's included minutes, and
 // larger runners in public repositories are billed, not drawn from them, so no line of a public repository is use of
 // the allowance. A larger runner in a private repository can draw from it (Team and Enterprise Cloud), so it counts.
-// Usage lines name their repository (https://docs.github.com/en/rest/billing/usage, read 2026-11-23); that endpoint
+// The usage report spells the product in lower case (actions, code_quality, copilot), the summary as Actions, so the
+// product is compared without case. Usage lines name their repository (https://docs.github.com/en/rest/billing/usage, read 2026-11-23); that endpoint
 // takes year, month and day and no page parameter, so one call is the whole month. The repository lists are paged.
 // A line whose repository is in neither list (renamed, deleted, or none named) is counted, never dropped. A failed
 // read of any call, or an empty private list beside lines that are not public, is a why, never a guess.
@@ -308,7 +309,7 @@ async function readBilling(reader, exec, now) {
   const usageApi = `/organizations/${reader.github_billing}/settings/billing/usage?year=${year}&month=${month}`;
   let api = usageApi;
   try {
-    const items = (JSON.parse(await exec('gh', ['api', usageApi])).usageItems ?? []).filter((x) => x.product === product && finite(x.grossAmount));
+    const items = (JSON.parse(await exec('gh', ['api', usageApi])).usageItems ?? []).filter((x) => String(x.product).toLowerCase() === product.toLowerCase() && finite(x.grossAmount));
     if (!items.length) return { why: `gh api ${api} lists no ${product} usage this month` };
     const lists = {};
     for (const visibility of ['public', 'private']) {
