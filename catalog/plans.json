@@ -12,6 +12,58 @@
  ],
  "rows": [
   {
+   "id": "bitrise-build-hub-basic-1",
+   "name": "Bitrise Build Hub Basic Tier 1 (GitHub Actions runners)",
+   "provider": "Bitrise",
+   "provider_hq": "HU",
+   "lanes": [
+    "ci"
+   ],
+   "price_month": 20,
+   "currency": "USD",
+   "price_note": "$20 per month billed monthly, or $18 per month billed annually.",
+   "includes": "Managed GitHub Actions runners: 480 included minutes per month per OS (8 hours macOS and 8 hours Linux), macOS M2 Pro Large (6 vCPU, 14 GB), Linux up to Medium (4 vCPU, 16 GB), 1 concurrent VM.",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "Pay-As-You-Go, if switched on, runs at 2x the standard per-minute rate with a user-set cap from $5. Page lists monthly caps of $99 (macOS) and $39 (Linux) for Tier 1 VMs.",
+   "card": true,
+   "overage": "stops",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "Pay-As-You-Go is off by default, so jobs stop running on Build Hub once the monthly budget is used. 14-day free trial available. Bitrise published a security incident report (published Nov 19, 2026) linked from this pricing page: an AI-driven attacker had access from Nov 13, 2026, Bitrise switched the platform off at 20:34 UTC that day, rotated credentials and rebuilt its build infrastructure; files in 15 customer workspaces were accessed. The report states Bitrise is safe to use and recommends customers rotate secrets stored in Bitrise. See https://bitrise.io/artex-incident-report",
+   "source": "https://bitrise.io/pricing",
+   "sources_extra": [
+    "https://bitrise.io/artex-incident-report"
+   ],
+   "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "bitrise-hobby",
+   "name": "Bitrise Hobby",
+   "provider": "Bitrise",
+   "provider_hq": "HU",
+   "lanes": [
+    "ci"
+   ],
+   "price_month": 0,
+   "currency": "USD",
+   "price_note": "Free forever plan; credit card verification required.",
+   "includes": "500 build minutes per month on Linux or macOS, 1 private app, unlimited public apps, pipelines, unlimited workflow steps, 1 free on-prem runner, unlimited team members.",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "Optional Pay-As-You-Go: extra minutes charged at 1.5x the per-minute rate, capped at $15 per month; PAYG charges under $5 are not billed.",
+   "card": true,
+   "overage": "stops",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "Builds time out at 90 minutes. Pay-As-You-Go is off unless switched on; at the $15 cap no new builds start until the next cycle. Bitrise published a security incident report (published Nov 19, 2026) linked from this pricing page: an AI-driven attacker had access from Nov 13, 2026, Bitrise switched the platform off at 20:34 UTC that day, rotated credentials and rebuilt its build infrastructure; files in 15 customer workspaces were accessed. The report states Bitrise is safe to use and recommends customers rotate secrets stored in Bitrise. See https://bitrise.io/artex-incident-report",
+   "source": "https://bitrise.io/pricing",
+   "sources_extra": [
+    "https://bitrise.io/artex-incident-report"
+   ],
+   "checked": "2026-11-23",
+   "verified": true
+  },
+  {
    "id": "blacksmith-free",
    "name": "Blacksmith free tier",
    "provider": "Blacksmith Software",
@@ -35,6 +87,78 @@
    "sources_extra": [
     "https://docs.blacksmith.sh/blacksmith-runners/overview"
    ],
+   "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "buildkite-free",
+   "name": "Buildkite Free plan",
+   "provider": "Buildkite",
+   "provider_hq": "AU",
+   "lanes": [
+    "ci"
+   ],
+   "price_month": 0,
+   "currency": "USD",
+   "price_note": "Free plan; starts with a 30-day all-access trial, no credit card.",
+   "includes": "Up to 5 users, up to 10 concurrent jobs on self-hosted agents, up to 2,000 Linux AMD64 vCPU minutes per month on hosted agents (Small size only, up to 20 vCPU concurrency), 250k test executions per month, 1 GB/month of OpenTelemetry traces (hard cap), 50 GB/month artifact storage, 30-day build retention.",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "Pro is $30 per active user per month with 4,000 Linux AMD64 vCPU minutes and extra minutes at per-minute rates (rates not shown on this page).",
+   "card": false,
+   "overage": "unknown",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "No ARM64, macOS or Windows hosted agents on Free. Community support only.",
+   "source": "https://buildkite.com/pricing/",
+   "sources_extra": [],
+   "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "circleci-free",
+   "name": "CircleCI Free",
+   "provider": "CircleCI",
+   "provider_hq": "US",
+   "lanes": [
+    "ci"
+   ],
+   "price_month": 0,
+   "currency": "USD",
+   "price_note": "Free plan, no credit card required.",
+   "includes": "30,000 credits per month (up to 6,000 build minutes on a small Docker resource class; 3,000 minutes on Linux Medium at 10 credits per minute), up to 5 active users, Docker, Windows, Linux, Arm and macOS plus self-hosted runners, 30 concurrent jobs, 1 GB network and 2 GB storage included.",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "Performance plan credits cost $15 per 25,000; prepaid bulk from 1 million credits for $600.",
+   "card": false,
+   "overage": "unknown",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "Free plan credits expire after a month and do not roll over. Self-hosted runners limited to 5 concurrent tasks. Network and storage beyond plan thresholds is charged at 420 credits per GB.",
+   "source": "https://circleci.com/pricing/",
+   "sources_extra": [],
+   "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "circleci-performance",
+   "name": "CircleCI Performance",
+   "provider": "CircleCI",
+   "provider_hq": "US",
+   "lanes": [
+    "ci"
+   ],
+   "price_month": 15,
+   "currency": "USD",
+   "price_note": "Starting at $15 per month; usage-based credits.",
+   "includes": "The 30,000 free monthly credits plus purchased credits at $15 per 25,000, 5 active users included, larger resource classes, 80 concurrent jobs, 20 concurrent self-hosted runner tasks, 5 GB network and 2 GB storage included.",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "$15 per 25,000 credits; extra active users $15 per month (25,000 credits each). Paid credits roll over and expire after 12 months.",
+   "card": true,
+   "overage": "bills",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "When credits run out the account automatically refills 25% of the monthly amount, minimum 25,000 credits. The included 30,000 free credits do not roll over.",
+   "source": "https://circleci.com/pricing/",
+   "sources_extra": [],
    "checked": "2026-11-23",
    "verified": true
   },
@@ -90,6 +214,82 @@
    "sources_extra": [
     "https://docs.github.com/en/actions/reference/limits"
    ],
+   "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "gitlab-premium",
+   "name": "GitLab Premium",
+   "provider": "GitLab",
+   "provider_hq": "US",
+   "lanes": [
+    "ci"
+   ],
+   "price_month": 29,
+   "currency": "USD",
+   "price_note": "$29 per user per month, billed annually.",
+   "includes": "10,000 compute minutes per month, 500 GiB storage, unlimited licensed users, advanced CI/CD, and $8 of included GitLab Credits per user per month for AI features (a limited-time promotional offer per the page).",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "Extra compute minutes $10 per 1,000; GitLab Credits $1 each.",
+   "card": true,
+   "overage": "unknown",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "Price is per user and billed annually. Minutes are counted per top-level namespace with the same cost factors as Free.",
+   "source": "https://about.gitlab.com/pricing/",
+   "sources_extra": [
+    "https://docs.gitlab.com/ci/pipelines/compute_minutes/"
+   ],
+   "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "gitlab-free",
+   "name": "GitLab.com Free",
+   "provider": "GitLab",
+   "provider_hq": "US",
+   "lanes": [
+    "ci"
+   ],
+   "price_month": 0,
+   "currency": "USD",
+   "price_note": "Free tier on GitLab.com, no credit card required.",
+   "includes": "400 compute minutes per month on GitLab-hosted instance runners, 5 users per top-level group, 10 GiB storage, source code management and CI/CD, static application security testing.",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "Extra compute minutes are $10 per 1,000 minutes (one-time purchase, rolls over). Cost factors: Linux x86-64 small 1, medium 2, large 3, xlarge 6, 2xlarge 12, GPU standard 7, macOS M1 medium 6 (beta), Windows medium 1 (beta).",
+   "card": false,
+   "overage": "unknown",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "Quota is enforced on Free namespaces on GitLab.com; the docs say enforcement measures apply when the quota is exceeded but do not detail them. Usage resets on the first day of each month. Public projects in the GitLab for Open Source program get a 0.5 cost factor. AI features need purchased GitLab Credits.",
+   "source": "https://about.gitlab.com/pricing/",
+   "sources_extra": [
+    "https://docs.gitlab.com/ci/pipelines/compute_minutes/"
+   ],
+   "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "semaphore-free-credits",
+   "name": "Semaphore Cloud free monthly credits",
+   "provider": "Semaphore",
+   "provider_hq": null,
+   "lanes": [
+    "ci"
+   ],
+   "price_month": 0,
+   "currency": "USD",
+   "price_note": "$15 of free credits every month on Semaphore Cloud, then per-minute billing.",
+   "includes": "$15 of credits per month (about 2,000 Ubuntu x64 2-vCPU minutes per the page), usable across services; 20 concurrent jobs by default; 20 GB/month artifact egress and 100 GB/month artifact storage; 9.6 GB cache per project.",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "Per-minute rates listed on the page include Ubuntu x64 $0.0075 (2 vCPU) and $0.015 (4 vCPU), macOS $0.09 (4 vCPU), self-hosted $0.0025 per minute on any machine. Extra artifact egress $0.35/GB, storage $0.07/GB.",
+   "card": null,
+   "overage": "unknown",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "The page does not say whether a card is required or what happens when the credits run out.",
+   "source": "https://semaphore.io/pricing",
+   "sources_extra": [],
    "checked": "2026-11-23",
    "verified": true
   },
@@ -313,6 +513,58 @@
    "commercial_use": null,
    "limits": "Self-imposed usage caps are available; at a cap Depot stops running builds until next month or until the cap is raised. Larger builders (above 16 vCPU), RBAC and SSO are not on Developer.",
    "source": "https://depot.dev/pricing",
+   "sources_extra": [],
+   "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "fly-free-plan",
+   "name": "Fly.io Free plan",
+   "provider": "Fly.io",
+   "provider_hq": "US",
+   "lanes": [
+    "cpu",
+    "hosting"
+   ],
+   "price_month": 0,
+   "currency": "USD",
+   "price_note": "$1 one-time credit without a card (expires after 7 days); $5 of usage every month once a card is added.",
+   "includes": "The credit covers Machines, volumes and snapshots, data transfer, Sprites and one Managed Postgres cluster on the $4 Developer plan. New Free organizations with a card also get a $30 Sprites credit. Always free on every plan: first 10 GB of volume snapshots, first 10 single-hostname certificates, inbound data, shared IPv4 and IPv6.",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "Machine prices: shared-cpu-1x 256 MB $2.19/month, 512 MB $3.69, 1 GB $6.70, shared-cpu-2x 2 GB $13.39, performance-1x 2 GB $33.00, billed per second while running.",
+   "card": true,
+   "overage": "bills",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "Personal organization only, 1 member, up to 3 Machines (no performance Machines), volumes up to 5 GB, up to 3 Sprites, community support. Going over $5 moves the organization to Pay As You Go automatically and the whole month is billed at standard rates from the first cent. One Free plan per card. Without a card, new resources cannot be created once the $1 is used or after 7 days.",
+   "source": "https://docs.fly.io/about/free-plan",
+   "sources_extra": [
+    "https://docs.fly.io/about/pricing"
+   ],
+   "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "codespaces-free",
+   "name": "GitHub Codespaces included usage (personal accounts)",
+   "provider": "GitHub",
+   "provider_hq": "US",
+   "lanes": [
+    "cpu",
+    "tools"
+   ],
+   "price_month": 0,
+   "currency": "USD",
+   "price_note": "Free monthly quota for every GitHub personal account; usage above it is billed to the account.",
+   "includes": "GitHub Free personal accounts: 120 hours of compute time and 15 GB-month of storage per month. GitHub Pro personal accounts: 180 hours and 20 GB-month. Compute draws down at an included-usage multiplier equal to the core count (2 for a 2-core machine, 4 for 4-core), so 120 hours is about 60 hours on a 2-core machine.",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "Paid rates: 2 core $0.18/hour, 4 core $0.36, 8 core $0.72, 16 core $1.44, 32 core $2.88; storage $0.07 per GB-month.",
+   "card": false,
+   "overage": "stops",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "Without a payment method, usage is blocked once the quota is used up until the next billing cycle; with one, usage above the quota is billed. Organization and enterprise plans get no free Codespaces quota. Prebuilds also consume GitHub Actions minutes.",
+   "source": "https://docs.github.com/en/billing/concepts/product-billing/github-codespaces",
    "sources_extra": [],
    "checked": "2026-11-23",
    "verified": true
@@ -2426,6 +2678,32 @@
    "verified": false
   },
   {
+   "id": "sambanova-free",
+   "name": "SambaCloud Free Tier",
+   "provider": "SambaNova Systems",
+   "provider_hq": "US",
+   "lanes": [
+    "inference"
+   ],
+   "price_month": 0,
+   "currency": "USD",
+   "price_note": "Rate-limited free tier, applied when no payment method is linked.",
+   "includes": "gpt-oss-120b and gemma-4-31B-it at 20 requests per minute, 20 requests per day and 200,000 tokens per day each.",
+   "resets": "daily",
+   "unit_cost_vs_payg": "Developer Tier (card linked, pay per token) raises limits to 60 RPM and 12,000 RPD per model, capped at 20M tokens per day across models.",
+   "card": false,
+   "overage": "stops",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "Docs state all SambaCloud models are Preview models for evaluation and experimentation only, not for production, and may be removed at short notice. The Plans console page instead says to add a payment method and purchase credits to run first requests, so free access without a card could not be confirmed end to end.",
+   "source": "https://docs.sambanova.ai/docs/en/models/rate-limits",
+   "sources_extra": [
+    "https://cloud.sambanova.ai/plans"
+   ],
+   "checked": "2026-11-23",
+   "verified": true
+  },
+  {
    "id": "synthetic-standard",
    "name": "Synthetic Standard (Go $9, Big $90, Bigger $300)",
    "provider": "Synthetic",
@@ -2605,6 +2883,191 @@
    "verified": true
   },
   {
+   "id": "koyeb-pro",
+   "name": "Koyeb Pro",
+   "provider": "Koyeb (joining Mistral AI)",
+   "provider_hq": "FR",
+   "lanes": [
+    "hosting",
+    "cpu",
+    "gpu"
+   ],
+   "price_month": 29,
+   "currency": "USD",
+   "price_note": "$29 per month plus compute.",
+   "includes": "$10 of included compute per month, 10 users, 100 services, NVMe volumes and snapshots, 5 concurrent builds, email and chat support.",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "Compute billed per second from $0.000006 per second; 100 GB outbound bandwidth free, then $0.04/GB.",
+   "card": true,
+   "overage": "bills",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "Card required; a $29 pre-authorization hold is placed. Koyeb announced it is joining Mistral AI; the announcement says the free Starter plan will be removed and new users must subscribe to Pro, Scale or Enterprise with a valid payment method (https://www.koyeb.com/blog/koyeb-is-joining-mistral-ai-to-build-the-future-of-ai-infrastructure). The free web service listed in the pricing FAQ is therefore not open to new sign-ups.",
+   "source": "https://www.koyeb.com/pricing",
+   "sources_extra": [
+    "https://www.koyeb.com/docs/faqs/pricing",
+    "https://www.koyeb.com/blog/koyeb-is-joining-mistral-ai-to-build-the-future-of-ai-infrastructure"
+   ],
+   "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "northflank-sandbox",
+   "name": "Northflank Sandbox",
+   "provider": "Northflank",
+   "provider_hq": "GB",
+   "lanes": [
+    "hosting",
+    "cpu"
+   ],
+   "price_month": 0,
+   "currency": "USD",
+   "price_note": "Free tier, no card needed.",
+   "includes": "Up to $20 a month of resources on Northflank Cloud across 2 services, 2 jobs and 1 database; one bring-your-own-cloud cluster with up to 12 vCPU and 48 GB memory (your cloud provider bills that infrastructure). Always on, no sleeping.",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "Pay as you go from $0.01667 per vCPU hour, billed per second, no seat fees.",
+   "card": false,
+   "overage": "unknown",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "The page does not say what happens when the $20 of resources is used.",
+   "source": "https://northflank.com/pricing",
+   "sources_extra": [],
+   "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "railway-free",
+   "name": "Railway Free plan",
+   "provider": "Railway",
+   "provider_hq": "US",
+   "lanes": [
+    "hosting"
+   ],
+   "price_month": 0,
+   "currency": "USD",
+   "price_note": "Free plan with $1 of usage credits each month, no credit card; new accounts also get a 30-day trial with a one-time $5 credit.",
+   "includes": "$1 of monthly usage credits, 1 project with up to 3 services, up to 1 vCPU and 0.5 GB RAM per service, 0.5 GB volume storage, one-click Postgres, Redis, MySQL and MongoDB.",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "Container usage: RAM $10/GB/month, CPU $20/vCPU/month, egress $0.05/GB, volume storage $0.15/GB/month; builds are free.",
+   "card": false,
+   "overage": "unknown",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "Services sleep after 5 to 10 minutes without outbound traffic and wake on the next request. The Free plan does not expire. When trial credits run out, running deployments are stopped. The page does not say what happens when the $1 is used.",
+   "source": "https://railway.com/pricing",
+   "sources_extra": [
+    "https://docs.railway.com/pricing/plans"
+   ],
+   "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "railway-hobby",
+   "name": "Railway Hobby",
+   "provider": "Railway",
+   "provider_hq": "US",
+   "lanes": [
+    "hosting",
+    "cpu"
+   ],
+   "price_month": 5,
+   "currency": "USD",
+   "price_note": "$5 per month minimum, which includes $5 of usage.",
+   "includes": "$5 of monthly usage credits, up to 48 vCPU and 48 GB RAM per service, up to 5 replicas at 8 vCPU / 8 GB each, up to 5 GB storage, always-on services, 7-day log history, single developer workspace.",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "Usage above $5 billed at RAM $10/GB/month, CPU $20/vCPU/month, egress $0.05/GB, volume $0.15/GB/month.",
+   "card": true,
+   "overage": "bills",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "The $5 fee is charged even if unused; included usage does not roll over. Railway may waive the fee for some active builders.",
+   "source": "https://railway.com/pricing",
+   "sources_extra": [
+    "https://docs.railway.com/pricing/plans"
+   ],
+   "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "railway-pro",
+   "name": "Railway Pro",
+   "provider": "Railway",
+   "provider_hq": "US",
+   "lanes": [
+    "hosting",
+    "cpu"
+   ],
+   "price_month": 20,
+   "currency": "USD",
+   "price_note": "$20 per month minimum, which includes $20 of usage.",
+   "includes": "$20 of monthly usage credits, up to 1,000 vCPU and 1 TB RAM per service, up to 42 replicas at 24 vCPU / 24 GB each, up to 1 TB storage, unlimited workspace seats.",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "Usage above $20 billed at the same per-resource rates as Hobby.",
+   "card": true,
+   "overage": "bills",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "Included usage does not roll over.",
+   "source": "https://railway.com/pricing",
+   "sources_extra": [
+    "https://docs.railway.com/pricing/plans"
+   ],
+   "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "render-free",
+   "name": "Render free instances",
+   "provider": "Render",
+   "provider_hq": "US",
+   "lanes": [
+    "hosting"
+   ],
+   "price_month": 0,
+   "currency": "USD",
+   "price_note": "Free compute plan for web services, Postgres and Key Value on the $0 Hobby workspace.",
+   "includes": "750 free instance hours per workspace per month for free web services (512 MB RAM), one free Postgres database (1 GB, expires 30 days after creation), one free Key Value instance, free static sites; Hobby workspace includes 5 GB bandwidth and up to 25 services.",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "Paid instances start at $7/month (512 MB RAM, 0.5 CPU); SSD $0.25/GB per month.",
+   "card": false,
+   "overage": "stops",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "Free web services spin down after 15 minutes without inbound traffic (about one minute to spin back up), have an ephemeral filesystem, and are suspended when the 750 hours are used. Bandwidth overage is billed if a payment method exists, otherwise services are suspended. Render says not to use free instances for production.",
+   "source": "https://render.com/docs/free",
+   "sources_extra": [
+    "https://render.com/pricing"
+   ],
+   "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "render-starter-instance",
+   "name": "Render paid web service, 512 MB",
+   "provider": "Render",
+   "provider_hq": "US",
+   "lanes": [
+    "hosting",
+    "cpu"
+   ],
+   "price_month": 7,
+   "currency": "USD",
+   "price_note": "$7 per month for the smallest paid instance, on the $0 Hobby workspace.",
+   "includes": "512 MB RAM, 0.5 CPU (instance type 0.5c-512mb), always on, persistent disks available. Next size: 1 CPU, 2 GB RAM at $25 per month.",
+   "resets": null,
+   "unit_cost_vs_payg": "SSD storage $0.25/GB per month. Pro workspace is $25 per month plus compute.",
+   "card": true,
+   "overage": "bills",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "Hobby workspace: up to 25 services, 5 GB bandwidth included.",
+   "source": "https://render.com/pricing",
+   "sources_extra": [],
+   "checked": "2026-11-23",
+   "verified": true
+  },
+  {
    "id": "supabase-free",
    "name": "Supabase Free plan",
    "provider": "Supabase",
@@ -2627,6 +3090,30 @@
    "sources_extra": [
     "https://supabase.com/docs/guides/platform/billing-on-supabase"
    ],
+   "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "supabase-pro",
+   "name": "Supabase Pro",
+   "provider": "Supabase",
+   "provider_hq": "US",
+   "lanes": [
+    "hosting"
+   ],
+   "price_month": 25,
+   "currency": "USD",
+   "price_note": "$25 per month per organization; first project included.",
+   "includes": "100K monthly active users, 8 GB disk per project, 250 GB bandwidth, daily backups with 7-day retention, email support, $10 per month of compute credits (covers one Micro instance: 1 GB RAM, shared compute).",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "Additional projects from $10 per month; custom domain $10 per month flat.",
+   "card": true,
+   "overage": "stops",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "Spend cap is on by default, so usage beyond included quota is not billed until the cap is switched off.",
+   "source": "https://supabase.com/pricing",
+   "sources_extra": [],
    "checked": "2026-11-23",
    "verified": true
   },
@@ -2655,6 +3142,30 @@
     "https://vercel.com/legal/terms",
     "https://vercel.com/docs/plans/hobby"
    ],
+   "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "vercel-pro",
+   "name": "Vercel Pro",
+   "provider": "Vercel",
+   "provider_hq": "US",
+   "lanes": [
+    "hosting"
+   ],
+   "price_month": 20,
+   "currency": "USD",
+   "price_note": "$20 per month.",
+   "includes": "$20 of included usage credit, Flat Rate CDN with traffic spike protection, advanced spend management, team collaboration with free viewer seats, cold start prevention, free custom domain.",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "Usage beyond the credit is metered per resource as listed on the pricing page.",
+   "card": true,
+   "overage": "unknown",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "Free trial available.",
+   "source": "https://vercel.com/pricing",
+   "sources_extra": [],
    "checked": "2026-11-23",
    "verified": true
   },
@@ -3122,6 +3633,30 @@
    "verified": true
   },
   {
+   "id": "mistral-vibe-free",
+   "name": "Mistral Vibe Free (formerly Le Chat)",
+   "provider": "Mistral AI",
+   "provider_hq": "FR",
+   "lanes": [
+    "tools"
+   ],
+   "price_month": 0,
+   "currency": "USD",
+   "price_note": "Free plan.",
+   "includes": "Vibe on web and mobile, limited messages and web searches, limited coding sessions, basic image generation and editing, 100+ connectors.",
+   "resets": null,
+   "unit_cost_vs_payg": "Pro is $14.99 per month (excluding taxes).",
+   "card": null,
+   "overage": null,
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "Message and search limits are not quantified on the page (Pro offers up to 6x the messages and 5x the web searches of Free).",
+   "source": "https://mistral.ai/pricing/",
+   "sources_extra": [],
+   "checked": "2026-11-23",
+   "verified": true
+  },
+  {
    "id": "mistral-le-chat-pro",
    "name": "Mistral Vibe Pro (formerly Le Chat Pro)",
    "provider": "Mistral AI",
@@ -3216,6 +3751,60 @@
    "sources_extra": [],
    "checked": "2026-10-25",
    "verified": false
+  },
+  {
+   "id": "replit-core",
+   "name": "Replit Core",
+   "provider": "Replit",
+   "provider_hq": "US",
+   "lanes": [
+    "tools",
+    "hosting"
+   ],
+   "price_month": 20,
+   "currency": "USD",
+   "price_note": "$20 per month, or $18 per month billed annually.",
+   "includes": "$20 of monthly credits toward more powerful models, up to 30 hours of chat and up to 60 projects on Free Mode, unlimited workspaces, AI integrations, unlimited published apps.",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "Credits apply to Replit AI work, publishing, network transfer, database storage and AI Integrations; pay-as-you-go beyond credits.",
+   "card": true,
+   "overage": "unknown",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "Pricing page states prices are subject to tax.",
+   "source": "https://replit.com/pricing",
+   "sources_extra": [
+    "https://docs.replit.com/billing/plans/replit-core"
+   ],
+   "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "replit-starter",
+   "name": "Replit Starter",
+   "provider": "Replit",
+   "provider_hq": "US",
+   "lanes": [
+    "tools",
+    "hosting"
+   ],
+   "price_month": 0,
+   "currency": "USD",
+   "price_note": "Free plan.",
+   "includes": "Daily credits for Replit AI up to a monthly cap, monthly credits for production databases, object storage and Autoscale or static publishing, Lite build, one free published app.",
+   "resets": "daily AI credits, monthly cloud credits",
+   "unit_cost_vs_payg": "Core is $20 per month ($18 billed annually).",
+   "card": null,
+   "overage": "unknown",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "Credit amounts are not stated on the page. The free published app goes down after 30 days and carries a Made with Replit badge. Full build, third-party connectors and Replit AI Integrations need Core.",
+   "source": "https://docs.replit.com/billing/plans/starter-plan",
+   "sources_extra": [
+    "https://replit.com/pricing"
+   ],
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "venice-pro",
