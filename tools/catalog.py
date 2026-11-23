@@ -48,6 +48,9 @@ DROP = {
     "nanogpt-sub": "its only source is a third-party page",
     "claude-max-5x": "superseded by claude-max, read on a first-party page later",
     "claude-max-20x": "superseded by claude-max, read on a first-party page later",
+    "chatgpt-plus": "not listed: this project lists no OpenAI, xAI or SpaceX (Cursor) products",
+    "chatgpt-pro-100": "not listed: this project lists no OpenAI, xAI or SpaceX (Cursor) products",
+    "cursor-plus": "not listed: this project lists no OpenAI, xAI or SpaceX (Cursor) products",
 }
 # Older rows carry no provider; these fill it from the row's own source page.
 PROVIDER = {
@@ -102,7 +105,8 @@ def strings(v):
 def public_row(row, lanes):
     """The allowlist: only PUBLIC_FIELDS, from either source shape."""
     out = {k: row.get(k) for k in PUBLIC_FIELDS}
-    out["lanes"] = sorted(lanes, key=LANES.index)
+    # A lane the catalog does not know (or none) sorts last and stays in the row, so check_doc reports it.
+    out["lanes"] = sorted(lanes, key=lambda x: (LANES.index(x) if x in LANES else len(LANES), str(x)))
     out["provider"] = row.get("provider") or PROVIDER.get(row.get("id"))
     out["currency"] = row.get("currency") or "USD"
     out["verified"] = row.get("verified_here") is True
@@ -125,7 +129,8 @@ def merge(dirs):
                     ledger.append(f"drop {rid}: {DROP[rid]}")
                     continue
                 lanes.setdefault(rid, set()).add(row.get("lane"))
-                key = (str(row.get("checked", "")), -rank)
+                checked = row.get("checked")
+                key = (checked if isinstance(checked, str) else "", -rank)
                 if rid not in best or key > best[rid][0]:
                     best[rid] = (key, row)
     rows = []
@@ -140,11 +145,17 @@ def merge(dirs):
         "about": "Free tiers and plans for compute, CI and AI inference, public fields only. Built by tools/catalog.py; "
                  "every row names the vendor page it was read on and the date. verified: true means every figure was "
                  "read on that first-party page on that date; false means it was not re-read since.",
-        "checked": max((r["checked"] for r in rows), default=None),
+        "checked": newest(rows),
         "lanes": list(LANES),
         "rows": rows,
     }
     return doc, sorted(set(ledger))
+
+
+def newest(rows):
+    """The newest well-formed checked date. A row with none is left for check_doc to report."""
+    return max((r["checked"] for r in rows if isinstance(r.get("checked"), str) and DATE.fullmatch(r["checked"])),
+               default=None)
 
 
 def sort_key(r):
@@ -235,12 +246,33 @@ def check(root):
             text = f.read()
     except FileNotFoundError as e:
         raise CannotCheck(f"{CATALOG} is missing") from e
+    except (OSError, UnicodeDecodeError) as e:  # a byte that is not UTF-8, or a path that is not a file
+        raise CannotCheck(f"{CATALOG} cannot be read ({e})") from e
     try:
         doc = json.loads(text, parse_constant=no_constant)
     except ValueError as e:
         return [f"{CATALOG}: not JSON ({e})"], None
     findings = check_doc(doc, text)
     return findings, len(doc.get("rows", [])) if isinstance(doc, dict) else None
+
+
+def format_catalog(root):
+    """Sort the rows and rewrite the catalog canonically. A missing or unreadable file is CannotCheck. A catalog of
+    the wrong shape is left as it is: --check reports it."""
+    path = os.path.join(root, CATALOG)
+    doc = load(path)
+    if not (isinstance(doc, dict) and isinstance(doc.get("rows"), list)
+            and all(isinstance(r, dict) for r in doc["rows"])):
+        return
+    try:
+        doc["rows"].sort(key=sort_key)
+    except (TypeError, IndexError, KeyError):  # a row whose lanes are not a list: --check reports it
+        return
+    try:
+        with open(path, "w", encoding="utf-8") as f:
+            f.write(render(doc))
+    except OSError as e:
+        raise CannotCheck(f"{path} cannot be written ({e})") from e
 
 
 def self_test():
@@ -305,6 +337,45 @@ def self_test():
                 f.write(render(clean).replace('"price_month": 0,', '"price_month": Infinity,', 1))
             findings, _ = check(t)
         return any("not JSON" in f for f in findings)
+
+    def merge_findings(*dirs_rows):
+        """Findings for a merge of source rows that may be wrong; a crash is a failure, so it returns None."""
+        try:
+            doc = build(*dirs_rows)
+            return check_doc(doc, render(doc))
+        except Exception:
+            return None
+
+    def check_file(raw):
+        """What --check does with these bytes as catalog/plans.json: its findings, or CannotCheck."""
+        with tempfile.TemporaryDirectory() as t:
+            os.makedirs(os.path.join(t, "catalog"))
+            with open(os.path.join(t, CATALOG), "wb") as f:
+                f.write(raw)
+            try:
+                return check(t)[0]
+            except CannotCheck:
+                return "cannot check"
+
+    def format_file(raw):
+        """What --format does with these bytes: (CannotCheck or 'ok', the file's bytes afterwards)."""
+        with tempfile.TemporaryDirectory() as t:
+            os.makedirs(os.path.join(t, "catalog"))
+            path = os.path.join(t, CATALOG)
+            if raw is not None:
+                with open(path, "wb") as f:
+                    f.write(raw)
+            try:
+                format_catalog(t)
+                outcome = "ok"
+            except CannotCheck:
+                outcome = "cannot check"
+            return outcome, (open(path, "rb").read() if os.path.exists(path) else None)
+
+    shuffled = json.loads(json.dumps(clean))
+    shuffled["rows"].reverse()
+    shuffled_bytes = json.dumps(shuffled, indent=1, ensure_ascii=False).encode() + b"\n"
+    no_rows = b'{"version": 1}\n'
     cases = [
         ("a clean merge passes --check", not checked(clean)),
         ("every row has exactly PUBLIC_FIELDS", all(tuple(r) == PUBLIC_FIELDS for r in clean["rows"])),
@@ -365,6 +436,38 @@ def self_test():
         ("a list as provider fails", bool(checked(clean, v(provider=["Acme"])))),
         ("a blank-padded name fails", bool(checked(clean, v(name=" Acme Free ")))),
         ("a blank provider fails", bool(checked(clean, v(provider="   ")))),
+        # Issue 20: a source row with no lane, or a lane the catalog does not know, is a finding, not a crash.
+        ("a source row with an unknown lane is reported, not a crash",
+         any("lanes" in f for f in merge_findings([dict(new, lane="storage")]) or [])),
+        ("a source row with no lane is reported, not a crash",
+         any("lanes" in f for f in merge_findings([{k: x for k, x in new.items() if k != "lane"}]) or [])),
+        ("an unknown lane beside a known one keeps the known lane first",
+         build([new], [dict(old, lane="storage")])["rows"][0]["lanes"] == ["gpu", "storage"]),
+        # Issue 23: a source row with no checked date is a finding, not a crash.
+        ("a source row with no checked date is reported, not a crash",
+         any("checked" in f for f in merge_findings([new, dict(other, id="beta-free", checked=None)]) or [])),
+        ("a source row with no checked key is reported, not a crash",
+         any("checked" in f for f in merge_findings([new, {k: x for k, x in other.items() if k != "checked"}]) or [])),
+        ("a row with a null checked never beats a dated row",
+         [r["name"] for r in build([new], [dict(old, checked=None)])["rows"]] == ["Acme Free"]),
+        ("the top-level checked is the newest valid date when another row has none",
+         build([new, dict(other, checked=None)])["checked"] == "2026-11-02"),
+        # Issue 25: a catalog that is not UTF-8 is infrastructure (exit 2), not a traceback.
+        ("a catalog with a byte that is not UTF-8 cannot be checked (exit 2)",
+         check_file(render(clean).encode().replace(b"Acme", b"Acm\xe9", 1)) == "cannot check"),
+        ("a catalog that is a UTF-8 file still checks", check_file(render(clean).encode()) == []),
+        # Issue 21: --format never tracebacks: a bad or missing catalog is exit 2, a wrong shape is left for --check.
+        ("--format on a missing catalog cannot check (exit 2)", format_file(None) == ("cannot check", None)),
+        ("--format on a catalog that is not JSON cannot check (exit 2)",
+         format_file(b"{not json") == ("cannot check", b"{not json")),
+        ("--format on a catalog that is not UTF-8 cannot check (exit 2)",
+         format_file(b"\xe9") == ("cannot check", b"\xe9")),
+        ("--format on a catalog with no rows list leaves it for --check",
+         format_file(no_rows) == ("ok", no_rows) and bool(check_file(no_rows))),
+        ("--format on a catalog whose rows are not objects leaves it for --check",
+         format_file(b'{"version": 1, "rows": [5]}\n') == ("ok", b'{"version": 1, "rows": [5]}\n')),
+        ("--format sorts a catalog's rows and writes it canonically",
+         format_file(shuffled_bytes) == ("ok", render(clean).encode())),
     ]
     try:  # infrastructure: a missing catalog must say "could not check", never look like a finding
         with tempfile.TemporaryDirectory() as t:
@@ -401,11 +504,11 @@ def main(argv):
         print(f"catalog: wrote {CATALOG}, {len(doc['rows'])} rows, {sum(r['verified'] for r in doc['rows'])} verified")
         return 0
     if args == ["--format"]:
-        path = os.path.join(ROOT, CATALOG)
-        doc = load(path)
-        doc["rows"].sort(key=sort_key)
-        with open(path, "w", encoding="utf-8") as f:
-            f.write(render(doc))
+        try:
+            format_catalog(ROOT)
+        except CannotCheck as e:
+            print(f"catalog: could not format ({e}); infrastructure, not a finding")
+            return 2
         args = ["--check"]
     if args != ["--check"]:
         print(__doc__)

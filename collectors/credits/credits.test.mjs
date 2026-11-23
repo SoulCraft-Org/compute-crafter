@@ -112,6 +112,26 @@ test('collect: a committed catalog gives credits.registry_age_days its read date
   }
 });
 
+test('collect: a missing source file or a config error still gives credits.registry_age_days the catalog\'s read dates', async () => {
+  const kit = fs.mkdtempSync(path.join(os.tmpdir(), 'credits-catalog-local-'));
+  try {
+    write(path.join(kit, 'catalog', 'plans.json'), { rows: [{ provider: 'P', name: 'Old', checked: '2026-10-25' }] });
+    const cat = { catalog_file: 'catalog/plans.json' };
+    const gone = await collect({ ...base, kit, params: { ...params, ...cat, systems_file: '~/missing/systems.json' } });
+    assert.equal(gone['credits.registry_age_days'].value, 9, 'a missing systems file, catalog read 2026-10-25');
+    assert.match(gone['credits.idle_replaceable'].could_not_check, /missing or unreadable/, 'every other metric still says why');
+    const noReg = await collect({ ...base, kit, params: { ...params, ...cat, registry_files: ['absent.json'] } });
+    assert.equal(noReg['credits.registry_age_days'].value, 9, 'a missing registry file');
+    const bad = await collect({ ...base, kit, params: { ...params, ...cat, no_usage_api: { nothing: 'no API' } } });
+    assert.equal(bad['credits.registry_age_days'].value, 9, 'a params.no_usage_api key that names nothing');
+    assert.match(bad['credits.idle_replaceable'].could_not_check, /names no allowance or registry row/);
+    const none = await collect({ ...base, kit, params: { ...params, ...cat, catalog_file: 'catalog/none.json', systems_file: '~/missing/systems.json' } });
+    assert.match(none['credits.registry_age_days'].could_not_check, /catalog is missing or unreadable/, 'no catalog, no age');
+  } finally {
+    fs.rmSync(kit, { recursive: true, force: true });
+  }
+});
+
 test('usage: a running total, a floor when a repo is unread, and no reader', () => {
   const org = { metrics: { x: { value: 5 }, y: { by_repo: { a: 10, b: null }, could_not_check: 'b unread' } } };
   assert.equal(usage({ usage: 'x' }, org).used, 5);
@@ -234,6 +254,30 @@ test('collect: CI mode with HF_TOKEN and OPENROUTER_API_KEY reads those two alon
   assert.match(top.source, /in CI only hf, or, read with repo secrets/);
   for (const id of metricIds.filter((m) => m !== 'credits.highest_used_share')) assert.match(out[id].could_not_check, /refreshed by a --local collect/, id);
   assert.ok(!JSON.stringify(out).includes(KEY) && !text.includes(KEY), 'no key in the result or the output');
+});
+
+test('collect: CI mode reads an allowance whose claim status the registry gives, not only status_override', async () => {
+  const calls = [];
+  const env = { HF_TOKEN: KEY, OPENROUTER_API_KEY: KEY };
+  const viaRegistry = {
+    systems_file: '~/code-os/systems.json',
+    registry: '~/reg',
+    registry_files: ['free.json'],
+    allowances: [
+      { id: 'hf', system: 'gpu', lane: 'gpu', registry: 'free.json#free-gpu', allowance: { label: 'a day', value: 5, unit: 'minutes', read: '2026-11-03' }, reader: { provider: 'huggingface' } },
+      { id: 'or', system: 'llm', lane: 'inference', registry: 'free.json#llm-free', reader: { provider: 'openrouter' } },
+    ],
+  };
+  const out = await collect({ ...base, mode: 'ci', exec: noExec, providers: { env, fetch: ciFetch(calls) }, params: viaRegistry });
+  const top = out['credits.highest_used_share'];
+  assert.equal(top.value, 60, 'HF 3 of 5 minutes, read in CI though no registry file is');
+  assert.deepEqual(top.detail.map((d) => d.label), ['GPU plan', 'Free LLM']);
+  assert.ok(!('could_not_check' in top), 'the read is kept, not turned into a sign-up step');
+  const refused = await collect({ ...base, mode: 'ci', exec: noExec, providers: { env, fetch: async () => new Response('{}', { status: 401 }) }, params: viaRegistry });
+  assert.doesNotMatch(refused['credits.highest_used_share'].could_not_check, /sign up/, 'a read that failed still never tells the owner to sign up');
+  const stated = { ...viaRegistry, allowances: [{ ...viaRegistry.allowances[0], status_override: { org_status: 'could_claim' } }] };
+  const claim = await collect({ ...base, mode: 'ci', exec: noExec, providers: { env, fetch: ciFetch([]) }, params: stated });
+  assert.match(claim['credits.highest_used_share'].could_not_check, /sign up/, 'an override the params state stays');
 });
 
 test('collect: CI mode with no key, or a refused key, never reads as 0 and never prints the key', async () => {

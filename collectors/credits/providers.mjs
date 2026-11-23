@@ -66,12 +66,13 @@ export async function readProvider(reader, { env = process.env, fetch = globalTh
   try {
     return await p.read({ env, fetch, exec, key: secrets[0] });
   } catch (err) {
-    return { why: `${reader.provider}: ${scrub(reasonOf(err), secrets)}` };
+    return { why: `${reader.provider}: ${reasonOf(err, secrets)}` };
   }
 }
 
-// The first line of an error, cut to 160 characters.
-const reasonOf = (err) => String(err?.stderr || err?.message || err).trim().split('\n')[0].slice(0, 160);
+// The first line of an error with every key value taken out, then cut to 160
+// characters: the cut comes last, so it can never leave the start of a key.
+const reasonOf = (err, secrets) => scrub(String(err?.stderr || err?.message || err), secrets).trim().split('\n')[0].slice(0, 160);
 
 // Text with every key value taken out.
 export function scrub(text, secrets) {
