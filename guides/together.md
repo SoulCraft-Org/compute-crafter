@@ -14,10 +14,10 @@ Together AI gives a Claude Code or OpenCode user prepaid, pay-per-token access t
 
 3. Create an API key in Together's settings. Keep it in a password manager, never in a repo or a shell profile.
 
-4. Connect OpenCode. Paste the key at the hidden prompt.
+4. Connect OpenCode. Paste the key at the hidden prompt ([OpenCode 2](README.md#opencode-2)).
 
 ```bash
-opencode auth login
+opencode auth login togetherai --method key
 ```
 
 Pick Together AI, then choose a model with `/models`. Any other OpenAI-compatible tool uses base URL `https://api.together.ai/v1` ([OpenAI compatibility](https://docs.together.ai/docs/openai-api-compatibility), read 2026-11-12).
