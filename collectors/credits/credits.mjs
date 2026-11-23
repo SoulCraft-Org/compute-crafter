@@ -276,8 +276,9 @@ const PLAN_FRESH_MS = DAY;
 // spec.used ({ value, source }); a reader that fails gives usage_why instead,
 // so the row reads "not read" with why, never 0. Three readers:
 //   { github_billing: 'org', product: 'Actions' }: gh api's org billing usage
-//     summary for this month, the product's gross (list-rate) amount in USD,
-//     which is what the included allowance is spent against
+//     for this month, the product's gross (list-rate) amount in USD over the
+//     org's private repositories, which is what the included allowance is
+//     spent against (readBilling says why public repositories are left out)
 //   { plan_file: 'path', window: 'regex' }: the app's get_usage block a session
 //     wrote (tokens.plan_used's file), that window's percent used; over a day
 //     old it is not read. A relative path is from the repo root
@@ -286,21 +287,32 @@ const PLAN_FRESH_MS = DAY;
 //     (providers.mjs cites each endpoint); `providers` passes it env, fetch
 //     and exec in tests
 export async function readUse(reader, { exec = defaultExec, root = '.', now = new Date(), providers = {} } = {}) {
-  if (reader.github_billing) return readBilling(reader, exec);
+  if (reader.github_billing) return readBilling(reader, exec, now);
   if (reader.provider) return readProvider(reader, providers);
   if (reader.plan_file) return readPlan(reader, root, now);
   return { why: `unknown reader ${JSON.stringify(reader)}` };
 }
 
-async function readBilling(reader, exec) {
-  const api = `/organizations/${reader.github_billing}/settings/billing/usage/summary`;
+// The org's use of a product this month, in gross USD, over its private repositories only. GitHub Docs, "GitHub
+// Actions billing" (https://docs.github.com/en/billing/concepts/product-billing/github-actions, read 2026-11-23):
+// standard GitHub-hosted runners in public repositories are free and never draw on the plan's included minutes, so
+// the gross amount of a public repository's minutes is not use of the allowance. The usage report's items name their
+// repository (https://docs.github.com/en/rest/billing/usage, read 2026-11-23); the repository list says which are
+// private. A failed read of either call is a why, never a guess.
+async function readBilling(reader, exec, now) {
   const product = reader.product ?? 'Actions';
+  const [year, month] = [now.getUTCFullYear(), now.getUTCMonth() + 1];
+  const usageApi = `/organizations/${reader.github_billing}/settings/billing/usage?year=${year}&month=${month}`;
+  const reposApi = `orgs/${reader.github_billing}/repos?type=private`;
+  let api = usageApi;
   try {
-    const doc = JSON.parse(await exec('gh', ['api', api]));
-    const items = (doc.usageItems ?? []).filter((x) => x.product === product && finite(x.grossAmount));
+    const items = (JSON.parse(await exec('gh', ['api', usageApi])).usageItems ?? []).filter((x) => x.product === product && finite(x.grossAmount));
     if (!items.length) return { why: `gh api ${api} lists no ${product} usage this month` };
-    const period = doc.timePeriod ? `${doc.timePeriod.year}-${String(doc.timePeriod.month).padStart(2, '0')}` : 'this month';
-    return { used: { value: round(items.reduce((a, x) => a + x.grossAmount, 0), 2), source: `gh api ${api}: ${product} grossAmount summed over ${items.length} SKUs, ${period}` } };
+    api = reposApi;
+    const names = (await exec('gh', ['api', reposApi, '--paginate', '--jq', '.[].name'])).split('\n').map((s) => s.trim()).filter(Boolean);
+    const mine = items.filter((x) => names.includes(String(x.repositoryName ?? '').split('/').pop()));
+    const source = `gh api ${usageApi}, private repositories from gh api ${reposApi}: ${product} grossAmount summed over ${mine.length} SKUs in private repositories, ${year}-${String(month).padStart(2, '0')}; public repositories are free and left out`;
+    return { used: { value: round(mine.reduce((a, x) => a + x.grossAmount, 0), 2), source } };
   } catch (err) {
     return { why: `gh api ${api} failed (${String(err?.stderr || err?.message || err).trim().split('\n')[0].slice(0, 160)})` };
   }

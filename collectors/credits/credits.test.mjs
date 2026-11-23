@@ -406,12 +406,34 @@ test('collect: a registry that names its status field otherwise is read through 
   }
 });
 
-test('readers: GitHub billing sums the product gross; a plan file a day old, or gh failing, is not read and never 0', async () => {
-  const bill = { timePeriod: { year: 2026, month: 11 }, usageItems: [{ product: 'Actions', sku: 'linux', grossAmount: 98.08 }, { product: 'Actions', sku: 'mac', grossAmount: 9.05 }, { product: 'Packages', sku: 'x', grossAmount: 5 }] };
-  const ok = async () => JSON.stringify(bill);
-  assert.equal((await readUse({ github_billing: 'acme' }, { exec: ok })).used.value, 107.13);
+// gh api as the billing reader calls it: the repository list for orgs/<org>/repos, the usage report for anything else.
+const ghApi = (bill, repos = 'app\ntools\n', seen = []) => async (cmd, args) => {
+  seen.push(args[1]);
+  return args[1].startsWith('orgs/') ? repos : JSON.stringify(bill);
+};
+
+test('readers: GitHub billing sums the product gross over private repositories only, so public-repo minutes are left out', async () => {
+  const item = (repositoryName, grossAmount, product = 'Actions') => ({ product, sku: 'linux', grossAmount, repositoryName });
+  const bill = { usageItems: [item('app', 98.08), item('acme/tools', 9.05), item('docs-site', 200), item('app', 5, 'Packages')] };
+  const seen = [];
+  const r = await readUse({ github_billing: 'acme' }, { exec: ghApi(bill, undefined, seen), now });
+  assert.equal(r.used.value, 107.13, 'docs-site is public: its 200 is not use of the included minutes');
+  assert.deepEqual(seen, ['/organizations/acme/settings/billing/usage?year=2026&month=11', 'orgs/acme/repos?type=private']);
+  assert.match(r.used.source, /2 SKUs in private repositories, 2026-11; public repositories are free and left out/);
+  const allPublic = await readUse({ github_billing: 'acme' }, { exec: ghApi({ usageItems: [item('docs-site', 307)] }), now });
+  assert.equal(allPublic.used.value, 0, 'only public minutes: the allowance is untouched, and that is read, not guessed');
+  assert.match((await readUse({ github_billing: 'acme' }, { exec: ghApi({ usageItems: [] }), now })).why, /lists no Actions usage/);
+  const noRepos = async (cmd, args) => { if (args[1].startsWith('orgs/')) throw Object.assign(new Error('x'), { stderr: 'HTTP 403' }); return JSON.stringify(bill); };
+  const denied = await readUse({ github_billing: 'acme' }, { exec: noRepos, now });
+  assert.equal(denied.used, undefined);
+  assert.match(denied.why, /orgs\/acme\/repos\?type=private failed \(HTTP 403\)/);
+});
+
+test('readers: a plan file a day old, or gh failing, is not read and never 0', async () => {
+  const bill = { usageItems: [{ product: 'Actions', sku: 'linux', grossAmount: 98.08, repositoryName: 'app' }, { product: 'Actions', sku: 'mac', grossAmount: 9.05, repositoryName: 'app' }, { product: 'Packages', sku: 'x', grossAmount: 5, repositoryName: 'app' }] };
+  const ok = ghApi(bill);
   const fail = async () => { throw Object.assign(new Error('x'), { stderr: 'HTTP 403' }); };
-  assert.match((await readUse({ github_billing: 'acme' }, { exec: fail })).why, /HTTP 403/);
+  assert.match((await readUse({ github_billing: 'acme' }, { exec: fail, now })).why, /HTTP 403/);
   const root = path.join(home, 'repo');
   write(path.join(root, 'data', 'plan.json'), { read_at: '2026-11-03T10:00:00Z', windows: [{ label: 'Weekly · all models', percentUsed: 62 }] });
   assert.equal((await readUse({ plan_file: 'data/plan.json' }, { root, now })).used.value, 62);
