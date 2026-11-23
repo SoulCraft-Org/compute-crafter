@@ -30,8 +30,8 @@ def main() -> int:
         return 2
     try:
         terms = re.compile(re.sub(r"^\(\?i\)", "", value), re.I)
-    except re.error as exc:
-        print(f"::error::PRIVATE_TERMS is not a valid regex ({exc.msg})")
+    except re.error:  # its message can quote part of the secret, so the log gets none of it
+        print("::error::PRIVATE_TERMS is not a valid regex")
         return 2
     # Strings already public on purpose (a GitHub handle CODEOWNERS needs, a license attribution), one per line.
     allowed = []
