@@ -50,7 +50,7 @@ async function getPage(fetch, key, query) {
   return body;
 }
 
-// The cents in one page's buckets that start this month; 
+// The cents in one page's buckets that start this month; a result that is not USD, or whose amount is not a decimal string ('' and null included), throws.
 function sumCents(body, start) {
   let cents = 0;
   for (const bucket of body.data) {
