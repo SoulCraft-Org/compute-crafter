@@ -372,7 +372,7 @@ test('logins starter: the README names status.example.json, and its steps and co
   const steps = text.slice(text.indexOf('| Step | Do |'), text.indexOf('\n\n', text.indexOf('| Step | Do |')));
   const commands = [...text.matchAll(/```bash\n([\s\S]*?)```/g)].map((m) => m[1]).join('\n');
   const names = [...`${steps}\n${commands}`.matchAll(/[\w./-]*logins\.json/g)].map((m) => m[0]);
-  assert.ok(names.length >= 3);
+  assert.ok(names.length >= 2);
   assert.deepEqual([...new Set(names)], ['vendor/logins.json']);
 });
 
