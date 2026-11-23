@@ -406,31 +406,55 @@ test('collect: a registry that names its status field otherwise is read through 
   }
 });
 
-// gh api as the billing reader calls it: the repository list for orgs/<org>/repos, the usage report for anything else.
-const ghApi = (bill, repos = 'app\ntools\n', seen = []) => async (cmd, args) => {
+// gh api as the billing reader calls it: a repository list for orgs/<org>/repos?type=public or private, the usage report for anything else.
+const ghApi = (bill, { pub = 'docs-site\n', priv = 'app\ntools\n' } = {}, seen = []) => async (cmd, args) => {
   seen.push(args[1]);
-  return args[1].startsWith('orgs/') ? repos : JSON.stringify(bill);
+  if (args[1].includes('type=public')) return pub;
+  return args[1].includes('type=private') ? priv : JSON.stringify(bill);
 };
+const item = (repositoryName, grossAmount, extra = {}) => ({ product: 'Actions', sku: 'Actions Linux', grossAmount, repositoryName, ...extra });
+const acme = { github_billing: 'acme' };
 
-test('readers: GitHub billing sums the product gross over private repositories only, so public-repo minutes are left out', async () => {
-  const item = (repositoryName, grossAmount, product = 'Actions') => ({ product, sku: 'linux', grossAmount, repositoryName });
-  const bill = { usageItems: [item('app', 98.08), item('acme/tools', 9.05), item('docs-site', 200), item('app', 5, 'Packages')] };
+test('readers: GitHub billing sums the product gross less public repositories, so public-repo minutes are left out', async () => {
+  const bill = { usageItems: [item('app', 98.08), item('acme/tools', 9.05), item('docs-site', 200), item('app', 5, { product: 'Packages' })] };
   const seen = [];
-  const r = await readUse({ github_billing: 'acme' }, { exec: ghApi(bill, undefined, seen), now });
+  const r = await readUse(acme, { exec: ghApi(bill, undefined, seen), now });
   assert.equal(r.used.value, 107.13, 'docs-site is public: its 200 is not use of the included minutes');
-  assert.deepEqual(seen, ['/organizations/acme/settings/billing/usage?year=2026&month=11', 'orgs/acme/repos?type=private']);
-  assert.match(r.used.source, /2 SKUs in private repositories, 2026-11; public repositories are free and left out/);
-  const allPublic = await readUse({ github_billing: 'acme' }, { exec: ghApi({ usageItems: [item('docs-site', 307)] }), now });
-  assert.equal(allPublic.used.value, 0, 'only public minutes: the allowance is untouched, and that is read, not guessed');
-  assert.match((await readUse({ github_billing: 'acme' }, { exec: ghApi({ usageItems: [] }), now })).why, /lists no Actions usage/);
-  const noRepos = async (cmd, args) => { if (args[1].startsWith('orgs/')) throw Object.assign(new Error('x'), { stderr: 'HTTP 403' }); return JSON.stringify(bill); };
-  const denied = await readUse({ github_billing: 'acme' }, { exec: noRepos, now });
-  assert.equal(denied.used, undefined);
-  assert.match(denied.why, /orgs\/acme\/repos\?type=private failed \(HTTP 403\)/);
+  assert.deepEqual(seen, ['/organizations/acme/settings/billing/usage?year=2026&month=11', 'orgs/acme/repos?type=public', 'orgs/acme/repos?type=private']);
+  assert.match(r.used.source, /2 SKUs counted; 1 SKUs of public repositories left out/);
+  assert.doesNotMatch(r.used.source, /in no repository list/);
+});
+
+test('readers: a renamed repository is counted, never dropped; a public larger runner is left out, a private one counted', async () => {
+  const bill = { usageItems: [item('app', 10), item('renamed-away', 4), item(undefined, 1), item('docs-site', 50, { sku: 'Actions Linux 4-core' }), item('tools', 20, { sku: 'Actions Linux 4-core' })] };
+  const r = await readUse(acme, { exec: ghApi(bill), now });
+  assert.equal(r.used.value, 35, 'app, the renamed repository, the line naming none, and the private larger runner');
+  assert.match(r.used.source, /4 SKUs counted, 2 of them in no repository list/);
+  assert.match(r.used.source, /1 SKUs of public repositories left out/);
+  assert.doesNotMatch(r.used.source, /renamed-away/, 'a repository name is never printed');
+});
+
+test('readers: only public lines read 0; no usage, an empty private list beside non-public lines, or a failed listing is a why', async () => {
+  const allPublic = await readUse(acme, { exec: ghApi({ usageItems: [item('docs-site', 307)] }), now });
+  assert.equal(allPublic.used.value, 0, 'both listings read: every line is public, so the allowance is untouched');
+  assert.match(allPublic.used.source, /0 SKUs counted; 1 SKUs of public repositories left out/);
+  assert.match((await readUse(acme, { exec: ghApi({ usageItems: [] }), now })).why, /lists no Actions usage/);
+  const noPrivate = await readUse(acme, { exec: ghApi({ usageItems: [item('app', 5), item('docs-site', 7)] }, { priv: '' }), now });
+  assert.equal(noPrivate.used, undefined, 'an empty private list with a non-public line is not read, never 0');
+  assert.match(noPrivate.why, /orgs\/acme\/repos\?type=private lists no private repositories, yet 1 Actions lines are not public/);
+  for (const visibility of ['public', 'private']) {
+    const denied = async (cmd, args) => {
+      if (args[1].includes(`type=${visibility}`)) throw Object.assign(new Error('x'), { stderr: 'HTTP 403' });
+      return ghApi({ usageItems: [item('app', 5)] })(cmd, args);
+    };
+    const r = await readUse(acme, { exec: denied, now });
+    assert.equal(r.used, undefined);
+    assert.match(r.why, new RegExp(`orgs/acme/repos\\?type=${visibility} failed \\(HTTP 403\\)`));
+  }
 });
 
 test('readers: a plan file a day old, or gh failing, is not read and never 0', async () => {
-  const bill = { usageItems: [{ product: 'Actions', sku: 'linux', grossAmount: 98.08, repositoryName: 'app' }, { product: 'Actions', sku: 'mac', grossAmount: 9.05, repositoryName: 'app' }, { product: 'Packages', sku: 'x', grossAmount: 5, repositoryName: 'app' }] };
+  const bill = { usageItems: [item('app', 98.08), item('app', 9.05), item('app', 5, { product: 'Packages' })] };
   const ok = ghApi(bill);
   const fail = async () => { throw Object.assign(new Error('x'), { stderr: 'HTTP 403' }); };
   assert.match((await readUse({ github_billing: 'acme' }, { exec: fail, now })).why, /HTTP 403/);
