@@ -1,9 +1,10 @@
 {
- "comment": "Starter Quality, Speed and Consumption config for your own compute. Copy this folder to quality/ in your repo. packs loads Compute Crafter's Credits pack at one full commit SHA: a tag or a branch is refused, because a pack runs in CI. tabs shows only that pack's tab. Keys: Git Crafter quality/CONFIG.md.",
+ "comment": "Starter Quality, Speed and Consumption config for your own compute. Copy this folder to quality/ in your repo. packs loads Compute Crafter's Credits pack at one full commit SHA: a tag or a branch is refused, because a pack runs in CI. tabs shows only that pack's tab. name is the page title: put your repo's name. Keys: Git Crafter quality/CONFIG.md.",
+ "name": "my-compute",
  "tabs": [
   "credits"
  ],
  "packs": [
-  "SoulCraft-Org/compute-crafter@f0dbc525a01285eefb4a9f66f09cf7902396baed"
+  "SoulCraft-Org/compute-crafter@fffe2bd9e0105156ca3e51eae02254febf5c6dd4"
  ]
 }
