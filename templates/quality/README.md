@@ -46,10 +46,12 @@ A CI run reads no file of yours, so five metrics stay "not measured" there until
 
 ## Paths
 
+A relative path is from your repo's root.
+
 | Path form | Reads from |
 | --- | --- |
-| `../../../quality/inputs/x.json` | Your repo's root, when the pack sits at `.code-os-packs/SoulCraft-Org/compute-crafter` (the default Git Crafter expects) |
+| `quality/inputs/x.json` | Your repo's root, so your own files |
 | `~/compute/x.json` | Your home folder |
-| `catalog/plans.json` | The pack's own checkout, so the page also scores the age of the public catalog |
+| `.code-os-packs/SoulCraft-Org/compute-crafter/catalog/plans.json` | The pack's checkout, where Git Crafter puts it by default, so the page also scores the age of the public catalog |
 
-Use the `~/` form when `CODE_OS_PACKS` moves the pack elsewhere.
+Use the `~/` form for the catalog too when `CODE_OS_PACKS` moves the pack elsewhere.

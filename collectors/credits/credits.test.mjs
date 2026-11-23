@@ -298,7 +298,7 @@ test('collect: with the template alone, no allowance is named, so nothing reads 
   for (const id of metricIds) assert.match(out[id].could_not_check, /no allowance to read/, id);
 });
 
-test('collect: a relative file is read from the Git Crafter checkout, a ~/ file from home', async () => {
+test('collect: with no root, a relative file is read from the checkout, a ~/ file from home', async () => {
   const kit = fs.mkdtempSync(path.join(os.tmpdir(), 'credits-kit-'));
   try {
     fs.cpSync(path.join(home, 'code-os'), kit, { recursive: true });
@@ -309,7 +309,45 @@ test('collect: a relative file is read from the Git Crafter checkout, a ~/ file 
   }
 });
 
-test('collect: a relative registry is read from the pack checkout, never from the working directory', async () => {
+test('collect: a relative path is read from root, the adopting repo, never from kit, the pack checkout', async () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'credits-root-'));
+  const kit = fs.mkdtempSync(path.join(os.tmpdir(), 'credits-kit-'));
+  try {
+    const only = (dir, rel) => fs.cpSync(path.join(home, rel), path.join(dir, rel), { recursive: true });
+    for (const rel of ['code-os', 'reg']) only(root, rel);
+    write(path.join(root, 'catalog', 'plans.json'), { rows: [{ provider: 'P', name: 'Old', checked: '2026-10-25' }] });
+    const paths = { systems_file: 'code-os/systems.json', usage_file: 'code-os/data/org.json', registry: 'reg', catalog_file: 'catalog/plans.json' };
+    const fromRoot = await collect({ ...base, root, kit, params: { ...params, ...paths } });
+    assert.equal(fromRoot['credits.actions_pool_used'].value, 103.3, 'systems_file and usage_file from root');
+    assert.equal(fromRoot['credits.unclaimed_free'].value, 2, 'registry from root');
+    assert.equal(fromRoot['credits.registry_age_days'].value, 14, 'catalog_file from root: no error, the GPU limit is the oldest');
+    assert.equal(fromRoot['credits.registry_age_days'].could_not_check, undefined);
+    const ci = await collect({ mode: 'ci', now, home, root, kit, providers: { env: {} }, params: { catalog_file: paths.catalog_file } });
+    assert.equal(ci['credits.registry_age_days'].value, 9, 'a CI collect reads the catalog from root too');
+    // The same files under kit only are not found: root is the one base.
+    only(kit, 'code-os');
+    only(kit, 'reg');
+    write(path.join(kit, 'catalog', 'plans.json'), { rows: [{ provider: 'P', name: 'Old', checked: '2026-10-25' }] });
+    const empty = fs.mkdtempSync(path.join(os.tmpdir(), 'credits-empty-'));
+    try {
+      const miss = await collect({ ...base, root: empty, kit, params: { ...params, ...paths } });
+      assert.match(miss['credits.actions_pool_used'].could_not_check, /missing or unreadable/);
+      assert.match(miss['credits.registry_age_days'].could_not_check, /catalog is missing or unreadable/);
+      const missCi = await collect({ mode: 'ci', now, home, root: empty, kit, providers: { env: {} }, params: { catalog_file: paths.catalog_file } });
+      assert.match(missCi['credits.registry_age_days'].could_not_check, /catalog is missing or unreadable/);
+    } finally {
+      fs.rmSync(empty, { recursive: true, force: true });
+    }
+    // ~/ stays home, whatever root is.
+    const home_ = await collect({ ...base, root, kit, params: { ...params, systems_file: '~/code-os/systems.json', usage_file: '~/code-os/data/org.json' } });
+    assert.equal(home_['credits.actions_pool_used'].value, 103.3);
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+    fs.rmSync(kit, { recursive: true, force: true });
+  }
+});
+
+test('collect: with no root, a relative registry is read from the checkout, never from the working directory', async () => {
   const kit = fs.mkdtempSync(path.join(os.tmpdir(), 'credits-kit-'));
   const cwd = fs.mkdtempSync(path.join(os.tmpdir(), 'credits-cwd-'));
   const was = process.cwd();

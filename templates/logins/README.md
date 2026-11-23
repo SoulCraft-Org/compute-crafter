@@ -5,21 +5,24 @@ Your own logins sheet and board, built from the vendor catalog [catalog/logins.j
 | Step | Do |
 | --- | --- |
 | 1 | Make a private repository and copy this folder into it, with its `.gitignore` |
-| 2 | Download `logins.json` from the `catalog/` folder of a Compute Crafter commit, into this folder, and write that commit down |
+| 2 | Run `bash sync.sh`. It copies the catalog, `sheet.sh` and `board.html` at one Compute Crafter commit into `vendor/`, and writes that commit to `vendor/PIN` |
 | 3 | Copy `sites.example.json` to `sites.json`: one row per account, with the catalog id as `vendor` |
 | 4 | Copy `status.example.json` to `status.json`, which stays on your machine, and replace its fake rows with one row per site id |
 | 5 | Put one `<!-- sheet:start -->` line in your README, and one `<!-- sheet:end -->` line after it. Then run the sheet. With the markers missing, repeated or out of order, `--write` leaves the file as it was and exits 2 |
 | 6 | Build `board.json`, open `board.html` in a browser and pick `board.json` |
 
 ```bash
-bash sheet.sh logins.json sites.json --write README.md
-bash sheet.sh logins.json sites.json --json status.json > board.json
+bash sync.sh
+bash sheet.sh vendor/logins.json sites.json --write README.md
+bash sheet.sh vendor/logins.json sites.json --json status.json > board.json
 ```
 
 | File | Holds | In git |
 | --- | --- | --- |
 | `sheet.sh`, `board.html` | The sheet and the board | yes |
-| `logins.json` | The catalog copy, from the commit you wrote down | yes |
+| `sync.sh` | The copy of the catalog, the sheet and the board, and its pin | yes |
+| `vendor/logins.json`, `vendor/PIN` | The catalog copy, and `owner/repo@sha` of its commit | yes |
+| `vendor/sheet.sh`, `vendor/board.html` | That commit's copies of the two tools, to compare with yours | yes |
 | `sites.example.json`, `status.example.json` | Seven fake example sites, and their fake progress | yes |
 | `sites.json` | Your order, your code apps, one row per site | yes, in a private repo |
 | `status.json` | How far each account is | never |
