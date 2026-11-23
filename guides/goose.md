@@ -20,7 +20,7 @@ brew install block-goose-cli
 goose configure
 ```
 
-3. For Ollama's cloud, pick the **Ollama Cloud** provider, which reads `OLLAMA_CLOUD_API_KEY`. The plain **Ollama** provider is for a local or self-hosted server through `OLLAMA_HOST` ([Providers](https://goose-docs.ai/docs/getting-started/providers), read 2026-11-20). See [Ollama](ollama.md) for its credits.
+3. For Ollama's cloud, pick the **Ollama Cloud** provider, which reads `OLLAMA_CLOUD_API_KEY`. Use cloud models only; the plain **Ollama** provider is for a local server ([Providers](https://goose-docs.ai/docs/getting-started/providers), read 2026-11-20). See [Ollama](ollama.md) for its credits.
 
 4. For any other OpenAI-compatible endpoint, add a custom provider file in `~/.config/goose/custom_providers/`. Its `api_key_env` names the variable that holds the key, and the Desktop app can store the key in the keyring instead ([Providers](https://goose-docs.ai/docs/getting-started/providers), read 2026-11-20).
 

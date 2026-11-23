@@ -25,7 +25,7 @@ Zed is a free editor that runs open-weight models through your own provider keys
 }
 ```
 
-3. For Ollama, Zed finds models on a local server by itself. For Ollama's cloud, set the API URL to `https://ollama.com` and give Zed a key in the provider UI or `OLLAMA_API_KEY` ([Use a Local Model](https://zed.dev/docs/ai/use-a-local-model), [Ollama: Zed](https://docs.ollama.com/integrations/zed), read 2026-11-20). See [Ollama](ollama.md) for its credits.
+3. For Ollama, use its cloud models only, never a local pull. Set the API URL to `https://ollama.com` and give Zed a key in the provider UI or `OLLAMA_API_KEY` ([Use a Local Model](https://zed.dev/docs/ai/use-a-local-model), [Ollama: Zed](https://docs.ollama.com/integrations/zed), read 2026-11-20). See [Ollama](ollama.md) for its credits.
 
 4. Add OpenCode as an external agent: install it from the ACP Registry (`zed: acp registry`), or add a custom agent ([External Agents](https://zed.dev/docs/ai/external-agents), [ACP](https://opencode.ai/docs/cli/acp), read 2026-11-20). OpenCode uses the credentials it already holds, so run `opencode auth login` in a terminal first.
 
