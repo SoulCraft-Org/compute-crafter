@@ -1,15 +1,16 @@
 name: catalog-reread
 
 # Weekly keyless Claude agent: re-reads the stalest rows of catalog/plans.json and opens one pull request.
-# It never merges. Auth is workload identity federation (guides/claude-api.md): no API key, no OAuth token.
-# A static key wins over federation, so none is passed here and none may be added.
+# It never merges. It runs on the plan's included Claude Code usage through CLAUDE_CODE_OAUTH_TOKEN (claude
+# setup-token), never an API key, which bills per use (rules/compute.md, Money). Federation does not help: plan API
+# credits cover the Claude API, Managed Agents, the Agent SDK and the playground, not Claude Code, and
+# anthropics/claude-code-action runs Claude Code, so every federated run failed after one turn
+# (https://platform.claude.com/docs/en/about-claude/api-credits-for-subscribers, read 2026-11-23).
+# Until the secret exists the job passes with a notice and calls nothing, as claude-review.yml does.
+# It can run only after it is merged: use workflow_dispatch on main.
 #
-# The Claude Console rule accepts only this exact workflow_ref, on main:
-#   SoulCraft-Org/compute-crafter/.github/workflows/catalog-reread.yml@refs/heads/main
-# Keep the file name. It can run only after it is merged: use workflow_dispatch on main.
-#
-# The action trades the job's OIDC token for the Claude GitHub App token and gives it to git and gh. A pull request
-# opened with that token starts CI. One opened with GITHUB_TOKEN would not.
+# The action trades the job's OIDC token for the Claude GitHub App token (hence id-token: write) and gives it to
+# git and gh. A pull request opened with that token starts CI. One opened with GITHUB_TOKEN would not.
 on:
   schedule:
     - cron: "17 6 * * 1" # Mondays 06:17 UTC
@@ -26,25 +27,32 @@ jobs:
   reread:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    env:
+      # A secret cannot be read in an if:, so the job holds whether it is set.
+      HAS_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN != '' }}
     # git and gh use the Claude App token (see above), so the job token needs only these two.
     permissions:
       contents: read
       id-token: write
     steps:
+      - name: Skip without the token
+        if: env.HAS_TOKEN != 'true'
+        run: echo "::notice::CLAUDE_CODE_OAUTH_TOKEN is not set, so no catalog re-read ran."
+
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        if: env.HAS_TOKEN == 'true'
         with:
           fetch-depth: 1
           persist-credentials: false
 
       - name: Start the agent on its branch
+        if: env.HAS_TOKEN == 'true'
         run: git checkout -b "reread/$(date -u +%F)"
 
       - uses: anthropics/claude-code-action@b5e37652b7d48df841bfddfd6520610e19bf3136 # v1.0.287
+        if: env.HAS_TOKEN == 'true'
         with:
-          anthropic_federation_rule_id: ${{ vars.ANTHROPIC_FEDERATION_RULE_ID }}
-          anthropic_organization_id: ${{ vars.ANTHROPIC_ORGANIZATION_ID }}
-          anthropic_service_account_id: ${{ vars.ANTHROPIC_SERVICE_ACCOUNT_ID }}
-          anthropic_workspace_id: ${{ vars.ANTHROPIC_WORKSPACE_ID }}
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           claude_args: >-
             --model claude-sonnet-5-5
             --max-turns 60
