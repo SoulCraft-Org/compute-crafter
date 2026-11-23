@@ -168,75 +168,96 @@ def render(doc):
     return json.dumps(doc, indent=1, ensure_ascii=False, allow_nan=False) + "\n"
 
 
+def failed(where, rules):
+    """The where-led message of each (broken, message) rule whose condition holds, in order."""
+    return [f"{where}: {message}" for broken, message in rules if broken]
+
+
+def check_identity(where, row, seen):
+    """Findings for a row's keys, id, name and provider; the row's id joins seen."""
+    extra = sorted(set(row) - set(PUBLIC_FIELDS))
+    found = failed(where, [
+        (tuple(row) != PUBLIC_FIELDS, "keys are not PUBLIC_FIELDS in order" + (f" (not allowed: {extra})" if extra else "")),
+        (not ID.fullmatch(str(row.get("id", ""))), "id is not lowercase letters, digits, dots and hyphens"),
+        (row.get("id") in seen, "duplicate id"),
+        (any(not isinstance(row.get(k), str) or not row[k].strip() or row[k] != row[k].strip() for k in ("name", "provider")),
+         "name and provider are required, as text with no outer spaces"),
+    ])
+    seen.add(row.get("id"))
+    return found
+
+
+def check_values(where, row):
+    """Findings for a row's country, lanes and price."""
+    hq, lanes, pm = row.get("provider_hq"), row.get("lanes"), row.get("price_month")
+    return failed(where, [
+        (not (hq is None or (isinstance(hq, str) and COUNTRY.fullmatch(hq))), f"provider_hq {hq!r} is not an ISO 3166-1 alpha-2 code or null"),
+        (not isinstance(lanes, list) or not lanes or any(x not in LANES for x in lanes),
+         f"lanes {lanes!r} is not a non-empty list from {list(LANES)}"),
+        (not (pm is None or (isinstance(pm, (int, float)) and not isinstance(pm, bool) and math.isfinite(pm) and pm >= 0)),
+         "price_month is not a finite number or null"),
+    ])
+
+
+def check_flags(where, row):
+    """Findings for a row's currency, overage, flags, sources and checked date."""
+    extra = row.get("sources_extra")
+    return failed(where, [
+        (not CURRENCY.fullmatch(str(row.get("currency", ""))), f"currency {row.get('currency')!r} is not an ISO 4217 code"),
+        (row.get("overage") not in OVERAGE, f"overage {row.get('overage')!r} is not stops, bills, unknown or null"),
+        *[(row.get(k) not in (True, False, None), f"{k} is not true, false or null") for k in ("card", "trains_on_data", "commercial_use")],
+        (not isinstance(row.get("verified"), bool), "verified is not true or false"),
+        (not str(row.get("source", "")).startswith("https://"), "source is not an https URL"),
+        (not isinstance(extra, list) or any(not str(u).startswith("https://") for u in strings(extra)),
+         "sources_extra is not a list of https URLs"),
+        (not real_date(row.get("checked")), "checked is not a real YYYY-MM-DD date, no later than tomorrow"),
+    ])
+
+
+def check_text(where, row):
+    """Findings for each string of a row: an em or en dash, an email address, a private term."""
+    out = []
+    for s in strings(row):
+        m = PRIVATE.search(s)
+        out += failed(where, [
+            (any(d in s for d in DASHES), "an em or en dash (use a comma, colon or parentheses)"),
+            (EMAIL.search(s), "an email address"),
+            (m, f"a private term {(m and m.group(0))!r}"),
+        ])
+    return out
+
+
+def check_row(i, row, seen):
+    """Findings for one catalog row."""
+    where = f"row {i} ({row.get('id', '?') if isinstance(row, dict) else '?'})"
+    if not isinstance(row, dict):
+        return [f"{where}: not an object"]
+    return check_identity(where, row, seen) + check_values(where, row) + check_flags(where, row) + check_text(where, row)
+
+
+def check_order(doc, text):
+    """Findings for the order, newest date and bytes of a catalog that is otherwise valid."""
+    rows = doc["rows"]
+    return [message for broken, message in [
+        (rows != sorted(rows, key=sort_key), "catalog: rows are not sorted by first lane, provider, name and id"),
+        (doc.get("checked") != max((r["checked"] for r in rows), default=None), "catalog: top-level checked is not the newest row's checked"),
+        (text != render(doc), "catalog: not in canonical form; run python3 -I tools/catalog.py --format"),
+    ] if broken]
+
+
 def check_doc(doc, text):
     """Findings for the catalog document and its bytes."""
-    out = []
     if not isinstance(doc, dict) or doc.get("version") != 1 or not isinstance(doc.get("rows"), list):
         return ['catalog: wants {"version": 1, "checked": "YYYY-MM-DD", "lanes": [...], "rows": [...]}']
+    out = []
     if set(doc) != {"version", "about", "checked", "lanes", "rows"}:
         out.append(f"catalog: top-level keys {sorted(doc)} are not version, about, checked, lanes, rows")
     if doc.get("lanes") != list(LANES):
         out.append(f"catalog: lanes is not {list(LANES)}")
     seen = set()
     for i, row in enumerate(doc["rows"]):
-        where = f"row {i} ({row.get('id', '?') if isinstance(row, dict) else '?'})"
-        if not isinstance(row, dict):
-            out.append(f"{where}: not an object")
-            continue
-        if tuple(row) != PUBLIC_FIELDS:
-            extra = sorted(set(row) - set(PUBLIC_FIELDS))
-            out.append(f"{where}: keys are not PUBLIC_FIELDS in order" + (f" (not allowed: {extra})" if extra else ""))
-        if not ID.fullmatch(str(row.get("id", ""))):
-            out.append(f"{where}: id is not lowercase letters, digits, dots and hyphens")
-        if row.get("id") in seen:
-            out.append(f"{where}: duplicate id")
-        seen.add(row.get("id"))
-        if any(not isinstance(row.get(k), str) or not row[k].strip() or row[k] != row[k].strip()
-               for k in ("name", "provider")):
-            out.append(f"{where}: name and provider are required, as text with no outer spaces")
-        hq = row.get("provider_hq")
-        if not (hq is None or (isinstance(hq, str) and COUNTRY.fullmatch(hq))):
-            out.append(f"{where}: provider_hq {hq!r} is not an ISO 3166-1 alpha-2 code or null")
-        lanes = row.get("lanes")
-        if not isinstance(lanes, list) or not lanes or any(x not in LANES for x in lanes):
-            out.append(f"{where}: lanes {lanes!r} is not a non-empty list from {list(LANES)}")
-        pm = row.get("price_month")
-        if not (pm is None or (isinstance(pm, (int, float)) and not isinstance(pm, bool) and math.isfinite(pm)
-                                 and pm >= 0)):
-            out.append(f"{where}: price_month is not a finite number or null")
-        if not CURRENCY.fullmatch(str(row.get("currency", ""))):
-            out.append(f"{where}: currency {row.get('currency')!r} is not an ISO 4217 code")
-        if row.get("overage") not in OVERAGE:
-            out.append(f"{where}: overage {row.get('overage')!r} is not stops, bills, unknown or null")
-        for k in ("card", "trains_on_data", "commercial_use"):
-            if row.get(k) not in (True, False, None):
-                out.append(f"{where}: {k} is not true, false or null")
-        if not isinstance(row.get("verified"), bool):
-            out.append(f"{where}: verified is not true or false")
-        if not str(row.get("source", "")).startswith("https://"):
-            out.append(f"{where}: source is not an https URL")
-        extra = row.get("sources_extra")
-        if not isinstance(extra, list) or any(not str(u).startswith("https://") for u in strings(extra)):
-            out.append(f"{where}: sources_extra is not a list of https URLs")
-        if not real_date(row.get("checked")):
-            out.append(f"{where}: checked is not a real YYYY-MM-DD date, no later than tomorrow")
-        for s in strings(row):
-            if any(d in s for d in DASHES):
-                out.append(f"{where}: an em or en dash (use a comma, colon or parentheses)")
-            if EMAIL.search(s):
-                out.append(f"{where}: an email address")
-            m = PRIVATE.search(s)
-            if m:
-                out.append(f"{where}: a private term {m.group(0)!r}")
-    if not out:
-        rows = doc["rows"]
-        if rows != sorted(rows, key=sort_key):
-            out.append("catalog: rows are not sorted by first lane, provider, name and id")
-        if doc.get("checked") != max((r["checked"] for r in rows), default=None):
-            out.append("catalog: top-level checked is not the newest row's checked")
-        if text != render(doc):
-            out.append("catalog: not in canonical form; run python3 -I tools/catalog.py --format")
-    return out
+        out += check_row(i, row, seen)
+    return out or check_order(doc, text)
 
 
 def check(root):
