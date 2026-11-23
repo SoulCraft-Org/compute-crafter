@@ -48,6 +48,9 @@ DROP = {
     "nanogpt-sub": "its only source is a third-party page",
     "claude-max-5x": "superseded by claude-max, read on a first-party page later",
     "claude-max-20x": "superseded by claude-max, read on a first-party page later",
+    "chatgpt-plus": "not listed: this project lists no OpenAI, xAI or SpaceX (Cursor) products",
+    "chatgpt-pro-100": "not listed: this project lists no OpenAI, xAI or SpaceX (Cursor) products",
+    "cursor-plus": "not listed: this project lists no OpenAI, xAI or SpaceX (Cursor) products",
 }
 # Older rows carry no provider; these fill it from the row's own source page.
 PROVIDER = {
