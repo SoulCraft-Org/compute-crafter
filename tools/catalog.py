@@ -18,7 +18,6 @@ import math
 import os
 import re
 import sys
-import tempfile
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CATALOG = os.path.join("catalog", "plans.json")
@@ -276,40 +275,10 @@ def format_catalog(root):
 
 
 def self_test():
-    new = {"id": "acme-free", "name": "Acme Free", "provider": "Acme", "provider_hq": "US", "exclude": None,
-           "status": "live", "lane": "gpu", "price_month": 0, "currency": "USD", "price_note": "Free.",
-           "includes": "10 GPU hours a month.", "resets": "monthly", "unit_cost_vs_payg": "Free.", "card": False,
-           "overage": "stops", "trains_on_data": None, "commercial_use": None, "limits": "One account.",
-           "source": "https://acme.test/pricing", "sources_extra": ["https://acme.test/docs"], "checked": "2026-11-02",
-           "verified_here": True, "evidence": [{"url": "https://acme.test", "quote": "q"}], "verify_note": "private",
-           "cs_status": "use", "cs_note": "private", "notes": "private"}
-    old = {"id": "acme-free", "name": "Acme Free (old)", "lane": "inference", "price_month": 0, "includes": "old",
-           "unit_cost_vs_payg": "Free", "card": False, "overage": "stops", "have": True,
-           "source": "https://acme.test/pricing", "checked": "2026-10-25", "notes": "private"}
-    other = {"id": "warpbuild", "name": "WarpBuild", "lane": "cpu", "price_month": None, "includes": "PAYG",
-             "unit_cost_vs_payg": "x", "card": True, "overage": "bills", "have": False,
-             "source": "https://www.warpbuild.com/pricing", "checked": "2026-10-25", "notes": "private"}
-
-    def build(*dirs_rows):
-        with tempfile.TemporaryDirectory() as t:
-            dirs = []
-            for n, rows in enumerate(dirs_rows):
-                d = os.path.join(t, str(n))
-                os.makedirs(d)
-                with open(os.path.join(d, "free.json"), "w", encoding="utf-8") as f:
-                    json.dump({"version": 1, "checked": "2026-11-02", "rows": rows}, f)
-                dirs.append(d)
-            return merge(dirs)[0]
-
-    def ids(doc):
-        return [r["id"] for r in doc["rows"]]
-
-    def checked(doc, mutate=None, text=None):
-        doc = json.loads(json.dumps(doc))
-        if mutate:
-            mutate(doc)
-        return check_doc(doc, text if text is not None else render(doc))
-
+    """--self-test: seeded samples that must pass and must fail. Exit 0 all behave, 1 one does not."""
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))  # -I keeps the script's folder off the path
+    from catalog_selftest import NEW as new, OLD as old, OTHER as other, build, check_file, checked, format_file, merge_findings, refuses_inf
+    ids = lambda doc: [r["id"] for r in doc["rows"]]
     clean = build([new], [old, other])
     v = lambda **kw: (lambda d: d["rows"][0].update(kw))
 
@@ -322,56 +291,6 @@ def self_test():
     future = str(datetime.datetime.now(datetime.timezone.utc).date() + datetime.timedelta(days=30))
     inf_doc = json.loads(json.dumps(clean))
     inf_doc["rows"][0]["price_month"] = float("inf")
-
-    def refuses_inf():
-        try:
-            render(inf_doc)
-        except ValueError:
-            return True
-        return False
-
-    def infinity_file_fails():
-        with tempfile.TemporaryDirectory() as t:
-            os.makedirs(os.path.join(t, "catalog"))
-            with open(os.path.join(t, CATALOG), "w", encoding="utf-8") as f:
-                f.write(render(clean).replace('"price_month": 0,', '"price_month": Infinity,', 1))
-            findings, _ = check(t)
-        return any("not JSON" in f for f in findings)
-
-    def merge_findings(*dirs_rows):
-        """Findings for a merge of source rows that may be wrong; a crash is a failure, so it returns None."""
-        try:
-            doc = build(*dirs_rows)
-            return check_doc(doc, render(doc))
-        except Exception:
-            return None
-
-    def check_file(raw):
-        """What --check does with these bytes as catalog/plans.json: its findings, or CannotCheck."""
-        with tempfile.TemporaryDirectory() as t:
-            os.makedirs(os.path.join(t, "catalog"))
-            with open(os.path.join(t, CATALOG), "wb") as f:
-                f.write(raw)
-            try:
-                return check(t)[0]
-            except CannotCheck:
-                return "cannot check"
-
-    def format_file(raw):
-        """What --format does with these bytes: (CannotCheck or 'ok', the file's bytes afterwards)."""
-        with tempfile.TemporaryDirectory() as t:
-            os.makedirs(os.path.join(t, "catalog"))
-            path = os.path.join(t, CATALOG)
-            if raw is not None:
-                with open(path, "wb") as f:
-                    f.write(raw)
-            try:
-                format_catalog(t)
-                outcome = "ok"
-            except CannotCheck:
-                outcome = "cannot check"
-            return outcome, (open(path, "rb").read() if os.path.exists(path) else None)
-
     shuffled = json.loads(json.dumps(clean))
     shuffled["rows"].reverse()
     shuffled_bytes = json.dumps(shuffled, indent=1, ensure_ascii=False).encode() + b"\n"
@@ -416,8 +335,9 @@ def self_test():
         ("a wrong top-level checked fails", bool(checked(clean, lambda d: d.update(checked="2020-01-01")))),
         # Issue 31: Infinity is not JSON, so it never reaches or passes the catalog.
         ("an infinite price fails", any("price_month" in f for f in check_doc(inf_doc, ""))),
-        ("render refuses an infinite price", refuses_inf()),
-        ("a catalog file holding Infinity is not JSON", infinity_file_fails()),
+        ("render refuses an infinite price", refuses_inf(inf_doc)),
+        ("a catalog file holding Infinity is not JSON",
+         any("not JSON" in f for f in check_file(render(clean).replace('"price_month": 0,', '"price_month": Infinity,', 1).encode()))),
         # Issue 33: a date must be a real calendar date, not in the future, with nothing after it.
         # dated() also moves the top-level checked, so only the date itself can fail.
         ("a dated row passes", not checked(clean, dated("2026-11-02"))),
@@ -468,13 +388,9 @@ def self_test():
          format_file(b'{"version": 1, "rows": [5]}\n') == ("ok", b'{"version": 1, "rows": [5]}\n')),
         ("--format sorts a catalog's rows and writes it canonically",
          format_file(shuffled_bytes) == ("ok", render(clean).encode())),
+        # infrastructure: a missing catalog must say "could not check", never look like a finding
+        ("a missing catalog is infrastructure (exit 2)", check_file(None) == "cannot check"),
     ]
-    try:  # infrastructure: a missing catalog must say "could not check", never look like a finding
-        with tempfile.TemporaryDirectory() as t:
-            check(t)
-        cases.append(("a missing catalog is infrastructure (exit 2)", False))
-    except CannotCheck:
-        cases.append(("a missing catalog is infrastructure (exit 2)", True))
     bad = 0
     for name, good in cases:
         bad |= not good
