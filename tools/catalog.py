@@ -18,7 +18,6 @@ import math
 import os
 import re
 import sys
-import tempfile
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CATALOG = os.path.join("catalog", "plans.json")
@@ -173,75 +172,96 @@ def render(doc):
     return json.dumps(doc, indent=1, ensure_ascii=False, allow_nan=False) + "\n"
 
 
+def failed(where, rules):
+    """The where-led message of each (broken, message) rule whose condition holds, in order."""
+    return [f"{where}: {message}" for broken, message in rules if broken]
+
+
+def check_identity(where, row, seen):
+    """Findings for a row's keys, id, name and provider; the row's id joins seen."""
+    extra = sorted(set(row) - set(PUBLIC_FIELDS))
+    found = failed(where, [
+        (tuple(row) != PUBLIC_FIELDS, "keys are not PUBLIC_FIELDS in order" + (f" (not allowed: {extra})" if extra else "")),
+        (not ID.fullmatch(str(row.get("id", ""))), "id is not lowercase letters, digits, dots and hyphens"),
+        (row.get("id") in seen, "duplicate id"),
+        (any(not isinstance(row.get(k), str) or not row[k].strip() or row[k] != row[k].strip() for k in ("name", "provider")),
+         "name and provider are required, as text with no outer spaces"),
+    ])
+    seen.add(row.get("id"))
+    return found
+
+
+def check_values(where, row):
+    """Findings for a row's country, lanes and price."""
+    hq, lanes, pm = row.get("provider_hq"), row.get("lanes"), row.get("price_month")
+    return failed(where, [
+        (not (hq is None or (isinstance(hq, str) and COUNTRY.fullmatch(hq))), f"provider_hq {hq!r} is not an ISO 3166-1 alpha-2 code or null"),
+        (not isinstance(lanes, list) or not lanes or any(x not in LANES for x in lanes),
+         f"lanes {lanes!r} is not a non-empty list from {list(LANES)}"),
+        (not (pm is None or (isinstance(pm, (int, float)) and not isinstance(pm, bool) and math.isfinite(pm) and pm >= 0)),
+         "price_month is not a finite number or null"),
+    ])
+
+
+def check_flags(where, row):
+    """Findings for a row's currency, overage, flags, sources and checked date."""
+    extra = row.get("sources_extra")
+    return failed(where, [
+        (not CURRENCY.fullmatch(str(row.get("currency", ""))), f"currency {row.get('currency')!r} is not an ISO 4217 code"),
+        (row.get("overage") not in OVERAGE, f"overage {row.get('overage')!r} is not stops, bills, unknown or null"),
+        *[(row.get(k) not in (True, False, None), f"{k} is not true, false or null") for k in ("card", "trains_on_data", "commercial_use")],
+        (not isinstance(row.get("verified"), bool), "verified is not true or false"),
+        (not str(row.get("source", "")).startswith("https://"), "source is not an https URL"),
+        (not isinstance(extra, list) or any(not str(u).startswith("https://") for u in strings(extra)),
+         "sources_extra is not a list of https URLs"),
+        (not real_date(row.get("checked")), "checked is not a real YYYY-MM-DD date, no later than tomorrow"),
+    ])
+
+
+def check_text(where, row):
+    """Findings for each string of a row: an em or en dash, an email address, a private term."""
+    out = []
+    for s in strings(row):
+        m = PRIVATE.search(s)
+        out += failed(where, [
+            (any(d in s for d in DASHES), "an em or en dash (use a comma, colon or parentheses)"),
+            (EMAIL.search(s), "an email address"),
+            (m, f"a private term {(m and m.group(0))!r}"),
+        ])
+    return out
+
+
+def check_row(i, row, seen):
+    """Findings for one catalog row."""
+    where = f"row {i} ({row.get('id', '?') if isinstance(row, dict) else '?'})"
+    if not isinstance(row, dict):
+        return [f"{where}: not an object"]
+    return check_identity(where, row, seen) + check_values(where, row) + check_flags(where, row) + check_text(where, row)
+
+
+def check_order(doc, text):
+    """Findings for the order, newest date and bytes of a catalog that is otherwise valid."""
+    rows = doc["rows"]
+    return [message for broken, message in [
+        (rows != sorted(rows, key=sort_key), "catalog: rows are not sorted by first lane, provider, name and id"),
+        (doc.get("checked") != max((r["checked"] for r in rows), default=None), "catalog: top-level checked is not the newest row's checked"),
+        (text != render(doc), "catalog: not in canonical form; run python3 -I tools/catalog.py --format"),
+    ] if broken]
+
+
 def check_doc(doc, text):
     """Findings for the catalog document and its bytes."""
-    out = []
     if not isinstance(doc, dict) or doc.get("version") != 1 or not isinstance(doc.get("rows"), list):
         return ['catalog: wants {"version": 1, "checked": "YYYY-MM-DD", "lanes": [...], "rows": [...]}']
+    out = []
     if set(doc) != {"version", "about", "checked", "lanes", "rows"}:
         out.append(f"catalog: top-level keys {sorted(doc)} are not version, about, checked, lanes, rows")
     if doc.get("lanes") != list(LANES):
         out.append(f"catalog: lanes is not {list(LANES)}")
     seen = set()
     for i, row in enumerate(doc["rows"]):
-        where = f"row {i} ({row.get('id', '?') if isinstance(row, dict) else '?'})"
-        if not isinstance(row, dict):
-            out.append(f"{where}: not an object")
-            continue
-        if tuple(row) != PUBLIC_FIELDS:
-            extra = sorted(set(row) - set(PUBLIC_FIELDS))
-            out.append(f"{where}: keys are not PUBLIC_FIELDS in order" + (f" (not allowed: {extra})" if extra else ""))
-        if not ID.fullmatch(str(row.get("id", ""))):
-            out.append(f"{where}: id is not lowercase letters, digits, dots and hyphens")
-        if row.get("id") in seen:
-            out.append(f"{where}: duplicate id")
-        seen.add(row.get("id"))
-        if any(not isinstance(row.get(k), str) or not row[k].strip() or row[k] != row[k].strip()
-               for k in ("name", "provider")):
-            out.append(f"{where}: name and provider are required, as text with no outer spaces")
-        hq = row.get("provider_hq")
-        if not (hq is None or (isinstance(hq, str) and COUNTRY.fullmatch(hq))):
-            out.append(f"{where}: provider_hq {hq!r} is not an ISO 3166-1 alpha-2 code or null")
-        lanes = row.get("lanes")
-        if not isinstance(lanes, list) or not lanes or any(x not in LANES for x in lanes):
-            out.append(f"{where}: lanes {lanes!r} is not a non-empty list from {list(LANES)}")
-        pm = row.get("price_month")
-        if not (pm is None or (isinstance(pm, (int, float)) and not isinstance(pm, bool) and math.isfinite(pm)
-                                 and pm >= 0)):
-            out.append(f"{where}: price_month is not a finite number or null")
-        if not CURRENCY.fullmatch(str(row.get("currency", ""))):
-            out.append(f"{where}: currency {row.get('currency')!r} is not an ISO 4217 code")
-        if row.get("overage") not in OVERAGE:
-            out.append(f"{where}: overage {row.get('overage')!r} is not stops, bills, unknown or null")
-        for k in ("card", "trains_on_data", "commercial_use"):
-            if row.get(k) not in (True, False, None):
-                out.append(f"{where}: {k} is not true, false or null")
-        if not isinstance(row.get("verified"), bool):
-            out.append(f"{where}: verified is not true or false")
-        if not str(row.get("source", "")).startswith("https://"):
-            out.append(f"{where}: source is not an https URL")
-        extra = row.get("sources_extra")
-        if not isinstance(extra, list) or any(not str(u).startswith("https://") for u in strings(extra)):
-            out.append(f"{where}: sources_extra is not a list of https URLs")
-        if not real_date(row.get("checked")):
-            out.append(f"{where}: checked is not a real YYYY-MM-DD date, no later than tomorrow")
-        for s in strings(row):
-            if any(d in s for d in DASHES):
-                out.append(f"{where}: an em or en dash (use a comma, colon or parentheses)")
-            if EMAIL.search(s):
-                out.append(f"{where}: an email address")
-            m = PRIVATE.search(s)
-            if m:
-                out.append(f"{where}: a private term {m.group(0)!r}")
-    if not out:
-        rows = doc["rows"]
-        if rows != sorted(rows, key=sort_key):
-            out.append("catalog: rows are not sorted by first lane, provider, name and id")
-        if doc.get("checked") != max((r["checked"] for r in rows), default=None):
-            out.append("catalog: top-level checked is not the newest row's checked")
-        if text != render(doc):
-            out.append("catalog: not in canonical form; run python3 -I tools/catalog.py --format")
-    return out
+        out += check_row(i, row, seen)
+    return out or check_order(doc, text)
 
 
 def check(root):
@@ -282,211 +302,10 @@ def format_catalog(root):
 
 
 def self_test():
-    new = {"id": "acme-free", "name": "Acme Free", "provider": "Acme", "provider_hq": "US", "exclude": None,
-           "status": "live", "lane": "gpu", "price_month": 0, "currency": "USD", "price_note": "Free.",
-           "includes": "10 GPU hours a month.", "resets": "monthly", "unit_cost_vs_payg": "Free.", "card": False,
-           "overage": "stops", "trains_on_data": None, "commercial_use": None, "limits": "One account.",
-           "source": "https://acme.test/pricing", "sources_extra": ["https://acme.test/docs"], "checked": "2026-11-02",
-           "verified_here": True, "evidence": [{"url": "https://acme.test", "quote": "q"}], "verify_note": "private",
-           "cs_status": "use", "cs_note": "private", "notes": "private"}
-    old = {"id": "acme-free", "name": "Acme Free (old)", "lane": "inference", "price_month": 0, "includes": "old",
-           "unit_cost_vs_payg": "Free", "card": False, "overage": "stops", "have": True,
-           "source": "https://acme.test/pricing", "checked": "2026-10-25", "notes": "private"}
-    other = {"id": "warpbuild", "name": "WarpBuild", "lane": "cpu", "price_month": None, "includes": "PAYG",
-             "unit_cost_vs_payg": "x", "card": True, "overage": "bills", "have": False,
-             "source": "https://www.warpbuild.com/pricing", "checked": "2026-10-25", "notes": "private"}
-
-    def build(*dirs_rows):
-        with tempfile.TemporaryDirectory() as t:
-            dirs = []
-            for n, rows in enumerate(dirs_rows):
-                d = os.path.join(t, str(n))
-                os.makedirs(d)
-                with open(os.path.join(d, "free.json"), "w", encoding="utf-8") as f:
-                    json.dump({"version": 1, "checked": "2026-11-02", "rows": rows}, f)
-                dirs.append(d)
-            return merge(dirs)[0]
-
-    def ids(doc):
-        return [r["id"] for r in doc["rows"]]
-
-    def checked(doc, mutate=None, text=None):
-        doc = json.loads(json.dumps(doc))
-        if mutate:
-            mutate(doc)
-        return check_doc(doc, text if text is not None else render(doc))
-
-    clean = build([new], [old, other])
-    v = lambda **kw: (lambda d: d["rows"][0].update(kw))
-
-    def dated(s):
-        def mutate(d):
-            d["rows"][0]["checked"] = s
-            d["checked"] = max(r["checked"] for r in d["rows"])
-        return mutate
-
-    future = str(datetime.datetime.now(datetime.timezone.utc).date() + datetime.timedelta(days=30))
-    inf_doc = json.loads(json.dumps(clean))
-    inf_doc["rows"][0]["price_month"] = float("inf")
-
-    def refuses_inf():
-        try:
-            render(inf_doc)
-        except ValueError:
-            return True
-        return False
-
-    def infinity_file_fails():
-        with tempfile.TemporaryDirectory() as t:
-            os.makedirs(os.path.join(t, "catalog"))
-            with open(os.path.join(t, CATALOG), "w", encoding="utf-8") as f:
-                f.write(render(clean).replace('"price_month": 0,', '"price_month": Infinity,', 1))
-            findings, _ = check(t)
-        return any("not JSON" in f for f in findings)
-
-    def merge_findings(*dirs_rows):
-        """Findings for a merge of source rows that may be wrong; a crash is a failure, so it returns None."""
-        try:
-            doc = build(*dirs_rows)
-            return check_doc(doc, render(doc))
-        except Exception:
-            return None
-
-    def check_file(raw):
-        """What --check does with these bytes as catalog/plans.json: its findings, or CannotCheck."""
-        with tempfile.TemporaryDirectory() as t:
-            os.makedirs(os.path.join(t, "catalog"))
-            with open(os.path.join(t, CATALOG), "wb") as f:
-                f.write(raw)
-            try:
-                return check(t)[0]
-            except CannotCheck:
-                return "cannot check"
-
-    def format_file(raw):
-        """What --format does with these bytes: (CannotCheck or 'ok', the file's bytes afterwards)."""
-        with tempfile.TemporaryDirectory() as t:
-            os.makedirs(os.path.join(t, "catalog"))
-            path = os.path.join(t, CATALOG)
-            if raw is not None:
-                with open(path, "wb") as f:
-                    f.write(raw)
-            try:
-                format_catalog(t)
-                outcome = "ok"
-            except CannotCheck:
-                outcome = "cannot check"
-            return outcome, (open(path, "rb").read() if os.path.exists(path) else None)
-
-    shuffled = json.loads(json.dumps(clean))
-    shuffled["rows"].reverse()
-    shuffled_bytes = json.dumps(shuffled, indent=1, ensure_ascii=False).encode() + b"\n"
-    no_rows = b'{"version": 1}\n'
-    cases = [
-        ("a clean merge passes --check", not checked(clean)),
-        ("every row has exactly PUBLIC_FIELDS", all(tuple(r) == PUBLIC_FIELDS for r in clean["rows"])),
-        ("cs_*, evidence, notes, have and verify_note never reach the catalog",
-         all(not k.startswith("cs_") and k not in ("evidence", "notes", "have", "verify_note")
-             for r in clean["rows"] for k in r)),
-        ("ids dedupe, and the newer checked wins", ids(clean).count("acme-free") == 1
-         and [r for r in clean["rows"] if r["id"] == "acme-free"][0]["name"] == "Acme Free"),
-        ("the newer row wins even from a later source", [r["name"] for r in build([old], [new])["rows"]] == ["Acme Free"]),
-        ("on a tie the earlier source wins",
-         [r["name"] for r in build([dict(old, checked="2026-11-02")], [new])["rows"]] == ["Acme Free (old)"]),
-        ("one id in two lanes keeps both lanes", [r for r in clean["rows"] if r["id"] == "acme-free"][0]["lanes"]
-         == ["gpu", "inference"]),
-        ("an old row gets its provider and USD", [r for r in clean["rows"] if r["id"] == "warpbuild"][0]["provider"]
-         == "WarpBuild" and [r for r in clean["rows"] if r["id"] == "warpbuild"][0]["currency"] == "USD"),
-        ("verified follows verified_here", [r["verified"] for r in build([dict(new, verified_here=False)])["rows"]]
-         == [False]),
-        ("closed and excluded rows stay out",
-         ids(build([new, dict(new, id="b", status="closed"), dict(new, id="c", exclude="china")])) == ["acme-free"]),
-        ("a row closed in the newer source stays out though an older one is live",
-         ids(build([dict(new, status="closed")], [old])) == []),
-        ("DROP rows stay out", ids(build([new, dict(new, id="copilot-current")])) == ["acme-free"]),
-        ("two merges are byte-identical", render(build([new], [old, other])) == render(clean)),
-        ("a private column added to a source never leaks", "secret" not in render(build([dict(new, secret="x")]))),
-        ("a stale (non-canonical) file fails", bool(checked(clean, text=render(clean).replace("\n ", "\n  ", 1)))),
-        ("an extra key fails", bool(checked(clean, v(cs_status="use")))),
-        ("an http source fails", bool(checked(clean, v(source="http://acme.test")))),
-        ("an http extra source fails", bool(checked(clean, v(sources_extra=["http://acme.test"])))),
-        ("a bad date fails", bool(checked(clean, v(checked="2026-11")))),
-        ("an em dash fails", bool(checked(clean, v(includes="one \u2014 two")))),
-        ("an email fails", bool(checked(clean, v(limits="write to x" + "@" + "acme.test")))),
-        ("a private term fails", bool(checked(clean, v(price_note="Seen on the " + "Soul" + "Craft account.")))),
-        ("a duplicate id fails", bool(checked(clean, lambda d: d["rows"].append(dict(d["rows"][0]))))),
-        ("a bad lane fails", bool(checked(clean, v(lanes=["cloud"])))),
-        ("a currency symbol fails", bool(checked(clean, v(currency="\u20ac")))),
-        ("a string price fails", bool(checked(clean, v(price_month="$5")))),
-        ("unsorted rows fail", bool(checked(clean, lambda d: d["rows"].reverse()))),
-        ("a wrong top-level checked fails", bool(checked(clean, lambda d: d.update(checked="2020-01-01")))),
-        # Issue 31: Infinity is not JSON, so it never reaches or passes the catalog.
-        ("an infinite price fails", any("price_month" in f for f in check_doc(inf_doc, ""))),
-        ("render refuses an infinite price", refuses_inf()),
-        ("a catalog file holding Infinity is not JSON", infinity_file_fails()),
-        # Issue 33: a date must be a real calendar date, not in the future, with nothing after it.
-        # dated() also moves the top-level checked, so only the date itself can fail.
-        ("a dated row passes", not checked(clean, dated("2026-11-02"))),
-        ("an impossible date fails", bool(checked(clean, dated("2026-02-30")))),
-        ("a month 13 date fails", bool(checked(clean, dated("2026-13-01")))),
-        ("a future date fails", bool(checked(clean, dated(future)))),
-        ("a date with a trailing newline fails", bool(checked(clean, dated("2026-11-02\n")))),
-        ("an id with a trailing newline fails", bool(checked(clean, v(id="acme-free\n")))),
-        ("a currency with a trailing newline fails", bool(checked(clean, v(currency="USD\n")))),
-        # Issue 36: commercial_use, provider_hq, name and provider keep their README types.
-        ("a string commercial_use fails", bool(checked(clean, v(commercial_use="only on weekends")))),
-        ("a country name as provider_hq fails", bool(checked(clean, v(provider_hq="United States of America")))),
-        ("a lowercase provider_hq fails", bool(checked(clean, v(provider_hq="us")))),
-        ("a null provider_hq passes", not checked(clean, v(provider_hq=None))),
-        ("a number as name fails", bool(checked(clean, v(name=5)))),
-        ("a list as provider fails", bool(checked(clean, v(provider=["Acme"])))),
-        ("a blank-padded name fails", bool(checked(clean, v(name=" Acme Free ")))),
-        ("a blank provider fails", bool(checked(clean, v(provider="   ")))),
-        # Issue 20: a source row with no lane, or a lane the catalog does not know, is a finding, not a crash.
-        ("a source row with an unknown lane is reported, not a crash",
-         any("lanes" in f for f in merge_findings([dict(new, lane="storage")]) or [])),
-        ("a source row with no lane is reported, not a crash",
-         any("lanes" in f for f in merge_findings([{k: x for k, x in new.items() if k != "lane"}]) or [])),
-        ("an unknown lane beside a known one keeps the known lane first",
-         build([new], [dict(old, lane="storage")])["rows"][0]["lanes"] == ["gpu", "storage"]),
-        # Issue 23: a source row with no checked date is a finding, not a crash.
-        ("a source row with no checked date is reported, not a crash",
-         any("checked" in f for f in merge_findings([new, dict(other, id="beta-free", checked=None)]) or [])),
-        ("a source row with no checked key is reported, not a crash",
-         any("checked" in f for f in merge_findings([new, {k: x for k, x in other.items() if k != "checked"}]) or [])),
-        ("a row with a null checked never beats a dated row",
-         [r["name"] for r in build([new], [dict(old, checked=None)])["rows"]] == ["Acme Free"]),
-        ("the top-level checked is the newest valid date when another row has none",
-         build([new, dict(other, checked=None)])["checked"] == "2026-11-02"),
-        # Issue 25: a catalog that is not UTF-8 is infrastructure (exit 2), not a traceback.
-        ("a catalog with a byte that is not UTF-8 cannot be checked (exit 2)",
-         check_file(render(clean).encode().replace(b"Acme", b"Acm\xe9", 1)) == "cannot check"),
-        ("a catalog that is a UTF-8 file still checks", check_file(render(clean).encode()) == []),
-        # Issue 21: --format never tracebacks: a bad or missing catalog is exit 2, a wrong shape is left for --check.
-        ("--format on a missing catalog cannot check (exit 2)", format_file(None) == ("cannot check", None)),
-        ("--format on a catalog that is not JSON cannot check (exit 2)",
-         format_file(b"{not json") == ("cannot check", b"{not json")),
-        ("--format on a catalog that is not UTF-8 cannot check (exit 2)",
-         format_file(b"\xe9") == ("cannot check", b"\xe9")),
-        ("--format on a catalog with no rows list leaves it for --check",
-         format_file(no_rows) == ("ok", no_rows) and bool(check_file(no_rows))),
-        ("--format on a catalog whose rows are not objects leaves it for --check",
-         format_file(b'{"version": 1, "rows": [5]}\n') == ("ok", b'{"version": 1, "rows": [5]}\n')),
-        ("--format sorts a catalog's rows and writes it canonically",
-         format_file(shuffled_bytes) == ("ok", render(clean).encode())),
-    ]
-    try:  # infrastructure: a missing catalog must say "could not check", never look like a finding
-        with tempfile.TemporaryDirectory() as t:
-            check(t)
-        cases.append(("a missing catalog is infrastructure (exit 2)", False))
-    except CannotCheck:
-        cases.append(("a missing catalog is infrastructure (exit 2)", True))
-    bad = 0
-    for name, good in cases:
-        bad |= not good
-        print(f"self-test: {'ok   ' if good else 'WRONG'} {name}")
-    print("self-test passed" if not bad else "self-test FAILED")
-    return 1 if bad else 0
+    """--self-test: seeded samples that must pass and must fail. Exit 0 all behave, 1 one does not."""
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))  # -I keeps the script's folder off the path
+    import catalog_selftest
+    return catalog_selftest.run()
 
 
 def run_merge(dirs):
