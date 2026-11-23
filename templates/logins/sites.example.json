@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "order": ["github", "apple", "microsoft", "google", "email-password"],
+  "codes": {
+    "default": "passwords",
+    "microsoft": "microsoft-authenticator",
+    "google": "google-authenticator"
+  },
+  "sites": [
+    {"id": "apple", "vendor": "apple", "stage": "now"},
+    {"id": "github", "vendor": "github", "stage": "now", "codes": "passwords"},
+    {"id": "microsoft", "vendor": "microsoft", "stage": "now"},
+    {"id": "google", "vendor": "google", "stage": "now"},
+    {"id": "hugging-face", "vendor": "hugging-face", "stage": "now"},
+    {"id": "modal", "vendor": "modal", "stage": "now"},
+    {"id": "cloudflare", "vendor": "cloudflare", "stage": "later"}
+  ]
+}

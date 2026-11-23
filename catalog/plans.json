@@ -1,7 +1,7 @@
 {
  "version": 1,
  "about": "Free tiers and plans for compute, CI and AI inference, public fields only. Built by tools/catalog.py; every row names the vendor page it was read on and the date. verified: true means every figure was read on that first-party page on that date; false means it was not re-read since.",
- "checked": "2026-11-13",
+ "checked": "2026-11-23",
  "lanes": [
   "ci",
   "cpu",
@@ -11,6 +11,58 @@
   "tools"
  ],
  "rows": [
+  {
+   "id": "bitrise-build-hub-basic-1",
+   "name": "Bitrise Build Hub Basic Tier 1 (GitHub Actions runners)",
+   "provider": "Bitrise",
+   "provider_hq": "HU",
+   "lanes": [
+    "ci"
+   ],
+   "price_month": 20,
+   "currency": "USD",
+   "price_note": "$20 per month billed monthly, or $18 per month billed annually.",
+   "includes": "Managed GitHub Actions runners: 480 included minutes per month per OS (8 hours macOS and 8 hours Linux), macOS M2 Pro Large (6 vCPU, 14 GB), Linux up to Medium (4 vCPU, 16 GB), 1 concurrent VM.",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "Pay-As-You-Go, if switched on, runs at 2x the standard per-minute rate with a user-set cap from $5. Page lists monthly caps of $99 (macOS) and $39 (Linux) for Tier 1 VMs.",
+   "card": true,
+   "overage": "stops",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "Pay-As-You-Go is off by default, so jobs stop running on Build Hub once the monthly budget is used. 14-day free trial available. Bitrise published a security incident report (published Nov 19, 2026) linked from this pricing page: an AI-driven attacker had access from Nov 13, 2026, Bitrise switched the platform off at 20:34 UTC that day, rotated credentials and rebuilt its build infrastructure; files in 15 customer workspaces were accessed. The report states Bitrise is safe to use and recommends customers rotate secrets stored in Bitrise. See https://bitrise.io/artex-incident-report",
+   "source": "https://bitrise.io/pricing",
+   "sources_extra": [
+    "https://bitrise.io/artex-incident-report"
+   ],
+   "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "bitrise-hobby",
+   "name": "Bitrise Hobby",
+   "provider": "Bitrise",
+   "provider_hq": "HU",
+   "lanes": [
+    "ci"
+   ],
+   "price_month": 0,
+   "currency": "USD",
+   "price_note": "Free forever plan; credit card verification required.",
+   "includes": "500 build minutes per month on Linux or macOS, 1 private app, unlimited public apps, pipelines, unlimited workflow steps, 1 free on-prem runner, unlimited team members.",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "Optional Pay-As-You-Go: extra minutes charged at 1.5x the per-minute rate, capped at $15 per month; PAYG charges under $5 are not billed.",
+   "card": true,
+   "overage": "stops",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "Builds time out at 90 minutes. Pay-As-You-Go is off unless switched on; at the $15 cap no new builds start until the next cycle. Bitrise published a security incident report (published Nov 19, 2026) linked from this pricing page: an AI-driven attacker had access from Nov 13, 2026, Bitrise switched the platform off at 20:34 UTC that day, rotated credentials and rebuilt its build infrastructure; files in 15 customer workspaces were accessed. The report states Bitrise is safe to use and recommends customers rotate secrets stored in Bitrise. See https://bitrise.io/artex-incident-report",
+   "source": "https://bitrise.io/pricing",
+   "sources_extra": [
+    "https://bitrise.io/artex-incident-report"
+   ],
+   "checked": "2026-11-23",
+   "verified": true
+  },
   {
    "id": "blacksmith-free",
    "name": "Blacksmith free tier",
@@ -35,7 +87,79 @@
    "sources_extra": [
     "https://docs.blacksmith.sh/blacksmith-runners/overview"
    ],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "buildkite-free",
+   "name": "Buildkite Free plan",
+   "provider": "Buildkite",
+   "provider_hq": "AU",
+   "lanes": [
+    "ci"
+   ],
+   "price_month": 0,
+   "currency": "USD",
+   "price_note": "Free plan; starts with a 30-day all-access trial, no credit card.",
+   "includes": "Up to 5 users, up to 10 concurrent jobs on self-hosted agents, up to 2,000 Linux AMD64 vCPU minutes per month on hosted agents (Small size only, up to 20 vCPU concurrency), 250k test executions per month, 1 GB/month of OpenTelemetry traces (hard cap), 50 GB/month artifact storage, 30-day build retention.",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "Pro is $30 per active user per month with 4,000 Linux AMD64 vCPU minutes and extra minutes at per-minute rates (rates not shown on this page).",
+   "card": false,
+   "overage": "unknown",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "No ARM64, macOS or Windows hosted agents on Free. Community support only.",
+   "source": "https://buildkite.com/pricing/",
+   "sources_extra": [],
+   "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "circleci-free",
+   "name": "CircleCI Free",
+   "provider": "CircleCI",
+   "provider_hq": "US",
+   "lanes": [
+    "ci"
+   ],
+   "price_month": 0,
+   "currency": "USD",
+   "price_note": "Free plan, no credit card required.",
+   "includes": "30,000 credits per month (up to 6,000 build minutes on a small Docker resource class; 3,000 minutes on Linux Medium at 10 credits per minute), up to 5 active users, Docker, Windows, Linux, Arm and macOS plus self-hosted runners, 30 concurrent jobs, 1 GB network and 2 GB storage included.",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "Performance plan credits cost $15 per 25,000; prepaid bulk from 1 million credits for $600.",
+   "card": false,
+   "overage": "unknown",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "Free plan credits expire after a month and do not roll over. Self-hosted runners limited to 5 concurrent tasks. Network and storage beyond plan thresholds is charged at 420 credits per GB.",
+   "source": "https://circleci.com/pricing/",
+   "sources_extra": [],
+   "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "circleci-performance",
+   "name": "CircleCI Performance",
+   "provider": "CircleCI",
+   "provider_hq": "US",
+   "lanes": [
+    "ci"
+   ],
+   "price_month": 15,
+   "currency": "USD",
+   "price_note": "Starting at $15 per month; usage-based credits.",
+   "includes": "The 30,000 free monthly credits plus purchased credits at $15 per 25,000, 5 active users included, larger resource classes, 80 concurrent jobs, 20 concurrent self-hosted runner tasks, 5 GB network and 2 GB storage included.",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "$15 per 25,000 credits; extra active users $15 per month (25,000 credits each). Paid credits roll over and expire after 12 months.",
+   "card": true,
+   "overage": "bills",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "When credits run out the account automatically refills 25% of the monthly amount, minimum 25,000 credits. The included 30,000 free credits do not roll over.",
+   "source": "https://circleci.com/pricing/",
+   "sources_extra": [],
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -51,19 +175,20 @@
    "price_note": "USD per user per month. The pricing page says Enterprise now includes access to GitHub Copilot.",
    "includes": "$300 per month of included Actions compute, which covers 50,000 Linux 2-core minutes at $0.006 (pricing page: 50,000 CI/CD minutes per month). 50 GB artifact storage, 10 GB cache per repository, 150 GB custom image storage. Larger runners, the GPU runner among them, can draw from the included amount.",
    "resets": "monthly",
-   "unit_cost_vs_payg": "Past $300: Linux 2-core x64 $0.006/min, Linux 2-core arm64 $0.005/min, Linux 4-core GPU $0.052/min. Storage past the allowance: $0.25 per GB-month for artifacts and Packages, $0.07 for cache.",
+   "unit_cost_vs_payg": "Past $300: Linux 2-core x64 $0.006/min, Linux 2-core arm64 $0.005/min, Linux 4-core GPU $0.052/min. Storage past the allowance: $0.25 per GB-month for artifacts and Packages, $0.07 for cache, $0.07 for custom image storage.",
    "card": true,
    "overage": "bills",
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": "Past the included amount, usage bills the payment method on file. A budget set to stop usage can block Actions spend. Without a valid payment method, usage is blocked once included compute is used.",
+   "limits": "Past the included amount, usage bills the payment method on file. A budget set to stop usage can block Actions spend. Without a valid payment method, usage is blocked once included compute is used. Standard GitHub-hosted runners: 500 concurrent jobs, at most 50 macOS jobs.",
    "source": "https://docs.github.com/en/billing/concepts/product-billing/github-actions",
    "sources_extra": [
     "https://github.com/pricing",
     "https://docs.github.com/en/billing/reference/actions-runner-pricing",
-    "https://docs.github.com/en/billing/concepts/budgets-and-alerts"
+    "https://docs.github.com/en/billing/concepts/budgets-and-alerts",
+    "https://docs.github.com/en/actions/reference/limits"
    ],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -77,9 +202,9 @@
    "price_month": 0,
    "currency": "USD",
    "price_note": "GitHub Free plan. GitHub Pro is a paid plan with a larger allowance.",
-   "includes": "Private repositories: $12 of included compute per month on GitHub Free, with 500 MB artifact storage and 10 GB cache per repository. GitHub Pro gets $18 and 1 GB. At $0.006 per Linux 2-core minute, $12 covers 2,000 minutes and $18 covers 3,000 (computed here). Standard GitHub-hosted runners in public repositories are free and do not draw on the allowance.",
+   "includes": "Private repositories: $12 of included compute per month on GitHub Free (also GitHub Free for organizations), with 500 MB artifact storage and 10 GB cache per repository. GitHub Pro gets $18 and 1 GB. At $0.006 per Linux 2-core minute, $12 covers 2,000 minutes and $18 covers 3,000 (computed here; github.com/pricing also shows 2,000 CI/CD minutes on Free). Cloud sandbox compute and memory now draw from the same included amount. Standard GitHub-hosted runners in public repositories, GitHub Pages and Dependabot are free and do not draw on the allowance.",
    "resets": "monthly",
-   "unit_cost_vs_payg": "Per minute: Linux 1-core $0.002, Linux 2-core x64 $0.006, Linux 2-core arm64 $0.005, Windows 2-core $0.010, macOS 3 or 4-core $0.062. Extra storage $0.25 per GB-month.",
+   "unit_cost_vs_payg": "Per minute: Linux 1-core $0.002, Linux 2-core x64 $0.006, Linux 2-core arm64 $0.005, Windows 2-core x64 $0.010, Windows 2-core arm64 $0.010, macOS 3 or 4-core $0.062. Extra storage $0.25 per GB-month (artifacts and Packages), $0.07 per GB-month (cache).",
    "card": false,
    "overage": "stops",
    "trains_on_data": null,
@@ -89,7 +214,83 @@
    "sources_extra": [
     "https://docs.github.com/en/actions/reference/limits"
    ],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "gitlab-premium",
+   "name": "GitLab Premium",
+   "provider": "GitLab",
+   "provider_hq": "US",
+   "lanes": [
+    "ci"
+   ],
+   "price_month": 29,
+   "currency": "USD",
+   "price_note": "$29 per user per month, billed annually.",
+   "includes": "10,000 compute minutes per month, 500 GiB storage, unlimited licensed users, advanced CI/CD, and $8 of included GitLab Credits per user per month for AI features (a limited-time promotional offer per the page).",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "Extra compute minutes $10 per 1,000; GitLab Credits $1 each.",
+   "card": true,
+   "overage": "unknown",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "Price is per user and billed annually. Minutes are counted per top-level namespace with the same cost factors as Free.",
+   "source": "https://about.gitlab.com/pricing/",
+   "sources_extra": [
+    "https://docs.gitlab.com/ci/pipelines/compute_minutes/"
+   ],
+   "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "gitlab-free",
+   "name": "GitLab.com Free",
+   "provider": "GitLab",
+   "provider_hq": "US",
+   "lanes": [
+    "ci"
+   ],
+   "price_month": 0,
+   "currency": "USD",
+   "price_note": "Free tier on GitLab.com, no credit card required.",
+   "includes": "400 compute minutes per month on GitLab-hosted instance runners, 5 users per top-level group, 10 GiB storage, source code management and CI/CD, static application security testing.",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "Extra compute minutes are $10 per 1,000 minutes (one-time purchase, rolls over). Cost factors: Linux x86-64 small 1, medium 2, large 3, xlarge 6, 2xlarge 12, GPU standard 7, macOS M1 medium 6 (beta), Windows medium 1 (beta).",
+   "card": false,
+   "overage": "unknown",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "Quota is enforced on Free namespaces on GitLab.com; the docs say enforcement measures apply when the quota is exceeded but do not detail them. Usage resets on the first day of each month. Public projects in the GitLab for Open Source program get a 0.5 cost factor. AI features need purchased GitLab Credits.",
+   "source": "https://about.gitlab.com/pricing/",
+   "sources_extra": [
+    "https://docs.gitlab.com/ci/pipelines/compute_minutes/"
+   ],
+   "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "semaphore-free-credits",
+   "name": "Semaphore Cloud free monthly credits",
+   "provider": "Semaphore",
+   "provider_hq": null,
+   "lanes": [
+    "ci"
+   ],
+   "price_month": 0,
+   "currency": "USD",
+   "price_note": "$15 of free credits every month on Semaphore Cloud, then per-minute billing.",
+   "includes": "$15 of credits per month (about 2,000 Ubuntu x64 2-vCPU minutes per the page), usable across services; 20 concurrent jobs by default; 20 GB/month artifact egress and 100 GB/month artifact storage; 9.6 GB cache per project.",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "Per-minute rates listed on the page include Ubuntu x64 $0.0075 (2 vCPU) and $0.015 (4 vCPU), macOS $0.09 (4 vCPU), self-hosted $0.0025 per minute on any machine. Extra artifact egress $0.35/GB, storage $0.07/GB.",
+   "card": null,
+   "overage": "unknown",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "The page does not say whether a card is required or what happens when the credits run out.",
+   "source": "https://semaphore.io/pricing",
+   "sources_extra": [],
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -102,19 +303,21 @@
    ],
    "price_month": 0,
    "currency": "USD",
-   "price_note": null,
-   "includes": "$100 + up to $100 earned credits, 6 months, select services",
+   "price_note": "Free plan: no charges unless you upgrade to the Paid plan or activate paid-only services. New customers on the Paid plan also get up to $200 in credits.",
+   "includes": "$100 in credits at sign-up plus up to $100 more earned by completing activities with foundational services (up to $200), usable for up to 6 months. Free plan is limited to select services (the page says over 90). Separately, 30+ services have Always Free monthly limits on both Free and Paid plans.",
    "resets": null,
    "unit_cost_vs_payg": "$0 within credit",
-   "card": true,
+   "card": false,
    "overage": "stops",
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": null,
+   "limits": "The Free plan ends 6 months after account creation or when credits run out, whichever comes first, and cannot be extended. AWS then suspends the account; data is kept 90 days, during which an upgrade to the Paid plan restores access, after which the account and content are erased. Usage past Always Free limits is paid from credits; once credits are exhausted you must upgrade. Paid plan: spend limit from $20 per project can pause resources. Accounts that already had an AWS account are not eligible. The FAQ gives two different credit expiry periods after an upgrade (12 months in one answer, 6 months in another).",
    "source": "https://aws.amazon.com/free/",
-   "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "sources_extra": [
+    "https://aws.amazon.com/free/free-tier-faqs/"
+   ],
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "claude-code-cloud-sessions",
@@ -126,7 +329,7 @@
    ],
    "price_month": 0,
    "currency": "USD",
-   "price_note": "No separate charge for the cloud VM. Needs a paid plan: Pro is $20 billed monthly (claude.com/pricing). Usage counts toward the plan's limits.",
+   "price_note": "No separate charge for the cloud VM. Needs a paid plan: Pro is $20 billed monthly, or $17 per month on an annual subscription ($200 billed up front) (claude.com/pricing). Usage counts toward the plan's limits.",
    "includes": "One isolated Anthropic-managed VM per session, Ubuntu 24.04 on x86_64, with approximate ceilings of 4 vCPUs, 16 GB RAM and 30 GB disk that may change over time. The docs list no GPU. Available on Pro, Max, Ultra and Team plans, and to Enterprise users with premium or Chat + Claude Code seats.",
    "resets": null,
    "unit_cost_vs_payg": "No per-VM charge. Usage draws on the plan's usage limits.",
@@ -134,13 +337,13 @@
    "overage": "stops",
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": "Cloud sessions share rate limits with all other Claude and Claude Code usage. Network access defaults to Trusted (allowlisted domains). Foreground commands wait 2 minutes by default (up to 10); a backgrounded command runs up to 30 more minutes. Sessions stop after inactivity and the VM is reclaimed. Repository cloning and pull requests need GitHub. Organizations with Zero Data Retention, HIPAA configuration or customer-managed keys cannot use cloud sessions.",
+   "limits": "Cloud sessions share rate limits with all other Claude and Claude Code usage. Network access has three levels (None, Limited, Full); the default is Limited with 'Allow package managers' checked, and environments saved as the former 'Trusted' level open as Limited. Foreground commands wait 2 minutes by default (up to 10); a command moved to the background runs up to 30 more minutes. After a few minutes without activity the VM pauses with files saved, and a paused VM can later be reclaimed. GitHub is needed to clone and push from GitHub, but a repository with no GitHub remote can be bundled from the terminal and uploaded (bundle under 100 MB). Members governed by custom roles need the cloud sessions permission. Organizations with Zero Data Retention, HIPAA configuration or customer-managed keys cannot use cloud sessions.",
    "source": "https://code.claude.com/docs/en/claude-code-on-the-web",
    "sources_extra": [
     "https://code.claude.com/docs/en/cloud-environments",
     "https://claude.com/pricing"
    ],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -153,19 +356,19 @@
    ],
    "price_month": 150,
    "currency": "USD",
-   "price_note": null,
-   "includes": "1 concurrent runner, unlimited min (Linux x86 16 vCPU / 48 GB)",
+   "price_note": "$150 per runner per month. Discounts (mutually exclusive, applied by support): 15% for a 12-month commitment, 50% for non-revenue projects.",
+   "includes": "1 concurrent runner with no limit on minutes. The same $150 buys one of: Linux x86 16 vCPU / 48 GB (KVM), Linux arm64 8 vCPU / 24 GB, macOS 4 M4 Pro vCPU / 16 GB, or Linux GPU 8 vCPU / 24 GB with an Nvidia GPU.",
    "resets": null,
    "unit_cost_vs_payg": "$150 per concurrent slot",
    "card": null,
    "overage": "stops",
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": null,
+   "limits": "Concurrency equals the number of runners bought; workflows labelled low-priority yield to regular ones near the concurrency limit. Subscription can be changed at any time.",
    "source": "https://cirrus-runners.app/pricing/",
    "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "cloudflare-workers-paid",
@@ -186,12 +389,12 @@
    "overage": "bills",
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": "CPU time up to 5 minutes per request (default 30 seconds). Up to 15 minutes per Cron Trigger or Queue consumer. 128 MB memory per Worker. On Free, requests past 100,000 a day get Error 1027.",
+   "limits": "CPU time up to 5 minutes per request (default 30 seconds). Cron Triggers: up to 5 minutes CPU (default 30 seconds) for intervals under 1 hour, 15 minutes for intervals of 1 hour or more. Queue consumers: 15 minutes wall time per invocation. 128 MB memory per Worker isolate. On Free, requests past 100,000 a day get Error 1027.",
    "source": "https://developers.cloudflare.com/workers/platform/pricing/",
    "sources_extra": [
     "https://developers.cloudflare.com/workers/platform/limits/"
    ],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -300,19 +503,71 @@
    ],
    "price_month": 20,
    "currency": "USD",
-   "price_note": null,
-   "includes": "2,000 runner min + 500 build min",
-   "resets": null,
-   "unit_cost_vs_payg": null,
+   "price_note": "Per month; 7-day trial. Billed monthly on the 1st, prorated in the first month; paid by credit card through Stripe.",
+   "includes": "Each month: 2,000 sandbox minutes (one pool shared by Depot CI, Depot Sandboxes and Depot Managed Agents, measured at 2 vCPUs), 2,000 GitHub Actions minutes, 500 container build minutes, 25 GB cache and registry storage, 1,000,000 passing test results. 1 user, unlimited concurrency.",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "Additional usage: GitHub Actions runners $0.006/min (base 2-vCPU Linux), container builds $0.04/min (default 16-vCPU builder), sandbox compute $0.00005 per second per vCPU, storage $0.20 per GB-month, test results $0.000001 per passing test. Billed per second with no one-minute minimum.",
    "card": true,
    "overage": "bills",
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": null,
+   "limits": "Self-imposed usage caps are available; at a cap Depot stops running builds until next month or until the cap is raised. Larger builders (above 16 vCPU), RBAC and SSO are not on Developer.",
    "source": "https://depot.dev/pricing",
    "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "fly-free-plan",
+   "name": "Fly.io Free plan",
+   "provider": "Fly.io",
+   "provider_hq": "US",
+   "lanes": [
+    "cpu",
+    "hosting"
+   ],
+   "price_month": 0,
+   "currency": "USD",
+   "price_note": "$1 one-time credit without a card (expires after 7 days); $5 of usage every month once a card is added.",
+   "includes": "The credit covers Machines, volumes and snapshots, data transfer, Sprites and one Managed Postgres cluster on the $4 Developer plan. New Free organizations with a card also get a $30 Sprites credit. Always free on every plan: first 10 GB of volume snapshots, first 10 single-hostname certificates, inbound data, shared IPv4 and IPv6.",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "Machine prices: shared-cpu-1x 256 MB $2.19/month, 512 MB $3.69, 1 GB $6.70, shared-cpu-2x 2 GB $13.39, performance-1x 2 GB $33.00, billed per second while running.",
+   "card": true,
+   "overage": "bills",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "Personal organization only, 1 member, up to 3 Machines (no performance Machines), volumes up to 5 GB, up to 3 Sprites, community support. Going over $5 moves the organization to Pay As You Go automatically and the whole month is billed at standard rates from the first cent. One Free plan per card. Without a card, new resources cannot be created once the $1 is used or after 7 days.",
+   "source": "https://docs.fly.io/about/free-plan",
+   "sources_extra": [
+    "https://docs.fly.io/about/pricing"
+   ],
+   "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "codespaces-free",
+   "name": "GitHub Codespaces included usage (personal accounts)",
+   "provider": "GitHub",
+   "provider_hq": "US",
+   "lanes": [
+    "cpu",
+    "tools"
+   ],
+   "price_month": 0,
+   "currency": "USD",
+   "price_note": "Free monthly quota for every GitHub personal account; usage above it is billed to the account.",
+   "includes": "GitHub Free personal accounts: 120 hours of compute time and 15 GB-month of storage per month. GitHub Pro personal accounts: 180 hours and 20 GB-month. Compute draws down at an included-usage multiplier equal to the core count (2 for a 2-core machine, 4 for 4-core), so 120 hours is about 60 hours on a 2-core machine.",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "Paid rates: 2 core $0.18/hour, 4 core $0.36, 8 core $0.72, 16 core $1.44, 32 core $2.88; storage $0.07 per GB-month.",
+   "card": false,
+   "overage": "stops",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "Without a payment method, usage is blocked once the quota is used up until the next billing cycle; with one, usage above the quota is billed. Organization and enterprise plans get no free Codespaces quota. Prebuilds also consume GitHub Actions minutes.",
+   "source": "https://docs.github.com/en/billing/concepts/product-billing/github-codespaces",
+   "sources_extra": [],
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "github-team",
@@ -332,14 +587,15 @@
    "overage": "bills",
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": "Past the included amount, usage bills the payment method on file. A budget set to stop usage can block Actions spend at a chosen amount. The docs state no default spending limit.",
+   "limits": "Past the included amount, usage bills the payment method on file. A budget set to stop usage can block Actions spend at a chosen amount. The docs state no default spending limit. Standard runners: 60 concurrent jobs, at most 5 macOS; larger runners: 1,000 concurrent jobs, 100 GPU jobs.",
    "source": "https://docs.github.com/en/billing/concepts/product-billing/github-actions",
    "sources_extra": [
     "https://github.com/pricing",
     "https://docs.github.com/en/billing/reference/actions-runner-pricing",
-    "https://docs.github.com/en/billing/concepts/budgets-and-alerts"
+    "https://docs.github.com/en/billing/concepts/budgets-and-alerts",
+    "https://docs.github.com/en/actions/reference/limits"
    ],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -353,7 +609,7 @@
    "price_month": null,
    "currency": "USD",
    "price_note": "Metered per minute, no subscription. Each job rounds up to the next whole minute.",
-   "includes": "Per-minute rates: Linux 1-core x64 $0.002, Linux 2-core x64 $0.006, Linux 2-core arm64 $0.005, Windows 2-core $0.010, macOS 3 or 4-core $0.062. Standard runners are free in public repositories. Self-hosted runners are free and do not reduce included compute.",
+   "includes": "Per-minute rates: Linux 1-core x64 $0.002, Linux 2-core x64 $0.006, Linux 2-core arm64 $0.005, Windows 2-core x64 $0.010, Windows 2-core arm64 $0.010, macOS 3 or 4-core $0.062. Standard runners are free in public repositories. Self-hosted runners are free and do not reduce included compute.",
    "resets": null,
    "unit_cost_vs_payg": "Baseline: Linux 2-core x64 $0.006/min ($0.36 per hour). 25,000 minutes cost $150 (derived: 25,000 x $0.006).",
    "card": true,
@@ -365,7 +621,7 @@
    "sources_extra": [
     "https://docs.github.com/en/billing/concepts/product-billing/github-actions"
    ],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -389,7 +645,7 @@
    "limits": "GPUs and TPUs are not part of the Free Tier and are always charged. A Free Trial account cannot add GPUs to VM instances. Free Trial signup requires a credit card or other payment method. If the Free Trial ends without an upgrade, the page says access to Google Cloud products is lost.",
    "source": "https://docs.cloud.google.com/free/docs/free-cloud-features",
    "sources_extra": [],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -402,19 +658,19 @@
    ],
    "price_month": 0,
    "currency": "USD",
-   "price_note": null,
-   "includes": "$300 over 90 days",
+   "price_note": "Free Trial billing account: you are not billed during the trial; no automatic charges.",
+   "includes": "$300 Welcome credit valid for 90 days, plus full access to the Free Tier.",
    "resets": null,
    "unit_cost_vs_payg": "$0 within credit",
    "card": true,
    "overage": "stops",
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": null,
-   "source": "https://docs.cloud.google.com/free",
+   "limits": "A credit card or other payment method is required at sign-up. While on the trial you cannot add GPUs, use Marketplace, request quota increases, create Windows Server VMs or VMware Engine resources. The credit cannot pay for Gemini API in AI Studio, partner models as a service, or, for sign-ups or upgrades on or after November 16, 2026, Gemini platform (formerly Vertex AI) services. When the credit or 90 days runs out without an upgrade, billing is disabled, resources stop and are deleted after a 30-day grace period.",
+   "source": "https://docs.cloud.google.com/free/docs/free-cloud-features",
    "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "hetzner-ax41",
@@ -426,8 +682,8 @@
    ],
    "price_month": 59,
    "currency": "EUR",
-   "price_note": null,
-   "includes": "Ryzen 5 3600 6c/12t / 64 GB, 6 slots, no setup fee",
+   "price_note": "Excl. VAT. Also shown as EUR 0.0945 per hour.",
+   "includes": "AMD Ryzen 5 3600 (6c/12t), 64 GB DDR4, no setup fee (EUR 0.00), unlimited traffic.",
    "resets": null,
    "unit_cost_vs_payg": null,
    "card": true,
@@ -437,8 +693,8 @@
    "limits": null,
    "source": "https://www.hetzner.com/dedicated-rootserver/matrix-ax/",
    "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "hetzner-ax42",
@@ -450,8 +706,8 @@
    ],
    "price_month": 79,
    "currency": "EUR",
-   "price_note": null,
-   "includes": "Ryzen 7 8700GE 8c/16t / 64 GB, 7-8 slots, EUR 49 setup",
+   "price_note": "Excl. VAT. 'Starting from' EUR 79; the second AX42 type is up to EUR 99 per month. Also shown as EUR 0.1586 per hour.",
+   "includes": "AMD Ryzen 7 PRO 8700GE (8c/16t), 64 GB DDR5 ECC, EUR 49 one-time setup fee, unlimited traffic. '7-8 slots' is a catalog estimate, not on the page.",
    "resets": null,
    "unit_cost_vs_payg": null,
    "card": true,
@@ -461,8 +717,8 @@
    "limits": null,
    "source": "https://www.hetzner.com/dedicated-rootserver/matrix-ax/",
    "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "hetzner-cx53",
@@ -474,19 +730,19 @@
    ],
    "price_month": 29.99,
    "currency": "EUR",
-   "price_note": null,
-   "includes": "16 vCPU / 32 GB shared, 4 slots, 20 TB traffic",
+   "price_note": "Excl. VAT, price includes IPv4. EUR 0.0481 per hour with a monthly cap of EUR 29.99. The page marks CX53 (and every other cost-optimized type) 'not available' / 'currently unavailable. Please check back later.'",
+   "includes": "16 vCPU (Intel/AMD, shared) / 32 GB / 320 GB NVMe, 20 TB traffic in EU locations (NBG1, HEL1). '4 slots' is a catalog estimate, not on the page.",
    "resets": null,
    "unit_cost_vs_payg": null,
    "card": true,
-   "overage": "stops",
+   "overage": "bills",
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": null,
+   "limits": "Each customer has a default limit on simultaneous Cloud resources, raised on request. Cost-optimized servers run on older hardware with variable CPU performance; the number of servers is limited and the page currently marks the type unavailable.",
    "source": "https://www.hetzner.com/cloud/cost-optimized/",
    "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "hostinger-kvm8",
@@ -498,8 +754,8 @@
    ],
    "price_month": 25.99,
    "currency": "USD",
-   "price_note": null,
-   "includes": "8 vCPU / 32 GB, 4 slots",
+   "price_note": "Introductory price for a 24-month term: $623.76 paid today, renews at $49.99/month for the same term (list price $73.99). 30-day money-back guarantee.",
+   "includes": "8 vCPU (AMD EPYC) / 32 GB RAM / 400 GB NVMe / 32 TB bandwidth, weekly backups. '4 slots' is a catalog estimate.",
    "resets": null,
    "unit_cost_vs_payg": null,
    "card": true,
@@ -509,8 +765,56 @@
    "limits": null,
    "source": "https://www.hostinger.com/vps-hosting",
    "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "tenki-starter",
+   "name": "Luxor Agent Cloud Starter (formerly Tenki Starter)",
+   "provider": "Luxor AI (formerly Tenki)",
+   "provider_hq": null,
+   "lanes": [
+    "cpu"
+   ],
+   "price_month": 0,
+   "currency": "USD",
+   "price_note": null,
+   "includes": "One-time $100 credit, given the first time a payment method is added (about 12,500 min on a 4 vCPU x64 runner or 25,000 min at 2 vCPU, computed). Up to 5 concurrent sessions, 100 GiB storage, machines up to 4 cores / 8 GB.",
+   "resets": null,
+   "unit_cost_vs_payg": "After credits: runners x64 $0.002 per vCPU-min, macOS $0.020 per vCPU-min, billed per second, queue time free; sandbox $0.00084 per vCPU-min + $0.00027 per GiB-min; code review $1.00 each.",
+   "card": true,
+   "overage": "stops",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "When the balance runs out, new jobs and sessions stop until you top up (minimum $20) or turn on auto-reload. Up to 5 members on Starter.",
+   "source": "https://luxor.ai/pricing",
+   "sources_extra": [],
+   "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "tenki-team",
+   "name": "Luxor Agent Cloud Team (formerly Tenki Team)",
+   "provider": "Luxor AI (formerly Tenki)",
+   "provider_hq": null,
+   "lanes": [
+    "cpu"
+   ],
+   "price_month": 250,
+   "currency": "USD",
+   "price_note": "$250 per month billed monthly, or $200 per month billed yearly.",
+   "includes": "$100 usage credits each month (unused credits do not roll over), up to 100 concurrent sessions, 1,000 GiB storage, machines up to 16 cores / 64 GB, up to 50 members, priority support.",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "Past credits, same rates as Starter: runners x64 $0.002 per vCPU-min, macOS $0.020 per vCPU-min; billed per second.",
+   "card": true,
+   "overage": "bills",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": null,
+   "source": "https://luxor.ai/pricing",
+   "sources_extra": [],
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "namespace-team",
@@ -522,19 +826,19 @@
    ],
    "price_month": 100,
    "currency": "USD",
-   "price_note": null,
-   "includes": "100,000 unit-min = 25,000 min at 2 vCPU / 8 GB (50,000 at 2/4), 64 vCPU concurrency",
+   "price_note": "$100 per month. 'No credit card required' to get started; new sign-ups get the Developer plan for 30 days.",
+   "includes": "100,000 unit minutes shared across CI and remote builds (1 unit = 1 vCPU + 2 GB for a minute on Linux; Windows x2, macOS x10): 25,000 min at 2 vCPU / 8 GB or 50,000 at 2 vCPU / 4 GB (computed). 1,000 Docker builds, 5,000 GB-hr cache snapshots and 3,000 GB-day cache storage free. Concurrency 64 vCPU Linux, 24 vCPU macOS.",
    "resets": null,
-   "unit_cost_vs_payg": null,
-   "card": null,
+   "unit_cost_vs_payg": "Overage is 1.5x the prepaid rate: Linux 2 vCPU / 8 GB $0.006/min (prepaid $0.004). Extra Docker builds $10 per 1,000. Devboxes billed separately from $0.004/min.",
+   "card": false,
    "overage": "bills",
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": null,
+   "limits": "Max instance duration 5 hours. Up to 3 Devboxes per user, 30 per workspace. Usage is rounded to whole minutes (minimum 1).",
    "source": "https://namespace.so/pricing",
    "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "netcup-vps-8000",
@@ -546,8 +850,8 @@
    ],
    "price_month": 67.11,
    "currency": "EUR",
-   "price_note": null,
-   "includes": "16 vCore / 64 GB, 7-8 slots",
+   "price_note": "Incl. 19% VAT, with a 12-month contract. Monthly-term price EUR 77.16; a 24-month term is cheaper.",
+   "includes": "16 vCore (x86) / 64 GB RAM / 1 TB SSD, traffic included, snapshots. '7-8 slots' is a catalog estimate.",
    "resets": null,
    "unit_cost_vs_payg": null,
    "card": true,
@@ -557,8 +861,8 @@
    "limits": null,
    "source": "https://www.netcup.com/en/server/vps",
    "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "actuated",
@@ -578,11 +882,11 @@
    "overage": "stops",
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": null,
+   "limits": "Self-service plan: unlimited build minutes, RAM/CPU and concurrency on your own servers; community support by email, best-effort. Supports GitHub Actions and GitLab CI, x86_64 and Arm.",
    "source": "https://actuated.com/pricing",
    "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "oracle-always-free",
@@ -607,7 +911,7 @@
    "sources_extra": [
     "https://www.oracle.com/cloud/free/faq/"
    ],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -620,8 +924,8 @@
    ],
    "price_month": 23.37,
    "currency": "USD",
-   "price_note": null,
-   "includes": "8 vCore / 24 GB, 3 slots",
+   "price_note": "'Starting at' price. VPS-4 is now part of the 'VPS 2027' range; OVHcloud notes the configurations of the models have shifted and a new VPS-1 entry model was added.",
+   "includes": "8 vCore / 24 GB RAM / 200 GB NVMe, daily backup of the previous 24 hours, unlimited traffic, 3 Gbps public bandwidth. '3 slots' is a catalog estimate.",
    "resets": null,
    "unit_cost_vs_payg": null,
    "card": true,
@@ -631,8 +935,8 @@
    "limits": null,
    "source": "https://us.ovhcloud.com/vps/",
    "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "runson-starter",
@@ -644,19 +948,19 @@
    ],
    "price_month": 25,
    "currency": "EUR",
-   "price_note": null,
-   "includes": "EUR 300/yr license, <50k jobs/month; compute billed by AWS",
+   "price_note": "EUR 300 per year per company (EUR 25 per month computed); checkout in EUR or USD. 15-day free trial with payment details collected at checkout.",
+   "includes": "License for under 50k jobs per month; Flex and Fleet modes, all releases and AMIs, email support, one license for all your GitHub orgs and AWS accounts. Compute billed by AWS at spot or on-demand prices with no markup; control plane about $7 per month on your AWS bill.",
    "resets": null,
-   "unit_cost_vs_payg": null,
+   "unit_cost_vs_payg": "Example spot rates shown (us-east-1, 7-day average): 2 vCPU m8a.large about $0.0008/min vs GitHub $0.006/min. Rates vary with AWS spot prices.",
    "card": true,
    "overage": "bills",
    "trains_on_data": null,
-   "commercial_use": null,
-   "limits": null,
+   "commercial_use": true,
+   "limits": "No job limit is enforced; sustained overage above the tier for two months running moves you up a tier, prorated. Short spikes are not charged.",
    "source": "https://runs-on.com/pricing/",
    "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "salad-cpu",
@@ -668,7 +972,7 @@
    ],
    "price_month": null,
    "currency": "USD",
-   "price_note": null,
+   "price_note": "Pay-as-you-go, no minimum commitment, no free trial. Billed per second while the instance is running.",
    "includes": "$0.005/vCPU-h + $0.001/GB-h (2 vCPU / 8 GB = $0.018/h)",
    "resets": null,
    "unit_cost_vs_payg": null,
@@ -676,11 +980,11 @@
    "overage": "unknown",
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": null,
+   "limits": "CPU-only container groups run at the Lowest (Batch) priority tier, the most interruptible. Allocation, image download and cold start are not billed.",
    "source": "https://salad.com/pricing",
    "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "scaleway-basic2",
@@ -692,8 +996,8 @@
    ],
    "price_month": 25.18,
    "currency": "EUR",
-   "price_note": null,
-   "includes": "2 vCPU / 8 GB, 1 slot",
+   "price_note": "EUR 0.0345 per hour; ~EUR 25.18 per month is the page's approximate monthly figure.",
+   "includes": "2 vCPU / 8 GB, 200 Mbps bandwidth. '1 slot' is a catalog estimate.",
    "resets": null,
    "unit_cost_vs_payg": "EUR 25 per slot",
    "card": true,
@@ -705,56 +1009,8 @@
    "sources_extra": [
     "https://api.scaleway.com/product-catalog/v2alpha1/public-catalog/products?product_types=instance"
    ],
-   "checked": "2026-10-25",
-   "verified": false
-  },
-  {
-   "id": "tenki-starter",
-   "name": "Tenki Starter",
-   "provider": "Tenki",
-   "provider_hq": null,
-   "lanes": [
-    "cpu"
-   ],
-   "price_month": 0,
-   "currency": "USD",
-   "price_note": null,
-   "includes": "One-time $100 credit (about 25,000 min at 2 vCPU / 8 GB), 5 concurrent, machines up to 4c/8 GB",
-   "resets": null,
-   "unit_cost_vs_payg": null,
-   "card": null,
-   "overage": "stops",
-   "trains_on_data": null,
-   "commercial_use": null,
-   "limits": null,
-   "source": "https://www.tenki.cloud/pricing",
-   "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
-  },
-  {
-   "id": "tenki-team",
-   "name": "Tenki Team",
-   "provider": "Tenki",
-   "provider_hq": null,
-   "lanes": [
-    "cpu"
-   ],
-   "price_month": 250,
-   "currency": "USD",
-   "price_note": null,
-   "includes": "$100/month credit, 100 concurrent; $200/mo if billed yearly",
-   "resets": null,
-   "unit_cost_vs_payg": null,
-   "card": true,
-   "overage": "bills",
-   "trains_on_data": null,
-   "commercial_use": null,
-   "limits": null,
-   "source": "https://www.tenki.cloud/pricing",
-   "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "ubicloud",
@@ -767,18 +1023,18 @@
    "price_month": 0,
    "currency": "USD",
    "price_note": null,
-   "includes": "$2.50/month credit (about 1,250 premium min)",
-   "resets": null,
-   "unit_cost_vs_payg": null,
+   "includes": "$2.50 per month credit per account, which the page equates to 1,250 runner minutes (premium 2 vCPU at $0.002/min; new users get premium runners by default).",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "Standard x64 2 vCPU $0.00125/min, premium x64 2 vCPU $0.002/min, arm64 2 vCPU $0.00125/min (GitHub: $0.006 / $0.005). Billed per minute, monthly.",
    "card": true,
    "overage": "bills",
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": null,
+   "limits": "A credit card is required to start ('add a credit card'). Runners run in Germany. Premium jobs fall back to standard runners when premium capacity is full.",
    "source": "https://www.ubicloud.com/docs/about/pricing",
    "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "warpbuild",
@@ -793,16 +1049,16 @@
    "price_note": null,
    "includes": "PAYG; unlimited concurrency",
    "resets": null,
-   "unit_cost_vs_payg": "$0.004 x64 / $0.003 arm; BYOC $0.002 + cloud vs $0.006 GitHub",
-   "card": true,
+   "unit_cost_vs_payg": "Linux x64 2 vCPU $0.004/min, arm64 2 vCPU $0.003/min, Windows 4 vCPU $0.016/min, macOS 6 vCPU $0.08/min. BYOC (AWS, GCP, Azure) $0.002/min for Linux and Windows plus your cloud bill. GitHub Linux 2-core: $0.006/min.",
+   "card": false,
    "overage": "bills",
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": null,
+   "limits": "Billed per minute, at month end, or mid-cycle once an account threshold is crossed. The page mentions free usage or credit limits but does not state the amount.",
    "source": "https://www.warpbuild.com/pricing",
    "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "beam-developer",
@@ -815,18 +1071,18 @@
    "price_month": 20,
    "currency": "USD",
    "price_note": null,
-   "includes": "$20/month credit (unused expires), 5 GPU containers",
-   "resets": null,
-   "unit_cost_vs_payg": "96 GB RTX PRO 6000 $1.09/h vs $1.69 RunPod; L40S $0.76; B200 $4.11",
-   "card": true,
-   "overage": "unknown",
+   "includes": "$20 in credits each month. 5 concurrent GPUs, 30 concurrent vCPUs, 1 seat, 30-day log retention, unlimited apps.",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "Serverless GPU: RTX 4090 24 GB $0.69/h, RTX 5090 32 GB $1.09/h, plus GPU-attached CPU $0.18972/vCPU-h and RAM $0.0198/GiB-h. On-demand machines from: RTX PRO 6000 96 GB $2.41, L40S $0.97, H100 $3.00, B200 (spot) $2.66 per GPU-h. RunPod Community (read today): RTX 5090 $0.69, RTX Pro 6000 $1.69.",
+   "card": null,
+   "overage": null,
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": null,
+   "limits": "Concurrent vCPUs count VMs, sandboxes and serverless apps together; a default VM uses 4 vCPUs, so Developer can run 7 at once. Team is $89/month plus usage with 1,000 vCPUs / 50 GPUs.",
    "source": "https://www.beam.cloud/pricing",
    "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "cirrus-gpu-runner",
@@ -838,19 +1094,19 @@
    ],
    "price_month": 150,
    "currency": "USD",
-   "price_note": null,
+   "price_note": "Per runner per month, no limit on minutes. 15% annual discount (12-month commitment) or 50% nonprofit discount, mutually exclusive, applied by support.",
    "includes": "8 vCPU / 24 GB + unnamed Nvidia GPU, unlimited minutes",
    "resets": null,
-   "unit_cost_vs_payg": "unknown GPU",
+   "unit_cost_vs_payg": "GPU model not named ('Nvidia GPU'). Cirrus compares it with GitHub's ubuntu-24.04-4core-t4 runner, which it prices at $3,024 a month.",
    "card": null,
-   "overage": "stops",
+   "overage": null,
    "trains_on_data": null,
    "commercial_use": null,
    "limits": null,
    "source": "https://cirrus-runners.app/pricing/",
    "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "comfy-cloud-creator",
@@ -867,7 +1123,7 @@
    "includes": "7,400 credits per month (88,800 per year on annual billing). Import your own models and LoRAs from CivitAI or Hugging Face. Same Blackwell RTX 6000 Pro 96 GB GPU. About 7.7 GPU-hours at 0.266 credits per second (derived).",
    "resets": "monthly",
    "unit_cost_vs_payg": "Same credit rate as Standard and top-ups (about 211 credits per $1). About $4.53 per GPU-hour of Cloud runtime (derived).",
-   "card": true,
+   "card": null,
    "overage": "stops",
    "trains_on_data": null,
    "commercial_use": true,
@@ -878,7 +1134,7 @@
     "https://support.comfy.org/articles/5846341390-how-credits-work-in-comfy",
     "https://docs.comfy.org/tutorials/partner-nodes/pricing"
    ],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -896,7 +1152,7 @@
    "includes": "4,200 credits per month (50,400 per year on annual billing). Credits pay for active GPU runtime and Partner Nodes. Runs on Blackwell RTX 6000 Pro with 96 GB VRAM. Cloud GPU runtime costs 0.266 credits per second (about 958 per hour), so 4,200 credits buy about 4.4 GPU-hours (derived). Comfy API: 5 builds, 2 deployments, 2 workers per deployment.",
    "resets": "monthly",
    "unit_cost_vs_payg": "Credits convert at $1 = 211 credits, so Cloud runtime equals about $4.54 per GPU-hour (derived). The plan buys 210 credits per $1, close to the 211 per $1 top-up rate. Comfy API deployments bill the RTX PRO 6000 at $3.49 per hour (736.39 credits).",
-   "card": true,
+   "card": null,
    "overage": "stops",
    "trains_on_data": null,
    "commercial_use": true,
@@ -908,7 +1164,7 @@
     "https://docs.comfy.org/tutorials/partner-nodes/concurrency-limits",
     "https://support.comfy.org/articles/1116676382-unexpected-credit-usage-charges"
    ],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -925,15 +1181,18 @@
    "price_note": "Free start for new users. Paid plans: Standard $20 per month ($16 billed yearly), Creator $35 ($28), Pro $100 ($80).",
    "includes": "5 free runs on real GPUs and free Comfy Agent credits for new users.",
    "resets": "one_time",
-   "unit_cost_vs_payg": "Comfy API GPU rate: RTX PRO 6000 (96GB) $3.49/hr or 736.39 credits/hr. Comfy says a five-second video uses roughly 11 credits. No USD value per credit is stated.",
-   "card": null,
+   "unit_cost_vs_payg": "Credits convert at $1 = 211 credits. Cloud GPU runtime uses 0.266 credits per second (about $4.54 per GPU-hour, derived). Comfy API GPU rate: RTX PRO 6000 (96 GB) $3.49/hr or 736.39 credits/hr. A five-second Wan 2.2 video uses roughly 11 credits.",
+   "card": false,
    "overage": "stops",
    "trains_on_data": null,
-   "commercial_use": null,
+   "commercial_use": true,
    "limits": "Free plan runs 2 Comfy Agent tasks at once per person. API access is stated for paid plans only. When credits run out, the agent pauses until more are added.",
    "source": "https://comfy.org/pricing",
-   "sources_extra": [],
-   "checked": "2026-11-02",
+   "sources_extra": [
+    "https://comfy.org/flux-3/",
+    "https://support.comfy.org/articles/5846341390-how-credits-work-in-comfy"
+   ],
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -946,7 +1205,7 @@
    ],
    "price_month": null,
    "currency": "USD",
-   "price_note": "On-demand per GPU-hour, billed per hour or per second, no minimum commitment.",
+   "price_note": "On-demand per GPU-hour, billed per hour or per second, no minimum commitment. Crusoe has announced new on-demand prices starting Dec 1, 2026: B300 $9.90, B200 $8.50 (now contact sales), H200 $5.40, H100 $4.50 per GPU-hour; the other GPUs are listed as 'No change'.",
    "includes": "On-demand per GPU-hour: L40S 48 GB $1.50, A100 80 GB PCIe $2.00, A100 80 GB SXM $2.30, H100 80 GB $3.90, H200 141 GB $4.29, B300 288 GB $8.96, AMD MI300X 192 GB $3.45. B200, GB200, GB300, MI355X and all spot prices are contact sales. Persistent disk $0.08 per GiB-month. General-purpose CPU $0.04 per vCPU-hour.",
    "resets": null,
    "unit_cost_vs_payg": "L40S $1.50 vs RunPod Community $0.79; A100 80 GB PCIe $2.00 vs RunPod $1.19 (both read today).",
@@ -954,13 +1213,13 @@
    "overage": "bills",
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": "Billing needs a valid, non-prepaid credit card. The only free credit found is $5 for Serverless Inference and Serverless Fine-Tuning, not for VMs.",
+   "limits": "Billing needs a valid, non-prepaid credit card. The only free credit found is $5 for Serverless Inference and Serverless Fine-Tuning (usable without a payment method), not for VMs. Crusoe deprecates Ubuntu 22.04 curated VM images on Dec 31, 2026 (support ends Jan 31, 2027).",
    "source": "https://www.crusoe.ai/cloud/pricing",
    "sources_extra": [
-    "https://docs.crusoecloud.com/create-an-account/",
-    "https://docs.crusoecloud.com/updates/2026/index.html"
+    "https://docs.crusoe.ai/create-an-account/",
+    "https://docs.crusoe.ai/updates/2026/index.html"
    ],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -987,7 +1246,7 @@
     "https://www.digitalocean.com/pricing/gpu-droplets",
     "https://docs.digitalocean.com/products/amd/details/credits/"
    ],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -1000,19 +1259,19 @@
    ],
    "price_month": 39,
    "currency": "USD",
-   "price_note": null,
-   "includes": "Free A5000 24 GB, A6000 48 GB, A100-80G notebooks; 6 h auto-shutdown; availability-based",
+   "price_note": "Billed $0.0580/hr up to a $39.00 monthly maximum (same for user and team Growth plans).",
+   "includes": "Free A5000, A6000 and A100-80G notebook machines (plus the Pro and Free tiers' free machines), 50 GB included storage.",
    "resets": null,
-   "unit_cost_vs_payg": "80 GB: $1.95/h at 20 free h, $0.65 at 60 h vs $1.19 RunPod",
-   "card": true,
-   "overage": "stops",
+   "unit_cost_vs_payg": "Paperspace on-demand rates: A100-80G $3.18/hr, A6000 $1.89/hr, A5000 $1.38/hr. $39 equals about 12 hours of on-demand A100-80G (derived). The page states no hour cap for free machines, so per-hour cost depends on use.",
+   "card": null,
+   "overage": "bills",
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": null,
+   "limits": "Free machines can only be used for Notebooks in private workspaces. Extra storage $0.29/GB-month.",
    "source": "https://docs.digitalocean.com/products/paperspace/pricing",
    "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "paperspace-pro",
@@ -1024,19 +1283,19 @@
    ],
    "price_month": 8,
    "currency": "USD",
-   "price_note": null,
-   "includes": "Free A4000 16 GB, RTX4000/5000, P4000/P5000 notebooks, 6 h sessions",
+   "price_note": "Billed $0.0119/hr up to an $8.00 monthly maximum for a user; Team Pro is $0.0179/hr up to $12.00.",
+   "includes": "Free A4000, RTX4000, RTX5000, P4000, P5000 notebook machines plus Free GPU (M4000) and Free CPU (C4); 15 GB included storage.",
    "resets": null,
-   "unit_cost_vs_payg": "16 GB: $0.40/h at 20 h vs Colab T4 $0.12",
-   "card": true,
-   "overage": "stops",
+   "unit_cost_vs_payg": "Paperspace on-demand A4000 is $0.76/hr; $8 equals about 10.5 hours of on-demand A4000 (derived). The page states no hour cap for free machines.",
+   "card": null,
+   "overage": "bills",
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": null,
+   "limits": "Free machines can only be used for Notebooks in private workspaces.",
    "source": "https://docs.digitalocean.com/products/paperspace/pricing",
    "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "github-gpu-runner",
@@ -1061,7 +1320,7 @@
    "sources_extra": [
     "https://docs.github.com/en/actions/reference/runners/larger-runners"
    ],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -1075,19 +1334,22 @@
    ],
    "price_month": 19.99,
    "currency": "USD",
-   "price_note": null,
-   "includes": "200 Colab CU/month + $10/month Google Cloud credit (Developer Program) + Gemini",
-   "resets": null,
-   "unit_cost_vs_payg": "about 23 h G4 96 GB at $0.87/h vs $1.69 RunPod",
-   "card": true,
+   "price_note": "US: $19.99 per month or $199.99 per year.",
+   "includes": "200 Colab compute units per month, $10 per month of Google Cloud credits from the Google Developer Program, Gemini 4 Neon access, 5 TB storage.",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "200 compute units equal $19.98 at Colab's Pay As You Go price of $9.99 per 100 units (derived). Google publishes no per-GPU compute-unit burn rate on the pages read.",
+   "card": null,
    "overage": "stops",
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": null,
+   "limits": "Colab benefits are not included during a free trial of a Google One plan and are honoured only in countries where Colab sells paid plans. Colab compute units expire after 90 days.",
    "source": "https://one.google.com/about/google-ai-plans/",
-   "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "sources_extra": [
+    "https://research.google.com/colaboratory/faq.html",
+    "https://colab.research.google.com/signup"
+   ],
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "colab-free",
@@ -1105,14 +1367,14 @@
    "unit_cost_vs_payg": null,
    "card": false,
    "overage": "stops",
-   "trains_on_data": null,
+   "trains_on_data": true,
    "commercial_use": null,
    "limits": "Idle runtimes time out. Without a positive compute unit balance, free runtimes may be terminated without warning for SSH shells or remote desktops, bypassing the notebook UI to work through a web UI, chess training, or distributed computing workers. All managed runtimes bar file hosting, media serving, remote proxies, torrents, crypto mining, password cracking and deepfakes. Colab terms bar selling or providing access to Colab to third parties.",
    "source": "https://research.google.com/colaboratory/faq.html",
    "sources_extra": [
     "https://research.google.com/colaboratory/tos_v5.html"
    ],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -1129,16 +1391,16 @@
    "includes": "100 compute units per month. Compute units expire after 90 days. Faster GPUs and high-memory machines, subject to availability.",
    "resets": "monthly",
    "unit_cost_vs_payg": "$0.0999 per compute unit, the same as Pay As You Go (100 units for $9.99). Google publishes no per-GPU unit burn rate on the pages read.",
-   "card": true,
+   "card": null,
    "overage": "stops",
-   "trains_on_data": null,
+   "trains_on_data": true,
    "commercial_use": null,
    "limits": "GPU type and availability are not guaranteed. Notebooks run at most 12 hours. At zero units, paid users revert to free-tier rules. Connecting to remote proxies is disallowed on all managed runtimes. Web UIs that bypass the notebook are disallowed only without a positive unit balance.",
    "source": "https://colab.research.google.com/signup",
    "sources_extra": [
     "https://research.google.com/colaboratory/faq.html"
    ],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -1151,19 +1413,21 @@
    ],
    "price_month": 49.99,
    "currency": "USD",
-   "price_note": null,
-   "includes": "500 compute units, background execution",
-   "resets": null,
-   "unit_cost_vs_payg": "same CU rates: about 57 h G4 96 GB at $0.87/h",
-   "card": true,
+   "price_note": "US price per month.",
+   "includes": "600 compute units per month (Pro's 100 plus an additional 500), faster GPUs, highest-memory machines, background execution. Compute units expire after 90 days.",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "About $0.083 per compute unit ($49.99 / 600, derived) vs $0.0999 on Pay As You Go ($49.99 per 500). Google publishes no per-GPU compute-unit burn rate on the pages read.",
+   "card": null,
    "overage": "stops",
-   "trains_on_data": null,
+   "trains_on_data": true,
    "commercial_use": null,
-   "limits": null,
-   "source": "https://workspaceupdates.googleblog.com/2024/06/google-workspace-colab-pro-and-colab-pro-plus.html",
-   "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "limits": "Pro+ supports continuous code execution for up to 24 hours with sufficient compute units. GPU types and availability are not guaranteed.",
+   "source": "https://colab.research.google.com/signup",
+   "sources_extra": [
+    "https://research.google.com/colaboratory/faq.html"
+   ],
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "gpumart-a6000",
@@ -1176,18 +1440,18 @@
    "price_month": 409,
    "currency": "USD",
    "price_note": null,
-   "includes": "A6000 48 GB, 2x 18-core, 256 GB RAM, US",
+   "includes": "RTX A6000 48 GB, 2x 18-core E5-2697v4, 256 GB RAM, 240 GB SSD + 2 TB NVMe + 8 TB SATA, 100 Mbps unmetered, 1 IPv4, USA.",
    "resets": null,
    "unit_cost_vs_payg": "$0.56/h at 730 h vs $0.33 RunPod",
-   "card": true,
+   "card": null,
    "overage": "stops",
    "trains_on_data": null,
    "commercial_use": null,
    "limits": null,
    "source": "https://www.gpu-mart.com/gpu-dedicated-server",
    "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "hetzner-gex45",
@@ -1199,19 +1463,19 @@
    ],
    "price_month": 214,
    "currency": "EUR",
-   "price_note": null,
-   "includes": "RTX PRO 4000 Blackwell 24 GB, 64 GB RAM; EUR 209 setup",
+   "price_note": "EUR 214.00 per month or EUR 0.3429 per hour, excl. VAT, plus EUR 209.00 one-time setup fee.",
+   "includes": "NVIDIA RTX PRO 4000 Blackwell SFF 24 GB, Intel Core i5-13500, 64 GB DDR4, 2x 512 GB NVMe; EUR 209 setup; unlimited traffic.",
    "resets": null,
-   "unit_cost_vs_payg": "EUR 0.29/h at 730 h vs $0.34 RunPod 4090",
-   "card": true,
+   "unit_cost_vs_payg": "EUR 0.29/h at 730 h (derived) or EUR 0.3429/h on hourly billing, vs $0.34 RunPod Community RTX 4090 (read today).",
+   "card": null,
    "overage": "stops",
    "trains_on_data": null,
    "commercial_use": null,
    "limits": null,
    "source": "https://www.hetzner.com/dedicated-rootserver/matrix-gpu/",
    "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "hetzner-gex63",
@@ -1223,19 +1487,19 @@
    ],
    "price_month": 999,
    "currency": "EUR",
-   "price_note": null,
-   "includes": "RTX PRO 6000 Max-Q 96 GB, 128 GB RAM; EUR 999 setup",
+   "price_note": "EUR 999.00 per month or EUR 1.6009 per hour, excl. VAT, plus EUR 999.00 one-time setup fee.",
+   "includes": "NVIDIA RTX PRO 6000 Blackwell Max-Q 96 GB, Intel Core Ultra 7 265, 128 GB DDR5, 2x 1.92 TB NVMe; EUR 999 setup; unlimited traffic.",
    "resets": null,
-   "unit_cost_vs_payg": "EUR 1.37/h at 730 h vs $1.69 RunPod",
-   "card": true,
+   "unit_cost_vs_payg": "EUR 1.37/h at 730 h (derived) or EUR 1.6009/h on hourly billing, vs $1.69 RunPod Community RTX Pro 6000 (read today).",
+   "card": null,
    "overage": "stops",
    "trains_on_data": null,
    "commercial_use": null,
    "limits": null,
    "source": "https://www.hetzner.com/dedicated-rootserver/matrix-gpu/",
    "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "hotaisle-mi300x",
@@ -1248,18 +1512,18 @@
    "price_month": null,
    "currency": "USD",
    "price_note": null,
-   "includes": "MI300X 192 GB VM $2.99/GPU-h, per minute",
+   "includes": "MI300X 192 GB VMs (1x, 2x, 4x) $2.99/GPU-h billed by the minute; 8x bare metal $3.39/GPU-h. 1x VM: 8 or 13 CPU cores, 224 GB RAM, 12 TB NVMe.",
    "resets": null,
    "unit_cost_vs_payg": "$2.99 vs $2.59 DO AMD",
    "card": null,
-   "overage": "unknown",
+   "overage": null,
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": null,
+   "limits": "Quick start flow: create a team, add credits, then provision.",
    "source": "https://hotaisle.xyz/pricing/",
    "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "hf-pro",
@@ -1286,7 +1550,7 @@
     "https://huggingface.co/pricing",
     "https://huggingface.co/docs/inference-providers/pricing"
    ],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -1302,7 +1566,7 @@
    "price_note": "Per user per month, paid by credit card.",
    "includes": "Every member gets PRO ZeroGPU and Inference Providers benefits: 40 minutes per day of ZeroGPU quota each. $2 per seat per month of compute credits, shared across the organization. The organization can host up to 50 ZeroGPU Spaces. SSO, audit logs, resource groups and storage regions.",
    "resets": "daily",
-   "unit_cost_vs_payg": "Same per-member ZeroGPU quota as PRO at $20 instead of $9 (2.2x). Past quota, $1 per 10 minutes from prepaid credits. Enterprise ($50 per user) gives 60 minutes per day.",
+   "unit_cost_vs_payg": "Same per-member ZeroGPU quota as PRO at $20 instead of $9 (2.2x). Past quota, $1 per 10 minutes from prepaid credits. Enterprise ($500 per user per month on the pricing page) gives 60 minutes per day.",
    "card": true,
    "overage": "stops",
    "trains_on_data": null,
@@ -1313,7 +1577,7 @@
     "https://huggingface.co/docs/hub/spaces-zerogpu",
     "https://huggingface.co/docs/inference-providers/pricing"
    ],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -1337,7 +1601,7 @@
    "limits": "ZeroGPU Spaces work only with the Gradio SDK. Default GPU time per call is 60 seconds, settable with a duration argument. torch.compile is not supported. Free accounts get medium queue priority. The quota resets 24 hours after first GPU use.",
    "source": "https://huggingface.co/docs/hub/spaces-zerogpu",
    "sources_extra": [],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -1355,14 +1619,14 @@
    "resets": null,
    "unit_cost_vs_payg": "RTX PRO 6000 $1.30 vs $1.69 RunPod",
    "card": true,
-   "overage": "unknown",
+   "overage": null,
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": null,
+   "limits": "Reservations are invoiced monthly; on-demand is prepaid and billed per minute. Payment by credit card via Stripe. The pricing page carries a banner warning of a fraudulent website impersonating Hyperstack at hyperstack.my (no start date given).",
    "source": "https://www.hyperstack.cloud/gpu-pricing",
    "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "kaggle-free",
@@ -1402,20 +1666,21 @@
    "price_month": null,
    "currency": "USD",
    "price_note": "Per GPU-hour, billed by the minute, weekly invoices. Prices exclude sales tax.",
-   "includes": "1x instances per GPU-hour: Quadro RTX 6000 $0.69, A6000 48 GB $1.09, A10 $1.29, A100 40 GB $1.99, GH200 96 GB $2.29, H100 PCIe $3.29, H100 SXM $4.29, B200 $6.99. 8x: H100 SXM $3.99, B200 $6.69.",
+   "includes": "1x instances per GPU-hour: Quadro RTX 6000 $0.69, A6000 48 GB $1.09, A10 $1.29, A100 40 GB (PCIe or SXM) $1.99, GH200 96 GB $2.59, H100 PCIe $3.79, H100 SXM $4.89, B200 $7.99. 8x per GPU-hour: V100 $0.79, A100 40 GB $1.99, A100 80 GB $3.19, H100 $4.59, B200 $7.69.",
    "resets": null,
    "unit_cost_vs_payg": "A6000 $1.09 is 3.3x RunPod Community's $0.33 (both read today).",
    "card": true,
    "overage": "bills",
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": "A credit card is required, with a $10 pre-authorization. Instances bill while running, used or not. No free credit or subscription found.",
-   "source": "https://lambda.ai/pricing",
+   "limits": "Only major credit cards are accepted (prepaid and debit cards are declined), with a $10 pre-authorization. Instances bill while running, used or not. No free credit or subscription found. Purchases only from a listed set of countries.",
+   "source": "https://lambda.com/pricing",
    "sources_extra": [
-    "https://docs.lambda.ai/public-cloud/billing/",
-    "https://docs.lambda.ai/public-cloud/manage-billing/"
+    "https://docs.lambda.com/public-cloud/billing/",
+    "https://docs.lambda.com/public-cloud/manage-billing/",
+    "https://lambda.com/blog/lambda-ai-is-now-lambda-com"
    ],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -1429,18 +1694,18 @@
    "price_month": 50,
    "currency": "USD",
    "price_note": null,
-   "includes": "Developer $50 = $55 credit (Growth $85 = $100, Business $300 = $375); $10 free trial",
+   "includes": "Credits at $0.005 each. Builder $25/mo = $25, Developer $50 = $55, Growth $85 = $100, Pro $160 = $200, Business $300 = $375; one-time $20 bundle; $10 free trial (about 45 GPU-hours on T4G spot).",
    "resets": null,
-   "unit_cost_vs_payg": "T4G 16 GB spot $0.185/h; bonus 10-25% off PAYG",
+   "unit_cost_vs_payg": "About $0.22/h for T4G spot (derived from the page's '$10 ... ~45 GPU hours'). Plan bonuses are 10-25% extra credit.",
    "card": null,
-   "overage": "unknown",
+   "overage": null,
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": null,
+   "limits": "Credits roll over every month and never expire. Plans can be upgraded or switched at any time.",
    "source": "https://machine.dev/pricing",
    "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "modal-starter",
@@ -1453,7 +1718,7 @@
    "price_month": 0,
    "currency": "USD",
    "price_note": "$0 plus compute per month. Usage beyond the included credit is pay as you go.",
-   "includes": "$30 per month of included compute (GPU, CPU, memory) for Functions and Sandboxes. 3 workspace seats, 100 containers, 10 GPU concurrency, 5 deployed crons and 1 TiB per month of free egress. Shared Endpoint tokens are not covered and bill from the first request (since September 1, 2026).",
+   "includes": "$30 per month of included compute (GPU, CPU, memory) for Functions and Sandboxes. 3 workspace seats, 100 containers, 10 GPU concurrency, 200 deployed apps, 5 deployed crons, 1-day log retention and 1 TiB per month of free egress. Model APIs (per-token, formerly called Shared Endpoints in the catalog) are not covered and bill from the first request (since September 1, 2026).",
    "resets": "monthly",
    "unit_cost_vs_payg": "Per second: RTX PRO 6000 $0.000842, L40S $0.000542, L4 $0.000222, T4 $0.000164, H100 SXM5 $0.001097. At those rates $30 buys about 9.9 h of RTX PRO 6000, 15.4 h of L40S or 37.5 h of L4 (computed here, not stated by Modal).",
    "card": true,
@@ -1466,7 +1731,7 @@
     "https://modal.com/docs/guide/gpu",
     "https://modal.com/docs/guide/budgets"
    ],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -1487,10 +1752,10 @@
    "overage": "bills",
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": "A workspace budget can cap monthly spend. Included usage does not cover Shared Endpoints, which bill per token. Starter ($0) has $30 per month included, 3 seats and 10 GPU concurrency.",
+   "limits": "A workspace budget can cap monthly spend. Included usage does not cover Model APIs, which bill per token from the first request. Starter ($0) has $30 per month included, 3 seats and 10 GPU concurrency.",
    "source": "https://modal.com/pricing",
    "sources_extra": [],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -1501,21 +1766,21 @@
    "lanes": [
     "gpu"
    ],
-   "price_month": 19.99,
+   "price_month": 29.99,
    "currency": "USD",
-   "price_note": null,
-   "includes": "20% off machines, $10 credit, 20 CPU h",
-   "resets": null,
-   "unit_cost_vs_payg": "A6000 48 GB $1.99/h vs $0.33 RunPod",
-   "card": true,
-   "overage": "unknown",
+   "price_note": "$29.99 billed monthly, or $19.99 per month billed yearly ($239.92 per year).",
+   "includes": "20%+ off all GPU rates (ComfyUI and Trainer), $10 credit added each month, 20 CPU hours per month, 200 GB storage with permanent retention, unlimited saved workflow environments.",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "X-Large A6000 48 GB $1.99/h on Pro vs $2.50 pay as you go; RunPod Community RTX A6000 $0.33 (read today).",
+   "card": null,
+   "overage": null,
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": null,
+   "limits": "Purchased funds expire 365 days after purchase. A balance is still needed with Pro; usage is pay-as-you-go from it.",
    "source": "https://www.runcomfy.com/pricing",
    "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "runpod-community",
@@ -1527,20 +1792,20 @@
    ],
    "price_month": null,
    "currency": "USD",
-   "price_note": "Prepaid balance, billed per second. Start with as little as $10.",
-   "includes": "Community Cloud per hour: RTX A6000 $0.33, RTX 4090 $0.34, RTX 5090 $0.69, L40S $0.79, A100 PCIe 80 GB $1.19, A100 SXM $1.39, RTX Pro 6000 $1.69, H100 PCIe $1.99, H100 SXM $2.69, H200 $3.59, B200 $5.98.",
+   "price_note": "Prepaid balance, rates shown per hour and per second. Deploying a Pod needs at least one hour's worth of credits.",
+   "includes": "Community Cloud per hour: RTX A6000 $0.33, RTX 4090 $0.34, RTX 5090 $0.69, L40S $0.79, A100 PCIe 80 GB $1.19, A100 SXM $1.39, RTX Pro 6000 $1.69, H100 PCIe $1.99, H100 SXM $2.69, H200 $3.59, B200 $5.98, B300 $6.94.",
    "resets": null,
-   "unit_cost_vs_payg": "Baseline. Secure Cloud costs more: RTX A6000 $0.59, RTX Pro 6000 $2.49, H200 $5.29, B200 $7.99 per hour.",
-   "card": true,
+   "unit_cost_vs_payg": "Baseline. Secure Cloud costs more: RTX A6000 $0.69, RTX Pro 6000 $2.69, H200 $5.29, B200 $7.99 per hour.",
+   "card": false,
    "overage": "stops",
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": "At a $0 balance RunPod stops all running Pods. Pods without a network volume are terminated and their data is lost. Network volume storage keeps billing while Pods are stopped. Card or crypto top-ups.",
+   "limits": "At a $0 balance RunPod stops all running Pods. Pods without a network volume are terminated and their data is lost. Network volume storage keeps billing while Pods are stopped. Default spend limit $80 per hour. Prepaid cards should deposit at least $100.",
    "source": "https://www.runpod.io/pricing",
    "sources_extra": [
-    "https://docs.runpod.io/references/billing-information"
+    "https://docs.runpod.io/accounts-billing/billing"
    ],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -1553,19 +1818,19 @@
    ],
    "price_month": null,
    "currency": "USD",
-   "price_note": null,
-   "includes": "RTX 3090 $0.09-0.17, 4090 $0.16-0.33, 5090 $0.25-0.50 (vCPU/RAM included)",
+   "price_note": "Per GPU-hour by priority tier (Lowest to High), billed per second while running; vCPU and RAM included.",
+   "includes": "RTX 3090 $0.09-0.20, RTX 4090 $0.16-0.44, RTX 5090 $0.25-0.60 per GPU-hour (Lowest to High priority), vCPU and RAM included.",
    "resets": null,
-   "unit_cost_vs_payg": "cheapest 24-32 GB found",
+   "unit_cost_vs_payg": "Lowest tier x 730 h: RTX 5090 $182.50/month, RTX 4090 $116.80, RTX 3090 $65.70. RunPod Community RTX 4090 $0.34/h (read today).",
    "card": null,
-   "overage": "unknown",
+   "overage": "bills",
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": null,
+   "limits": "No free trial. Lower priority tiers can be preempted by higher ones; Lowest is the most interruptible.",
    "source": "https://salad.com/pricing",
    "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "saturn-cloud-free",
@@ -1578,18 +1843,18 @@
    "price_month": 0,
    "currency": "USD",
    "price_note": null,
-   "includes": "150 compute h/month, GPU access (type unstated), up to 64 GB RAM",
+   "includes": "A free account (Hosted Free) to try the platform. The page says to upgrade to Hosted Pro 'to unlock resource usage capabilities'. No free compute hours, GPU or RAM amounts are stated.",
    "resets": null,
-   "unit_cost_vs_payg": "$0",
-   "card": false,
-   "overage": "stops",
+   "unit_cost_vs_payg": null,
+   "card": null,
+   "overage": null,
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": null,
-   "source": "https://saturncloud.io/try",
+   "limits": "Hosted Pro: $5 up-front credit charge, then the card is charged every $10 of usage. Saturn Cloud's own price is $0.00/hour; you pay the hosting price (e.g. Nebius 1x H100 $2.95/h, AWS T4 g4dn.xlarge $0.53/h).",
+   "source": "https://saturncloud.io/plans/hosted/",
    "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "thinkdiffusion-pro",
@@ -1601,19 +1866,19 @@
    ],
    "price_month": 29.99,
    "currency": "USD",
-   "price_note": null,
-   "includes": "$10 credit, 20% off; 48 GB $1.99/h",
-   "resets": null,
-   "unit_cost_vs_payg": "48 GB $1.99/h vs $0.33 RunPod",
-   "card": true,
-   "overage": "unknown",
+   "price_note": "$29.99 billed monthly, or $19.99 per month billed yearly.",
+   "includes": "$10 monthly balance credit (unused credits roll over), 20% off machine rates, 200 GB private drive with persistent storage. ULTRA 48 GB $1.99/h (standard $2.50).",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "ULTRA 48 GB $1.99/h on TD-Pro vs $2.50 standard; RunPod Community RTX A6000 $0.33 (read today).",
+   "card": null,
+   "overage": null,
    "trains_on_data": null,
    "commercial_use": null,
    "limits": null,
    "source": "https://www.thinkdiffusion.com/pricing",
    "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "thunder-payg",
@@ -1626,18 +1891,18 @@
    "price_month": null,
    "currency": "USD",
    "price_note": null,
-   "includes": "PAYG per minute: A6000 $0.35, L40 $0.79, A100 80 GB $1.09, H100 $3.20",
+   "includes": "On-demand instances billed per minute while running, at these hourly rates: RTX A6000 $0.35, L40 $0.79, A100 80GB $1.09, H100 SXM $3.20 per GPU-hour. Extra vCPU $0.04/vCPU-hr; instance disk beyond the first 100 GB per GPU $0.219/GB-month; snapshots $0.05/GB-month; no egress fees. Sandboxes (per-second billing, access by request): H100 SXM $2.95, A100 80GB $1.95 per GPU-hour.",
    "resets": null,
-   "unit_cost_vs_payg": "A100 80 GB $1.09 vs $1.19 RunPod",
+   "unit_cost_vs_payg": "Thunder's own comparison table (on-demand list prices checked Nov 22, 2026): H100 $3.20 vs Lambda $3.79, Runpod $4.39, AWS $6.88 per GPU-hour. These are the vendor's claims about competitors.",
    "card": null,
    "overage": "unknown",
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": null,
+   "limits": "Instances and sandboxes are never preempted. Reserved and volume pricing are by sales quote.",
    "source": "https://www.thundercompute.com/pricing",
    "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "vast-reserved",
@@ -1650,9 +1915,9 @@
    "price_month": null,
    "currency": "USD",
    "price_note": null,
-   "includes": "1, 3 or 6-month reservations, up to 50% off; interruptible 50%+ off",
+   "includes": "Reserved: 1, 3 or 6-month terms, up to 50% off, guaranteed capacity, volume discounts; the pricing page sends reservations to Contact Sales. Interruptible: 50%+ cheaper than on-demand, may be reclaimed. Per-second billing; prices set by supply and demand.",
    "resets": null,
-   "unit_cost_vs_payg": "up to half of marketplace (RTX PRO 6000 about $0.80-1.53 on-demand, 3rd-party)",
+   "unit_cost_vs_payg": "Up to 50% off on-demand marketplace rates (vendor's wording). Live rates vary; no fixed reserved price is published.",
    "card": true,
    "overage": "bills",
    "trains_on_data": null,
@@ -1660,8 +1925,8 @@
    "limits": null,
    "source": "https://vast.ai/pricing",
    "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "verda-spot",
@@ -1674,9 +1939,9 @@
    "price_month": null,
    "currency": "USD",
    "price_note": null,
-   "includes": "Spot: RTX PRO 6000 $1.26, L40S $0.90, A100 80 GB $1.08, H200 $2.97, B200 $4.22, B300 $5.40",
+   "includes": "Spot, 1x GPU per hour (USD): RTX PRO 6000 96GB $1.491, L40S $1.040, A100 SXM4 80GB $1.235, H100 SXM5 $2.754, H200 $3.522, B200 $4.874, B300 $6.525, GB300 $7.504.",
    "resets": null,
-   "unit_cost_vs_payg": "B200 $4.22 vs $5.98 RunPod; H200 $2.97 vs $3.59",
+   "unit_cost_vs_payg": "Spot is half of Verda's own on-demand price (B200 $4.874 vs $9.747; H200 $3.522 vs $7.043; A100 80GB $1.235 vs $2.470).",
    "card": null,
    "overage": "unknown",
    "trains_on_data": null,
@@ -1684,8 +1949,8 @@
    "limits": null,
    "source": "https://verda.com/pricing",
    "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "opencode-go",
@@ -1697,20 +1962,21 @@
    ],
    "price_month": 10,
    "currency": "USD",
-   "price_note": "$10 a month for a single-member workspace. Go Plus is $40 a month with higher limits; Go Teams is $20 per member per month.",
-   "includes": "A separate monthly dollar cap per model, from $15 to $100 at OpenCode's token prices. Models include Claude Haiku 5.5, GPT 6 Luna, GPT 5.6 Luna, Gemini 4 Argon, Grok 4.7, and open models (GLM, Kimi, Qwen, MiniMax, MiMo, DeepSeek and others). Each model has 5-hour and weekly sub-caps of 20 and 50 percent of its monthly cap.",
+   "price_note": "$10 a month for Go. Go Plus is $40 a month. Go Teams is $20 per member per month with a 2-member minimum ($40 a month).",
+   "includes": "One monthly allowance shared by all paid models. Each model's monthly limit (the amount covered if you use only that model) runs from $15 to $200 at OpenCode's token prices: for example Claude Haiku 5.5, GPT 6 Luna, Grok 4.7 and Kimi K3 at $15, DeepSeek V4.1 Flash at $100, GLM-5.3 at $200. Models include Claude Haiku 5.5, GPT 6 Luna, GPT 5.6 Luna, Gemini 4 Argon, Grok 4.7, and open models (GLM, Kimi, Qwen, MiniMax, MiMo, DeepSeek, Hy, Step, LongCat, Muse Spark Contributor). The 5-hour limit is 20% and the weekly limit 50% of the monthly allowance; the weekly limit resets Monday 00:00 UTC.",
    "resets": "monthly",
-   "unit_cost_vs_payg": "Claude Haiku 5.5 is priced at $0.10/$0.50 per M, the same as Anthropic's list price, with a $15 cap. Caps run from 1.5x to 10x the $10 fee per model (computed).",
+   "unit_cost_vs_payg": "Claude Haiku 5.5 costs $0.10/$0.50 per M, the same as Anthropic's list price, with a $15 limit. Per-model limits run from 1.5x to 20x the $10 fee (computed). Gemini 4 Argon is 50% off through November 30, 2026. DeepSeek models cost 2x on weekdays from 01:00 to 04:00 and 06:00 to 10:00 UTC.",
    "card": true,
    "overage": "stops",
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": "At a cap you can keep using the free models. Extra Usage is opt-in and draws on a Console pay-as-you-go balance. Default regions are Europe and United States; DeepSeek models need the Global region turned on. Clients should send a stable session header. Terms allow use for your own internal purposes only. Trap: leave the Global region off, since DeepSeek models need it and the owner's rule bars providers run from China.",
-   "source": "https://opencode.ai/docs/go/",
+   "limits": "At a limit you can keep using the free models, or opt in to Extra Usage, which draws on a Console pay-as-you-go balance (Go Teams starts with Extra Usage on). Default regions are Europe and United States. DeepSeek V4.1 Flash, DeepSeek V4 Pro and LongCat 2.5 (hosted in China) need the Global region. Muse Spark Contributor models need 'Allow paid endpoints that train on request data'. Workspaces with no saved privacy settings also allow Global for requests from China. Clients should send x-opencode-session and their own user agent. Terms allow your own internal use only. Trap: save the privacy settings with Global off and the training toggle off.",
+   "source": "https://opencode.ai/docs/console/go/",
    "sources_extra": [
+    "https://opencode.ai/inference/go/v1/models",
     "https://opencode.ai/legal/terms-of-service"
    ],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -1724,9 +1990,9 @@
    "price_month": null,
    "currency": "USD",
    "price_note": "No subscription. Prepaid usage credits bought in the Claude Console; billed per token at list price.",
-   "includes": "Per million tokens, input/output: Haiku 5.5 $0.10/$0.50 for prompts up to 100K tokens and $0.50/$2.50 above; Sonnet 5.5 $2/$10; Opus 5.5 $4/$20. Fable 5.1 is $10/$50. Batch API halves input and output prices. New users get a small free credit.",
+   "includes": "Per million tokens, input/output: Haiku 5.5 $0.10/$0.50 for prompts up to 100K tokens and $0.50/$2.50 above; Sonnet 5.5 $2/$10; Opus 5.5 $4/$20; Fable 5.2 $8/$40 (Fable 5.1 is still $10/$50). Batch API halves input and output prices.",
    "resets": "none",
-   "unit_cost_vs_payg": "List price. Batch API is 50 percent off; US-only inference costs 1.1x; Opus 5.5 fast mode costs 2x.",
+   "unit_cost_vs_payg": "List price. Batch API is 50 percent off; US-only inference costs 1.1x; fast mode costs 2x (Opus 5.5 $8/$40, Fable 5.2 $16/$80).",
    "card": true,
    "overage": "stops",
    "trains_on_data": false,
@@ -1739,7 +2005,7 @@
     "https://www.anthropic.com/legal/commercial-terms",
     "https://code.claude.com/docs/en/data-usage"
    ],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -1752,19 +2018,19 @@
    ],
    "price_month": 15,
    "currency": "USD",
-   "price_note": null,
-   "includes": "Unlimited tokens, 1 request at a time, up to 552B models",
+   "price_note": "Core $15, Plus $20, Pro $30 and Max $160 a month; 10% off when paid annually.",
+   "includes": "Core: unlimited tokens and requests, 1 request at a time, standard priority, models up to 552B, 32K context, image generation up to 3 MP. Plus: 128K context. Pro: 2 parallel requests, high priority, 256K context. Max: 6 parallel requests, 512K context.",
    "resets": null,
    "unit_cost_vs_payg": "Flat",
    "card": null,
    "overage": "unknown",
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": null,
+   "limits": "The page headline says 'Unlimited. Zero-Log. Monthly Pricing.' Core is limited to 32K context and 1 request at a time.",
    "source": "https://www.arliai.com/pricing",
    "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "assemblyai-free",
@@ -1787,7 +2053,7 @@
    "limits": "Once the $50 is used, the API returns an error until you add a card and upgrade.",
    "source": "https://support.assemblyai.com/articles/5370767329-can-i-sign-up-for-free",
    "sources_extra": [],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -1801,7 +2067,7 @@
    "price_month": 0,
    "currency": "USD",
    "price_note": "One-time $5 promotional credit; there is no permanently free tier.",
-   "includes": "$5 in credits after adding a verified payment method, valid 30 days. gpt-oss-120b and qwen-3.8-27b at 5 RPM, 30K uncached TPM, 90K total TPM, 1M tokens per hour and 1M tokens per day.",
+   "includes": "$5 in credits after adding a verified payment method, valid 30 days, usable on every Shared Inference model. Free Trial limits: gpt-oss-120b 5 RPM, 30K uncached TPM, 90K total TPM, 1M tokens per hour and 1M tokens per day. qwen-3.8-27b 300 RPM, 150K uncached TPM, 750K total TPM (temporarily raised from 450K), no hourly or daily token caps, the same as Pay as You Go.",
    "resets": "one_time",
    "unit_cost_vs_payg": "Pay as you go credits after the trial; rates not read here.",
    "card": true,
@@ -1813,7 +2079,7 @@
    "sources_extra": [
     "https://www.cerebras.ai/pricing"
    ],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -1826,19 +2092,19 @@
    ],
    "price_month": 10,
    "currency": "USD",
-   "price_note": null,
-   "includes": "2,000 req/day (Pro 5,000), $50 monthly cap",
+   "price_note": "ENDED. Monthly plans are no longer sold. Existing plans stay active to the end of the current billing period, do not renew, and then bill pay-as-you-go from the account balance. Chutes offers no free tier.",
+   "includes": "Offer ended. Chutes now sells only pay-per-token inference (for example Qwen3.8-27B-TEE $0.039 input and $1.25 output per M) and Private Chutes on TEE GPUs (RTX Pro 6000 $2.25 an hour plus a one-time deploy fee of 3x the hourly rate).",
    "resets": null,
    "unit_cost_vs_payg": "6% (Pro 10%) off PAYG",
    "card": true,
    "overage": "bills",
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": null,
+   "limits": "Pay-as-you-go from a prepaid account balance, with no subscription and no minimum. Volume pricing is by sales quote.",
    "source": "https://chutes.ai/pricing",
    "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "cloudflare-ai-search",
@@ -1850,8 +2116,8 @@
    ],
    "price_month": null,
    "currency": "USD",
-   "price_note": "No separate subscription. Billing began November 1, 2026. Each account gets included usage monthly on Workers Free and Workers Paid; usage past it is metered.",
-   "includes": "Monthly: 5 million ingestion tokens, 10 GB-month storage, 1,000 semantic queries, 1,000 full-text queries. Workers AI embedding and reranking, vector indexing, storage and Browser Run crawling are included in AI Search usage. Generation, query rewriting and external models bill through Workers AI or AI Gateway.",
+   "price_note": "No separate subscription. AI Search billing begins December 1, 2026. Each account gets included usage every month on Workers Free and Workers Paid; usage past it is metered.",
+   "includes": "Monthly: 5 million ingestion tokens (image-processing tokens share this allotment), 10 GB-month storage, 1,000 semantic queries, 1,000 full-text queries. OCR is available on every account and bills as image-processing tokens. Workers AI embedding and reranking, R2, Vectorize and Browser Run crawling done for AI Search are included in AI Search usage. Generation, query rewriting, file summaries and external models bill through Workers AI or AI Gateway.",
    "resets": "monthly",
    "unit_cost_vs_payg": "Ingestion $0.75 per M tokens (images add $0.50 per M); storage $2.00 per GB-month; semantic, vector or hybrid queries $0.75 per 1,000; full-text queries $0.10 per 1,000; instances past 5,000 on Paid $0.10 a month each.",
    "card": null,
@@ -1861,7 +2127,7 @@
    "limits": "Workers Free: 100 instances, 100,000 files per instance, 500 crawled pages a day. Workers Paid: 5,000 instances by default, 1M files per instance (500K for hybrid search), no daily crawl cap. Both: 100 namespaces, 10 MiB max for OCR PDFs and text files, 4 MiB for other formats, 100,000 pages per discover crawl. A legacy R2 crawl bucket can still bill R2 storage.",
    "source": "https://developers.cloudflare.com/ai-search/platform/limits-pricing/",
    "sources_extra": [],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -1887,7 +2153,7 @@
    "sources_extra": [
     "https://developers.cloudflare.com/workers-ai/platform/data-usage/"
    ],
-   "checked": "2026-11-13",
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -1908,14 +2174,14 @@
    "overage": "bills",
    "trains_on_data": false,
    "commercial_use": null,
-   "limits": "On Workers Free, requests past 10,000 Neurons a day fail with an error until 00:00 UTC. Text generation defaults to 300 requests per minute. Some models (Kimi, GLM, DeepSeek) need a paid billing method.",
+   "limits": "On Workers Free, requests past 10,000 Neurons a day fail with an error until 00:00 UTC. Text generation defaults to 300 requests per minute. The nine models that need a paid billing method (Kimi, GLM, DeepSeek, Inkling) instead get 20 requests per minute per model, or 50 with prepaid AI Gateway credits on Unified billing.",
    "source": "https://developers.cloudflare.com/workers-ai/platform/pricing/",
    "sources_extra": [
     "https://developers.cloudflare.com/workers/platform/pricing/",
     "https://developers.cloudflare.com/workers-ai/platform/data-usage/",
     "https://developers.cloudflare.com/workers-ai/platform/limits/"
    ],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -1928,19 +2194,22 @@
    ],
    "price_month": 22,
    "currency": "USD",
-   "price_note": null,
-   "includes": "121k credits (~121 min)",
-   "resets": null,
+   "price_note": "$22 a month; annual billing $18.33 a month. Black Friday until December 1, 2026: $8.25 a month for the first year on annual billing ($99 for the year). The FAQ also lists $11 for the first month.",
+   "includes": "121,000 credits a month (about 121 minutes of text to speech), Professional Voice Cloning, 30 custom voice slots, 5 concurrent requests, 128 and 192 kbps audio.",
+   "resets": "monthly",
    "unit_cost_vs_payg": "$0.18/min",
    "card": true,
-   "overage": "unknown",
-   "trains_on_data": null,
-   "commercial_use": null,
-   "limits": null,
+   "overage": "stops",
+   "trains_on_data": true,
+   "commercial_use": true,
+   "limits": "5 concurrent requests. Unused credits roll over for up to two months (balance up to 3x the monthly quota) while subscribed. PAYG top-ups start at $5, expire 12 months after purchase and are non-refundable.",
    "source": "https://elevenlabs.io/pricing",
-   "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "sources_extra": [
+    "https://elevenlabs.io/docs/overview/administration/pay-as-you-go",
+    "https://elevenlabs.io/terms-of-use"
+   ],
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "elevenlabs-free",
@@ -1957,15 +2226,16 @@
    "resets": "monthly",
    "unit_cost_vs_payg": "Free; paid plans start with Starter at $6 per month for 30,000 credits.",
    "card": null,
-   "overage": "unknown",
+   "overage": "stops",
    "trains_on_data": true,
    "commercial_use": false,
-   "limits": "Non-commercial use only. No credit rollover on Free. Content may be used for training unless you opt out.",
+   "limits": "Non-commercial use only, with a personal email address. No credit rollover on Free. Content may be used for training unless you opt out. Optional PAYG top-ups (minimum $5) work on Free and raise concurrency to the Starter level (3), but voice slots and other plan limits stay at the Free level.",
    "source": "https://elevenlabs.io/pricing",
    "sources_extra": [
-    "https://elevenlabs.io/terms-of-use"
+    "https://elevenlabs.io/terms-of-use",
+    "https://elevenlabs.io/docs/overview/administration/pay-as-you-go"
    ],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -1978,7 +2248,7 @@
    ],
    "price_month": 6,
    "currency": "USD",
-   "price_note": "$6 a month. A first-month promotion shows $1. Annual billing is $5 a month (monthly price times 10 per year).",
+   "price_note": "$6 a month; annual billing $5 a month (monthly price times 10 per year). The page still shows a 'First month for $1' banner, but it is marked 'Ends September 30', so that promotion has lapsed.",
    "includes": "30,000 credits a month (about 30 minutes of text to speech), commercial license, Instant Voice Cloning, 20 Studio projects, 10 custom voice slots, 3 concurrent requests.",
    "resets": "monthly",
    "unit_cost_vs_payg": "The pricing table lists about $0.20 per extra minute for Starter. Pay-as-you-go top-ups start at $5 and expire 12 months after purchase.",
@@ -1992,7 +2262,7 @@
     "https://elevenlabs.io/docs/overview/administration/pay-as-you-go",
     "https://elevenlabs.io/terms-of-use"
    ],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -2013,11 +2283,11 @@
    "overage": "unknown",
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": null,
+   "limits": "Interactive, human-driven use by the purchaser only: no reselling, app or API traffic, background automation or benchmarking. Misuse may lead to cancellation without refund. 40,000+ open models. Prompts and completions are never stored. Billed monthly; cancel any time. Switching to Developer mid-period forfeits the rest of the period.",
    "source": "https://featherless.ai/pricing",
    "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "featherless-developer",
@@ -2029,19 +2299,19 @@
    ],
    "price_month": 50,
    "currency": "USD",
-   "price_note": null,
-   "includes": "$50 metered credits, 256K context, 100 concurrent",
+   "price_note": "From $50 a month (credit amount selectable), billed per token.",
+   "includes": "$50 or more of metered credits a month, context up to 256K, 100 concurrent units, 1 agent environment included, priority capacity.",
    "resets": null,
    "unit_cost_vs_payg": "1x (no discount)",
    "card": true,
    "overage": "stops",
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": null,
+   "limits": "Credits never expire and carry into later cycles. One-off top-ups any time. Only successful requests are billed. Requests are blocked at zero credit. Prompts are never stored. No reselling.",
    "source": "https://featherless.ai/pricing",
    "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "fireworks-fire-pass",
@@ -2053,19 +2323,19 @@
    ],
    "price_month": null,
    "currency": "USD",
-   "price_note": null,
-   "includes": "Kimi K3 Fast at $0 per token while active",
+   "price_note": "CLOSED TO NEW SUBSCRIPTIONS. Fire Pass is experimental and not open to new subscriptions; only existing users and promo recipients can manage a pass. No price is published.",
+   "includes": "Covered usage on enabled open-weight routers while the pass is active. kimi-fast-latest currently resolves to Kimi K3 Fast (1,040,000-token context, up to 131,072 output tokens), at $0 per token. Uses a dedicated fpk_ key.",
    "resets": null,
    "unit_cost_vs_payg": "Flat (was $7/week, 3p)",
    "card": true,
    "overage": "unknown",
    "trains_on_data": null,
-   "commercial_use": null,
-   "limits": null,
+   "commercial_use": false,
+   "limits": "Personal, non-production agentic coding only. No Responses API (Codex, ChatGPT desktop), no auto or Nexus Auto, and Nexus CLI rejects Fire Pass keys. Violations may revoke the pass.",
    "source": "https://docs.fireworks.ai/firepass",
    "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "gemini-api-free",
@@ -2078,20 +2348,21 @@
    "price_month": 0,
    "currency": "USD",
    "price_note": "Free input and output tokens on selected models; the Paid tier is pay as you go.",
-   "includes": "Free of charge on the free tier: Gemini 3.8 Flash, 3.6 Flash, 3.5 Flash-Lite, 3.1 Flash-Lite, 3 Flash Preview, 2.5 Pro, 2.5 Flash, 2.5 Flash-Lite, Gemma 4, Gemini Embedding, and the TTS, Live and Transcribe models. Not on the free tier: Gemini 4 Argon, Gemini Omni Flash, 3.1 Pro Preview, the Nano Banana image models, and Lyria.",
+   "includes": "Free of charge on the Free tier: Gemini 4 Hydrogen, Gemini 3.8 Flash, 3.6 Flash, 3.5 Flash-Lite, 3.1 Flash-Lite, 3 Flash Preview, 2.5 Pro and 2.5 Flash (both deprecated), 2.5 Flash-Lite, Gemma 4, Gemini Embedding and Embedding 2, Gemini Decision 1, Robotics ER 2 previews, and the TTS, Live, Live Translate and Transcribe models. Not on the Free tier: Gemini 4 Carbon, 4 Argon, 4 Neon, Genie 4, Omni 1.2/1.1 Flash, 3.1 Pro Preview, the Nano Banana image models, 2.5 Pro Preview TTS, and Lyria 3/3.5.",
    "resets": "daily",
    "unit_cost_vs_payg": "Free",
    "card": null,
    "overage": "stops",
    "trains_on_data": true,
    "commercial_use": true,
-   "limits": "Rate limits are per project and shown in AI Studio, not on the docs page. Daily quotas reset at midnight Pacific time. Apps made available to users in the EEA, Switzerland or the UK must use Paid Services. Free-tier content can be read by human reviewers.",
+   "limits": "Rate limits are per project and shown in AI Studio, not on the docs page. Daily quotas reset at midnight Pacific time. Apps made available to users in the EEA, Switzerland or the UK must use Paid Services. Free-tier content can be read by human reviewers. DEPRECATION: gemini-2.5-pro and gemini-2.5-flash are no longer selectable in AI Studio. From December 1, 2026, API calls to them route to gemini-3.8-flash and gemini-3.5-flash-lite respectively and bill at those rates.",
    "source": "https://aistudio.google.com/docs/pricing",
    "sources_extra": [
     "https://aistudio.google.com/docs/terms",
-    "https://aistudio.google.com/docs/rate-limits"
+    "https://aistudio.google.com/docs/rate-limits",
+    "https://aistudio.google.com/docs/deprecations"
    ],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -2112,7 +2383,7 @@
    "overage": "bills",
    "trains_on_data": false,
    "commercial_use": null,
-   "limits": "The rate-limits page shows 30 RPM, 1K RPD, 8K TPM and 200K TPD for gpt-oss-120b and calls the table the Developer base limits. Exact limits show on the signed-in limits page. Zero Data Retention is available to all customers and disables batch and fine-tuning. Customer data is stored in US Google Cloud buckets.",
+   "limits": "The rate-limits page now has a separate Developer Plan table: gpt-oss-120b 1K RPM, 500K RPD, 250K TPM (no TPD listed); qwen3.8-27b the same; whisper-large-v3 300 RPM, 200K RPD, 200K ASH, 4M ASD. Exact limits show on the signed-in limits page. Zero Data Retention is available to all customers and disables batch and fine-tuning. Customer data is stored in US Google Cloud buckets.",
    "source": "https://console.groq.com/docs/billing-faqs",
    "sources_extra": [
     "https://console.groq.com/docs/model/openai/gpt-oss-120b",
@@ -2120,7 +2391,7 @@
     "https://console.groq.com/docs/your-data",
     "https://console.groq.com/docs/legal/services-agreement"
    ],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -2146,7 +2417,7 @@
    "sources_extra": [
     "https://console.groq.com/docs/your-data"
    ],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -2173,7 +2444,7 @@
     "https://huggingface.co/pricing",
     "https://huggingface.co/docs/inference-providers/security"
    ],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -2186,19 +2457,19 @@
    ],
    "price_month": 29,
    "currency": "USD",
-   "price_note": null,
-   "includes": "$58 of usage (own page; another own page says $87)",
+   "price_note": "$29 a month. Pro $79, Max $179. Self-serve first-month money-back guarantee.",
+   "includes": "$58 of model usage a month at provider rates (2x the fee), 200+ models, with a weekly premium allowance.",
    "resets": null,
-   "unit_cost_vs_payg": "2x to 3x incl. Claude",
+   "unit_cost_vs_payg": "2x usage value at provider rates (vendor's figure): Lite $29 to $58, Pro $79 to $158, Max $179 to $358.",
    "card": true,
    "overage": "stops",
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": null,
+   "limits": "Weekly premium allowance; Reset Passes restore it (Max includes two a month, and any tier can buy one). First-month refund is self-serve from the billing dashboard.",
    "source": "https://llmgateway.io/products/devpass",
    "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "mistral-api-free",
@@ -2249,7 +2520,7 @@
    "sources_extra": [
     "https://assets.ngc.nvidia.com/products/api-catalog/legal/NVIDIA%20API%20Trial%20Terms%20of%20Service.pdf"
    ],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -2273,7 +2544,7 @@
    "limits": "10 concurrent requests; extra requests queue. Included credits do not roll over. Purchased credits are drawn after the included amount, so buying none keeps a hard stop.",
    "source": "https://ollama.com/pricing",
    "sources_extra": [],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -2299,7 +2570,7 @@
    "sources_extra": [
     "https://ollama.com/terms"
    ],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -2312,19 +2583,22 @@
    ],
    "price_month": 40,
    "currency": "USD",
-   "price_note": null,
-   "includes": "Per-model caps $60-$240",
-   "resets": null,
-   "unit_cost_vs_payg": "1.5x to 6x",
+   "price_note": "$40 a month.",
+   "includes": "One shared monthly allowance. Per-model monthly limits run from $60 to $400 (for example Claude Haiku 5.5, GPT 6 Luna and Kimi K3 $60, DeepSeek V4.1 Flash $200, GLM-5.3 $400). 5-hour (20%) and weekly (50%) sub-limits.",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "1.5x to 10x the $40 fee per model (computed from the models endpoint).",
    "card": true,
    "overage": "stops",
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": null,
-   "source": "https://opencode.ai/docs/go/",
-   "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "limits": "The same rules as Go: free models or opt-in Extra Usage at a limit; DeepSeek and LongCat need the Global region; Muse Spark Contributor needs the training toggle; the terms allow internal use only.",
+   "source": "https://opencode.ai/docs/console/go/",
+   "sources_extra": [
+    "https://opencode.ai/inference/go/v1/models",
+    "https://opencode.ai/legal/terms-of-service"
+   ],
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "openrouter-free",
@@ -2349,7 +2623,7 @@
    "sources_extra": [
     "https://openrouter.ai/docs/guides/privacy/provider-logging"
    ],
-   "checked": "2026-11-13",
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -2362,7 +2636,7 @@
    ],
    "price_month": null,
    "currency": "USD",
-   "price_note": "No monthly fee or minimum. A 5.5% fee on credit purchases (Standard); Business plan fee is 8%.",
+   "price_note": "No monthly fee or minimum. A 5.5% fee on credit purchases ($0.80 minimum) on Standard; 5% for crypto payments; the Business plan fee is 8%.",
    "includes": "600+ models at each provider's list price. Free models: 20 requests a minute and 50 a day, rising to 1,000 a day after at least $10 of lifetime credit purchases. BYOK: $25,000 of list-price inference a month with no fee, then 5%.",
    "resets": "none",
    "unit_cost_vs_payg": "Provider list price plus the 5.5% purchase fee.",
@@ -2376,7 +2650,7 @@
     "https://openrouter.ai/docs/faq",
     "https://openrouter.ai/terms"
    ],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -2404,8 +2678,34 @@
    "verified": false
   },
   {
+   "id": "sambanova-free",
+   "name": "SambaCloud Free Tier",
+   "provider": "SambaNova Systems",
+   "provider_hq": "US",
+   "lanes": [
+    "inference"
+   ],
+   "price_month": 0,
+   "currency": "USD",
+   "price_note": "Rate-limited free tier, applied when no payment method is linked.",
+   "includes": "gpt-oss-120b and gemma-4-31B-it at 20 requests per minute, 20 requests per day and 200,000 tokens per day each.",
+   "resets": "daily",
+   "unit_cost_vs_payg": "Developer Tier (card linked, pay per token) raises limits to 60 RPM and 12,000 RPD per model, capped at 20M tokens per day across models.",
+   "card": null,
+   "overage": "stops",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "Docs state all SambaCloud models are Preview models for evaluation and experimentation only, not for production, and may be removed at short notice. The Plans console page instead says to add a payment method and purchase credits to run first requests, so free access without a card could not be confirmed end to end.",
+   "source": "https://docs.sambanova.ai/docs/en/models/rate-limits",
+   "sources_extra": [
+    "https://cloud.sambanova.ai/plans"
+   ],
+   "checked": "2026-11-23",
+   "verified": true
+  },
+  {
    "id": "synthetic-standard",
-   "name": "Synthetic Standard (Go $9, Big $90)",
+   "name": "Synthetic Standard (Go $9, Big $90, Bigger $300)",
    "provider": "Synthetic",
    "provider_hq": null,
    "lanes": [
@@ -2413,19 +2713,22 @@
    ],
    "price_month": 30,
    "currency": "USD",
-   "price_note": null,
-   "includes": "Weekly-regenerating credits at discounted rates; 3p: 500 req/5h and $24 credits/week per pack",
-   "resets": null,
-   "unit_cost_vs_payg": "About 3.5x (3p)",
+   "price_note": "Plans: Go $9, Standard $30, Big $90, Bigger $300 a month.",
+   "includes": "A weekly credit limit that regenerates 2% every 202 minutes (a full week from zero). There are no 5-hour or monthly limits. Credits are spent at discounted subscription rates. Includes 1 usage reset a month, Web Search API and beta models. Fast mode (2x speed, 2x credit use) and Infinite mode (DeepSeek V4.1 Flash only, slower, not counted against limits) come with Big and Bigger.",
+   "resets": "weekly",
+   "unit_cost_vs_payg": "Subscription rate vs usage-based price per M tokens, input/output: Kimi K3.1 Pro $0.75/$6.00 vs $2.00/$10.00; Qwen3.8-27B $0.23/$1.10 vs $0.45/$2.20; gpt-oss-120b $0.01/$0.05 vs $0.10/$0.10.",
    "card": true,
    "overage": "unknown",
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": null,
+   "limits": "Every plan allows extra usage at usage-based API pricing. You can buy more tokens or move to a higher plan.",
    "source": "https://synthetic.new/rate-limits",
-   "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "sources_extra": [
+    "https://synthetic.new/pricing",
+    "https://synthetic.new/pricing/models"
+   ],
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "venice-pro-plus",
@@ -2439,17 +2742,17 @@
    "currency": "USD",
    "price_note": null,
    "includes": "$75 API spend/mo (Max $225)",
-   "resets": null,
+   "resets": "monthly",
    "unit_cost_vs_payg": "1.10x (Max 1.125x)",
    "card": true,
    "overage": "unknown",
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": null,
+   "limits": "Unused credits roll forward: 2-month credit banking on Pro Plus, 3-month on Max. 100 credits = $1. One-time 500 welcome credits. API rate limits listed as 'Higher' (Pro Plus) and 'Highest' (Max).",
    "source": "https://venice.ai/pricing",
    "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "cloudflare-d1-free",
@@ -2472,7 +2775,7 @@
    "limits": "Daily limits reset at 00:00 UTC. Past the read or write limit, queries fail until reset. At the storage limit you must delete data before writing more.",
    "source": "https://developers.cloudflare.com/d1/platform/pricing/",
    "sources_extra": [],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -2498,7 +2801,7 @@
    "sources_extra": [
     "https://developers.cloudflare.com/r2/get-started/"
    ],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -2524,7 +2827,7 @@
    "sources_extra": [
     "https://developers.cloudflare.com/workers/platform/limits/"
    ],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -2550,7 +2853,7 @@
    "sources_extra": [
     "https://docs.github.com/en/site-policy/github-terms/github-terms-for-additional-products-and-features"
    ],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -2576,7 +2879,192 @@
    "sources_extra": [
     "https://huggingface.co/docs/hub/spaces-gpus"
    ],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "koyeb-pro",
+   "name": "Koyeb Pro",
+   "provider": "Koyeb (joining Mistral AI)",
+   "provider_hq": "FR",
+   "lanes": [
+    "hosting",
+    "cpu",
+    "gpu"
+   ],
+   "price_month": 29,
+   "currency": "USD",
+   "price_note": "$29 per month plus compute.",
+   "includes": "$10 of included compute per month, 10 users, 100 services, NVMe volumes and snapshots, 5 concurrent builds, email and chat support.",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "Compute billed per second from $0.000006 per second; 100 GB outbound bandwidth free, then $0.04/GB.",
+   "card": true,
+   "overage": "bills",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "Card required; a $29 pre-authorization hold is placed. Koyeb announced it is joining Mistral AI; the announcement says the free Starter plan will be removed and new users must subscribe to Pro, Scale or Enterprise with a valid payment method (https://www.koyeb.com/blog/koyeb-is-joining-mistral-ai-to-build-the-future-of-ai-infrastructure). The free web service listed in the pricing FAQ is therefore not open to new sign-ups.",
+   "source": "https://www.koyeb.com/pricing",
+   "sources_extra": [
+    "https://www.koyeb.com/docs/faqs/pricing",
+    "https://www.koyeb.com/blog/koyeb-is-joining-mistral-ai-to-build-the-future-of-ai-infrastructure"
+   ],
+   "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "northflank-sandbox",
+   "name": "Northflank Sandbox",
+   "provider": "Northflank",
+   "provider_hq": "GB",
+   "lanes": [
+    "hosting",
+    "cpu"
+   ],
+   "price_month": 0,
+   "currency": "USD",
+   "price_note": "Free tier, no card needed.",
+   "includes": "Up to $20 a month of resources on Northflank Cloud across 2 services, 2 jobs and 1 database; one bring-your-own-cloud cluster with up to 12 vCPU and 48 GB memory (your cloud provider bills that infrastructure). Always on, no sleeping.",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "Pay as you go from $0.01667 per vCPU hour, billed per second, no seat fees.",
+   "card": false,
+   "overage": "unknown",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "The page does not say what happens when the $20 of resources is used.",
+   "source": "https://northflank.com/pricing",
+   "sources_extra": [],
+   "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "railway-free",
+   "name": "Railway Free plan",
+   "provider": "Railway",
+   "provider_hq": "US",
+   "lanes": [
+    "hosting"
+   ],
+   "price_month": 0,
+   "currency": "USD",
+   "price_note": "Free plan with $1 of usage credits each month, no credit card; new accounts also get a 30-day trial with a one-time $5 credit.",
+   "includes": "$1 of monthly usage credits, 1 project with up to 3 services, up to 1 vCPU and 0.5 GB RAM per service, 0.5 GB volume storage, one-click Postgres, Redis, MySQL and MongoDB.",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "Container usage: RAM $10/GB/month, CPU $20/vCPU/month, egress $0.05/GB, volume storage $0.15/GB/month; builds are free.",
+   "card": false,
+   "overage": "unknown",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "Services sleep after 5 to 10 minutes without outbound traffic and wake on the next request. The Free plan does not expire. When trial credits run out, running deployments are stopped. The page does not say what happens when the $1 is used.",
+   "source": "https://railway.com/pricing",
+   "sources_extra": [
+    "https://docs.railway.com/pricing/plans"
+   ],
+   "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "railway-hobby",
+   "name": "Railway Hobby",
+   "provider": "Railway",
+   "provider_hq": "US",
+   "lanes": [
+    "hosting",
+    "cpu"
+   ],
+   "price_month": 5,
+   "currency": "USD",
+   "price_note": "$5 per month minimum, which includes $5 of usage.",
+   "includes": "$5 of monthly usage credits, up to 48 vCPU and 48 GB RAM per service, up to 5 replicas at 8 vCPU / 8 GB each, up to 5 GB storage, always-on services, 7-day log history, single developer workspace.",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "Usage above $5 billed at RAM $10/GB/month, CPU $20/vCPU/month, egress $0.05/GB, volume $0.15/GB/month.",
+   "card": true,
+   "overage": "bills",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "The $5 fee is charged even if unused; included usage does not roll over. Railway may waive the fee for some active builders.",
+   "source": "https://railway.com/pricing",
+   "sources_extra": [
+    "https://docs.railway.com/pricing/plans"
+   ],
+   "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "railway-pro",
+   "name": "Railway Pro",
+   "provider": "Railway",
+   "provider_hq": "US",
+   "lanes": [
+    "hosting",
+    "cpu"
+   ],
+   "price_month": 20,
+   "currency": "USD",
+   "price_note": "$20 per month minimum, which includes $20 of usage.",
+   "includes": "$20 of monthly usage credits, up to 1,000 vCPU and 1 TB RAM per service, up to 42 replicas at 24 vCPU / 24 GB each, up to 1 TB storage, unlimited workspace seats.",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "Usage above $20 billed at the same per-resource rates as Hobby.",
+   "card": true,
+   "overage": "bills",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "Included usage does not roll over.",
+   "source": "https://railway.com/pricing",
+   "sources_extra": [
+    "https://docs.railway.com/pricing/plans"
+   ],
+   "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "render-free",
+   "name": "Render free instances",
+   "provider": "Render",
+   "provider_hq": "US",
+   "lanes": [
+    "hosting"
+   ],
+   "price_month": 0,
+   "currency": "USD",
+   "price_note": "Free compute plan for web services, Postgres and Key Value on the $0 Hobby workspace.",
+   "includes": "750 free instance hours per workspace per month for free web services (512 MB RAM), one free Postgres database (1 GB, expires 30 days after creation), one free Key Value instance, free static sites; Hobby workspace includes 5 GB bandwidth and up to 25 services.",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "Paid instances start at $7/month (512 MB RAM, 0.5 CPU); SSD $0.25/GB per month.",
+   "card": false,
+   "overage": "stops",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "Free web services spin down after 15 minutes without inbound traffic (about one minute to spin back up), have an ephemeral filesystem, and are suspended when the 750 hours are used. Bandwidth overage is billed if a payment method exists, otherwise services are suspended. Render says not to use free instances for production.",
+   "source": "https://render.com/docs/free",
+   "sources_extra": [
+    "https://render.com/pricing"
+   ],
+   "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "render-starter-instance",
+   "name": "Render paid web service, 512 MB",
+   "provider": "Render",
+   "provider_hq": "US",
+   "lanes": [
+    "hosting",
+    "cpu"
+   ],
+   "price_month": 7,
+   "currency": "USD",
+   "price_note": "$7 per month for the smallest paid instance, on the $0 Hobby workspace.",
+   "includes": "512 MB RAM, 0.5 CPU (instance type 0.5c-512mb), always on, persistent disks available. Next size: 1 CPU, 2 GB RAM at $25 per month.",
+   "resets": null,
+   "unit_cost_vs_payg": "SSD storage $0.25/GB per month. Pro workspace is $25 per month plus compute.",
+   "card": true,
+   "overage": "bills",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "Hobby workspace: up to 25 services, 5 GB bandwidth included.",
+   "source": "https://render.com/pricing",
+   "sources_extra": [],
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -2597,12 +3085,36 @@
    "overage": "unknown",
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": "Free projects pause after 1 week of inactivity. Paused projects do not count toward the 2-project limit. The pages read do not say what happens when a Free project goes over quota.",
+   "limits": "Free projects pause after 1 week of inactivity. Paused projects do not count toward the 2-project limit, which applies across all organizations where you are Owner or Administrator. Egress, storage, MAU and Edge Function quotas apply to the whole organization, not per project; database size (500 MB) is per project. The pages read do not say what happens when a Free project goes over quota.",
    "source": "https://supabase.com/pricing",
    "sources_extra": [
     "https://supabase.com/docs/guides/platform/billing-on-supabase"
    ],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "supabase-pro",
+   "name": "Supabase Pro",
+   "provider": "Supabase",
+   "provider_hq": "US",
+   "lanes": [
+    "hosting"
+   ],
+   "price_month": 25,
+   "currency": "USD",
+   "price_note": "$25 per month per organization; first project included.",
+   "includes": "100K monthly active users, 8 GB disk per project, 250 GB bandwidth, daily backups with 7-day retention, email support, $10 per month of compute credits (covers one Micro instance: 1 GB RAM, shared compute).",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "Additional projects from $10 per month; custom domain $10 per month flat.",
+   "card": true,
+   "overage": "stops",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "Spend cap is on by default, so usage beyond included quota is not billed until the cap is switched off.",
+   "source": "https://supabase.com/pricing",
+   "sources_extra": [],
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -2623,12 +3135,38 @@
    "overage": "stops",
    "trains_on_data": null,
    "commercial_use": false,
-   "limits": "Personal, non-commercial use only. Payments, ads, product sales, affiliate sites, or being paid to build or host the site all count as commercial; donations do not.",
+   "limits": "Terms of Service: the Hobby plan is for personal or non-commercial use only, and Vercel may disable or remove Hobby projects with or without notice. Past a Hobby usage limit you generally have to wait until 30 days have passed to use that feature again (Web Analytics collection resumes after 7 days). Hobby cannot buy extra usage.",
    "source": "https://vercel.com/pricing",
    "sources_extra": [
-    "https://vercel.com/docs/limits/fair-use-guidelines"
+    "https://vercel.com/docs/limits/fair-use-guidelines",
+    "https://vercel.com/legal/terms",
+    "https://vercel.com/docs/plans/hobby"
    ],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "vercel-pro",
+   "name": "Vercel Pro",
+   "provider": "Vercel",
+   "provider_hq": "US",
+   "lanes": [
+    "hosting"
+   ],
+   "price_month": 20,
+   "currency": "USD",
+   "price_note": "$20 per month.",
+   "includes": "$20 of included usage credit, Flat Rate CDN with traffic spike protection, advanced spend management, team collaboration with free viewer seats, cold start prevention, free custom domain.",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "Usage beyond the credit is metered per resource as listed on the pricing page.",
+   "card": true,
+   "overage": "unknown",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "Free trial available.",
+   "source": "https://vercel.com/pricing",
+   "sources_extra": [],
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -2643,17 +3181,19 @@
    "currency": "USD",
    "price_note": null,
    "includes": "50 credits/mo; Claude Sonnet 4.5 and open-weight models",
-   "resets": null,
+   "resets": "monthly",
    "unit_cost_vs_payg": "Free",
-   "card": false,
+   "card": null,
    "overage": "stops",
-   "trains_on_data": null,
+   "trains_on_data": true,
    "commercial_use": null,
-   "limits": null,
+   "limits": "50 credits per month, open-weight models and Claude Sonnet 4.5 'with limits'. Not available in Kiro Enterprise or AWS GovCloud (US). Use through third-party automation harnesses (e.g. OpenClaw) is not permitted. Content may be used for service improvement unless you opt out.",
    "source": "https://kiro.dev/pricing/",
-   "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "sources_extra": [
+    "https://kiro.dev/faq/"
+   ],
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "kiro-pro",
@@ -2665,19 +3205,21 @@
    ],
    "price_month": 20,
    "currency": "USD",
-   "price_note": null,
+   "price_note": "$20 per user per month, excluding tax. First upgrade from Free: the rest of that month is free plus 500 trial credits usable within 12 months (valid credit card required). Fees and credits are prorated to the second.",
    "includes": "1,000 credits/mo",
-   "resets": null,
+   "resets": "monthly",
    "unit_cost_vs_payg": "2x vs $0.04 add-on credits",
    "card": true,
    "overage": "stops",
-   "trains_on_data": null,
+   "trains_on_data": true,
    "commercial_use": null,
-   "limits": null,
+   "limits": "Past plan credits you continue only by buying add-on credits ($0.04 each, packs from $5 for 125 credits to $100); add-on credits roll over and expire 12 months after purchase. Plan credits do not roll over. Third-party automation harnesses not permitted. GovCloud pricing about 20% higher.",
    "source": "https://kiro.dev/pricing/",
-   "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "sources_extra": [
+    "https://kiro.dev/faq/"
+   ],
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "claude-max",
@@ -2704,7 +3246,7 @@
     "https://support.claude.com/en/articles/17154008-monthly-api-credits-for-max-ultra-and-team-plans",
     "https://code.claude.com/docs/en/data-usage"
    ],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -2725,14 +3267,14 @@
    "overage": "stops",
    "trains_on_data": true,
    "commercial_use": null,
-   "limits": "A session limit that resets every 5 hours and a weekly limit. Claude Code shares the same limits as chat. Usage credits are opt-in and prepaid through Add funds; auto-reload is optional.",
+   "limits": "A session limit that resets every 5 hours and a weekly limit. Claude Code shares the same limits as chat. Usage credits are opt-in and prepaid through Add funds; auto-reload is optional. Usage credits bought on or after December 7, 2026 expire 12 months after purchase (earlier purchases do not expire); purchases are non-refundable.",
    "source": "https://claude.com/pricing",
    "sources_extra": [
     "https://support.claude.com/en/articles/12429409-manage-usage-credits-for-paid-claude-plans",
     "https://code.claude.com/docs/en/data-usage",
     "https://support.claude.com/en/articles/17154008-monthly-api-credits-for-max-ultra-and-team-plans"
    ],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -2760,7 +3302,7 @@
     "https://support.claude.com/en/articles/17154008-monthly-api-credits-for-max-ultra-and-team-plans",
     "https://code.claude.com/docs/en/data-usage"
    ],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -2787,7 +3329,7 @@
     "https://claude.com/pricing",
     "https://support.claude.com/en/articles/17154008-monthly-api-credits-for-max-ultra-and-team-plans"
    ],
-   "checked": "2026-11-02",
+   "checked": "2026-11-23",
    "verified": true
   },
   {
@@ -2824,19 +3366,21 @@
    ],
    "price_month": 50,
    "currency": "USD",
-   "price_note": null,
+   "price_note": "Shown as 'sold out' on the Cerebras Code page on 2026-11-23 (the $200 Max tier is also sold out); the page invites visitors to follow for new plans.",
    "includes": "Up to 24M tokens/day GLM 4.7",
-   "resets": null,
-   "unit_cost_vs_payg": "About $0.07/M vs about $2.15/M GLM-5.x (30x)",
+   "resets": "daily",
+   "unit_cost_vs_payg": "About $0.07 per million tokens if the full 24M tokens/day is used for 30 days (computed: $50 / 720M). No pay-as-you-go GLM price was readable on cerebras.ai/pricing today, so the 30x comparison could not be re-checked.",
    "card": true,
    "overage": "unknown",
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": null,
+   "limits": "Sold out as of 2026-11-23. GLM 4.7 only, up to 24 million tokens per day; use with any editor or agent that accepts an API key.",
    "source": "https://www.cerebras.ai/code",
-   "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "sources_extra": [
+    "https://www.cerebras.ai/pricing"
+   ],
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "devin-pro",
@@ -2849,18 +3393,18 @@
    "price_month": 20,
    "currency": "USD",
    "price_note": null,
-   "includes": "Quotas unpublished, refresh daily and weekly",
-   "resets": null,
+   "includes": "Increased quotas (amounts unpublished) that refresh daily and weekly; frontier models from OpenAI, Claude, Gemini and SpaceXAI plus open-source models; free use of SWE-2; Devin Cloud agents; option to use your ChatGPT plan; up to 10 concurrent sessions.",
+   "resets": "daily and weekly",
    "unit_cost_vs_payg": "Unquantified",
    "card": true,
-   "overage": "bills",
+   "overage": "unknown",
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": null,
+   "limits": "Extra usage must be purchased and is consumed at API pricing. Up to 10 concurrent sessions.",
    "source": "https://devin.ai/pricing",
    "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "copilot-free",
@@ -2873,18 +3417,20 @@
    "price_month": 0,
    "currency": "USD",
    "price_note": null,
-   "includes": "2,000 completions/mo, limited chat and agent",
-   "resets": null,
+   "includes": "2,000 code completions per month; limited chat and agent usage (AI-credit allowance, models through auto model selection only); access to Haiku 4.5, GPT-5 mini and more; Copilot Fusion Standard.",
+   "resets": "monthly",
    "unit_cost_vs_payg": "Free",
    "card": false,
    "overage": "stops",
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": null,
-   "source": "https://docs.github.com/en/copilot/concepts/billing/usage-based-billing-for-individuals",
-   "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "limits": "Models only through auto model selection. Included allowance does not carry over between months.",
+   "source": "https://docs.github.com/en/copilot/concepts/billing-and-usage/individuals/billing",
+   "sources_extra": [
+    "https://github.com/features/copilot/plans"
+   ],
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "copilot-max",
@@ -2897,18 +3443,20 @@
    "price_month": 100,
    "currency": "USD",
    "price_note": null,
-   "includes": "20,000 AI credits ($200)",
-   "resets": null,
+   "includes": "20,000 AI credits ($200: 10,000 base + 10,000 flex), everything in Pro+, priority access to new models and features, unlimited completions.",
+   "resets": "monthly",
    "unit_cost_vs_payg": "2.0x at API token rates",
    "card": true,
    "overage": "stops",
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": null,
+   "limits": "Allowance resets at 00:00 UTC on the 1st of each calendar month; unused credits are forfeited. The flex allotment is variable and 'may change over time'. When credits run out, usage stops unless you set an additional-usage budget (1 AI credit = $0.01) or upgrade. Code completions and next edit suggestions are unlimited and not billed in credits. Through Nov 30, 2026: 30% off model costs with Copilot Fusion; 10% off with auto model selection.",
    "source": "https://github.com/features/copilot/plans",
-   "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "sources_extra": [
+    "https://docs.github.com/en/copilot/concepts/billing-and-usage/individuals/billing"
+   ],
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "copilot-pro",
@@ -2922,17 +3470,19 @@
    "currency": "USD",
    "price_note": null,
    "includes": "1,500 AI credits ($15: 1,000 base + 500 flex), unlimited completions",
-   "resets": null,
+   "resets": "monthly",
    "unit_cost_vs_payg": "1.5x at API token rates",
    "card": true,
    "overage": "stops",
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": null,
-   "source": "https://docs.github.com/en/copilot/concepts/billing/usage-based-billing-for-individuals",
-   "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "limits": "Allowance resets at 00:00 UTC on the 1st of each calendar month; unused credits are forfeited. The flex allotment is variable and 'may change over time'. When credits run out, usage stops unless you set an additional-usage budget (1 AI credit = $0.01) or upgrade. Code completions and next edit suggestions are unlimited and not billed in credits. Through Nov 30, 2026: 30% off model costs with Copilot Fusion; 10% off with auto model selection.",
+   "source": "https://docs.github.com/en/copilot/concepts/billing-and-usage/individuals/billing",
+   "sources_extra": [
+    "https://github.com/features/copilot/plans"
+   ],
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "copilot-pro-plus",
@@ -2945,18 +3495,20 @@
    "price_month": 39,
    "currency": "USD",
    "price_note": null,
-   "includes": "7,000 AI credits ($70), Claude and Codex agents",
-   "resets": null,
+   "includes": "7,000 AI credits ($70: 3,900 base + 3,100 flex), premium models including Opus, third-party agents (Claude Code and Codex), Copilot Fusion Standard, High and Max, unlimited completions.",
+   "resets": "monthly",
    "unit_cost_vs_payg": "1.8x at API token rates",
    "card": true,
    "overage": "stops",
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": null,
+   "limits": "Allowance resets at 00:00 UTC on the 1st of each calendar month; unused credits are forfeited. The flex allotment is variable and 'may change over time'. When credits run out, usage stops unless you set an additional-usage budget (1 AI credit = $0.01) or upgrade. Code completions and next edit suggestions are unlimited and not billed in credits. Through Nov 30, 2026: 30% off model costs with Copilot Fusion; 10% off with auto model selection.",
    "source": "https://github.com/features/copilot/plans",
-   "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "sources_extra": [
+    "https://docs.github.com/en/copilot/concepts/billing-and-usage/individuals/billing"
+   ],
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "antigravity-individual-free",
@@ -2969,18 +3521,18 @@
    "price_month": 0,
    "currency": "USD",
    "price_note": null,
-   "includes": "Basic weekly rate limits, unlimited Tab and Command",
-   "resets": null,
+   "includes": "Baseline agent quota refreshed weekly; Antigravity app, CLI, IDE Extensions and Python SDK; parallel background agents, subagents, browser use and scheduled tasks. Models: Gemini 3.8 Flash, Claude Sonnet 4.6 (thinking), Claude Opus 4.6 (thinking), GPT-OSS-120b.",
+   "resets": "weekly",
    "unit_cost_vs_payg": "Free",
-   "card": false,
+   "card": null,
    "overage": "stops",
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": null,
+   "limits": "Deprecation: Claude Sonnet 4.6, Claude Opus 4.6 and GPT-OSS-120b 'will be removed on November 30, 2026', which leaves Gemini 3.8 Flash on the free plan. Rate limits vary by plan and task complexity.",
    "source": "https://antigravity.google/pricing",
    "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "ideogram-plus",
@@ -2992,19 +3544,19 @@
    ],
    "price_month": 20,
    "currency": "USD",
-   "price_note": null,
+   "price_note": "$20 billed monthly, or $15 a month billed yearly ($180). Prices exclude tax. No free trial for subscriptions.",
    "includes": "2,400 priority credits/mo",
-   "resets": null,
-   "unit_cost_vs_payg": "API separate at $0.01/credit",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "About $0.0083 per priority credit ($20 / 2,400) vs pay-as-you-go 1 cent per credit, about 1.2x (computed). The hosted API can use the subscription's monthly credits when they cover the whole request; otherwise it bills a prepaid API balance per image/second.",
    "card": true,
-   "overage": "unknown",
+   "overage": "stops",
    "trains_on_data": null,
-   "commercial_use": null,
-   "limits": null,
+   "commercial_use": true,
+   "limits": "Unlimited slow-queue generations after priority credits run out; Editing with AI and Image Reference need priority credits. New images stay private until published. Payment by card through Stripe only.",
    "source": "https://ideogram.ai/pricing/?pricing_tab=api",
    "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "krea-free",
@@ -3018,7 +3570,7 @@
    "currency": "USD",
    "price_note": null,
    "includes": "100 compute units/day: ~30 Flux.1 Dev or 5 Flux 2 images",
-   "resets": null,
+   "resets": "daily",
    "unit_cost_vs_payg": "Free",
    "card": false,
    "overage": "stops",
@@ -3027,8 +3579,8 @@
    "limits": null,
    "source": "https://www.krea.ai/pricing",
    "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "krea-pro",
@@ -3040,23 +3592,25 @@
    ],
    "price_month": 35,
    "currency": "USD",
-   "price_note": null,
-   "includes": "20,000 units: ~6,000 Flux.1 Dev, 1,080 Flux 2, 592 LTX-2 videos, 90 Wan 2.2 ($21/mo yearly)",
-   "resets": null,
-   "unit_cost_vs_payg": "Flux.1 Dev $0.006 (1.5x); Flux 2 $0.032 (worse); LTX-2 $0.059/video (4x)",
+   "price_note": "$35 a month billed monthly (offer price in the page's structured data), or $21 a month billed yearly. On 2026-11-23 the page runs a limited-time sale with a countdown ('up to 75% off') and shows $42 as a struck-through reference price.",
+   "includes": "20,000 compute units per month: about 6,000 Flux.1 Dev, 1,080 Flux 2, 592 LTX-2 19B (5 s, 512p) videos or 90 Wan 2.2 videos; all image and video models; LoRA training (50 images).",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "Flux.1 Dev about $0.0058 per image on the plan ($35 / 6,000) vs $0.007 on the API, about 1.2x (computed). Flux 2 about $0.032 and LTX-2 about $0.059 per video on the plan; their API prices were not listed on the API pricing page today.",
    "card": true,
    "overage": "stops",
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": null,
+   "limits": "API access is billed separately from app plans; plan units do not cover the API. Compute top-up packs expire after 90 days.",
    "source": "https://www.krea.ai/pricing",
-   "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "sources_extra": [
+    "https://www.krea.ai/app/api/pricing"
+   ],
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "magnific-premium-plus",
-   "name": "Magnific (Freepik) Premium+",
+   "name": "Magnific Plus",
    "provider": "Magnific",
    "provider_hq": null,
    "lanes": [
@@ -3064,23 +3618,47 @@
    ],
    "price_month": 45,
    "currency": "USD",
-   "price_note": null,
-   "includes": "Unlimited Nano Banana 2 (1K), Nano Banana Pro, Kling 2.5 in app ($33.75/mo yearly)",
+   "price_note": "$45 billed monthly, or $33.75 a month billed annually. Prices exclude VAT and local taxes. 30-day refund guarantee.",
+   "includes": "600K credits per year on annual billing ('Credits valid for 1 year, no monthly resets'); Relax mode generations that save credits on 30+ models, with Nano Banana 2 and Kling 2.5 in Relax mode all year; image, video and audio models; commercial AI license plus music rights; API access with credit-based usage; 250M+ stock assets.",
    "resets": null,
-   "unit_cost_vs_payg": "Unlimited vs $0.15 per Nano Banana Pro image",
+   "unit_cost_vs_payg": null,
    "card": true,
    "overage": "unknown",
-   "trains_on_data": null,
-   "commercial_use": null,
-   "limits": null,
+   "trains_on_data": false,
+   "commercial_use": true,
+   "limits": "Relax mode replaces the earlier 'unlimited' wording. On annual billing, credits are valid for one year with no monthly resets; the page does not say how credits work on monthly billing. Top-ups available anytime.",
    "source": "https://www.magnific.com/pricing",
    "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "mistral-vibe-free",
+   "name": "Mistral Vibe Free (formerly Le Chat)",
+   "provider": "Mistral AI",
+   "provider_hq": "FR",
+   "lanes": [
+    "tools"
+   ],
+   "price_month": 0,
+   "currency": "USD",
+   "price_note": "Free plan.",
+   "includes": "Vibe on web and mobile, limited messages and web searches, limited coding sessions, basic image generation and editing, 100+ connectors.",
+   "resets": null,
+   "unit_cost_vs_payg": "Pro is $14.99 per month (excluding taxes).",
+   "card": null,
+   "overage": null,
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "Message and search limits are not quantified on the page (Pro offers up to 6x the messages and 5x the web searches of Free).",
+   "source": "https://mistral.ai/pricing/",
+   "sources_extra": [],
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "mistral-le-chat-pro",
-   "name": "Mistral Le Chat Pro",
+   "name": "Mistral Vibe Pro (formerly Le Chat Pro)",
    "provider": "Mistral AI",
    "provider_hq": null,
    "lanes": [
@@ -3088,19 +3666,19 @@
    ],
    "price_month": 14.99,
    "currency": "USD",
-   "price_note": null,
-   "includes": "Page lists $15/mo API credits; all-day Vibe coding (Devstral); more chat and images",
+   "price_note": "$14.99 a month excluding tax. Verified students: $5.99 a month for up to 12 months. Subject to fair-usage limits and the Terms of Service.",
+   "includes": "Up to 6x Free messages and 5x web searches, all-day coding with Vibe in the CLI, IDE and web (Devstral), up to 40x Free image generations, up to 15 GB libraries, unlimited task scheduling, spreadsheets and slides. No monthly API credit is listed.",
    "resets": null,
-   "unit_cost_vs_payg": "About 1x on API credit plus chat and Vibe (credit unconfirmed)",
+   "unit_cost_vs_payg": null,
    "card": true,
    "overage": "unknown",
-   "trains_on_data": null,
+   "trains_on_data": true,
    "commercial_use": null,
-   "limits": null,
+   "limits": "Subject to fair-usage limits. Past the plan limit you can extend usage with pay-as-you-go credits at API rates; the page does not say whether this is automatic.",
    "source": "https://mistral.ai/pricing",
    "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "chatgpt-plus",
@@ -3175,6 +3753,60 @@
    "verified": false
   },
   {
+   "id": "replit-core",
+   "name": "Replit Core",
+   "provider": "Replit",
+   "provider_hq": "US",
+   "lanes": [
+    "tools",
+    "hosting"
+   ],
+   "price_month": 20,
+   "currency": "USD",
+   "price_note": "$20 per month, or $18 per month billed annually.",
+   "includes": "$20 of monthly credits toward more powerful models, up to 30 hours of chat and up to 60 projects on Free Mode, unlimited workspaces, AI integrations, unlimited published apps.",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "Credits apply to Replit AI work, publishing, network transfer, database storage and AI Integrations; pay-as-you-go beyond credits.",
+   "card": true,
+   "overage": "unknown",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "Pricing page states prices are subject to tax.",
+   "source": "https://replit.com/pricing",
+   "sources_extra": [
+    "https://docs.replit.com/billing/plans/replit-core"
+   ],
+   "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "replit-starter",
+   "name": "Replit Starter",
+   "provider": "Replit",
+   "provider_hq": "US",
+   "lanes": [
+    "tools",
+    "hosting"
+   ],
+   "price_month": 0,
+   "currency": "USD",
+   "price_note": "Free plan.",
+   "includes": "Daily credits for Replit AI up to a monthly cap, monthly credits for production databases, object storage and Autoscale or static publishing, Lite build, one free published app.",
+   "resets": "daily AI credits, monthly cloud credits",
+   "unit_cost_vs_payg": "Core is $20 per month ($18 billed annually).",
+   "card": null,
+   "overage": "unknown",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "Credit amounts are not stated on the page. The free published app goes down after 30 days and carries a Made with Replit badge. Full build, third-party connectors and Replit AI Integrations need Core.",
+   "source": "https://docs.replit.com/billing/plans/starter-plan",
+   "sources_extra": [
+    "https://replit.com/pricing"
+   ],
+   "checked": "2026-11-23",
+   "verified": true
+  },
+  {
    "id": "venice-pro",
    "name": "Venice Pro",
    "provider": "Venice",
@@ -3184,19 +3816,19 @@
    ],
    "price_month": 18,
    "currency": "USD",
-   "price_note": null,
+   "price_note": "$18 a month, or $216 billed yearly.",
    "includes": "1,000 images/day and unlimited text in app; 100 API credits ($1)",
-   "resets": null,
+   "resets": "monthly",
    "unit_cost_vs_payg": "App only",
    "card": true,
    "overage": "unknown",
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": null,
+   "limits": "One-time 500 welcome credits. 100 credits = $1. Standard API rate limits. No credit banking on Pro.",
    "source": "https://venice.ai/pricing",
    "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "checked": "2026-11-23",
+   "verified": true
   },
   {
    "id": "zed-pro",
@@ -3208,19 +3840,19 @@
    ],
    "price_month": 10,
    "currency": "USD",
-   "price_note": null,
+   "price_note": "$10 a month. 14-day free trial with $5 of GPT-6 Luna usage, no credit card required; trial ends when the $5 is used or 14 days pass.",
    "includes": "$5 tokens, unlimited edit predictions",
-   "resets": null,
+   "resets": "monthly",
    "unit_cost_vs_payg": "0.5x",
    "card": true,
    "overage": "bills",
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": null,
+   "limits": "Past the included $5, token usage is billed at API list price +10%, charged at month end or every additional $10, whichever comes first. A spending cap can be set.",
    "source": "https://zed.dev/pricing",
    "sources_extra": [],
-   "checked": "2026-10-25",
-   "verified": false
+   "checked": "2026-11-23",
+   "verified": true
   }
  ]
 }

@@ -1,7 +1,10 @@
 {
   "patterns": [
-    {"id": "private-term", "severity": "FAIL",
-     "regex": "(?i)soul[\\s_-]?craft(?![\\s_-]?org)|colorado[\\s_-]?(startups|ai)|coloradostartups|coloradoai|paulfoley|generateai|\\bpaul\\b|API-Key-|keys\\.toml|/Users/",
-     "message": "a private account, person or path; Compute Crafter names vendors only"}
+    {
+      "id": "private-term",
+      "severity": "FAIL",
+      "regex": "(?i)soul[\\s_-]?craft(?![\\s_-]?org)|/Users/",
+      "message": "a private path or name; the private names are checked by private-terms.yml from an org secret"
+    }
   ]
 }
