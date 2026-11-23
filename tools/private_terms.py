@@ -20,6 +20,7 @@ ALLOW = ".github/private-terms-allow"
 
 
 def main() -> int:
+    os.chdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))  # paths below are the repo root's
     value = os.environ.get("PRIVATE_TERMS", "").strip()
     if not value:
         if os.environ.get("GITHUB_EVENT_NAME") == "pull_request":
@@ -36,7 +37,7 @@ def main() -> int:
     allowed = []
     if os.path.isfile(ALLOW):
         with open(ALLOW, encoding="utf-8") as fh:
-            allowed = [s.strip() for s in fh if s.strip() and not s.lstrip().startswith("#")]
+            allowed = [re.compile(re.escape(s.strip()), re.I) for s in fh if s.strip() and not s.lstrip().startswith("#")]
     files = subprocess.run(["git", "ls-files", "-z"], capture_output=True, check=True).stdout.split(b"\0")
     hits = 0
     for name in filter(None, (f.decode("utf-8", "replace") for f in files)):
@@ -49,7 +50,7 @@ def main() -> int:
             continue
         for line_no, line in enumerate(data.decode("utf-8", "replace").splitlines(), 1):
             for literal in allowed:
-                line = line.replace(literal, "")
+                line = literal.sub(" ", line)
             if terms.search(line):
                 print(f"::error file={name},line={line_no}::a private term; name SoulCraft-Org or a public source only")
                 hits += 1
