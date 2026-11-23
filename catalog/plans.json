@@ -1551,7 +1551,7 @@
     "https://huggingface.co/pro"
    ],
    "checked": "2026-11-23",
-   "verified": true
+   "verified": false
   },
   {
    "id": "hf-pro",
@@ -1980,7 +1980,7 @@
     "https://tinker-docs.thinkingmachines.ai/tinker/models/"
    ],
    "checked": "2026-11-23",
-   "verified": true
+   "verified": false
   },
   {
    "id": "thunder-payg",

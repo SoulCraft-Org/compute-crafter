@@ -13,11 +13,11 @@ flowchart LR
 | --- | --- | --- | --- |
 | ci | 11 | 11 | 7 |
 | cpu | 31 | 27 | 9 |
-| gpu | 39 | 37 | 7 |
+| gpu | 39 | 35 | 7 |
 | inference | 32 | 31 | 11 |
 | hosting | 16 | 16 | 10 |
 | tools | 27 | 23 | 6 |
-| **All** | **156** | **145** | **50** |
+| **All** | **156** | **143** | **50** |
 
 Counts are by each row's first lane, from `plans.json` as built on 2026-11-23. Rows were read between 2026-10-25 and 2026-11-23.
 
