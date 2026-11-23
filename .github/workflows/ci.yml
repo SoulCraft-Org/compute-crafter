@@ -6,7 +6,7 @@ name: ci
 # any other file (a licence, a CODEOWNERS line) skips them, and ci-ok still reports.
 on:
   pull_request:
-  workflow_dispatch: # catalog-reread.yml starts CI this way, as a GITHUB_TOKEN pull request starts none
+  workflow_dispatch: # manual runs
   push:
     branches: [main]
 

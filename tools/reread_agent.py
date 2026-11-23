@@ -95,18 +95,29 @@ def setup_federation(base_dir: str) -> str:
     return directory
 
 
+async def only_catalog_reads(input_data, tool_use_id, context):
+    """Deny a Read outside catalog/ and AGENTS.md. Reads in the working directory need no allow rule, so a hook narrows them."""
+    root = os.path.realpath(os.getcwd())
+    path = os.path.realpath(os.path.join(root, str(input_data["tool_input"].get("file_path", ""))))
+    if path == os.path.join(root, "AGENTS.md") or path.startswith(os.path.join(root, "catalog") + os.sep):
+        return {}
+    return {"hookSpecificOutput": {"hookEventName": "PreToolUse", "permissionDecision": "deny",
+                                   "permissionDecisionReason": "Read only catalog/** and AGENTS.md"}}
+
+
 async def run(token_dir: str) -> int:
-    from claude_agent_sdk import ClaudeAgentOptions, ResultMessage, query
+    from claude_agent_sdk import ClaudeAgentOptions, HookMatcher, ResultMessage, query
 
     options = ClaudeAgentOptions(
         model=MODEL,
         max_turns=MAX_TURNS,
         max_budget_usd=MAX_BUDGET_USD,
         tools=["Read", "Edit", "WebFetch", "Bash"],
-        allowed_tools=["Read", "Edit(catalog/plans.json)", "WebFetch", "Bash(python3 -I tools/catalog.py --check)"],
+        allowed_tools=["Read(catalog/**)", "Read(AGENTS.md)", "Edit(catalog/plans.json)", "WebFetch", "Bash(python3 -I tools/catalog.py --check)"],
         # Deny what would prompt, and keep the agent off the token file and this process's environment.
         permission_mode="dontAsk",
         disallowed_tools=["Read(//proc/**)", "Read(/" + token_dir + "/**)"],
+        hooks={"PreToolUse": [HookMatcher(matcher="Read", hooks=[only_catalog_reads])]},
         setting_sources=[],
         cwd=os.getcwd(),
     )
