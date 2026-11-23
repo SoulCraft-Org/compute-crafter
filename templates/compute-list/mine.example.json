@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "plans": [
+    {"id": "github-actions-free", "have": true, "status": "use", "notes": "Example note: CI runs here first."},
+    {"id": "hf-zerogpu-free", "have": true, "status": "idle", "notes": "Example note: account made, nothing run yet."},
+    {"id": "kaggle-free", "have": false, "status": "want", "notes": "Example note: claim before the next training job."},
+    {"id": "colab-free", "have": false, "status": "skip", "notes": "Example note: not needed this quarter."},
+    {"id": "oracle-always-free", "have": true, "status": "use", "notes": "Example note: replace every row with your own."},
+    {"id": "bitrise-hobby", "have": false, "status": "want", "notes": ""}
+  ]
+}

@@ -1,10 +1,13 @@
 {
   "version": 1,
+  "comment": "Fake example data, one row per site id in sites.example.json. Copy it to status.json, which never goes in git, and replace every row with your own.",
   "rows": {
-    "apple": {"login_method": "email-password", "email_ok": "yes", "passkey": "na", "codes_app": "na", "recovery": "na", "links": [], "tested": "2026-11-22"},
-    "github": {"login_method": "email-password", "email_ok": "yes", "passkey": "passwords", "codes_app": "passwords", "recovery": "printed", "links": ["google"], "tested": "2026-11-22"},
-    "microsoft": {"login_method": "email-password", "email_ok": "yes", "passkey": "passwords", "codes_app": "microsoft-authenticator", "recovery": "passwords", "links": [], "tested": null},
-    "hugging-face": {"login_method": "email-password", "email_ok": "no", "passkey": "none", "codes_app": "google-authenticator", "recovery": "missing", "links": [], "tested": null},
-    "modal": {"login_method": "github", "email_ok": "yes", "passkey": "na", "codes_app": "na", "recovery": "na", "links": [], "tested": "2026-11-22"}
+    "apple": {"login_method": "email-password", "email_ok": "yes", "passkey": "na", "codes_app": "na", "recovery": "na", "links": [], "tested": "2000-01-01"},
+    "github": {"login_method": "passkey", "email_ok": "yes", "passkey": "passwords", "codes_app": "passwords", "recovery": "printed", "links": [], "tested": "2000-01-01"},
+    "microsoft": {"login_method": "passkey", "email_ok": "yes", "passkey": "passwords", "codes_app": "microsoft-authenticator", "recovery": "passwords", "links": [], "tested": null},
+    "google": {"login_method": "passkey", "email_ok": "yes", "passkey": "passwords", "codes_app": "google-authenticator", "recovery": "printed", "links": [], "tested": "2000-01-01"},
+    "hugging-face": {"login_method": "email-password", "email_ok": "no", "passkey": "none", "codes_app": "passwords", "recovery": "missing", "links": [], "tested": null},
+    "modal": {"login_method": "github", "email_ok": "yes", "passkey": "na", "codes_app": "na", "recovery": "na", "links": ["github"], "tested": "2000-01-01"},
+    "cloudflare": {"login_method": "email-password", "email_ok": "yes", "passkey": "na", "codes_app": "passwords", "recovery": "passwords", "links": [], "tested": "2000-01-01"}
   }
 }

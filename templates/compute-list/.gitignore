@@ -1,0 +1,3 @@
+# The board's input names your plans and notes: it stays on your machine, never in git.
+board.json
+local/

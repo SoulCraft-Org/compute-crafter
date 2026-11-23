@@ -1,0 +1,14 @@
+{
+ "comment": "Fake example data: what each allowance has used this cycle, in the unit of its limit. Type the number from the vendor's usage page, or let a reader in targets/credits.json write this file. Shape: Git Crafter data/org.json.",
+ "generated_at": "2026-11-20T09:00:00Z",
+ "metrics": {
+  "ci.minutes": {
+   "value": 1450,
+   "source": "Example CI usage page, typed by hand"
+  },
+  "gpu.usd": {
+   "value": 12,
+   "source": "Example GPU cloud billing page, typed by hand"
+  }
+ }
+}

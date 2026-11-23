@@ -1,0 +1,54 @@
+[
+ {
+  "id": "credits.idle_replaceable",
+  "params": {
+   "comment": "Fake example data: replace each file under inputs/ and each allowance below with your own. One entry carries the params for all six Credits metrics, because Git Crafter merges a targets file's params key by key (quality/overlay.mjs). A relative path is read from the pack's checkout, which a local run expects at .code-os-packs/SoulCraft-Org/compute-crafter, so ../../../ is your repo's root. ~/ is home, and a path from / is absolute. Every other key: targets/credits.json in the pack.",
+   "systems_file": "../../../quality/inputs/systems.json",
+   "usage_file": "../../../quality/inputs/usage.json",
+   "registry": "../../../quality/inputs/registry",
+   "registry_files": [
+    "free.json"
+   ],
+   "catalog_file": "catalog/plans.json",
+   "claim_lanes": [
+    "ci",
+    "gpu",
+    "inference"
+   ],
+   "lane_work": {
+    "ci": "CI jobs queued past the included minutes",
+    "gpu": "training and batch jobs",
+    "inference": "model calls from agents and evals"
+   },
+   "allowances": [
+    {
+     "id": "ci",
+     "system": "ci-host",
+     "registry": "free.json#example-ci-free",
+     "usage": "ci.minutes",
+     "pool": true,
+     "could_take_over": "CI past the plan"
+    },
+    {
+     "id": "gpu",
+     "system": "gpu-cloud",
+     "registry": "free.json#example-gpu-credit",
+     "usage": "gpu.usd",
+     "could_take_over": "training and batch jobs"
+    },
+    {
+     "id": "inference",
+     "system": "inference-api",
+     "registry": "free.json#example-inference-free",
+     "usage_why": "its use shows on a web page only"
+    }
+   ],
+   "pool_metrics": {
+    "credits.actions_pool_used": "ci"
+   },
+   "no_usage_api": {
+    "inference": "its use shows on a web page only, so no collector can read it"
+   }
+  }
+ }
+]

@@ -1,0 +1,4 @@
+# What the page build writes.
+dist/
+process/data/
+# A local run writes data/ and history/ from your own usage. In a public repo, add both here.
