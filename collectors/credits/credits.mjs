@@ -44,6 +44,7 @@ import { fileURLToPath } from 'node:url';
 import { cnc, DAY, finite, metricsFrom, round } from './credits-metrics.mjs';
 import { redact, useLib } from '../lib/engine.mjs';
 import { readBilling } from './billing.mjs';
+import { readClaudeCost } from './claude-cost.mjs';
 import { ciReadable, readProvider } from './providers.mjs';
 
 export const area = 'credits';
@@ -275,7 +276,7 @@ const PLAN_FRESH_MS = DAY;
 // An allowance's reader, run in a local collect (in CI, a ci provider's alone,
 // ciGather), gives its use this cycle as
 // spec.used ({ value, source }); a reader that fails gives usage_why instead,
-// so the row reads "not read" with why, never 0. Three readers:
+// so the row reads "not read" with why, never 0. Four readers:
 //   { github_billing: 'org', product: 'Actions' }: gh api's org billing usage
 //     for this month, the product's gross (list-rate) amount in USD less the
 //     lines of public repositories, which is what the included allowance is
@@ -283,12 +284,15 @@ const PLAN_FRESH_MS = DAY;
 //   { plan_file: 'path', window: 'regex' }: the app's get_usage block a session
 //     wrote (tokens.plan_used's file), that window's percent used; over a day
 //     old it is not read. A relative path is from the repo root
+//   { claude_cost: true }: the Claude Console cost report's spend this UTC month in USD (claude-cost.mjs cites the
+//     endpoint), its Admin key from ANTHROPIC_ADMIN_KEY in the environment, which `providers.env` replaces in tests
 //   { provider: 'modal' | 'huggingface' | 'groq' | 'openrouter' }: that
 //     provider's own usage or limits call, its key from the environment
 //     (providers.mjs cites each endpoint); `providers` passes it env, fetch
 //     and exec in tests
 export async function readUse(reader, { exec = defaultExec, root = '.', now = new Date(), providers = {} } = {}) {
   if (reader.github_billing) return readBilling(reader, exec, now);
+  if (reader.claude_cost) return readClaudeCost(reader, { ...providers, now });
   if (reader.provider) return readProvider(reader, providers);
   if (reader.plan_file) return readPlan(reader, root, now);
   return { why: `unknown reader ${JSON.stringify(reader)}` };
