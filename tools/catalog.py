@@ -302,10 +302,9 @@ def format_catalog(root):
 
 
 def self_test():
-    """--self-test: seeded samples that must pass and must fail. Exit 0 all behave, 1 one does not."""
-    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))  # -I keeps the script's folder off the path
-    import catalog_selftest
-    return catalog_selftest.run()
+    """--self-test: hand over to tools/catalog_selftest.py, which imports this module (this one never imports it).
+    That script prints one line per sample. It exits 0 when all behave, 1 when one does not."""
+    os.execv(sys.executable, [sys.executable, "-E", "-s", os.path.join(ROOT, "tools", "catalog_selftest.py")])
 
 
 def run_merge(dirs):

@@ -1,5 +1,5 @@
-"""The seeded samples of `python3 -I tools/catalog.py --self-test`: each merges, checks or formats a catalog made from
-seeded rows and must pass or fail the way its name says."""
+"""The seeded samples of `python3 -I tools/catalog.py --self-test`, which starts this script: each merges, checks or
+formats a catalog made from seeded rows and must pass or fail the way its name says."""
 import contextlib
 import datetime
 import json
@@ -224,3 +224,7 @@ def run():
     bad = not all(good for _, good in cases)
     print("self-test FAILED" if bad else "self-test passed")
     return int(bad)
+
+
+if __name__ == "__main__":
+    raise SystemExit(run())
