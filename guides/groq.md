@@ -34,6 +34,9 @@ Enter the key at the hidden prompt, then run `/models` inside OpenCode and pick 
 
 ## Sources
 
+<details>
+<summary>Pages read and their dates</summary>
+
 | Page | Read |
 | --- | --- |
 | [Rate Limits](https://console.groq.com/docs/rate-limits) | 2026-11-12 |
@@ -45,3 +48,5 @@ Enter the key at the hidden prompt, then run `/models` inside OpenCode and pick 
 | [Examples](https://console.groq.com/docs/examples) | 2026-11-12 |
 | [models.dev](https://models.dev) | 2026-11-12 |
 | [OpenCode providers](https://opencode.ai/docs/providers) | 2026-11-12 |
+
+</details>
