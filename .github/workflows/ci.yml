@@ -1,7 +1,7 @@
 name: ci
 
 # The Git Crafter CI standard (SoulCraft-Org/git-crafter templates/ci/README.md): this repo calls Git Crafter's
-# reusable workflow, which runs each job on GitHub's standard hosted runners. Dependabot's github-actions entry bumps
+# reusable workflow, which runs each job on GitHub's hosted runners. Dependabot's github-actions entry bumps
 # the pin, together with the engine pin in pages.yml. paths names what a change must touch to run the jobs; a change to
 # any other file (a licence, a CODEOWNERS line) skips them, and ci-ok still reports.
 on:
@@ -44,5 +44,6 @@ jobs:
         python3 -I tools/voice_lint.py --self-test
         git ls-files -z '*.md' | xargs -0 python3 -I tools/voice_lint.py --rules tools/voice_rules.json
         node --test tests/*.test.mjs
-      # Fidelity of the moved Credits files, then their own tests beside the engine at this pin (tests/engine-tests.sh).
-      standard: bash tests/engine-tests.sh
+        # Fidelity of the moved Credits files, then their own tests beside the engine at this pin (tests/engine-tests.sh).
+        # Seconds of work, so it runs in the short job on ubuntu-slim, not in a 2-core standard job.
+        bash tests/engine-tests.sh

@@ -2,6 +2,13 @@
 
 SoulCraft-Org owns the project. AI agents run its day-to-day work under `AGENTS.md`; people hold the seats in [`MAINTAINERS.md`](MAINTAINERS.md).
 
+```mermaid
+flowchart LR
+  I[Idea in Discussions] --> Q[Issue] --> P[Pull request] --> M{Path}
+  M -->|Maintainer-only path| R[Maintainer reviews]
+  M -->|Any other path| O[Orchestrator rebuilds it with credit]
+```
+
 | Decision | Who decides |
 |---|---|
 | An idea becomes an issue | The orchestrator, or a maintainer, in Discussions |
@@ -14,7 +21,7 @@ SoulCraft-Org owns the project. AI agents run its day-to-day work under `AGENTS.
 
 | Question | Rule |
 |---|---|
-| Who may ask | A contributor with five merged pull requests over three months who keeps the code of conduct |
+| Who may ask | A contributor with five merged pull requests over three months who keeps the [code of conduct](CODE_OF_CONDUCT.md) |
 | Who decides | SoulCraft-Org |
 | What the seat can do | Review and merge PRs on maintainer-only paths; turn ideas into issues; welcome new contributors |
 | What stays SoulCraft-Org's | The merge policy, the gates, secrets, deploy settings and production |
