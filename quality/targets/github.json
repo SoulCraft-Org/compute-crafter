@@ -1,0 +1,22 @@
+[
+  {
+    "id": "issues.open_bugs",
+    "params": {
+      "comment": "security.claude_review_share counts only merged PRs that change a file claude-review.yml reviews; keep this list equal to its on.pull_request.paths (git-crafter #838: reviews run on sensitive paths only, to save subscription tokens).",
+      "review_paths": [
+        "**/*.mjs",
+        "**/*.js",
+        "**/*.ts",
+        "**/*.py",
+        "**/*.sh",
+        "tools/**",
+        "actions/**",
+        ".github/workflows/**",
+        ".claude/settings.json",
+        "manifest.json",
+        "package.json",
+        "package-lock.json"
+      ]
+    }
+  }
+]
