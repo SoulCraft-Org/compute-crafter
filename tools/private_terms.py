@@ -8,9 +8,10 @@ path:line only, never the matched text, because a public repo's Actions log is p
 
   PRIVATE_TERMS='...' python3 -I tools/private_terms.py
 
-Exit 0 when clean, 1 on a hit, 2 when the secret is missing on a push (a fork's or Dependabot's pull request gets no
-secrets, so there it only notes the skip; the push to main then runs it in full).
+Exit 0 when clean, 1 on a hit, 2 when the secret is missing. A fork's or Dependabot's pull request gets no secrets
+by design, so there it only notes the skip; the push to main then runs it in full.
 """
+import json
 import os
 import re
 import subprocess
@@ -19,11 +20,23 @@ import sys
 ALLOW = ".github/private-terms-allow"
 
 
+def no_secrets_by_design() -> bool:
+    """Whether GitHub withholds secrets from this pull request: a fork's head, or Dependabot. Any other PR must have it."""
+    if os.environ.get("GITHUB_ACTOR") == "dependabot[bot]":
+        return True
+    try:
+        with open(os.environ["GITHUB_EVENT_PATH"], encoding="utf-8") as fh:
+            head = json.load(fh)["pull_request"]["head"]["repo"]["full_name"]
+    except (KeyError, OSError, TypeError, ValueError):
+        return False
+    return head != os.environ.get("GITHUB_REPOSITORY")
+
+
 def main() -> int:
     os.chdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))  # paths below are the repo root's
     value = os.environ.get("PRIVATE_TERMS", "").strip()
     if not value:
-        if os.environ.get("GITHUB_EVENT_NAME") == "pull_request":
+        if os.environ.get("GITHUB_EVENT_NAME") == "pull_request" and no_secrets_by_design():
             print("::notice::PRIVATE_TERMS is not available to this pull request; the push to main runs the scan")
             return 0
         print("::error::PRIVATE_TERMS is empty; set the org secret for this repo")
