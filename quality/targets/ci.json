@@ -1,0 +1,11 @@
+[
+  {
+    "id": "ci.latest_flow",
+    "params": {
+      "always_run": {
+        "private-terms.yml": "A privacy gate: it must run on every change, so a skip would be a gap.",
+        "pages.yml": "It rebuilds the score page on every merge, so it never skips by design."
+      }
+    }
+  }
+]

@@ -50,6 +50,6 @@ goose configure
 GOOSE_MODE: smart_approve
 ```
 
-6. Give Goose project rules and skills. It reads `AGENTS.md`, then `.goosehints`, in each folder ([Project instructions](https://goose-docs.ai/docs/guides/context-engineering/using-goosehints), read 2026-11-20). It loads skills from `~/.agents/skills/` and `.agents/skills/`, and also `.claude/skills/` ([Skills](https://goose-docs.ai/docs/guides/context-engineering/using-skills), read 2026-11-20).
+6. Give Goose project rules and skills. It reads `AGENTS.md`, then `.goosehints`, in each folder ([Project instructions](https://goose-docs.ai/docs/guides/context-engineering/using-goosehints), read 2026-11-20). It loads skills from `~/.agents/skills/`, and from `<project>/.agents/skills/` and `<project>/.claude/skills/` ([Skills](https://goose-docs.ai/docs/guides/context-engineering/using-skills), read 2026-11-20).
 
 Traps and sources: [Goose traps and sources](detail/goose.md).
