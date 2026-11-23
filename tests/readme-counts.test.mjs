@@ -12,13 +12,14 @@ const plans = JSON.parse(read('catalog', 'plans.json'));
 const logins = JSON.parse(read('catalog', 'logins.json'));
 const numbers = (text, re) => [...text.matchAll(re)].map((m) => Number(m[1]));
 
-test('README.md: every count of plans, lanes, sign-in vendors and verified plans matches the catalogs', () => {
+test('README.md: every count of plans, lanes, sign-in vendors, verified plans and starters matches the data', () => {
   const text = read('README.md');
   const claims = [
     ['plans', /\b(\d+) plans\b/g, plans.rows.length],
     ['lanes', /\b(\d+) lanes\b/g, plans.lanes.length],
     ['sign-in vendors', /\b(\d+) sign-in vendors\b/g, logins.rows.length],
     ['verified', /\b(\d+) verified\b/g, plans.rows.filter((r) => r.verified).length],
+    ['starters', /\b(\d+) starters\b/g, readdirSync(join(ROOT, 'templates'), { withFileTypes: true }).filter((e) => e.isDirectory()).length],
   ];
   for (const [name, re, want] of claims) {
     const got = numbers(text, re);

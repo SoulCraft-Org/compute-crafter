@@ -4,7 +4,7 @@
 // No test here starts a network call: sync.sh runs against a stand-in gh.
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { chmodSync, copyFileSync, cpSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { chmodSync, copyFileSync, cpSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join, relative, resolve } from 'node:path';
 import { test } from 'node:test';
@@ -203,6 +203,19 @@ test('compute-list: sheet.sh --write replaces only the part between the markers,
   assert.match(text, /<!-- sheet:end -->\n\nkept\n$/);
   assert.equal(text.match(/<!-- sheet:end -->/g).length, 1);
   assert.equal(text.match(/<!-- sheet:start -->/g).length, 1);
+  assert.deepEqual(readdirSync(dir).filter((f) => f.startsWith('.')), [], 'no temp folder is left beside FILE');
+});
+
+test('compute-list: sheet.sh --write keeps the file\'s mode and leaves no temp folder after a refusal', () => {
+  const dir = fixture([{ id: 'acme-free' }]);
+  const readme = join(dir, 'README.md');
+  writeFileSync(readme, '# Mine\n<!-- sheet:start -->\n<!-- sheet:end -->\n');
+  chmodSync(readme, 0o600);
+  assert.equal(sheet(join(dir, 'plans.json'), join(dir, 'mine.json'), '--write', readme).status, 0);
+  assert.equal(statSync(readme).mode & 0o777, 0o600);
+  writeFileSync(readme, 'no markers\n');
+  assert.equal(sheet(join(dir, 'plans.json'), join(dir, 'mine.json'), '--write', readme).status, 2);
+  assert.deepEqual(readdirSync(dir).filter((f) => f.startsWith('.')), []);
 });
 
 test('compute-list: sheet.sh --write exits 2 on missing, repeated or reversed markers and leaves FILE as it was', () => {
@@ -237,6 +250,22 @@ test('compute-list: sheet.sh exits 2 on a missing file, a mine.json with no plan
   assert.equal(sheet(plans, join(dir, 'mine.json'), '--nonsense').status, 2);
 });
 
+test('compute-list: sheet.sh exits 2 with a clear message when a status or an overage is not a string', () => {
+  const dir = fixture([{ id: 'acme-free' }]);
+  writeFileSync(join(dir, 'mine-bad.json'), JSON.stringify({ plans: [{ id: 'acme-free', status: 5 }] }));
+  const bad = sheet(join(dir, 'plans.json'), join(dir, 'mine-bad.json'));
+  assert.equal(bad.status, 2);
+  assert.match(bad.stderr, /status to be a string/);
+  const catalog = JSON.parse(readFileSync(join(dir, 'plans.json'), 'utf8'));
+  catalog.rows[0].overage = { not: 'a string' };
+  writeFileSync(join(dir, 'plans-bad.json'), JSON.stringify(catalog));
+  for (const mode of [[], ['--json']]) {
+    const out = sheet(join(dir, 'plans-bad.json'), join(dir, 'mine.json'), ...mode);
+    assert.equal(out.status, 2);
+    assert.match(out.stderr, /overage to be a string/);
+  }
+});
+
 // A stand-in gh on PATH: it answers the two calls sync.sh makes, and logs every call.
 function syncRun({ args = [], env = {}, sha = '0123456789abcdef0123456789abcdef01234567', catalog = readFileSync(CATALOG, 'utf8') } = {}) {
   const dir = mkdtempSync(join(tmpdir(), 'sync-'));
@@ -268,6 +297,7 @@ test('compute-list: sync.sh resolves the commit, copies the catalog at that comm
   assert.equal(r.out.status, 0, r.out.stderr);
   assert.equal(r.pin, `SoulCraft-Org/compute-crafter@${sha}\n`);
   assert.equal(r.plans, readFileSync(CATALOG, 'utf8'));
+  assert.deepEqual(readdirSync(join(r.dir, 'list', 'vendor')).sort(), ['PIN', 'plans.json'], 'no temp file is left in vendor/');
   const calls = r.log.trim().split('\n');
   assert.deepEqual(calls, [
     'api repos/SoulCraft-Org/compute-crafter/commits/main -q .sha',
@@ -291,13 +321,13 @@ test('compute-list: sync.sh takes a REF and a REPO, and writes nothing when the 
   assert.equal(bad.plans, null);
 });
 
-test('compute-list: sync.sh refuses a REF that starts with a dash or holds odd characters, and a REPO that is not owner/name', () => {
-  for (const args of [['--evil'], ['a b'], ['x;y']]) {
+test('compute-list: sync.sh refuses a REF that starts with a dash, holds odd characters or `..`, and a REPO that is not owner/name, holds `..` or starts a part with a dot', () => {
+  for (const args of [['--evil'], ['a b'], ['x;y'], ['..'], ['a/../b'], ['feature..x'], ['../../user']]) {
     const r = syncRun({ args });
     assert.equal(r.out.status, 2, args.join(' '));
     assert.equal(r.log, '', 'no gh call');
   }
-  for (const REPO of ['noslash', 'a/b/c', '/b', 'a/']) {
+  for (const REPO of ['noslash', 'a/b/c', '/b', 'a/', 'a/..', '../b', 'a..b/c', '.a/b', 'a/.b', '.hidden/repo']) {
     const r = syncRun({ env: { REPO } });
     assert.equal(r.out.status, 2, REPO);
     assert.equal(r.log, '', 'no gh call');

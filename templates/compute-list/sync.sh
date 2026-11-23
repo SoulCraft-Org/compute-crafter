@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # sync.sh: copy catalog/plans.json from a Compute Crafter commit into vendor/, and write vendor/PIN.
 #
-#   bash sync.sh [REF]             REF is a branch, tag or commit; the default is main
+#   bash sync.sh [REF]             REF is a branch, tag or commit name, with no `..`; the default is main
 #   REPO=owner/name bash sync.sh   another repo, such as a fork; the default is SoulCraft-Org/compute-crafter
 #
 # Needs gh, signed in with gh auth login, and jq. No key goes in a command. vendor/PIN holds REPO@SHA, the full
@@ -12,12 +12,12 @@ REPO=${REPO:-SoulCraft-Org/compute-crafter}
 REF=${1:-main}
 [ $# -le 1 ] || { echo "usage: bash sync.sh [REF]" >&2; exit 2; }
 case "$REPO" in
-  */*/* | */ | /* | *[!A-Za-z0-9._/-]*) echo "sync.sh: REPO must be owner/name, not $REPO" >&2; exit 2 ;;
+  *..* | .* | */.* | */*/* | */ | /* | *[!A-Za-z0-9._/-]*) echo "sync.sh: REPO must be owner/name, not $REPO" >&2; exit 2 ;;
   */*) ;;
   *) echo "sync.sh: REPO must be owner/name, not $REPO" >&2; exit 2 ;;
 esac
 case "$REF" in
-  "" | -* | *[!A-Za-z0-9._/-]*) echo "sync.sh: REF is a branch, tag or commit name, not $REF" >&2; exit 2 ;;
+  "" | -* | *..* | *[!A-Za-z0-9._/-]*) echo "sync.sh: REF is a branch, tag or commit name, not $REF" >&2; exit 2 ;;
 esac
 command -v gh >/dev/null || { echo "sync.sh: needs gh" >&2; exit 2; }
 command -v jq >/dev/null || { echo "sync.sh: needs jq" >&2; exit 2; }
@@ -35,7 +35,15 @@ gh api "repos/$REPO/contents/catalog/plans.json?ref=$sha" -H 'Accept: applicatio
 jq -e '(.rows | type) == "array" and (.rows | length) > 0' "$tmp" >/dev/null \
   || { echo "sync.sh: catalog/plans.json at $sha is not a plan catalog" >&2; exit 1; }
 
+# Both files are written beside their targets and moved into place, so a stopped run never leaves them disagreeing.
 mkdir -p "$dir"
-cat "$tmp" > "$dir/plans.json"
-printf '%s@%s\n' "$REPO" "$sha" > "$dir/PIN"
+new_plans="" new_pin=""
+trap 'rm -f "$tmp" "$new_plans" "$new_pin"' EXIT
+new_plans=$(mktemp "$dir/.plans.XXXXXX")
+new_pin=$(mktemp "$dir/.pin.XXXXXX")
+cat "$tmp" > "$new_plans"
+printf '%s@%s\n' "$REPO" "$sha" > "$new_pin"
+chmod 644 "$new_plans" "$new_pin"
+mv -f "$new_plans" "$dir/plans.json"
+mv -f "$new_pin" "$dir/PIN"
 echo "vendor/plans.json: $(jq '.rows | length' "$dir/plans.json") plans from $REPO at $sha"
