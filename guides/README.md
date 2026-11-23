@@ -1,6 +1,6 @@
 # Provider guides
 
-One page per provider. Each opens with one table: account, free tier, login or key, Claude connector, OpenCode, guard. Four topic pages open with their own table or text: Local models, Logins, Training and Claude Desktop MCP.
+One page per provider. Each opens with one table: account, free tier, login or key, Claude connector, OpenCode, guard. Four topic pages open with their own table or text: [Local models](local-models.md), [Logins](logins.md), [Training](training.md) and [Claude Desktop MCP](claude-desktop-mcp.md).
 
 ```mermaid
 flowchart LR
