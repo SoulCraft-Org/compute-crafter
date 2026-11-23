@@ -1,6 +1,6 @@
 # Groq
 
-Groq gives a Claude Code or OpenCode user fast hosted open-weight models, such as `openai/gpt-oss-120b`, on a free plan.
+Groq gives a Claude Code or OpenCode user fast hosted open-weight models, such as `qwen/qwen3.8-27b`, on a free plan.
 
 | Account | Free tier | Login or key | Claude connector | OpenCode | Guard |
 | --- | --- | --- | --- | --- | --- |
@@ -16,7 +16,7 @@ Groq gives a Claude Code or OpenCode user fast hosted open-weight models, such a
 opencode auth login groq --method key
 ```
 
-Enter the key at the hidden prompt, then run `/models` inside OpenCode and pick `groq/openai/gpt-oss-120b`.
+Enter the key at the hidden prompt, then run `/models` inside OpenCode and pick `groq/qwen/qwen3.8-27b`.
 
 3. Any other OpenAI-compatible tool uses base URL `https://api.groq.com/openai/v1` with `GROQ_API_KEY` set in its environment ([OpenAI Compatibility](https://console.groq.com/docs/openai), read 2026-11-12).
 
@@ -27,7 +27,7 @@ Enter the key at the hidden prompt, then run `/models` inside OpenCode and pick 
 | Trap | What happens |
 | --- | --- |
 | Tokens per minute | A coding agent's long context counts against the free plan's 8K tokens per minute; past it, requests return 429. |
-| One agent request | One OpenCode agent request measured 16,387 tokens (source: a live test on 2026-11-20). That is twice the free plan's 8K tokens per minute for `openai/gpt-oss-120b` ([Rate Limits](https://console.groq.com/docs/rate-limits), read 2026-11-20), so the request failed with a 413 or 429 tokens-per-minute error. Use Groq Free for short calls, not an agent loop. |
+| One agent request | One OpenCode agent request measured 16,387 tokens (source: a live test on 2026-11-20). That is twice the free plan's 8K tokens per minute per model ([Rate Limits](https://console.groq.com/docs/rate-limits), read 2026-11-20), so the request failed with a 413 or 429 tokens-per-minute error. Use Groq Free for short calls, not an agent loop. |
 | `retry-after` | Groq sets this header, in seconds, only on a 429 ([Rate Limits](https://console.groq.com/docs/rate-limits), read 2026-11-12). Wait that long before a retry. |
 | Spend limits | Groq's spend limit exists only on paid plans, and its tracking lags 10 to 15 minutes ([Spend Limits](https://console.groq.com/docs/spend-limits), read 2026-11-12). Staying on Free is the stronger stop. |
 | Developer plan billing | After upgrade, Groq bills at month end or as usage crosses $1, $10, $100, $500 and $1,000 ([Billing FAQs](https://console.groq.com/docs/billing-faqs), read 2026-11-12). |
