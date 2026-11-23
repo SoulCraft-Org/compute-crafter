@@ -1,29 +1,52 @@
 # Compute Crafter
 
-Wire open-source and open-weight compute to Claude Code and OpenCode, on free tiers and included credits. Published by [SoulCraft-Org](https://github.com/SoulCraft-Org) under [Apache-2.0](LICENSE).
+Wire open-source and open-weight compute to Claude Code and OpenCode on free tiers and included credits, then keep your own list, sign-ins and score page. Published by [SoulCraft-Org](https://github.com/SoulCraft-Org) under [Apache-2.0](LICENSE).
+
+**[Live score page](https://soulcraft-org.github.io/compute-crafter/)** · [Guides](guides/README.md) · [Plan catalog](catalog/README.md) · [Starters](#starters)
+
+| Plans | Lanes | Sign-in vendors | Verified plans | Starters |
+| :-: | :-: | :-: | :-: | :-: |
+| **153 plans** | **6 lanes** | **44 sign-in vendors** | **150 verified** | **4** |
 
 ```mermaid
 flowchart LR
-  Y[You, in Claude Code<br/>or OpenCode] --> G[guides/<br/>one page per provider]
-  Y --> C[catalog/plans.json<br/>152 free tiers and plans]
-  G --> L[Log in with the CLI<br/>no key in a command]
-  L --> S[Set the vendor's<br/>own spend stop]
-  S --> R[Run on the free tier]
-  Y --> A[guides/logins.md<br/>sign in one way, passkeys first]
+  P[catalog/plans.json<br/>the plan catalog] --> L[templates/compute-list<br/>your plans]
+  G[catalog/logins.json<br/>sign-in facts] --> N[templates/logins<br/>your sign-ins]
+  K[pack.json, targets/, maps/<br/>the Credits pack] --> Q[templates/quality<br/>your Quality page]
+  K --> R[templates/process<br/>your Spend map]
+  L --> Y[Your private repo<br/>and your score page]
+  N --> Y
+  Q --> Y
+  R --> Y
 ```
+
+## Starters
+
+Copy one folder. Each has a README with its steps and a fake example you replace.
+
+| Starter | You get | One command |
+| --- | --- | --- |
+| [templates/compute-list](templates/compute-list/README.md) | A sheet and a board of the plans you hold, from the plan catalog | `bash sheet.sh vendor/plans.json mine.json --write README.md` |
+| [templates/logins](templates/logins/README.md) | A sheet and a board of your sign-ins, from the sign-in catalog | `bash sheet.sh logins.json sites.json --write README.md` |
+| [templates/quality](templates/quality/README.md) | Your own Quality, Speed and Consumption page: the six Credits metrics | `node <git-crafter>/quality/collect.mjs --local --only credits` |
+| [templates/process](templates/process/README.md) | The five-step Spend map on your Process page | `cp templates/process/config.json <your repo>/quality/process/config.json` |
+
+## What is here
 
 | Part | Holds |
 | --- | --- |
 | [guides/](guides/README.md) | One page per provider, one table shape: account, free tier with its source and date, login or key, Claude connector, OpenCode, guard |
 | [guides/local-models.md](guides/local-models.md) | MLX and LM Studio serving a model on your own port |
 | [guides/logins.md](guides/logins.md) | One sign-in order, passkeys and codes in Apple Passwords, six lockout-safe steps per account |
-| [catalog/logins.json](catalog/logins.json) | What 44 vendors offer for signing in: methods, passkeys, 2FA, linking, email change, each with its vendor page and the date read |
-| [templates/logins/](templates/logins/README.md) | A starter for your own private logins sheet and a board that opens locally |
-| [catalog/](catalog/README.md) | `plans.json`, 152 plans across CI, CPU, GPU, inference, hosting and AI tools, each with its vendor page and the date read |
+| [catalog/](catalog/README.md) | `plans.json`: 153 plans across CI, CPU, GPU, inference, hosting and AI tools, each with its vendor page and the date read |
+| [catalog/logins.json](catalog/logins.json) | What 44 sign-in vendors offer: methods, passkeys, 2FA, linking, email change, each with its vendor page and the date read |
 | [tools/catalog.py](tools/catalog.py) | The field allowlist, the merge and the self-test |
 | Credits pack: `pack.json`, `targets/`, `ideals/`, `maps/`, `collectors/credits/` | Git Crafter's Credits Quality tab and Spend map, moved from Git Crafter ([NOTICE](NOTICE), [tests/moved.json](tests/moved.json)) |
-| Add the pack to another repo | In its `quality/config.json`, set `"packs": ["SoulCraft-Org/compute-crafter@<40-hex sha>"]` (Git Crafter `quality/CONFIG.md`), on an engine that no longer ships the credits tab |
 | [quality/config.json](quality/config.json), [quality/process/config.json](quality/process/config.json), [pages.yml](.github/workflows/pages.yml) | This repo's public Quality and Process pages, built by Git Crafter's `actions/pages` in CI mode, after the [privacy gate](tests/privacy.mjs). They show only what CI reads: the catalog's oldest read date, and the Spend map's step it scores |
+
+## Add the pack to another repo
+
+In its `quality/config.json`, set `"packs": ["SoulCraft-Org/compute-crafter@<40-hex sha>"]` (Git Crafter `quality/CONFIG.md`), on an engine that no longer ships the credits tab. The [quality starter](templates/quality/README.md) does this for you.
 
 ## Rules every page follows
 
@@ -39,4 +62,3 @@ flowchart LR
 | --- | --- |
 | [SoulCraft-Org/git-crafter](https://github.com/SoulCraft-Org/git-crafter) | The CI standard this repo runs on, and the Claude Code rules and guards |
 | [SoulCraft-Org/comfyui-base](https://github.com/SoulCraft-Org/comfyui-base) | The ComfyUI installer and handbook that [guides/comfyui.md](guides/comfyui.md) links |
-| `Colorado-Startups/startup-credits` (not yet published) | Startup credit programs and how to apply. Accounts and keys live here; credits and applications live there |
