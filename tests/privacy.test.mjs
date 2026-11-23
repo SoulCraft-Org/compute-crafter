@@ -8,7 +8,7 @@ import { join } from 'node:path';
 import { test } from 'node:test';
 import { fileURLToPath } from 'node:url';
 
-import { localOnlyIds, privacyProblems, textProblems } from './privacy.mjs';
+import { localOnlyIds, privacyProblems, termsPattern, textProblems } from './privacy.mjs';
 
 // A targets folder with one local-only metric and one read from GitHub.
 function targetsDir() {
@@ -99,4 +99,42 @@ test('privacy: the gate fails a home path planted in a file under --dist', () =>
   const run = gate();
   assert.equal(run.status, 1);
   assert.match(run.stderr, /page\.html: home path \/Users\/example/);
+});
+
+// The gate as CI runs it: PRIVACY_TERMS holds the org secret PRIVATE_TERMS, one regex, and no log line quotes a match.
+function gateWith(extra) {
+  const root = mkdtempSync(join(tmpdir(), 'privacy-terms-'));
+  writeFileSync(join(root, 'latest.json'), JSON.stringify(cleanRun()));
+  mkdirSync(join(root, 'dist'), { recursive: true });
+  writeFileSync(join(root, 'dist', 'index.html'), '<p>Credits for exampleterm and another</p>');
+  const args = [fileURLToPath(new URL('./privacy.mjs', import.meta.url)), join(root, 'latest.json'), '--dist', join(root, 'dist')];
+  return spawnSync(process.execPath, args, { encoding: 'utf8', env: { PATH: process.env.PATH, ...extra } });
+}
+
+test('privacy: PRIVACY_TERMS reads the PRIVATE_TERMS regex, case-insensitive, with or without a leading (?i)', () => {
+  assert.equal(termsPattern(''), null);
+  assert.equal(termsPattern(undefined), null);
+  for (const value of ['exampleterm', '(?i)EXAMPLETERM', 'other|ExampleTerm']) assert.deepEqual(textProblems('an exampleterm here', [], termsPattern(value)), ['private term'], value);
+  assert.deepEqual(textProblems('nothing here', [], termsPattern('exampleterm')), []);
+  assert.deepEqual(privacyProblems(cleanRun(), { localIds, terms: termsPattern('fixture') }), ['private term']);
+});
+
+test('privacy: the gate fails a private term in a --dist file and prints the file, never the match', () => {
+  const run = gateWith({ PRIVACY_TERMS: 'exampleterm|nomatch' });
+  assert.equal(run.status, 1);
+  assert.match(run.stderr, /index\.html: private term/);
+  assert.ok(!/exampleterm/.test(run.stderr + run.stdout), 'the log holds no match');
+});
+
+test('privacy: with PRIVACY_TERMS unset the gate notes the skip and passes, as a fork or Dependabot pull request needs', () => {
+  const run = gateWith({});
+  assert.equal(run.status, 0);
+  assert.match(run.stdout, /PRIVACY_TERMS is not set/);
+});
+
+test('privacy: an invalid PRIVACY_TERMS is a usage error that quotes none of it', () => {
+  const run = gateWith({ PRIVACY_TERMS: 'secretname(' });
+  assert.equal(run.status, 2);
+  assert.match(run.stderr, /PRIVACY_TERMS is not a valid regex/);
+  assert.ok(!/secretname/.test(run.stderr + run.stdout));
 });

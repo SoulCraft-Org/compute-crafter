@@ -26,20 +26,19 @@ test('pack: no other file builds an import() path', () => {
   assert.deepEqual(files.filter((f) => BUILT.test(readFileSync(join(ROOT, f), 'utf8'))), ['tests/engine-lib.mjs', 'tests/pack.test.mjs']);
 });
 
-// This repo's public pages (quality/config.json, quality/process/config.json) show only what CI reads: each
-// metric in quality/targets is the pack's own, every pack metric left off needs local files, and the Spend map
-// is maps/spend.json less the steps whose metric is off.
-test('pages: the public page keeps the pack metrics CI reads, and the Spend map the steps they score', () => {
+// This repo's public pages (quality/config.json, quality/process/config.json) carry the whole pack: each metric in
+// quality/targets/credits.json is the pack's own (only params differ, for params.catalog_file), the five that need
+// local files read not measured in CI, and the Spend map is maps/spend.json with all its steps.
+test('pages: the public page carries the pack metrics and the whole Spend map', () => {
   const read = (f) => JSON.parse(readFileSync(join(ROOT, f), 'utf8'));
-  const pack = new Map(read('targets/credits.json').map(({ params, ...d }) => [d.id, d]));
+  const pack = read('targets/credits.json');
   const page = read('quality/targets/credits.json');
-  for (const { params, ...d } of page) assert.deepEqual(d, pack.get(d.id), d.id);
-  const shown = new Set(page.map((d) => d.id));
-  assert.deepEqual([...pack.values()].filter((d) => shown.has(d.id) === (d.needs === 'local-files')).map((d) => d.id), []);
+  assert.deepEqual(page.map(({ params, ...d }) => d), pack.map(({ params, ...d }) => d));
+  assert.equal(Object.assign({}, ...page.map((d) => d.params ?? {})).catalog_file, 'catalog/plans.json');
   const map = read('maps/spend.json');
-  const steps = map.steps.filter((s) => shown.has(s.metric));
-  assert.ok(steps.length, 'the Spend map keeps a step');
-  assert.deepEqual(read('quality/process/config.json').maps, [{ ...map, critical_path: map.critical_path.filter((id) => steps.some((s) => s.id === id)), steps }]);
+  const shown = new Set(page.map((d) => d.id));
+  assert.deepEqual(map.steps.filter((s) => !shown.has(s.metric)).map((s) => s.id), [], 'every Spend step scores a metric on the page');
+  assert.deepEqual(read('quality/process/config.json').maps.filter((m) => m.id === 'spend'), [map]);
 });
 
 test('pack: every collector file imports with no engine beside it', async () => {

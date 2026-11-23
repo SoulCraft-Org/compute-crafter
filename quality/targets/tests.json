@@ -1,0 +1,12 @@
+[
+  {
+    "id": "tests.e2e_routes",
+    "params": {
+      "suites": [
+        { "label": "Tests", "dir": "tests/", "file": "\\.test\\.mjs$" },
+        { "label": "Collectors", "dir": "collectors/", "file": "\\.test\\.mjs$" }
+      ],
+      "workflows": [{ "file": "ci.yml", "job": ["ci / short", "ci / standard"], "role": "suite" }]
+    }
+  }
+]

@@ -9,8 +9,11 @@
 //   a local-only metric has a value   needs "local-files" in a targets folder
 //   a home path                       /Users/<name>, /home/<name>, C:\Users\<name>, -Users-<name>
 //   an email address                  git@ remotes and noreply addresses pass
-//   a name in PRIVACY_NAMES           comma separated, for a local check; CI sets none
-// A --dist file is text, so only the last three apply to it.
+//   a name in PRIVACY_NAMES           comma separated, for a local check
+//   a match of PRIVACY_TERMS          one regex, the org secret PRIVATE_TERMS that CI passes
+// A --dist file is text, so only the last four apply to it.
+// A PRIVACY_TERMS finding prints the file only, never the match: a public repo's Actions log is public too.
+// A pull request from a fork or Dependabot gets no secret, so an unset PRIVACY_TERMS prints a notice and skips that check.
 // Exit 0 clean, 1 findings (each printed), 2 usage error.
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
@@ -37,25 +40,32 @@ export function filesUnder(dir) {
   return readdirSync(dir).sort().flatMap((f) => (statSync(join(dir, f)).isDirectory() ? filesUnder(join(dir, f)) : [join(dir, f)]));
 }
 
-// Every home path, email or listed name in a text; [] when clean.
-export function textProblems(text, names = []) {
+// PRIVACY_TERMS as a case-insensitive RegExp, as tools/private_terms.py reads PRIVATE_TERMS; null when empty. Throws when invalid.
+export function termsPattern(value) {
+  const text = String(value ?? '').trim();
+  return text ? new RegExp(text.replace(/^\(\?i\)/, ''), 'i') : null;
+}
+
+// Every home path, email, listed name or private term in a text; [] when clean. A term hit never names the match.
+export function textProblems(text, names = [], terms = null) {
   const found = [];
   for (const re of HOME_PATHS) for (const hit of new Set(text.match(re) ?? [])) found.push(`home path ${hit}`);
   for (const hit of new Set((text.match(EMAIL) ?? []).filter((e) => !EMAIL_OK(e)))) found.push(`email ${hit}`);
   for (const name of names.map((n) => n.trim()).filter(Boolean)) {
     if (new RegExp(`\\b${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i').test(text)) found.push(`account name ${name}`);
   }
+  if (terms?.test(text)) found.push('private term');
   return found;
 }
 
 // Every finding in one run, as text; [] when clean.
-export function privacyProblems(run, { localIds = new Set(), names = [] } = {}) {
+export function privacyProblems(run, { localIds = new Set(), names = [], terms = null } = {}) {
   const found = [];
   if (run?.mode !== 'ci') found.push(`run mode is ${JSON.stringify(run?.mode)}, not "ci"`);
   for (const [id, m] of Object.entries(run?.metrics ?? {})) {
     if (localIds.has(id) && (m?.value != null || m?.detail?.length)) found.push(`${id} needs local files but carries a value`);
   }
-  return [...found, ...textProblems(JSON.stringify(run), names)];
+  return [...found, ...textProblems(JSON.stringify(run), names, terms)];
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
@@ -68,7 +78,14 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
     process.exit(2);
   }
   const names = (process.env.PRIVACY_NAMES ?? '').split(',');
-  let run, localIds, pages;
+  let run, localIds, pages, terms;
+  try {
+    terms = termsPattern(process.env.PRIVACY_TERMS);
+  } catch {
+    // The regex error message can quote part of the secret, so the log gets none of it.
+    console.error('privacy: PRIVACY_TERMS is not a valid regex');
+    process.exit(2);
+  }
   try {
     run = JSON.parse(readFileSync(file, 'utf8'));
     localIds = localOnlyIds(dirs);
@@ -77,8 +94,9 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
     console.error(`privacy: ${err.message}`);
     process.exit(2);
   }
-  const found = privacyProblems(run, { localIds, names });
-  for (const page of pages) for (const f of textProblems(readFileSync(page, 'utf8'), names)) found.push(`${page}: ${f}`);
+  if (!terms) console.log('::notice::privacy: PRIVACY_TERMS is not set, so the private-term check is skipped (a fork or Dependabot pull request gets no secret)');
+  const found = privacyProblems(run, { localIds, names, terms });
+  for (const page of pages) for (const f of textProblems(readFileSync(page, 'utf8'), names, terms)) found.push(`${page}: ${f}`);
   for (const f of found) console.error(`::error::privacy: ${f}`);
   console.log(`privacy: ${Object.keys(run.metrics ?? {}).length} metrics, ${localIds.size} local-only ids, ${pages.length} dist files, ${found.length} findings`);
   process.exit(found.length ? 1 : 0);
