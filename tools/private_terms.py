@@ -52,20 +52,34 @@ def main() -> int:
         with open(ALLOW, encoding="utf-8") as fh:
             allowed = [re.compile(re.escape(s.strip()), re.I) for s in fh if s.strip() and not s.lstrip().startswith("#")]
     files = subprocess.run(["git", "ls-files", "-z"], capture_output=True, check=True).stdout.split(b"\0")
+    def clean(text):
+        for literal in allowed:
+            text = literal.sub(" ", text)
+        return text
+
     hits = 0
-    for name in filter(None, (f.decode("utf-8", "replace") for f in files)):
+    for n, name in enumerate(filter(None, (f.decode("utf-8", "replace") for f in files)), 1):
+        # A path is text too. One that holds a term is never printed: the log would publish it.
+        shown = name
+        if terms.search(clean(name)):
+            print(f"::error::tracked file #{n} (git ls-files order) has a private term in its path")
+            hits += 1
+            shown = f"tracked file #{n}"
         try:
             with open(name, "rb") as fh:
                 data = fh.read()
         except OSError:
             continue
-        if b"\0" in data[:8192]:
+        if data[:2] in (b"\xff\xfe", b"\xfe\xff"):
+            text = data.decode("utf-16", "replace")      # UTF-16 text has NUL bytes but is not binary
+        elif b"\0" in data[:8192]:
             continue
-        for line_no, line in enumerate(data.decode("utf-8", "replace").splitlines(), 1):
-            for literal in allowed:
-                line = literal.sub(" ", line)
-            if terms.search(line):
-                print(f"::error file={name},line={line_no}::a private term; name SoulCraft-Org or a public source only")
+        else:
+            text = data.decode("utf-8", "replace")
+        for line_no, line in enumerate(text.splitlines(), 1):
+            if terms.search(clean(line)):
+                where = f" file={name},line={line_no}" if shown == name else ""
+                print(f"::error{where}::a private term ({shown}, line {line_no}); name SoulCraft-Org or a public source only")
                 hits += 1
     print(f"private terms: {hits} hit(s)")
     return 1 if hits else 0
