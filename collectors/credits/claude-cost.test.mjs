@@ -72,3 +72,32 @@ test('claude_cost: a refusal, an offline call, a bad amount or endless pages is 
   assert.match((await read(pages(endless))).why, /more than 5 pages/);
   for (const r of [refused, offline]) assert.doesNotMatch(JSON.stringify(r), /fake-admin/);
 });
+
+const TOKEN = 'fake-bearer-token-value-5678';
+
+test('claude_cost: ANTHROPIC_AUTH_TOKEN goes in the Authorization header as a bearer and wins over the Admin key; no x-api-key', async () => {
+  const calls = [];
+  const r = await read(pages([{ data: [day('02', '250')], has_more: false }], calls), { ANTHROPIC_AUTH_TOKEN: TOKEN, ANTHROPIC_ADMIN_KEY: KEY });
+  assert.equal(r.used.value, 2.5);
+  assert.equal(calls[0].headers.Authorization, `Bearer ${TOKEN}`);
+  assert.equal(calls[0].headers['x-api-key'], undefined, 'one credential per call');
+  assert.equal(calls[0].headers['anthropic-version'], '2026-10-21');
+  assert.ok(!calls[0].url.includes(TOKEN), 'no token in a URL');
+  assert.doesNotMatch(JSON.stringify(r), /fake-bearer|fake-admin/);
+});
+
+test('claude_cost: the Admin key alone still goes in x-api-key, never as a bearer', async () => {
+  const calls = [];
+  await read(pages([{ data: [], has_more: false }], calls), { ANTHROPIC_ADMIN_KEY: KEY, ANTHROPIC_AUTH_TOKEN: '  ' });
+  assert.equal(calls[0].headers['x-api-key'], KEY);
+  assert.equal(calls[0].headers.Authorization, undefined);
+});
+
+test('claude_cost: a refused or failing token call names the token variable and never prints the token', async () => {
+  const vars = { ANTHROPIC_AUTH_TOKEN: TOKEN };
+  const refused = await read(pages([{ status: 401 }]), vars);
+  assert.match(refused.why, /answered HTTP 401; ANTHROPIC_AUTH_TOKEN must be an OAuth bearer token with the org:admin scope/);
+  const offline = await read(async () => { throw new TypeError(`fetch failed, auth Bearer ${TOKEN}`); }, vars);
+  assert.equal(offline.why, 'claude_cost: fetch failed, auth Bearer [key]');
+  for (const r of [refused, offline]) assert.doesNotMatch(JSON.stringify(r), /fake-bearer/);
+});

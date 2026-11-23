@@ -286,7 +286,7 @@ const PLAN_FRESH_MS = DAY;
 //     wrote (tokens.plan_used's file), that window's percent used; over a day
 //     old it is not read. A relative path is from the repo root
 //   { claude_cost: true }: the Claude Console cost report's spend this UTC month in USD (claude-cost.mjs cites the
-//     endpoint), its Admin key from ANTHROPIC_ADMIN_KEY in the environment, which `providers.env` replaces in tests
+//     endpoint), its Admin key from ANTHROPIC_ADMIN_KEY, or an org:admin bearer token from ANTHROPIC_AUTH_TOKEN, in the environment, which `providers.env` replaces in tests
 //   { gcp_billing_export: 'project.dataset.table' }: the Cloud Billing export's cost this invoice month, before credits,
 //     read with `bq query` on the owner's own gcloud login (gcp-billing.mjs cites the docs); needs bq
 //   { provider: 'modal' | 'huggingface' | 'groq' | 'openrouter' }: that
