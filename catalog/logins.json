@@ -46,7 +46,7 @@
       "link": null,
       "email_change": false,
       "security_url": null,
-      "trap": "Claude and Console accounts are separate even with the same email, the account email cannot be changed (moving to a new email means a new account), and no dedicated password can be set.",
+      "trap": "Claude and Console accounts are separate even with one email, and the email cannot be changed: a new email means a new account.",
       "source": "https://support.claude.com/en/articles/13189465-log-in-to-your-claude-account",
       "sources_extra": [
         "https://support.claude.com/en/articles/13371040-log-in-to-your-console-account",
@@ -76,7 +76,7 @@
       "link": null,
       "email_change": true,
       "security_url": "https://myaccount.google.com/security",
-      "trap": "Signing in with a Google Workspace work account instead of the personal Google Account that holds the AI Pro/Ultra plan gets only a limited starter quota, and enterprise users whose email exists with more than one identity provider must pick the identity that matches their Gemini Enterprise license.",
+      "trap": "A Workspace account instead of the personal account holding AI Pro or Ultra gets only a starter quota.",
       "source": "https://antigravity.google/docs/install/",
       "sources_extra": [
         "https://antigravity.google/docs/faq/",
@@ -182,7 +182,7 @@
       "link": null,
       "email_change": null,
       "security_url": null,
-      "trap": "Signing in with a different GitHub user silently creates a new Blacksmith account ('No account? We'll create one for you'), and an organization that enforces GitHub SSO stays hidden until you authenticate with its SSO provider inside GitHub and refresh the dashboard.",
+      "trap": "Signing in with a different GitHub user silently creates a new Blacksmith account.",
       "source": "https://docs.blacksmith.sh/introduction/quickstart",
       "sources_extra": [
         "https://docs.blacksmith.sh/blacksmith-administration/github-app",
@@ -337,7 +337,7 @@
       "link": null,
       "email_change": true,
       "security_url": "https://myaccount.google.com/security",
-      "trap": "Colab paid benefits attach to the one Google Account that subscribed, so working while signed in to another Google Account shows the free tier, and buying a personal plan permanently ends a Colab Pro for Education subscription.",
+      "trap": "Paid Colab benefits stay on the Google Account that subscribed; another signed-in account shows the free tier.",
       "source": "https://colab.research.google.com/",
       "sources_extra": [
         "https://research.google.com/colaboratory/faq.html",
@@ -469,7 +469,7 @@
       "link": "email-match",
       "email_change": true,
       "security_url": null,
-      "trap": "Using Continue with Google or GitHub with an email that differs from the Docker account email starts a new sign-up and creates a second account instead of linking.",
+      "trap": "Continue with Google or GitHub under an email that differs from the Docker account creates a second account instead of linking.",
       "source": "https://docs.docker.com/accounts/individual/manage-account/",
       "sources_extra": [
         "https://app.docker.com/signup",
@@ -612,7 +612,7 @@
       "link": null,
       "email_change": null,
       "security_url": null,
-      "trap": "Workspace accounts are locked out when the Workspace admin has turned AI Studio off (or the user is under 18 on an Education edition), and unusual activity on a Google Account blocks access until it is verified with a phone or billing is set up.",
+      "trap": "A Workspace admin can turn AI Studio off for the account, and unusual activity blocks access until phone or billing verification.",
       "source": "https://aistudio.google.com/docs/workspace",
       "sources_extra": [
         "https://aistudio.google.com/",
@@ -646,7 +646,7 @@
       "link": null,
       "email_change": null,
       "security_url": "https://myaccount.google.com/security",
-      "trap": "The Cloud and Firebase consoles block accounts without 2-Step Verification (personal accounts on or after 2025-05-12, Enterprise Cloud Identity non-SSO accounts on or after 2026-10-20 for older orgs), so the account must turn on 2SV before it can get back in; accounts with passkeys still need 2SV.",
+      "trap": "The Cloud and Firebase consoles block accounts without 2-Step Verification, even accounts with passkeys.",
       "source": "https://docs.cloud.google.com/docs/authentication/mfa-requirement",
       "sources_extra": [
         "https://support.google.com/accounts/answer/185839?hl=en"
@@ -676,7 +676,7 @@
       "link": null,
       "email_change": null,
       "security_url": null,
-      "trap": "When an organization turns on Require SSO, sessions started with a password or Google sign-in cannot reach that organization until the user signs in through SSO.",
+      "trap": "With Require SSO on, a password or Google session cannot reach the organization until you sign in through SSO.",
       "source": "https://www.greptile.com/docs/quickstart",
       "sources_extra": [
         "https://www.greptile.com/docs/account/sso-and-identity"
@@ -762,7 +762,7 @@
       "link": null,
       "email_change": null,
       "security_url": null,
-      "trap": "Paid Jules plans currently work only for individual @gmail.com Google Accounts, so signing in with a Workspace account blocks upgrading and pushes people to a second, personal account; GitHub repo access is a separate connection.",
+      "trap": "Paid plans work only for personal @gmail.com accounts, so a Workspace sign-in pushes people to a second account.",
       "source": "https://jules.google/docs",
       "sources_extra": [
         "https://jules.google/docs/usage-limits/",
@@ -819,10 +819,10 @@
       "link": "settings",
       "email_change": null,
       "security_url": null,
-      "trap": "Signing in with a different provider than the one you signed up with is refused (\"An account already exists for this email address. Try signing in with the original login method\"), and an SSO link opened while the browser is signed in under another address stops at a \"Wrong account signed in\" page.",
+      "trap": "Signing in with a provider other than the one you signed up with is refused for the same email.",
       "source": "https://kilo.ai/docs/getting-started/setup-authentication",
       "sources_extra": [
-        "https://app.kilo.ai/users/sign_in",
+        "https://app.kilo.ai/",
         "https://kilo.ai/docs/collaborate/enterprise/sso",
         "https://kilo.ai/docs/getting-started/faq/account-and-integration",
         "https://www.anaconda.com/blog/anaconda-acquires-kilo-code"
@@ -879,7 +879,7 @@
       "link": null,
       "email_change": null,
       "security_url": "https://cloud.lambda.com/user/general",
-      "trap": "Standard sign-up creates your own separate account while company SSO puts you in the company account, and if your email already belongs to a different Lambda Cloud account you must contact your Lambda account manager before signing in with SSO.",
+      "trap": "If your email already belongs to another Lambda Cloud account, contact your account manager before signing in with company SSO.",
       "source": "https://docs.lambda.com/public-cloud/console/",
       "sources_extra": [
         "https://docs.lambda.com/public-cloud/enabling-sso/",
@@ -914,7 +914,7 @@
       "link": null,
       "email_change": null,
       "security_url": null,
-      "trap": "Accounts on personal emails can wait 2-3 business days for verification, and Lightning's own docs suggest creating a new account with a work or university email to verify faster, which leaves a second account.",
+      "trap": "Personal emails can wait 2 to 3 business days for verification; the docs suggest a work email, which makes a second account.",
       "source": "https://lightning.ai/docs/platform/overview/faq/create-account/",
       "sources_extra": [
         "https://lightning.ai/docs/platform/security/security-features/multi-factor-authentication",
@@ -1023,7 +1023,7 @@
       "link": null,
       "email_change": null,
       "security_url": null,
-      "trap": "Turning on \"Require SSO\" forces every user through the identity provider, so an admin without IdP access to the Workspace locks themselves out; Modal says to confirm IdP admin access first.",
+      "trap": "Require SSO can lock out an admin who has no access to the identity provider; confirm that access first.",
       "source": "https://modal.com/signup",
       "sources_extra": [
         "https://modal.com/docs/guide/workspaces",
@@ -1176,7 +1176,7 @@
       "link": null,
       "email_change": null,
       "security_url": null,
-      "trap": "If you lose your only 2-step verification device and never made a bypass code, you cannot get in on your own: an administrator must reset your MFA, and Free Tier accounts must go through Oracle's live chat.",
+      "trap": "Lose your only 2-step device without a bypass code and an administrator, or live chat for Free Tier, must reset it.",
       "source": "https://docs.oracle.com/en-us/iaas/Content/Identity/mfa/manage-2-step-verification.htm",
       "sources_extra": [
         "https://docs.oracle.com/en-us/iaas/Content/Identity/mfa/configure-authentication-factors.htm",
@@ -1240,7 +1240,7 @@
       "link": null,
       "email_change": false,
       "security_url": "https://resend.com/profile",
-      "trap": "The email on a login cannot be changed, even by support. If that mailbox or Google account goes away, you need a new login that an admin re-invites, or support grants after a domain TXT proof. Losing the one-time MFA recovery code also means support has to verify you through a domain.",
+      "trap": "A login's email cannot be changed, even by support; a lost mailbox means a new login re-invited by an admin.",
       "source": "https://resend.com/docs/knowledge-base/how-can-i-add-mfa",
       "sources_extra": [
         "https://resend.com/login",
@@ -1276,7 +1276,7 @@
       "link": null,
       "email_change": null,
       "security_url": null,
-      "trap": "Email-code sign-in from the Runpod CLI signs in to an existing account only if you use that account's exact email. Any other address silently creates a new, separate account.",
+      "trap": "CLI email-code sign-in with any address other than the account's exact email silently creates a new account.",
       "source": "https://console.runpod.io/login",
       "sources_extra": [
         "https://docs.runpod.io/release-notes",
@@ -1342,7 +1342,7 @@
       "link": null,
       "email_change": true,
       "security_url": "https://cloud.vast.ai/settings/",
-      "trap": "If you lose your phone and have no recovery codes, only Vast support can restore access. Accounts still on the legacy SMS 2FA have no recovery codes until they migrate in Account Settings.",
+      "trap": "Lose your phone with no recovery codes and only Vast support can restore access; legacy SMS 2FA has no codes.",
       "source": "https://docs.vast.ai/guides/reference/two-factor-authentication",
       "sources_extra": [
         "https://docs.vast.ai/guides/reference/account-settings",
