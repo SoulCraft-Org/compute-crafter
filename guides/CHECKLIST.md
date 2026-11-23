@@ -22,7 +22,7 @@ flowchart LR
 
 ## Names
 
-Fill these from [Names](README.md#names).
+Fill these from [Names](reference/names.md).
 
 | Name | Value |
 | --- | --- |

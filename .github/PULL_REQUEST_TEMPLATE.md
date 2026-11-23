@@ -15,3 +15,4 @@ Closes #
 | No secret, token, key or personal data in any file | [ ] |
 | User input reaches no HTML, SQL or header unescaped | [ ] |
 | An AI tool wrote part of this: say which part | [ ] |
+| Docs I touched read in two minutes, with a diagram or a drill-down where it helps | [ ] |

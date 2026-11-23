@@ -24,6 +24,7 @@ on:
       - "pack.json"
       - "**/*.md"
       - ".github/workflows/pages.yml"
+      - ".github/workflows/actions.lock"
   workflow_dispatch:
 
 permissions:
