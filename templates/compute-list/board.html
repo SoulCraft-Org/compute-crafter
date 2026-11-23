@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Compute board</title>
+<!-- Your compute board. Open this file in a browser, then pick board.json (from: bash sheet.sh vendor/plans.json
+     mine.json --json > board.json). Nothing is uploaded: the page reads the file in this tab only, and loads nothing. -->
+<style>
+  :root { --bg: #f6fbff; --panel: #e3f0fb; --fg: #10202e; --muted: #546a7c; --line: #c7dcee; --ok: #1f7a4d;
+    --todo: #b42318; --na: #8a9db0; --accent: #3b9bf0; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #0e1620; --panel: #172433; --fg: #e4eef8; --muted: #9db3c8;
+    --line: #28394b; --ok: #5fcf95; --todo: #ff8a7a; --na: #5d7185; --accent: #3b9bf0; } }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.5 system-ui, sans-serif; }
+  main { max-width: 1100px; margin: 0 auto; padding: 16px; }
+  h1 { font-size: 22px; font-weight: 600; margin: 8px 0 16px; }
+  .pick { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; padding: 12px; border: 1px dashed var(--line);
+    border-radius: 12px; margin-bottom: 16px; }
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 16px; }
+  .tile { background: var(--panel); border-radius: 12px; padding: 12px; }
+  .tile .k { color: var(--muted); font-size: 13px; }
+  .tile .v { font-size: 26px; font-weight: 600; }
+  .bar { height: 8px; background: var(--line); border-radius: 4px; overflow: hidden; margin-top: 8px; }
+  .bar > i { display: block; height: 100%; width: 0; background: var(--ok); }
+  @media (prefers-reduced-motion: no-preference) { .bar > i { transition: width .8s ease-out; } }
+  .filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+  button { font: inherit; color: var(--fg); background: transparent; border: 1px solid var(--line); border-radius: 8px;
+    padding: 4px 12px; cursor: pointer; }
+  button[aria-pressed="true"] { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .wrap { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; }
+  th, td { padding: 6px 8px; border-bottom: 1px solid var(--line); text-align: center; white-space: nowrap; }
+  th:first-child, td:first-child { text-align: left; }
+  .ok { color: var(--ok); } .todo { color: var(--todo); } .na { color: var(--na); }
+  .empty { color: var(--muted); padding: 24px 0; }
+</style>
+</head>
+<body>
+<main>
+  <h1>🧮 Compute board</h1>
+  <div class="pick">
+    <label for="file">📂 Pick board.json</label>
+    <input id="file" type="file" accept=".json,application/json">
+    <span id="msg" class="na">Nothing leaves this tab.</span>
+  </div>
+  <div class="tiles" id="tiles"></div>
+  <div class="filters" id="filters"></div>
+  <div class="wrap"><table id="table"></table></div>
+  <p class="empty" id="empty">Pick a file to see your plans.</p>
+</main>
+<script>
+(() => {
+  const FILTERS = [['all', 'All'], ['have', '✅ Have'], ['use', '🟢 Use'], ['idle', '💤 Idle'], ['want', '⭐ Want'], ['unknown', '❔ Not in the catalog']];
+  const STATUS = { use: '🟢 use', idle: '💤 idle', want: '⭐ want', skip: '⏭️ skip' };
+  const LIMIT = { stops: '🛑 stops', bills: '💸 bills' };
+  let rows = [], filter = 'all';
+  const el = (tag, text, cls) => { const e = document.createElement(tag); if (text != null) e.textContent = text; if (cls) e.className = cls; return e; };
+
+  function tile(key, label, done, total) {
+    const t = el('div', null, 'tile');
+    t.append(el('div', `${key} ${label}`, 'k'), el('div', total ? `${done} / ${total}` : '·', 'v'));
+    const bar = el('div', null, 'bar'), fill = el('i');
+    bar.append(fill); t.append(bar);
+    requestAnimationFrame(() => { fill.style.width = total ? `${Math.round((100 * done) / total)}%` : '0'; });
+    return t;
+  }
+
+  const price = (r) => (!r.known ? '·' : r.price_month == null ? '?' : r.price_month === 0 ? 'free' : `${r.currency || ''} ${r.price_month}`.trim());
+  const keep = (r) => filter === 'all' || (filter === 'have' ? r.have : filter === 'unknown' ? !r.known : r.status === filter);
+
+  function draw() {
+    const tiles = document.getElementById('tiles'), table = document.getElementById('table');
+    tiles.replaceChildren(); table.replaceChildren();
+    document.getElementById('empty').hidden = rows.length > 0;
+    if (!rows.length) return;
+    tiles.append(tile('✅', 'Held', rows.filter((r) => r.have).length, rows.length));
+    tiles.append(tile('🟢', 'In use', rows.filter((r) => r.status === 'use').length, rows.filter((r) => r.have).length));
+    tiles.append(tile('🆓', 'Free plans', rows.filter((r) => r.price_month === 0).length, rows.length));
+    tiles.append(tile('❔', 'Not in the catalog', rows.filter((r) => !r.known).length, rows.length));
+    const head = el('tr');
+    for (const h of ['Plan', 'Lane', 'Price', 'At the limit', 'Card', 'Have', 'Status', 'Read']) head.append(el('th', h));
+    table.append(head);
+    for (const r of rows.filter(keep)) {
+      const tr = el('tr');
+      tr.append(el('td', r.known ? r.name : `❔ ${r.id}`), el('td', r.known ? (r.lanes || []).join(', ') : 'not in the catalog', r.known ? null : 'todo'),
+        el('td', price(r)), el('td', r.known ? LIMIT[r.overage] || '❔' : '·'), el('td', r.known ? (r.card === true ? '💳' : r.card === false ? '·' : '?') : '·'),
+        el('td', r.have ? '✅' : '·', r.have ? 'ok' : 'na'), el('td', r.status == null ? '?' : STATUS[r.status] || String(r.status)),
+        el('td', r.known ? `${r.checked || '?'}${r.verified ? ' ✅' : ''}` : '·', 'na'));
+      // Notes are shown as the row's hover text, never as markup: the file is data.
+      if (r.notes) tr.title = String(r.notes);
+      table.append(tr);
+    }
+  }
+
+  const bar = document.getElementById('filters');
+  for (const [id, label] of FILTERS) {
+    const b = el('button', label); b.setAttribute('aria-pressed', String(id === filter));
+    b.addEventListener('click', () => { filter = id; for (const x of bar.children) x.setAttribute('aria-pressed', String(x === b)); draw(); });
+    bar.append(b);
+  }
+
+  document.getElementById('file').addEventListener('change', async (e) => {
+    const msg = document.getElementById('msg');
+    try {
+      const data = JSON.parse(await e.target.files[0].text());
+      if (!Array.isArray(data) || data.some((r) => typeof r !== 'object' || r === null || typeof r.id !== 'string' || typeof r.known !== 'boolean')) throw new Error('not a board.json');
+      rows = data; msg.textContent = `${rows.length} plans`; msg.className = 'ok';
+    } catch (err) {
+      rows = []; msg.textContent = `Could not read that file: ${err.message}`; msg.className = 'todo';
+    }
+    draw();
+  });
+  draw();
+})();
+</script>
+</body>
+</html>

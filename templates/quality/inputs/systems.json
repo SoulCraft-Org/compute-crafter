@@ -1,0 +1,44 @@
+{
+ "comment": "Fake example data from example.com: replace it with each vendor's own page and the date you read it. Shape: Git Crafter systems.json. Each limit holds a label, a value, a unit, the vendor page it came from and the date read.",
+ "systems": [
+  {
+   "id": "ci-host",
+   "name": "Example CI",
+   "limits": [
+    {
+     "label": "included minutes a month",
+     "value": 2000,
+     "unit": "minutes",
+     "source": "https://example.com/ci/pricing",
+     "read": "2026-11-20"
+    }
+   ]
+  },
+  {
+   "id": "gpu-cloud",
+   "name": "Example GPU cloud",
+   "limits": [
+    {
+     "label": "free credit a month",
+     "value": 30,
+     "unit": "USD",
+     "source": "https://example.com/gpu/pricing",
+     "read": "2026-11-20"
+    }
+   ]
+  },
+  {
+   "id": "inference-api",
+   "name": "Example inference API",
+   "limits": [
+    {
+     "label": "free requests a day",
+     "value": 1000,
+     "unit": "requests",
+     "source": "https://example.com/inference/limits",
+     "read": "2026-11-20"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,57 @@
+{
+ "comment": "Fake example data: one row per free tier you hold or could claim. org_status is could_claim, have or use. A free, live row marked could_claim in a lane named in claim_lanes shows as unclaimed.",
+ "rows": [
+  {
+   "id": "example-ci-free",
+   "name": "Free plan",
+   "provider": "Example CI",
+   "lane": "ci",
+   "price_month": 0,
+   "status": "live",
+   "org_status": "use",
+   "resets": "monthly",
+   "checked": "2026-11-20",
+   "source": "https://example.com/ci/pricing",
+   "includes": "2000 minutes a month."
+  },
+  {
+   "id": "example-gpu-credit",
+   "name": "Monthly credit",
+   "provider": "Example GPU cloud",
+   "lane": "gpu",
+   "price_month": 0,
+   "status": "live",
+   "org_status": "have",
+   "resets": "monthly",
+   "checked": "2026-11-20",
+   "source": "https://example.com/gpu/pricing",
+   "includes": "30 USD of credit a month."
+  },
+  {
+   "id": "example-inference-free",
+   "name": "Free tier",
+   "provider": "Example inference API",
+   "lane": "inference",
+   "price_month": 0,
+   "status": "live",
+   "org_status": "have",
+   "resets": "daily",
+   "checked": "2026-11-20",
+   "source": "https://example.com/inference/limits",
+   "includes": "1000 requests a day."
+  },
+  {
+   "id": "example-notebook-free",
+   "name": "Free notebooks",
+   "provider": "Example notebooks",
+   "lane": "gpu",
+   "price_month": 0,
+   "status": "live",
+   "org_status": "could_claim",
+   "resets": "weekly",
+   "checked": "2026-11-20",
+   "source": "https://example.com/notebooks/pricing",
+   "includes": "A few GPU hours a week."
+  }
+ ]
+}
