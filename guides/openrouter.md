@@ -51,9 +51,6 @@ Pick a method, then run `/models` inside OpenCode. A key goes in at the hidden p
 
 ## Sources
 
-<details>
-<summary>Pages read and their dates</summary>
-
 | Page | Read |
 | --- | --- |
 | [Limits](https://openrouter.ai/docs/api/reference/limits) | 2026-11-12 |
@@ -64,5 +61,3 @@ Pick a method, then run `/models` inside OpenCode. A key goes in at the hidden p
 | [OpenCode providers](https://opencode.ai/docs/providers) | 2026-11-12 |
 | [OpenCode MCP servers](https://opencode.ai/docs/mcp-servers) | 2026-11-20 |
 | [Claude Code MCP](https://code.claude.com/docs/en/mcp) | 2026-11-12 |
-
-</details>
