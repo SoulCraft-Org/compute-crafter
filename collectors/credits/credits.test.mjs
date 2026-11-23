@@ -265,6 +265,23 @@ test('collect: a relative file is read from the Git Crafter checkout, a ~/ file 
   }
 });
 
+test('collect: a relative registry is read from the pack checkout, never from the working directory', async () => {
+  const kit = fs.mkdtempSync(path.join(os.tmpdir(), 'credits-kit-'));
+  const cwd = fs.mkdtempSync(path.join(os.tmpdir(), 'credits-cwd-'));
+  const was = process.cwd();
+  try {
+    fs.cpSync(path.join(home, 'reg'), path.join(kit, 'reg'), { recursive: true });
+    for (const f of ['free.json', 'plans.json']) write(path.join(cwd, 'reg', f), { rows: [] });
+    process.chdir(cwd);
+    const out = await collect({ ...base, kit, params: { ...params, registry: 'reg' } });
+    assert.equal(out['credits.unclaimed_free'].value, 2, 'the rows of the pack copy, not of the working directory');
+  } finally {
+    process.chdir(was);
+    fs.rmSync(kit, { recursive: true, force: true });
+    fs.rmSync(cwd, { recursive: true, force: true });
+  }
+});
+
 test('collect: a registry that names its status field otherwise is read through params.status_field', async () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'credits-field-'));
   try {

@@ -187,6 +187,25 @@ test('sheet.sh --write replaces only the part between the markers', () => {
   assert.match(text, /<!-- sheet:end -->\n\nkept\n$/);
 });
 
+test('sheet.sh --write refuses reversed or repeated markers and leaves FILE as it was', () => {
+  const dir = fixture();
+  const readme = join(dir, 'README.md');
+  const cases = [
+    '# Mine\n<!-- sheet:end -->\nnotes 1\n<!-- sheet:start -->\nnotes 2\nkept?\n',
+    '# Mine\n<!-- sheet:start -->\nold\n<!-- sheet:end -->\n<!-- sheet:start -->\nkept?\n',
+    '# Mine\n<!-- sheet:start -->\nold\n<!-- sheet:end -->\nnotes\n<!-- sheet:end -->\nkept?\n',
+    '# Mine\n<!-- sheet:start --> <!-- sheet:end -->\nkept?\n',
+    '# Mine\nno markers\n',
+  ];
+  for (const before of cases) {
+    writeFileSync(readme, before);
+    const out = sheet(join(dir, 'catalog.json'), join(dir, 'sites.json'), '--write', readme);
+    assert.equal(out.status, 2, before);
+    assert.match(out.stderr, /needs one <!-- sheet:start --> line before one <!-- sheet:end --> line/);
+    assert.equal(readFileSync(readme, 'utf8'), before);
+  }
+});
+
 test('the starter example builds against the real catalog', () => {
   const out = sheet(CATALOG, join(STARTER, 'sites.example.json'), '--json', join(STARTER, 'status.example.json'));
   assert.equal(out.status, 0, out.stderr);

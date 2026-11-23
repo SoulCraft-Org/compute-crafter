@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Stdio <-> Streamable HTTP bridge for an MCP server that listens only on this computer (loopback).
 // Claude Desktop runs it as a desktop extension, so Cowork and the Code tab both get the server.
-// No dependencies: Node 18+ fetch only. Never forwards to a host that is not loopback.
+// No dependencies: Node 18+ fetch only. Never forwards to a host that is not loopback, and never follows a redirect.
 //
 // Settings come from the manifest's mcp_config.env:
 //   MCP_URL       the app's MCP endpoint, such as http://127.0.0.1:<port>/mcp (required)
@@ -38,7 +38,8 @@ async function post(msg) {
   const headers = { "Content-Type": "application/json", Accept: "application/json, text/event-stream" };
   if (session) headers["Mcp-Session-Id"] = session;
   if (protocol) headers["MCP-Protocol-Version"] = protocol;
-  const res = await fetch(URL_, { method: "POST", headers, body: JSON.stringify(msg) });
+  // redirect: "error": a 3xx from the loopback port never sends the session or a message to another host.
+  const res = await fetch(URL_, { method: "POST", headers, body: JSON.stringify(msg), redirect: "error" });
   if (res.headers.get("mcp-session-id")) session = res.headers.get("mcp-session-id");
   if (res.status === 202) return [];
   if (res.status === 404 && session) { const e = new Error("session expired"); e.expired = true; throw e; }

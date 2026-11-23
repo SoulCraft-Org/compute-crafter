@@ -12,7 +12,9 @@ default. Rows merge by id. The newer `checked` date wins; on a tie the earlier D
 lanes keep one row with both lanes. The winning row decides status: closed, excluded and DROP rows stay out. Exit 0: clean. Exit 1: a finding.
 Exit 2: could not check (a missing or unreadable file: infrastructure, not a finding).
 """
+import datetime
 import json
+import math
 import os
 import re
 import sys
@@ -27,9 +29,11 @@ PUBLIC_FIELDS = ("id", "name", "provider", "provider_hq", "lanes", "price_month"
                  "source", "sources_extra", "checked", "verified")
 LANES = ("ci", "cpu", "gpu", "inference", "hosting", "tools")
 OVERAGE = {"stops", "bills", "unknown", None}
-DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
-CURRENCY = re.compile(r"^[A-Z]{3}$")  # ISO 4217: a price stays in the currency its page states
-ID = re.compile(r"^[a-z0-9][a-z0-9.-]*$")
+# Each shape is used with fullmatch: a trailing newline never passes.
+DATE = re.compile(r"\d{4}-\d{2}-\d{2}")
+CURRENCY = re.compile(r"[A-Z]{3}")  # ISO 4217: a price stays in the currency its page states
+ID = re.compile(r"[a-z0-9][a-z0-9.-]*")
+COUNTRY = re.compile(r"[A-Z]{2}")  # ISO 3166-1 alpha-2
 EMAIL = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}")
 DASHES = ("\u2014", "\u2013")  # em and en dash
 # Generic shapes of a private source's name, path or wording. The catalog is facts about vendors only; the private
@@ -58,10 +62,26 @@ class CannotCheck(Exception):
     """Infrastructure, not a finding."""
 
 
+def no_constant(name):
+    """NaN, Infinity and -Infinity are not JSON: Python reads them, a standard parser does not."""
+    raise ValueError(f"{name} is not JSON")
+
+
+def real_date(s):
+    """A YYYY-MM-DD string that is a calendar date, and not later than tomorrow (UTC)."""
+    if not isinstance(s, str) or not DATE.fullmatch(s):
+        return False
+    try:
+        d = datetime.date.fromisoformat(s)
+    except ValueError:
+        return False
+    return d <= datetime.datetime.now(datetime.timezone.utc).date() + datetime.timedelta(days=1)
+
+
 def load(path):
     try:
         with open(path, encoding="utf-8") as f:
-            return json.load(f)
+            return json.load(f, parse_constant=no_constant)
     except FileNotFoundError as e:
         raise CannotCheck(f"{path} is missing") from e
     except (OSError, ValueError) as e:
@@ -134,7 +154,7 @@ def sort_key(r):
 
 
 def render(doc):
-    return json.dumps(doc, indent=1, ensure_ascii=False) + "\n"
+    return json.dumps(doc, indent=1, ensure_ascii=False, allow_nan=False) + "\n"
 
 
 def check_doc(doc, text):
@@ -155,24 +175,29 @@ def check_doc(doc, text):
         if tuple(row) != PUBLIC_FIELDS:
             extra = sorted(set(row) - set(PUBLIC_FIELDS))
             out.append(f"{where}: keys are not PUBLIC_FIELDS in order" + (f" (not allowed: {extra})" if extra else ""))
-        if not ID.match(str(row.get("id", ""))):
+        if not ID.fullmatch(str(row.get("id", ""))):
             out.append(f"{where}: id is not lowercase letters, digits, dots and hyphens")
         if row.get("id") in seen:
             out.append(f"{where}: duplicate id")
         seen.add(row.get("id"))
-        if not row.get("name") or not row.get("provider"):
-            out.append(f"{where}: name and provider are required")
+        if any(not isinstance(row.get(k), str) or not row[k].strip() or row[k] != row[k].strip()
+               for k in ("name", "provider")):
+            out.append(f"{where}: name and provider are required, as text with no outer spaces")
+        hq = row.get("provider_hq")
+        if not (hq is None or (isinstance(hq, str) and COUNTRY.fullmatch(hq))):
+            out.append(f"{where}: provider_hq {hq!r} is not an ISO 3166-1 alpha-2 code or null")
         lanes = row.get("lanes")
         if not isinstance(lanes, list) or not lanes or any(x not in LANES for x in lanes):
             out.append(f"{where}: lanes {lanes!r} is not a non-empty list from {list(LANES)}")
         pm = row.get("price_month")
-        if not (pm is None or (isinstance(pm, (int, float)) and not isinstance(pm, bool) and pm >= 0)):
-            out.append(f"{where}: price_month is not a number or null")
-        if not CURRENCY.match(str(row.get("currency", ""))):
+        if not (pm is None or (isinstance(pm, (int, float)) and not isinstance(pm, bool) and math.isfinite(pm)
+                                 and pm >= 0)):
+            out.append(f"{where}: price_month is not a finite number or null")
+        if not CURRENCY.fullmatch(str(row.get("currency", ""))):
             out.append(f"{where}: currency {row.get('currency')!r} is not an ISO 4217 code")
         if row.get("overage") not in OVERAGE:
             out.append(f"{where}: overage {row.get('overage')!r} is not stops, bills, unknown or null")
-        for k in ("card", "trains_on_data"):
+        for k in ("card", "trains_on_data", "commercial_use"):
             if row.get(k) not in (True, False, None):
                 out.append(f"{where}: {k} is not true, false or null")
         if not isinstance(row.get("verified"), bool):
@@ -182,8 +207,8 @@ def check_doc(doc, text):
         extra = row.get("sources_extra")
         if not isinstance(extra, list) or any(not str(u).startswith("https://") for u in strings(extra)):
             out.append(f"{where}: sources_extra is not a list of https URLs")
-        if not DATE.match(str(row.get("checked", ""))):
-            out.append(f"{where}: checked is not YYYY-MM-DD")
+        if not real_date(row.get("checked")):
+            out.append(f"{where}: checked is not a real YYYY-MM-DD date, no later than tomorrow")
         for s in strings(row):
             if any(d in s for d in DASHES):
                 out.append(f"{where}: an em or en dash (use a comma, colon or parentheses)")
@@ -211,7 +236,7 @@ def check(root):
     except FileNotFoundError as e:
         raise CannotCheck(f"{CATALOG} is missing") from e
     try:
-        doc = json.loads(text)
+        doc = json.loads(text, parse_constant=no_constant)
     except ValueError as e:
         return [f"{CATALOG}: not JSON ({e})"], None
     findings = check_doc(doc, text)
@@ -255,6 +280,31 @@ def self_test():
 
     clean = build([new], [old, other])
     v = lambda **kw: (lambda d: d["rows"][0].update(kw))
+
+    def dated(s):
+        def mutate(d):
+            d["rows"][0]["checked"] = s
+            d["checked"] = max(r["checked"] for r in d["rows"])
+        return mutate
+
+    future = str(datetime.datetime.now(datetime.timezone.utc).date() + datetime.timedelta(days=30))
+    inf_doc = json.loads(json.dumps(clean))
+    inf_doc["rows"][0]["price_month"] = float("inf")
+
+    def refuses_inf():
+        try:
+            render(inf_doc)
+        except ValueError:
+            return True
+        return False
+
+    def infinity_file_fails():
+        with tempfile.TemporaryDirectory() as t:
+            os.makedirs(os.path.join(t, "catalog"))
+            with open(os.path.join(t, CATALOG), "w", encoding="utf-8") as f:
+                f.write(render(clean).replace('"price_month": 0,', '"price_month": Infinity,', 1))
+            findings, _ = check(t)
+        return any("not JSON" in f for f in findings)
     cases = [
         ("a clean merge passes --check", not checked(clean)),
         ("every row has exactly PUBLIC_FIELDS", all(tuple(r) == PUBLIC_FIELDS for r in clean["rows"])),
@@ -293,6 +343,28 @@ def self_test():
         ("a string price fails", bool(checked(clean, v(price_month="$5")))),
         ("unsorted rows fail", bool(checked(clean, lambda d: d["rows"].reverse()))),
         ("a wrong top-level checked fails", bool(checked(clean, lambda d: d.update(checked="2020-01-01")))),
+        # Issue 31: Infinity is not JSON, so it never reaches or passes the catalog.
+        ("an infinite price fails", any("price_month" in f for f in check_doc(inf_doc, ""))),
+        ("render refuses an infinite price", refuses_inf()),
+        ("a catalog file holding Infinity is not JSON", infinity_file_fails()),
+        # Issue 33: a date must be a real calendar date, not in the future, with nothing after it.
+        # dated() also moves the top-level checked, so only the date itself can fail.
+        ("a dated row passes", not checked(clean, dated("2026-11-02"))),
+        ("an impossible date fails", bool(checked(clean, dated("2026-02-30")))),
+        ("a month 13 date fails", bool(checked(clean, dated("2026-13-01")))),
+        ("a future date fails", bool(checked(clean, dated(future)))),
+        ("a date with a trailing newline fails", bool(checked(clean, dated("2026-11-02\n")))),
+        ("an id with a trailing newline fails", bool(checked(clean, v(id="acme-free\n")))),
+        ("a currency with a trailing newline fails", bool(checked(clean, v(currency="USD\n")))),
+        # Issue 36: commercial_use, provider_hq, name and provider keep their README types.
+        ("a string commercial_use fails", bool(checked(clean, v(commercial_use="only on weekends")))),
+        ("a country name as provider_hq fails", bool(checked(clean, v(provider_hq="United States of America")))),
+        ("a lowercase provider_hq fails", bool(checked(clean, v(provider_hq="us")))),
+        ("a null provider_hq passes", not checked(clean, v(provider_hq=None))),
+        ("a number as name fails", bool(checked(clean, v(name=5)))),
+        ("a list as provider fails", bool(checked(clean, v(provider=["Acme"])))),
+        ("a blank-padded name fails", bool(checked(clean, v(name=" Acme Free ")))),
+        ("a blank provider fails", bool(checked(clean, v(provider="   ")))),
     ]
     try:  # infrastructure: a missing catalog must say "could not check", never look like a finding
         with tempfile.TemporaryDirectory() as t:

@@ -91,8 +91,10 @@ case "$MODE" in
   --json) rows ;;
   --write)
     [ -n "$ARG" ] && [ -w "$ARG" ] || { echo "sheet.sh: cannot write ${ARG:-FILE}" >&2; exit 2; }
-    if ! grep -q '<!-- sheet:start -->' "$ARG" || ! grep -q '<!-- sheet:end -->' "$ARG"; then
-      echo "sheet.sh: $ARG needs the lines <!-- sheet:start --> and <!-- sheet:end -->" >&2; exit 2
+    # Exactly one start marker, on an earlier line than exactly one end marker: else the rewrite would drop text.
+    if ! awk '/<!-- sheet:start -->/ { s++; if (!sl) sl = NR } /<!-- sheet:end -->/ { e++; if (!el) el = NR }
+              END { exit !(s == 1 && e == 1 && sl < el) }' "$ARG"; then
+      echo "sheet.sh: $ARG needs one <!-- sheet:start --> line before one <!-- sheet:end --> line" >&2; exit 2
     fi
     tmp=$(mktemp)
     table > "$tmp.sheet"
