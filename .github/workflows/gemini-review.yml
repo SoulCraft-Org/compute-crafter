@@ -31,7 +31,7 @@ concurrency:
 
 jobs:
   review:
-    uses: SoulCraft-Org/.github/.github/workflows/gemini-review.yml@8d227d85e95250dcc3c7ad78224328ac63241fbd # main, 2026-11-23, with Plan Mode and subagents off (.github#49)
+    uses: SoulCraft-Org/.github/.github/workflows/gemini-review.yml@c6bd7cd79bf64b6bab497eead1aadb863a90e21f # main, 2026-11-23 (new public history)
     permissions:
       contents: read
       id-token: write
