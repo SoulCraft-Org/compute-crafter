@@ -1,0 +1,6 @@
+# Strings tools/private_terms.py removes before it matches: each is public already, on purpose.
+# The code owner's GitHub handle, which CODEOWNERS must name.
+@paul-co-startups
+# The Apache 2.0 attribution in NOTICE, and the README row that points at the same organisation.
+Colorado-Startups/claudius
+Colorado-Startups/startup-credits
