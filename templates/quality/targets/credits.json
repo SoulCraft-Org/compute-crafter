@@ -2,14 +2,14 @@
  {
   "id": "credits.idle_replaceable",
   "params": {
-   "comment": "Fake example data: replace each file under inputs/ and each allowance below with your own. One entry carries the params for all six Credits metrics, because Git Crafter merges a targets file's params key by key (quality/overlay.mjs). A relative path is read from the pack's checkout, which a local run expects at .code-os-packs/SoulCraft-Org/compute-crafter, so ../../../ is your repo's root. ~/ is home, and a path from / is absolute. Every other key: targets/credits.json in the pack.",
-   "systems_file": "../../../quality/inputs/systems.json",
-   "usage_file": "../../../quality/inputs/usage.json",
-   "registry": "../../../quality/inputs/registry",
+   "comment": "Fake example data: replace each file under inputs/ and each allowance below with your own. One entry carries the params for all six Credits metrics, because Git Crafter merges a targets file's params key by key (quality/overlay.mjs). A path starting with pack: is read from the pack's checkout, ~/ is home, any other relative path is from your repo's root, and a path from / is absolute. Every other key: targets/credits.json in the pack.",
+   "systems_file": "quality/inputs/systems.json",
+   "usage_file": "quality/inputs/usage.json",
+   "registry": "quality/inputs/registry",
    "registry_files": [
     "free.json"
    ],
-   "catalog_file": "catalog/plans.json",
+   "catalog_file": "pack:catalog/plans.json",
    "claim_lanes": [
     "ci",
     "gpu",

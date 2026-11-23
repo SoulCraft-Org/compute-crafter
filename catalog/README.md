@@ -32,7 +32,7 @@ Counts are by each row's first lane, from `plans.json` as built on 2026-11-23. R
 | `price_note`, `includes`, `resets`, `limits` | What the page says the plan gives, and when it resets |
 | `unit_cost_vs_payg` | The plan's unit cost against the vendor's own pay-as-you-go rate |
 | `card` | `true` when the vendor wants a card on file |
-| `overage` | `stops`, `bills` or `unknown`: what happens at the limit |
+| `overage` | `stops`, `bills`, `unknown`, or `null` when not read: what happens at the limit |
 | `trains_on_data`, `commercial_use` | What the terms say, or `null` when not read |
 | `source`, `sources_extra` | The first-party `https://` pages read |
 | `checked` | The date the row was read, `YYYY-MM-DD`. It is a real calendar date, no later than tomorrow (UTC) |

@@ -48,8 +48,6 @@ A CI run reads no file of yours, so five metrics stay "not measured" there until
 
 | Path form | Reads from |
 | --- | --- |
-| `../../../quality/inputs/x.json` | Your repo's root, when the pack sits at `.code-os-packs/SoulCraft-Org/compute-crafter` (the default Git Crafter expects) |
+| `quality/inputs/x.json` | Your repo's root, so your own files |
 | `~/compute/x.json` | Your home folder |
-| `catalog/plans.json` | The pack's own checkout, so the page also scores the age of the public catalog |
-
-Use the `~/` form when `CODE_OS_PACKS` moves the pack elsewhere.
+| `pack:catalog/plans.json` | The pack's checkout at the commit you pin, so the page also scores the age of the public catalog. A `pack:` path cannot leave the checkout |

@@ -27,7 +27,7 @@ Copy one folder. Each has a README with its steps and a fake example you replace
 | Starter | You get | One command |
 | --- | --- | --- |
 | [templates/compute-list](templates/compute-list/README.md) | A sheet and a board of the plans you hold, from the plan catalog | `bash sync.sh`, then, with the two markers in your README, `bash sheet.sh vendor/plans.json mine.json --write README.md` |
-| [templates/logins](templates/logins/README.md) | A sheet and a board of your sign-ins, from the sign-in catalog | With the two markers in your README, `bash sheet.sh logins.json sites.json --write README.md` |
+| [templates/logins](templates/logins/README.md) | A sheet and a board of your sign-ins, from the sign-in catalog | `bash sync.sh`, then, with the two markers in your README, `bash sheet.sh vendor/logins.json sites.json --write README.md` |
 | [templates/quality](templates/quality/README.md) | Your own Quality, Speed and Consumption page: the six Credits metrics | `node <git-crafter>/quality/collect.mjs --local --only credits` |
 | [templates/process](templates/process/README.md) | The five-step Spend map on your Process page | `mkdir -p <your repo>/quality/process && cp templates/process/config.json <your repo>/quality/process/config.json` |
 

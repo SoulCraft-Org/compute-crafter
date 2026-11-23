@@ -1,6 +1,6 @@
 // The four public starters in templates/: the quality starter's example files measure all six Credits metrics in a local
 // collect, the process starter draws the Spend map's five steps, the compute-list tools build a sheet and copy the catalog
-// at a commit, and every starter README links only to files that exist and names every file in its folder.
+// at a commit, the logins sync copies three files at a commit, and every starter README links only to files that exist and names every file in its folder.
 // No test here starts a network call: sync.sh runs against a stand-in gh.
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
@@ -17,6 +17,7 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const TEMPLATES = join(ROOT, 'templates');
 const STARTERS = ['compute-list', 'logins', 'process', 'quality'];
 const CATALOG = join(ROOT, 'catalog', 'plans.json');
+const LOGINS = join(ROOT, 'catalog', 'logins.json');
 const read = (...p) => readFileSync(join(ROOT, ...p), 'utf8');
 const json = (...p) => JSON.parse(read(...p));
 // The same private-term rule the voice lint applies to Markdown, here applied to every other file.
@@ -84,7 +85,8 @@ function userRepo() {
   const params = Object.assign({}, ...packTargets().map((t) => t.params ?? {}), ...JSON.parse(readFileSync(join(dir, 'quality', 'targets', 'credits.json'), 'utf8')).map((t) => t.params ?? {}));
   return { dir, kit, params };
 }
-const run = ({ dir, kit, params }, mode) => collect({ mode, params, kit, home: dir, now: new Date('2026-11-23T12:00:00Z'), lib: { redact: (v) => v } });
+// root is the user's repo and kit the pack's checkout: the starter's paths are from the repo's root.
+const run = ({ dir, kit, params }, mode) => collect({ mode, params, kit, root: dir, home: dir, now: new Date('2026-11-23T12:00:00Z'), lib: { redact: (v) => v } });
 
 test('quality starter: the example files give 6 of 6 Credits metrics measured in a local collect', async () => {
   const repo = userRepo();
@@ -102,6 +104,18 @@ test('quality starter: the example files give 6 of 6 Credits metrics measured in
   assert.equal(out['credits.unclaimed_free'].value, 1);
   assert.equal(out['credits.usage_read_share'].value, 66.7);
   assert.equal(out['credits.idle_replaceable'].value, 0);
+});
+
+test('quality starter: every path is plain and from the repo\'s root, with no climb out of the pack checkout', () => {
+  const targets = readFileSync(join(TEMPLATES, 'quality', 'targets', 'credits.json'), 'utf8');
+  const readme = read('templates', 'quality', 'README.md');
+  assert.doesNotMatch(targets, /\.\.\//);
+  assert.doesNotMatch(readme, /\.\.\/\.\.\/\.\.\//);
+  assert.match(readme, /from your repo's root/);
+  const { params } = userRepo();
+  for (const key of ['systems_file', 'usage_file', 'registry']) assert.match(params[key], /^quality\/inputs\//, key);
+  assert.equal(params.catalog_file, 'pack:catalog/plans.json');
+  assert.doesNotMatch(targets, /\.code-os-packs/);
 });
 
 test('quality starter: a CI collect reads no file of yours, so only the age of the catalog is measured', async () => {
@@ -353,12 +367,99 @@ test('logins starter: status.example.json has one fake row for each of the seven
   assert.match(status.comment, /^Fake example data/);
 });
 
-test('logins starter: the README names status.example.json, and its steps and commands use one name for the catalog', () => {
+test('logins starter: the README names status.example.json, and its steps and commands use one name for the catalog copy', () => {
   const text = read('templates', 'logins', 'README.md');
   assert.ok(text.includes('status.example.json'));
   const steps = text.slice(text.indexOf('| Step | Do |'), text.indexOf('\n\n', text.indexOf('| Step | Do |')));
   const commands = [...text.matchAll(/```bash\n([\s\S]*?)```/g)].map((m) => m[1]).join('\n');
   const names = [...`${steps}\n${commands}`.matchAll(/[\w./-]*logins\.json/g)].map((m) => m[0]);
-  assert.ok(names.length >= 3);
-  assert.deepEqual([...new Set(names)], ['logins.json']);
+  assert.ok(names.length >= 2);
+  assert.deepEqual([...new Set(names)], ['vendor/logins.json']);
+});
+
+// A stand-in gh on PATH for the logins sync: it answers the commit call and the three file reads, and logs every call.
+const LOGINS_FILES = { 'logins.json': ['catalog/logins.json', LOGINS], 'sheet.sh': ['templates/logins/sheet.sh', join(TEMPLATES, 'logins', 'sheet.sh')], 'board.html': ['templates/logins/board.html', join(TEMPLATES, 'logins', 'board.html')] };
+function loginsSync({ args = [], env = {}, sha = '0123456789abcdef0123456789abcdef01234567', bodies = {} } = {}) {
+  const dir = mkdtempSync(join(tmpdir(), 'logins-sync-'));
+  const bin = join(dir, 'bin');
+  mkdirSync(bin);
+  writeFileSync(join(bin, 'gh'), [
+    '#!/usr/bin/env bash',
+    'echo "$*" >> "$STUB_LOG"',
+    'case "$2" in',
+    '  repos/*/commits/*) echo "$STUB_SHA" ;;',
+    '  repos/*/contents/catalog/logins.json*) cat "$STUB_DIR/logins.json" ;;',
+    '  repos/*/contents/templates/logins/sheet.sh*) cat "$STUB_DIR/sheet.sh" ;;',
+    '  repos/*/contents/templates/logins/board.html*) cat "$STUB_DIR/board.html" ;;',
+    '  *) exit 1 ;;',
+    'esac',
+    '',
+  ].join('\n'));
+  chmodSync(join(bin, 'gh'), 0o755);
+  mkdirSync(join(dir, 'stub'));
+  for (const [name, [, file]] of Object.entries(LOGINS_FILES)) writeFileSync(join(dir, 'stub', name), bodies[name] ?? readFileSync(file, 'utf8'));
+  mkdirSync(join(dir, 'tool'));
+  copyFileSync(join(TEMPLATES, 'logins', 'sync.sh'), join(dir, 'tool', 'sync.sh'));
+  const out = spawnSync('bash', [join(dir, 'tool', 'sync.sh'), ...args], { encoding: 'utf8',
+    env: { ...process.env, PATH: `${bin}:${process.env.PATH}`, STUB_LOG: join(dir, 'log'), STUB_SHA: sha, STUB_DIR: join(dir, 'stub'), ...env } });
+  const vendor = join(dir, 'tool', 'vendor');
+  const at = (f) => (existsSync(join(vendor, f)) ? readFileSync(join(vendor, f), 'utf8') : null);
+  return { out, dir, vendor, at, log: existsSync(join(dir, 'log')) ? readFileSync(join(dir, 'log'), 'utf8') : '' };
+}
+
+test('logins: sync.sh copies the catalog, the sheet and the board at one commit and writes vendor/PIN', () => {
+  const sha = '0123456789abcdef0123456789abcdef01234567';
+  const r = loginsSync();
+  assert.equal(r.out.status, 0, r.out.stderr);
+  assert.equal(r.at('PIN'), `SoulCraft-Org/compute-crafter@${sha}\n`);
+  for (const [name, [, file]] of Object.entries(LOGINS_FILES)) assert.equal(r.at(name), readFileSync(file, 'utf8'), name);
+  assert.deepEqual(readdirSync(r.vendor).sort(), ['PIN', 'board.html', 'logins.json', 'sheet.sh'], 'no temp file is left in vendor/');
+  assert.deepEqual(r.log.trim().split('\n'), [
+    'api repos/SoulCraft-Org/compute-crafter/commits/main -q .sha',
+    `api repos/SoulCraft-Org/compute-crafter/contents/catalog/logins.json?ref=${sha} -H Accept: application/vnd.github.raw`,
+    `api repos/SoulCraft-Org/compute-crafter/contents/templates/logins/sheet.sh?ref=${sha} -H Accept: application/vnd.github.raw`,
+    `api repos/SoulCraft-Org/compute-crafter/contents/templates/logins/board.html?ref=${sha} -H Accept: application/vnd.github.raw`,
+  ], 'every file is read at the SHA the first call gave, never at a branch');
+  assert.match(r.out.stdout, new RegExp(`from SoulCraft-Org/compute-crafter at ${sha}`));
+  assert.equal(statSync(join(r.vendor, 'sheet.sh')).mode & 0o777, 0o644);
+});
+
+test('logins: the copied sheet.sh builds the sheet from the copied catalog', () => {
+  const r = loginsSync();
+  assert.equal(r.out.status, 0, r.out.stderr);
+  const sheetOut = spawnSync('bash', [join(r.vendor, 'sheet.sh'), join(r.vendor, 'logins.json'), join(TEMPLATES, 'logins', 'sites.example.json')], { encoding: 'utf8' });
+  assert.equal(sheetOut.status, 0, sheetOut.stderr);
+  assert.match(sheetOut.stdout, /^\*\*7 sites\*\*/);
+});
+
+test('logins: sync.sh takes a REF and a REPO, and writes nothing when one file is not what it should be', () => {
+  const ref = loginsSync({ args: ['v1.0.0'], env: { REPO: 'someone/fork' } });
+  assert.equal(ref.out.status, 0, ref.out.stderr);
+  assert.match(ref.log, /^api repos\/someone\/fork\/commits\/v1\.0\.0 -q \.sha$/m);
+  assert.match(ref.at('PIN'), /^someone\/fork@[0-9a-f]{40}\n$/);
+  const cases = [
+    { sha: 'abc123' },
+    { bodies: { 'logins.json': '{"rows": []}' } },
+    { bodies: { 'sheet.sh': 'not a script\n' } },
+    { bodies: { 'board.html': '<p>not a page</p>\n' } },
+    { bodies: { 'board.html': '' } },
+  ];
+  for (const c of cases) {
+    const r = loginsSync(c);
+    assert.equal(r.out.status, 1, JSON.stringify(c));
+    assert.equal(existsSync(r.vendor) ? readdirSync(r.vendor).length : 0, 0, `${JSON.stringify(c)}: nothing is written, not one file of the three`);
+  }
+});
+
+test('logins: sync.sh refuses a REF that starts with a dash, holds odd characters or `..`, and a REPO that is not owner/name, holds `..` or starts a part with a dot', () => {
+  for (const args of [['--evil'], ['a b'], ['x;y'], ['..'], ['a/../b'], ['feature..x'], ['../../user'], ['main', 'extra']]) {
+    const r = loginsSync({ args });
+    assert.equal(r.out.status, 2, args.join(' '));
+    assert.equal(r.log, '', 'no gh call');
+  }
+  for (const REPO of ['noslash', 'a/b/c', '/b', 'a/', 'a/..', '../b', 'a..b/c', '.a/b', 'a/.b', '.hidden/repo']) {
+    const r = loginsSync({ env: { REPO } });
+    assert.equal(r.out.status, 2, REPO);
+    assert.equal(r.log, '', 'no gh call');
+  }
 });
