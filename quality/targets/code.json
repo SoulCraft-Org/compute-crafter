@@ -4,9 +4,9 @@
     "params": {
       "areas": ["collectors", "tools"],
       "test_suites": [
-        { "label": "Collectors", "runner": "node", "workflow": "ci.yml", "job": "ci / standard", "cover": ["collectors"] }
+        { "label": "Collectors", "runner": "node", "workflow": "ci.yml", "job": "ci / short", "cover": ["collectors"] }
       ],
-      "check": { "workflow": "ci.yml", "job": "ci / standard" }
+      "check": { "workflow": "ci.yml", "job": "ci / short" }
     }
   }
 ]
