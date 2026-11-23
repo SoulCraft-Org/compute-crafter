@@ -69,7 +69,8 @@ jobs:
           git commit -s -m "Catalog: re-read stale rows ($(date -u +%F))"
           git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "HEAD:refs/heads/$branch"
           {
-            cat "$RUNNER_TEMP/pr-body.md"
+            # The agent writes this table from fetched pages: a zero-width space after each @ keeps it from mentioning anyone.
+            python3 -I -c 'import sys; sys.stdout.write(sys.stdin.read().replace("@", "@\u200b"))' < "$RUNNER_TEMP/pr-body.md"
             printf '\n\nCompare: https://github.com/%s/compare/main...%s\n\nThe orchestrator opens the PR; this agent never merges.\n' "$GITHUB_REPOSITORY" "$branch"
           } > "$RUNNER_TEMP/body.md"
           gh issue create --title "Catalog re-read ready: $branch" --body-file "$RUNNER_TEMP/body.md"
