@@ -1,6 +1,6 @@
 # Provider guides
 
-One page per provider. Each provider page opens with one table: account, free tier with its source and date, login or key, Claude connector, OpenCode, guard. Four pages cover a topic, not one provider, and open with their own table or text: [Local models](local-models.md), [Logins](logins.md), [Training](training.md) and [Claude Desktop MCP](claude-desktop-mcp.md).
+One page per provider. Each opens with one table: account, free tier, login or key, Claude connector, OpenCode, guard. Four topic pages open with their own table or text: [Local models](local-models.md), [Logins](logins.md), [Training](training.md) and [Claude Desktop MCP](claude-desktop-mcp.md).
 
 ```mermaid
 flowchart LR
@@ -12,28 +12,28 @@ flowchart LR
 
 | Guide | Lane | What it covers |
 | --- | --- | --- |
-| [Hugging Face](hugging-face.md) | Inference, GPU | Hub models, ZeroGPU Spaces, Inference Providers, the Hugging Face MCP server |
-| [NVIDIA](nvidia.md) | Inference | NIM trial endpoints on build.nvidia.com, NGC containers, the CUDA docs MCP server |
+| [Hugging Face](hugging-face.md) | Inference, GPU | Hub models, ZeroGPU Spaces, Inference Providers, its MCP server |
+| [NVIDIA](nvidia.md) | Inference | NIM trial endpoints, NGC containers, the CUDA docs MCP server |
 | [Groq](groq.md) | Inference | Fast hosted open-weight models on a free plan |
 | [OpenRouter](openrouter.md) | Inference | One OpenAI-compatible API over many vendors, with `:free` variants |
 | [Together AI](together.md) | Inference | Prepaid per-token open-weight models |
 | [Cloudflare Workers AI](cloudflare-workers-ai.md) | Inference | A free daily Neurons allocation and hosted MCP servers |
-| [Ollama](ollama.md) | Inference | Cloud models paid from usage credits on a $0 plan, and launchers for Claude Code and OpenCode |
-| [Claude API](claude-api.md) | Inference | The API credits in a Max, Ultra or Team plan, and CI that holds no key through workload identity federation |
+| [Ollama](ollama.md) | Inference | Cloud models on a $0 plan's usage credits, and Claude Code and OpenCode launchers |
+| [Claude API](claude-api.md) | Inference | API credits in Max, Ultra and Team plans, and keyless CI through workload identity federation |
 | [Modal](modal.md) | GPU | Serverless GPUs for your own code, and Shared Endpoints |
 | [RunPod](runpod.md) | GPU | Prepaid GPU pods and Serverless endpoints, the RunPod MCP server |
 | [AMD](amd.md) | GPU | ROCm, and one-time AMD Developer Cloud credit |
-| [Google Cloud](google-cloud.md) | CPU, GPU | The $300 Free Trial credit and what it cannot pay for, the upgrade, and budgets, a kill switch and quotas |
+| [Google Cloud](google-cloud.md) | CPU, GPU | The $300 Free Trial, what it cannot pay for, the upgrade, a budget kill switch, quotas |
 | [ComfyUI](comfyui.md) | GPU | Comfy Cloud, comfy-cli, and the [comfyui-base](https://github.com/SoulCraft-Org/comfyui-base) installer |
-| [Claude Desktop MCP](claude-desktop-mcp.md) | Client | One MCP server for the Code tab and Cowork: a custom connector, or a desktop extension that bridges a loopback app |
+| [Claude Desktop MCP](claude-desktop-mcp.md) | Client | One MCP server for the Code tab and Cowork: a custom connector or a desktop extension |
 | [GitHub](github.md) | CI, tools | Actions, `gh` login, the GitHub MCP server, the App manifest flow, Copilot in OpenCode |
 | [Local models](local-models.md) | Local | MLX and LM Studio serving a model on your own port |
 | [Logins](logins.md) | Accounts | One sign-in order, passkeys and codes in Apple Passwords, the logins catalog and starter |
-| [Training](training.md) | GPU | LoRA, then RL such as GRPO, on free and subscription credits: jobs by GPU size, lanes with terms and card guards, lanes to avoid |
-| [Zed](zed.md) | Client | An editor that runs open-weight models on your own keys, and Claude Code, OpenCode and Goose over ACP |
-| [Goose](goose.md) | Client | An open-source agent, CLI and desktop app, that keeps provider keys in the system keyring |
+| [Training](training.md) | GPU | LoRA, then RL such as GRPO, on free and subscription credits: jobs by GPU size, lanes, lanes to avoid |
+| [Zed](zed.md) | Client | An editor running open-weight models on your keys, and coding agents over ACP |
+| [Goose](goose.md) | Client | An open-source agent, CLI and desktop app, with keys in the system keyring |
 
-Every free-tier figure is on its guide page, with the vendor's own page and the date it was read. [catalog/plans.json](../catalog/plans.json) holds the plans across all vendors.
+Each guide cites every free-tier figure with the vendor's page and the date it was read. [catalog/plans.json](../catalog/plans.json) holds every vendor's plans.
 
 ## OpenCode 2
 
