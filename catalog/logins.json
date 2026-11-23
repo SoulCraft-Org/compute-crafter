@@ -1,7 +1,7 @@
 {
   "version": 1,
   "about": "What each vendor offers for signing in: methods, passkeys, 2FA, linking and email change. Vendor facts only, each read on the vendor's own pages on the date in checked.",
-  "checked": "2026-11-22",
+  "checked": "2026-11-23",
   "rows": [
     {
       "id": "amd-developer-cloud",
@@ -44,14 +44,16 @@
       "own_2fa": null,
       "recovery_codes": null,
       "link": null,
-      "email_change": null,
+      "email_change": false,
       "security_url": null,
-      "trap": "Claude and Console accounts are separate even with the same email, and no dedicated password can be created.",
+      "trap": "Claude and Console accounts are separate even with the same email, the account email cannot be changed (moving to a new email means a new account), and no dedicated password can be set.",
       "source": "https://support.claude.com/en/articles/13189465-log-in-to-your-claude-account",
       "sources_extra": [
-        "https://support.claude.com/en/articles/13371040-log-in-to-your-console-account"
+        "https://support.claude.com/en/articles/13371040-log-in-to-your-console-account",
+        "https://support.claude.com/en/articles/8452276-how-do-i-change-the-email-address-associated-with-my-account",
+        "https://support.claude.com/en/collections/9811145-account-management"
       ],
-      "checked": "2026-11-22",
+      "checked": "2026-11-23",
       "verified": true
     },
     {
@@ -62,19 +64,30 @@
       "lanes": [
         "tools"
       ],
-      "signin": null,
-      "passkey": null,
-      "twofa": null,
+      "signin": [
+        "google"
+      ],
+      "passkey": "both",
+      "twofa": [
+        "via-provider"
+      ],
       "own_2fa": null,
-      "recovery_codes": null,
+      "recovery_codes": true,
       "link": null,
-      "email_change": null,
-      "security_url": null,
-      "trap": null,
-      "source": "https://antigravity.google/docs/get-started",
-      "sources_extra": [],
-      "checked": "2026-11-22",
-      "verified": false
+      "email_change": true,
+      "security_url": "https://myaccount.google.com/security",
+      "trap": "Signing in with a Google Workspace work account instead of the personal Google Account that holds the AI Pro/Ultra plan gets only a limited starter quota, and enterprise users whose email exists with more than one identity provider must pick the identity that matches their Gemini Enterprise license.",
+      "source": "https://antigravity.google/docs/install/",
+      "sources_extra": [
+        "https://antigravity.google/docs/faq/",
+        "https://antigravity.google/docs/getting-started/",
+        "https://support.google.com/accounts/answer/185839",
+        "https://support.google.com/accounts/answer/13548313?hl=en",
+        "https://support.google.com/accounts/answer/1187538?hl=en&co=GENIE.Platform%3DDesktop",
+        "https://support.google.com/accounts/answer/19870?hl=en&co=GENIE.Platform%3DDesktop"
+      ],
+      "checked": "2026-11-23",
+      "verified": true
     },
     {
       "id": "apple",
@@ -84,7 +97,10 @@
       "lanes": [
         "identity"
       ],
-      "signin": null,
+      "signin": [
+        "email-password",
+        "other"
+      ],
       "passkey": null,
       "twofa": [
         "push",
@@ -92,18 +108,20 @@
         "security-key"
       ],
       "own_2fa": null,
-      "recovery_codes": null,
+      "recovery_codes": true,
       "link": null,
       "email_change": true,
-      "security_url": null,
+      "security_url": "https://account.apple.com",
       "trap": "Security keys require registering at least two keys (up to six); keep spares so a lost key does not lock you out.",
       "source": "https://support.apple.com/en-us/102660",
       "sources_extra": [
         "https://support.apple.com/en-us/102637",
         "https://support.apple.com/en-us/102641",
-        "https://support.apple.com/en-us/102529"
+        "https://support.apple.com/en-us/102529",
+        "https://support.apple.com/en-us/109353",
+        "https://support.apple.com/en-us/109345"
       ],
-      "checked": "2026-11-22",
+      "checked": "2026-11-23",
       "verified": true
     },
     {
@@ -117,7 +135,11 @@
         "inference",
         "hosting"
       ],
-      "signin": null,
+      "signin": [
+        "email-password",
+        "other",
+        "sso"
+      ],
       "passkey": "2fa",
       "twofa": [
         "passkey",
@@ -127,14 +149,19 @@
       "own_2fa": null,
       "recovery_codes": null,
       "link": null,
-      "email_change": null,
+      "email_change": true,
       "security_url": null,
       "trap": "Register several MFA devices (up to eight) so a lost one does not force the account recovery procedure.",
       "source": "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_mfa.html",
       "sources_extra": [
-        "https://docs.aws.amazon.com/IAM/latest/UserGuide/console_sign-in-mfa.html"
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/console_sign-in-mfa.html",
+        "https://docs.aws.amazon.com/signin/latest/userguide/user-types-list.html",
+        "https://docs.aws.amazon.com/signin/latest/userguide/how-to-sign-in.html",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_mfa_lost-or-broken.html",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/enable-mfa-for-root.html",
+        "https://docs.aws.amazon.com/accounts/latest/reference/manage-acct-update-root-user-email.html"
       ],
-      "checked": "2026-11-22",
+      "checked": "2026-11-23",
       "verified": true
     },
     {
@@ -155,12 +182,15 @@
       "link": null,
       "email_change": null,
       "security_url": null,
-      "trap": "If the GitHub organization enforces SSO, authenticate with the SSO provider inside GitHub first, then refresh the Blacksmith dashboard.",
+      "trap": "Signing in with a different GitHub user silently creates a new Blacksmith account ('No account? We'll create one for you'), and an organization that enforces GitHub SSO stays hidden until you authenticate with its SSO provider inside GitHub and refresh the dashboard.",
       "source": "https://docs.blacksmith.sh/introduction/quickstart",
       "sources_extra": [
-        "https://docs.blacksmith.sh/blacksmith-administration/github-app"
+        "https://docs.blacksmith.sh/blacksmith-administration/github-app",
+        "https://docs.blacksmith.sh/blacksmith-administration/permissions.md",
+        "https://www.blacksmith.sh/security",
+        "https://app.blacksmith.sh/"
       ],
-      "checked": "2026-11-22",
+      "checked": "2026-11-23",
       "verified": true
     },
     {
@@ -172,9 +202,8 @@
         "inference"
       ],
       "signin": [
-        "github",
         "google",
-        "sso"
+        "github"
       ],
       "passkey": null,
       "twofa": null,
@@ -186,10 +215,11 @@
       "trap": null,
       "source": "https://cloud.cerebras.ai/",
       "sources_extra": [
-        "https://inference-docs.cerebras.ai/quickstart"
+        "https://inference-docs.cerebras.ai/quickstart",
+        "https://inference-docs.cerebras.ai/console/account-billing"
       ],
-      "checked": "2026-11-22",
-      "verified": false
+      "checked": "2026-11-23",
+      "verified": true
     },
     {
       "id": "civitai",
@@ -202,8 +232,7 @@
       "signin": [
         "github",
         "google",
-        "other",
-        "email-link"
+        "other"
       ],
       "passkey": null,
       "twofa": null,
@@ -214,9 +243,11 @@
       "security_url": null,
       "trap": null,
       "source": "https://education.civitai.com/using-civitai-a-guide/",
-      "sources_extra": [],
-      "checked": "2026-11-22",
-      "verified": false
+      "sources_extra": [
+        "https://civitai.com/content/guides/getting-started"
+      ],
+      "checked": "2026-11-23",
+      "verified": true
     },
     {
       "id": "cline",
@@ -227,9 +258,10 @@
         "tools"
       ],
       "signin": [
-        "github",
         "google",
-        "other"
+        "microsoft",
+        "github",
+        "sso"
       ],
       "passkey": null,
       "twofa": null,
@@ -239,10 +271,13 @@
       "email_change": null,
       "security_url": null,
       "trap": null,
-      "source": "https://docs.cline.bot/getting-started/authorizing-with-cline",
-      "sources_extra": [],
-      "checked": "2026-11-22",
-      "verified": false
+      "source": "https://app.cline.bot/login",
+      "sources_extra": [
+        "https://docs.cline.bot/getting-started/authorizing-with-cline",
+        "https://docs.cline.bot/api/authentication"
+      ],
+      "checked": "2026-11-23",
+      "verified": true
     },
     {
       "id": "cloudflare",
@@ -271,14 +306,14 @@
       "recovery_codes": true,
       "link": "email-match",
       "email_change": true,
-      "security_url": null,
+      "security_url": "https://dash.cloudflare.com/?to=/:account/profile",
       "trap": "Changing the account email unlinks Apple login; signing in with that Apple ID afterward creates a new Cloudflare account.",
       "source": "https://developers.cloudflare.com/fundamentals/user-profiles/login/",
       "sources_extra": [
         "https://developers.cloudflare.com/fundamentals/user-profiles/2fa/",
         "https://developers.cloudflare.com/fundamentals/user-profiles/change-password-or-email/"
       ],
-      "checked": "2026-11-22",
+      "checked": "2026-11-23",
       "verified": true
     },
     {
@@ -293,21 +328,25 @@
       "signin": [
         "google"
       ],
-      "passkey": null,
+      "passkey": "both",
       "twofa": [
         "via-provider"
       ],
-      "own_2fa": false,
-      "recovery_codes": null,
+      "own_2fa": null,
+      "recovery_codes": true,
       "link": null,
-      "email_change": null,
-      "security_url": null,
-      "trap": null,
+      "email_change": true,
+      "security_url": "https://myaccount.google.com/security",
+      "trap": "Colab paid benefits attach to the one Google Account that subscribed, so working while signed in to another Google Account shows the free tier, and buying a personal plan permanently ends a Colab Pro for Education subscription.",
       "source": "https://colab.research.google.com/",
       "sources_extra": [
-        "https://support.google.com/accounts/answer/185839"
+        "https://research.google.com/colaboratory/faq.html",
+        "https://support.google.com/accounts/answer/185839",
+        "https://support.google.com/accounts/answer/13548313?hl=en",
+        "https://support.google.com/accounts/answer/1187538?hl=en&co=GENIE.Platform%3DDesktop",
+        "https://support.google.com/accounts/answer/19870?hl=en&co=GENIE.Platform%3DDesktop"
       ],
-      "checked": "2026-11-22",
+      "checked": "2026-11-23",
       "verified": true
     },
     {
@@ -334,8 +373,10 @@
       "security_url": null,
       "trap": "SSO accounts cannot use the desktop app or accept workspace invite links yet; an admin must add them directly.",
       "source": "https://docs.comfy.org/account/login",
-      "sources_extra": [],
-      "checked": "2026-11-22",
+      "sources_extra": [
+        "https://docs.comfy.org/account/create-account"
+      ],
+      "checked": "2026-11-23",
       "verified": true
     },
     {
@@ -346,7 +387,12 @@
       "lanes": [
         "tools"
       ],
-      "signin": null,
+      "signin": [
+        "email-password",
+        "google",
+        "github",
+        "sso"
+      ],
       "passkey": null,
       "twofa": null,
       "own_2fa": null,
@@ -354,13 +400,15 @@
       "link": null,
       "email_change": null,
       "security_url": null,
-      "trap": null,
-      "source": "https://app.devin.ai/login",
+      "trap": "On the Teams plan an SSO connection signs in existing members only (no just-in-time provisioning), so people must be invited before their first SSO sign-in.",
+      "source": "https://docs.devin.ai/enterprise/security-access/sso/guide",
       "sources_extra": [
+        "https://docs.devin.ai/release-notes/2024",
+        "https://app.devin.ai/login",
         "https://docs.devin.ai/get-started/devin-intro"
       ],
-      "checked": "2026-11-22",
-      "verified": false
+      "checked": "2026-11-23",
+      "verified": true
     },
     {
       "id": "digitalocean",
@@ -388,13 +436,13 @@
       "link": "no",
       "email_change": true,
       "security_url": "https://cloud.digitalocean.com/account/profile",
-      "trap": "DigitalOcean 2FA covers email-password logins only; with Google or GitHub sign-in, 2FA must be enabled on that provider account.",
+      "trap": "GitHub sign-in needs the GitHub and DigitalOcean emails to match, so changing the GitHub email before the DigitalOcean one blocks GitHub login.",
       "source": "https://docs.digitalocean.com/platform/accounts/2fa/",
       "sources_extra": [
         "https://docs.digitalocean.com/support/logging-in/",
         "https://docs.digitalocean.com/platform/accounts/settings/"
       ],
-      "checked": "2026-11-22",
+      "checked": "2026-11-23",
       "verified": true
     },
     {
@@ -407,9 +455,10 @@
         "hosting"
       ],
       "signin": [
+        "email-password",
         "google",
         "github",
-        "email-password"
+        "sso"
       ],
       "passkey": null,
       "twofa": [
@@ -417,15 +466,20 @@
       ],
       "own_2fa": null,
       "recovery_codes": true,
-      "link": null,
-      "email_change": null,
+      "link": "email-match",
+      "email_change": true,
       "security_url": null,
-      "trap": null,
-      "source": "https://app.docker.com/signup",
+      "trap": "Using Continue with Google or GitHub with an email that differs from the Docker account email starts a new sign-up and creates a second account instead of linking.",
+      "source": "https://docs.docker.com/accounts/individual/manage-account/",
       "sources_extra": [
-        "https://docs.docker.com/security/for-developers/2fa/"
+        "https://app.docker.com/signup",
+        "https://docs.docker.com/security/authentication/2fa/",
+        "https://docs.docker.com/security/authentication/2fa/manage/",
+        "https://docs.docker.com/security/authentication/2fa/recover-hub-account/",
+        "https://docs.docker.com/accounts/individual/create-account/",
+        "https://docs.docker.com/security/authentication/single-sign-on/"
       ],
-      "checked": "2026-11-22",
+      "checked": "2026-11-23",
       "verified": true
     },
     {
@@ -448,15 +502,19 @@
       ],
       "own_2fa": null,
       "recovery_codes": true,
-      "link": null,
-      "email_change": null,
+      "link": "email-match",
+      "email_change": true,
       "security_url": null,
       "trap": "The one backup code is shown once and cannot be viewed again; it only removes 2FA, so store it during setup.",
       "source": "https://elevenlabs.io/app/sign-in",
       "sources_extra": [
-        "https://elevenlabs.io/docs/help-center/account/general/how-do-i-add-two-factor-authentication-2-fa-to-my-account"
+        "https://elevenlabs.io/docs/help-center/account/general/how-do-i-add-two-factor-authentication-2-fa-to-my-account",
+        "https://elevenlabs.io/docs/help-center/account/general/how-do-i-change-my-email",
+        "https://elevenlabs.io/docs/help-center/account/general/can-i-still-log-in-using-github-or-facebook",
+        "https://elevenlabs.io/docs/help-center/account/general/can-i-change-my-account-from-google-sign-in-to-email-and-password",
+        "https://elevenlabs.io/docs/help-center/account/general/can-i-change-my-account-from-apple-sign-in-to-email-and-password"
       ],
-      "checked": "2026-11-22",
+      "checked": "2026-11-23",
       "verified": true
     },
     {
@@ -493,7 +551,7 @@
         "https://docs.github.com/en/authentication/authenticating-with-a-passkey/about-passkeys",
         "https://docs.github.com/en/account-and-profile/how-tos/email-preferences/changing-your-primary-email-address"
       ],
-      "checked": "2026-11-22",
+      "checked": "2026-11-23",
       "verified": true
     },
     {
@@ -519,16 +577,18 @@
       "own_2fa": null,
       "recovery_codes": true,
       "link": null,
-      "email_change": null,
-      "security_url": null,
+      "email_change": true,
+      "security_url": "https://myaccount.google.com/security",
       "trap": "A newly added passkey or security key can take up to 7 days to become available at sign-in.",
       "source": "https://support.google.com/accounts/answer/185839?hl=en",
       "sources_extra": [
         "https://accounts.google.com/signin",
-        "https://support.google.com/accounts/answer/13548313",
-        "https://support.google.com/accounts/answer/6103523?hl=en"
+        "https://support.google.com/accounts/answer/13548313?hl=en",
+        "https://support.google.com/accounts/answer/6103523?hl=en",
+        "https://support.google.com/accounts/answer/19870?hl=en",
+        "https://docs.cloud.google.com/docs/authentication/mfa-requirement"
       ],
-      "checked": "2026-11-22",
+      "checked": "2026-11-23",
       "verified": true
     },
     {
@@ -552,13 +612,15 @@
       "link": null,
       "email_change": null,
       "security_url": null,
-      "trap": null,
-      "source": "https://aistudio.google.com/",
+      "trap": "Workspace accounts are locked out when the Workspace admin has turned AI Studio off (or the user is under 18 on an Education edition), and unusual activity on a Google Account blocks access until it is verified with a phone or billing is set up.",
+      "source": "https://aistudio.google.com/docs/workspace",
       "sources_extra": [
+        "https://aistudio.google.com/",
+        "https://aistudio.google.com/docs/verification",
         "https://support.google.com/accounts/answer/185839"
       ],
-      "checked": "2026-11-22",
-      "verified": false
+      "checked": "2026-11-23",
+      "verified": true
     },
     {
       "id": "google-cloud",
@@ -580,14 +642,16 @@
         "via-provider"
       ],
       "own_2fa": false,
-      "recovery_codes": null,
+      "recovery_codes": true,
       "link": null,
       "email_change": null,
-      "security_url": null,
-      "trap": "Console requires 2-Step Verification, personal accounts since 2025-05-12; super admins bypass SSO, so identity provider MFA does not apply to them.",
+      "security_url": "https://myaccount.google.com/security",
+      "trap": "The Cloud and Firebase consoles block accounts without 2-Step Verification (personal accounts on or after 2025-05-12, Enterprise Cloud Identity non-SSO accounts on or after 2026-10-20 for older orgs), so the account must turn on 2SV before it can get back in; accounts with passkeys still need 2SV.",
       "source": "https://docs.cloud.google.com/docs/authentication/mfa-requirement",
-      "sources_extra": [],
-      "checked": "2026-11-22",
+      "sources_extra": [
+        "https://support.google.com/accounts/answer/185839?hl=en"
+      ],
+      "checked": "2026-11-23",
       "verified": true
     },
     {
@@ -599,9 +663,11 @@
         "tools"
       ],
       "signin": [
-        "github",
+        "email-password",
         "google",
-        "other"
+        "github",
+        "other",
+        "sso"
       ],
       "passkey": null,
       "twofa": null,
@@ -610,10 +676,12 @@
       "link": null,
       "email_change": null,
       "security_url": null,
-      "trap": null,
+      "trap": "When an organization turns on Require SSO, sessions started with a password or Google sign-in cannot reach that organization until the user signs in through SSO.",
       "source": "https://www.greptile.com/docs/quickstart",
-      "sources_extra": [],
-      "checked": "2026-11-22",
+      "sources_extra": [
+        "https://www.greptile.com/docs/account/sso-and-identity"
+      ],
+      "checked": "2026-11-23",
       "verified": true
     },
     {
@@ -659,7 +727,7 @@
         "passkey",
         "totp"
       ],
-      "own_2fa": null,
+      "own_2fa": true,
       "recovery_codes": true,
       "link": null,
       "email_change": null,
@@ -668,9 +736,10 @@
       "source": "https://huggingface.co/docs/hub/security-2fa",
       "sources_extra": [
         "https://huggingface.co/login",
-        "https://huggingface.co/docs/hub/security-passkeys"
+        "https://huggingface.co/docs/hub/security-passkeys",
+        "https://huggingface.co/docs/hub/security-sso"
       ],
-      "checked": "2026-11-22",
+      "checked": "2026-11-23",
       "verified": true
     },
     {
@@ -693,12 +762,14 @@
       "link": null,
       "email_change": null,
       "security_url": null,
-      "trap": "Sign-in is Google only; repository access is a separate GitHub connection that must also be granted.",
+      "trap": "Paid Jules plans currently work only for individual @gmail.com Google Accounts, so signing in with a Workspace account blocks upgrading and pushes people to a second, personal account; GitHub repo access is a separate connection.",
       "source": "https://jules.google/docs",
       "sources_extra": [
+        "https://jules.google/docs/usage-limits/",
+        "https://jules.google/docs/faq/",
         "https://support.google.com/accounts/answer/185839"
       ],
-      "checked": "2026-11-22",
+      "checked": "2026-11-23",
       "verified": true
     },
     {
@@ -734,22 +805,29 @@
       ],
       "signin": [
         "apple",
+        "email-link",
         "github",
         "google",
+        "passkey",
         "other",
         "sso"
       ],
-      "passkey": null,
+      "passkey": "signin",
       "twofa": null,
       "own_2fa": null,
       "recovery_codes": null,
-      "link": null,
+      "link": "settings",
       "email_change": null,
       "security_url": null,
-      "trap": null,
+      "trap": "Signing in with a different provider than the one you signed up with is refused (\"An account already exists for this email address. Try signing in with the original login method\"), and an SSO link opened while the browser is signed in under another address stops at a \"Wrong account signed in\" page.",
       "source": "https://kilo.ai/docs/getting-started/setup-authentication",
-      "sources_extra": [],
-      "checked": "2026-11-22",
+      "sources_extra": [
+        "https://app.kilo.ai/users/sign_in",
+        "https://kilo.ai/docs/collaborate/enterprise/sso",
+        "https://kilo.ai/docs/getting-started/faq/account-and-integration",
+        "https://www.anaconda.com/blog/anaconda-acquires-kilo-code"
+      ],
+      "checked": "2026-11-23",
       "verified": true
     },
     {
@@ -775,8 +853,10 @@
       "security_url": null,
       "trap": "GitHub, Google or Builder ID sign-in makes you an individual subscriber, separate from organization sign-in through IAM Identity Center.",
       "source": "https://kiro.dev/docs/getting-started/authentication/",
-      "sources_extra": [],
-      "checked": "2026-11-22",
+      "sources_extra": [
+        "https://kiro.dev/llms.txt"
+      ],
+      "checked": "2026-11-23",
       "verified": true
     },
     {
@@ -789,22 +869,25 @@
         "cpu"
       ],
       "signin": [
+        "email-password",
         "sso"
       ],
       "passkey": null,
       "twofa": null,
-      "own_2fa": null,
+      "own_2fa": true,
       "recovery_codes": null,
       "link": null,
       "email_change": null,
-      "security_url": null,
-      "trap": null,
-      "source": "https://docs.lambda.com/public-cloud/enabling-sso/",
+      "security_url": "https://cloud.lambda.com/user/general",
+      "trap": "Standard sign-up creates your own separate account while company SSO puts you in the company account, and if your email already belongs to a different Lambda Cloud account you must contact your Lambda account manager before signing in with SSO.",
+      "source": "https://docs.lambda.com/public-cloud/console/",
       "sources_extra": [
-        "https://docs.lambda.com/public-cloud/console/"
+        "https://docs.lambda.com/public-cloud/enabling-sso/",
+        "https://docs.lambda.com/public-cloud/resource-hierarchy/",
+        "https://docs.lambda.com/public-cloud/managing-account/"
       ],
-      "checked": "2026-11-22",
-      "verified": false
+      "checked": "2026-11-23",
+      "verified": true
     },
     {
       "id": "lightning-ai",
@@ -817,6 +900,7 @@
         "hosting"
       ],
       "signin": [
+        "email-link",
         "google",
         "github",
         "sso"
@@ -825,16 +909,22 @@
       "twofa": [
         "via-provider"
       ],
-      "own_2fa": null,
+      "own_2fa": false,
       "recovery_codes": null,
       "link": null,
       "email_change": null,
       "security_url": null,
-      "trap": null,
-      "source": "https://lightning.ai/docs/platform/security/security-features/",
-      "sources_extra": [],
-      "checked": "2026-11-22",
-      "verified": false
+      "trap": "Accounts on personal emails can wait 2-3 business days for verification, and Lightning's own docs suggest creating a new account with a work or university email to verify faster, which leaves a second account.",
+      "source": "https://lightning.ai/docs/platform/overview/faq/create-account/",
+      "sources_extra": [
+        "https://lightning.ai/docs/platform/security/security-features/multi-factor-authentication",
+        "https://lightning.ai/docs/platform/security/security-features/",
+        "https://lightning.ai/docs/platform/security/security-features/configure-sso",
+        "https://platform.lightning.ai/sign-in",
+        "https://lightning.ai/security-incident"
+      ],
+      "checked": "2026-11-23",
+      "verified": true
     },
     {
       "id": "lm-studio",
@@ -847,6 +937,7 @@
       ],
       "signin": [
         "apple",
+        "email-link",
         "github",
         "google",
         "sso",
@@ -861,8 +952,10 @@
       "security_url": null,
       "trap": null,
       "source": "https://lmstudio.ai/login",
-      "sources_extra": [],
-      "checked": "2026-11-22",
+      "sources_extra": [
+        "https://lmstudio.ai/enterprise-login"
+      ],
+      "checked": "2026-11-23",
       "verified": true
     },
     {
@@ -873,26 +966,39 @@
       "lanes": [
         "identity"
       ],
-      "signin": null,
-      "passkey": "signin",
+      "signin": [
+        "email-password",
+        "passkey",
+        "other"
+      ],
+      "passkey": "both",
       "twofa": [
         "passkey",
         "security-key",
         "totp",
+        "push",
         "email",
         "sms"
       ],
-      "own_2fa": null,
-      "recovery_codes": null,
-      "link": null,
-      "email_change": null,
+      "own_2fa": true,
+      "recovery_codes": true,
+      "link": "no",
+      "email_change": true,
       "security_url": "https://account.microsoft.com/security",
       "trap": "Losing your only passkey could lock you out; Microsoft recommends passkeys in two storage locations, and is phasing out SMS for personal accounts.",
       "source": "https://support.microsoft.com/en-us/accounts-billing/manage/how-to-help-keep-your-microsoft-account-secure",
       "sources_extra": [
-        "https://support.microsoft.com/en-us/accounts-billing/manage/microsoft-account-security-info-verification-codes"
+        "https://support.microsoft.com/en-us/accounts-billing/manage/microsoft-account-security-info-verification-codes",
+        "https://support.microsoft.com/en-us/accounts-billing/security/how-to-use-two-step-verification-with-your-microsoft-account",
+        "https://support.microsoft.com/en-us/accounts-billing/security/how-to-go-passwordless-with-your-microsoft-account",
+        "https://support.microsoft.com/en-us/accounts-billing/security/create-save-passkey",
+        "https://support.microsoft.com/en-us/accounts-billing/manage/how-to-get-a-microsoft-account-recovery-code",
+        "https://support.microsoft.com/en-us/accounts-billing/manage/combining-microsoft-accounts",
+        "https://support.microsoft.com/en-us/accounts-billing/manage/link-your-google-account-and-microsoft-account",
+        "https://support.microsoft.com/en-us/accounts-billing/manage/change-the-email-address-or-phone-number-for-your-microsoft-account",
+        "https://support.microsoft.com/en-us/accounts-billing/manage/microsoft-to-stop-sending-sms-codes-for-personal-accounts"
       ],
-      "checked": "2026-11-22",
+      "checked": "2026-11-23",
       "verified": true
     },
     {
@@ -905,7 +1011,11 @@
         "cpu",
         "inference"
       ],
-      "signin": null,
+      "signin": [
+        "github",
+        "google",
+        "sso"
+      ],
       "passkey": null,
       "twofa": null,
       "own_2fa": null,
@@ -913,12 +1023,15 @@
       "link": null,
       "email_change": null,
       "security_url": null,
-      "trap": "Google sign-in beyond the standard buttons is arranged through Modal support; SAML SSO needs an Enterprise plan workspace.",
-      "source": "https://modal.com/docs/guide/workspaces",
+      "trap": "Turning on \"Require SSO\" forces every user through the identity provider, so an admin without IdP access to the Workspace locks themselves out; Modal says to confirm IdP admin access first.",
+      "source": "https://modal.com/signup",
       "sources_extra": [
-        "https://modal.com/docs/guide/modal-user-account-setup"
+        "https://modal.com/docs/guide/workspaces",
+        "https://modal.com/docs/guide/google-sso",
+        "https://modal.com/docs/guide/saml-sso",
+        "https://modal.com/docs/guide/getting-started"
       ],
-      "checked": "2026-11-22",
+      "checked": "2026-11-23",
       "verified": true
     },
     {
@@ -941,19 +1054,23 @@
       "passkey": "signin",
       "twofa": [
         "totp",
-        "security-key"
+        "security-key",
+        "email"
       ],
-      "own_2fa": null,
-      "recovery_codes": false,
-      "link": null,
-      "email_change": null,
+      "own_2fa": true,
+      "recovery_codes": true,
+      "link": "email-match",
+      "email_change": true,
       "security_url": "https://profile.nvgs.nvidia.com/security",
       "trap": "Log in with Apple or Google under another email makes a second, empty account; settings can only unlink providers.",
       "source": "https://docs.nvidia.com/ngc/latest/ngc-user-guide.html",
       "sources_extra": [
-        "https://profile.nvgs.nvidia.com/security"
+        "https://profile.nvgs.nvidia.com/security",
+        "https://login.nvgs.nvidia.com/v1/help/nfactor",
+        "https://login.nvgs.nvidia.com/assets/i18n/en-US.json",
+        "https://profile.nvgs.nvidia.com/profile/assets/i18n/help/en-US.json"
       ],
-      "checked": "2026-11-22",
+      "checked": "2026-11-23",
       "verified": true
     },
     {
@@ -1041,24 +1158,36 @@
         "hosting",
         "inference"
       ],
-      "signin": null,
+      "signin": [
+        "other",
+        "sso"
+      ],
       "passkey": "2fa",
       "twofa": [
         "push",
         "totp",
         "security-key",
+        "passkey",
         "sms",
         "email"
       ],
       "own_2fa": null,
-      "recovery_codes": null,
+      "recovery_codes": true,
       "link": null,
       "email_change": null,
       "security_url": null,
-      "trap": null,
-      "source": "https://docs.oracle.com/en-us/iaas/Content/Identity/mfa/configure-authentication-factors.htm",
-      "sources_extra": [],
-      "checked": "2026-11-22",
+      "trap": "If you lose your only 2-step verification device and never made a bypass code, you cannot get in on your own: an administrator must reset your MFA, and Free Tier accounts must go through Oracle's live chat.",
+      "source": "https://docs.oracle.com/en-us/iaas/Content/Identity/mfa/manage-2-step-verification.htm",
+      "sources_extra": [
+        "https://docs.oracle.com/en-us/iaas/Content/Identity/mfa/configure-authentication-factors.htm",
+        "https://docs.oracle.com/en-us/iaas/Content/Identity/mfa/configure-fido-security.htm",
+        "https://docs.oracle.com/en-us/iaas/Content/Identity/usersettings/sign-in-identity-domain-alternative-login-method.htm",
+        "https://docs.oracle.com/en-us/iaas/Content/Identity/usersettings/manage_security_and_2_step_verification.htm",
+        "https://docs.oracle.com/en-us/iaas/Content/GSG/Tasks/signinginIdentityDomain.htm",
+        "https://docs.oracle.com/en-us/iaas/Content/GSG/Concepts/signinoptions.htm",
+        "https://www.oracle.com/cloud/sign-in.html"
+      ],
+      "checked": "2026-11-23",
       "verified": true
     },
     {
@@ -1096,7 +1225,12 @@
       "lanes": [
         "tools"
       ],
-      "signin": null,
+      "signin": [
+        "email-password",
+        "google",
+        "github",
+        "sso"
+      ],
       "passkey": null,
       "twofa": [
         "totp"
@@ -1104,14 +1238,18 @@
       "own_2fa": null,
       "recovery_codes": true,
       "link": null,
-      "email_change": null,
+      "email_change": false,
       "security_url": "https://resend.com/profile",
-      "trap": "MFA is per account and cannot be enforced for a team; keep the one-time recovery code away from the authenticator device.",
+      "trap": "The email on a login cannot be changed, even by support. If that mailbox or Google account goes away, you need a new login that an admin re-invites, or support grants after a domain TXT proof. Losing the one-time MFA recovery code also means support has to verify you through a domain.",
       "source": "https://resend.com/docs/knowledge-base/how-can-i-add-mfa",
       "sources_extra": [
-        "https://resend.com/login"
+        "https://resend.com/login",
+        "https://resend.com/docs/dashboard/settings/sso",
+        "https://resend.com/docs/guides/account/how-to-recover-access-to-a-team",
+        "https://resend.com/docs/guides/account/locked-out-by-mfa",
+        "https://resend.com/docs/dashboard/settings/team"
       ],
-      "checked": "2026-11-22",
+      "checked": "2026-11-23",
       "verified": true
     },
     {
@@ -1138,13 +1276,16 @@
       "link": null,
       "email_change": null,
       "security_url": null,
-      "trap": "Accounts migrated to email-code sign-in lost earlier MFA settings; users who had MFA before the migration must add it again.",
-      "source": "https://www.runpod.io/blog/runpod-login-update",
+      "trap": "Email-code sign-in from the Runpod CLI signs in to an existing account only if you use that account's exact email. Any other address silently creates a new, separate account.",
+      "source": "https://console.runpod.io/login",
       "sources_extra": [
         "https://docs.runpod.io/release-notes",
-        "https://www.runpod.io/legal/privacy-policy"
+        "https://docs.runpod.io/agent-setup",
+        "https://www.runpod.io/articles/guides/keep-data-secure-cloud-gpus",
+        "https://www.runpod.io/blog/runpod-login-update",
+        "https://docs.runpod.io/get-started"
       ],
-      "checked": "2026-11-22",
+      "checked": "2026-11-23",
       "verified": true
     },
     {
@@ -1169,11 +1310,12 @@
       "email_change": false,
       "security_url": "https://api.together.ai/settings/profile",
       "trap": "Sign in only with the provider used at signup; a different one gives an already-linked error, and email cannot be changed directly.",
-      "source": "https://api.together.ai/signin",
+      "source": "https://docs.together.ai/docs/account-management",
       "sources_extra": [
-        "https://docs.together.ai/docs/account-management"
+        "https://api.together.ai/signin",
+        "https://docs.together.ai/docs/sso"
       ],
-      "checked": "2026-11-22",
+      "checked": "2026-11-23",
       "verified": true
     },
     {
@@ -1198,15 +1340,15 @@
       "own_2fa": null,
       "recovery_codes": true,
       "link": null,
-      "email_change": null,
+      "email_change": true,
       "security_url": "https://cloud.vast.ai/settings/",
-      "trap": "Forgot password sends nothing to an account made through GitHub. With no recovery codes or phone, only support restores access.",
+      "trap": "If you lose your phone and have no recovery codes, only Vast support can restore access. Accounts still on the legacy SMS 2FA have no recovery codes until they migrate in Account Settings.",
       "source": "https://docs.vast.ai/guides/reference/two-factor-authentication",
       "sources_extra": [
-        "https://vast.ai/article/january-product-update",
-        "https://docs.vast.ai/guides/reference/account-settings"
+        "https://docs.vast.ai/guides/reference/account-settings",
+        "https://cloud.vast.ai/"
       ],
-      "checked": "2026-11-22",
+      "checked": "2026-11-23",
       "verified": true
     },
     {
@@ -1248,15 +1390,15 @@
       "twofa": [
         "via-provider"
       ],
-      "own_2fa": false,
+      "own_2fa": null,
       "recovery_codes": null,
       "link": null,
-      "email_change": null,
+      "email_change": true,
       "security_url": null,
       "trap": "Zed account email is copied from GitHub; billing in Stripe does not update automatically when it changes.",
       "source": "https://zed.dev/docs/authentication",
       "sources_extra": [],
-      "checked": "2026-11-22",
+      "checked": "2026-11-23",
       "verified": true
     }
   ]
