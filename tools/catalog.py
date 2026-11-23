@@ -277,85 +277,9 @@ def format_catalog(root):
 def self_test():
     """--self-test: seeded samples that must pass and must fail. Exit 0 all behave, 1 one does not."""
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))  # -I keeps the script's folder off the path
-    from catalog_selftest import NEW as new, OLD as old, OTHER as other, build, check_file, checked, format_file, merge_findings, refuses_inf
-    ids = lambda doc: [r["id"] for r in doc["rows"]]
-    clean = build([new], [old, other])
-    v = lambda **kw: (lambda d: d["rows"][0].update(kw))
-
-    def dated(s):
-        def mutate(d):
-            d["rows"][0]["checked"] = s
-            d["checked"] = max(r["checked"] for r in d["rows"])
-        return mutate
-
-    future = str(datetime.datetime.now(datetime.timezone.utc).date() + datetime.timedelta(days=30))
-    inf_doc = json.loads(json.dumps(clean))
-    inf_doc["rows"][0]["price_month"] = float("inf")
-    shuffled = json.loads(json.dumps(clean))
-    shuffled["rows"].reverse()
-    shuffled_bytes = json.dumps(shuffled, indent=1, ensure_ascii=False).encode() + b"\n"
-    no_rows = b'{"version": 1}\n'
-    cases = [
-        ("a clean merge passes --check", not checked(clean)),
-        ("every row has exactly PUBLIC_FIELDS", all(tuple(r) == PUBLIC_FIELDS for r in clean["rows"])),
-        ("cs_*, evidence, notes, have and verify_note never reach the catalog",
-         all(not k.startswith("cs_") and k not in ("evidence", "notes", "have", "verify_note")
-             for r in clean["rows"] for k in r)),
-        ("ids dedupe, and the newer checked wins", ids(clean).count("acme-free") == 1
-         and [r for r in clean["rows"] if r["id"] == "acme-free"][0]["name"] == "Acme Free"),
-        ("the newer row wins even from a later source", [r["name"] for r in build([old], [new])["rows"]] == ["Acme Free"]),
-        ("on a tie the earlier source wins",
-         [r["name"] for r in build([dict(old, checked="2026-11-02")], [new])["rows"]] == ["Acme Free (old)"]),
-        ("one id in two lanes keeps both lanes", [r for r in clean["rows"] if r["id"] == "acme-free"][0]["lanes"]
-         == ["gpu", "inference"]),
-        ("an old row gets its provider and USD", [r for r in clean["rows"] if r["id"] == "warpbuild"][0]["provider"]
-         == "WarpBuild" and [r for r in clean["rows"] if r["id"] == "warpbuild"][0]["currency"] == "USD"),
-        ("verified follows verified_here", [r["verified"] for r in build([dict(new, verified_here=False)])["rows"]]
-         == [False]),
-        ("closed and excluded rows stay out",
-         ids(build([new, dict(new, id="b", status="closed"), dict(new, id="c", exclude="china")])) == ["acme-free"]),
-        ("a row closed in the newer source stays out though an older one is live",
-         ids(build([dict(new, status="closed")], [old])) == []),
-        ("DROP rows stay out", ids(build([new, dict(new, id="copilot-current")])) == ["acme-free"]),
-        ("two merges are byte-identical", render(build([new], [old, other])) == render(clean)),
-        ("a private column added to a source never leaks", "secret" not in render(build([dict(new, secret="x")]))),
-        ("a stale (non-canonical) file fails", bool(checked(clean, text=render(clean).replace("\n ", "\n  ", 1)))),
-        ("an extra key fails", bool(checked(clean, v(cs_status="use")))),
-        ("an http source fails", bool(checked(clean, v(source="http://acme.test")))),
-        ("an http extra source fails", bool(checked(clean, v(sources_extra=["http://acme.test"])))),
-        ("a bad date fails", bool(checked(clean, v(checked="2026-11")))),
-        ("an em dash fails", bool(checked(clean, v(includes="one \u2014 two")))),
-        ("an email fails", bool(checked(clean, v(limits="write to x" + "@" + "acme.test")))),
-        ("a private term fails", bool(checked(clean, v(price_note="Seen on the " + "Soul" + "Craft account.")))),
-        ("a duplicate id fails", bool(checked(clean, lambda d: d["rows"].append(dict(d["rows"][0]))))),
-        ("a bad lane fails", bool(checked(clean, v(lanes=["cloud"])))),
-        ("a currency symbol fails", bool(checked(clean, v(currency="\u20ac")))),
-        ("a string price fails", bool(checked(clean, v(price_month="$5")))),
-        ("unsorted rows fail", bool(checked(clean, lambda d: d["rows"].reverse()))),
-        ("a wrong top-level checked fails", bool(checked(clean, lambda d: d.update(checked="2020-01-01")))),
-        # Issue 31: Infinity is not JSON, so it never reaches or passes the catalog.
-        ("an infinite price fails", any("price_month" in f for f in check_doc(inf_doc, ""))),
-        ("render refuses an infinite price", refuses_inf(inf_doc)),
-        ("a catalog file holding Infinity is not JSON",
-         any("not JSON" in f for f in check_file(render(clean).replace('"price_month": 0,', '"price_month": Infinity,', 1).encode()))),
-        # Issue 33: a date must be a real calendar date, not in the future, with nothing after it.
-        # dated() also moves the top-level checked, so only the date itself can fail.
-        ("a dated row passes", not checked(clean, dated("2026-11-02"))),
-        ("an impossible date fails", bool(checked(clean, dated("2026-02-30")))),
-        ("a month 13 date fails", bool(checked(clean, dated("2026-13-01")))),
-        ("a future date fails", bool(checked(clean, dated(future)))),
-        ("a date with a trailing newline fails", bool(checked(clean, dated("2026-11-02\n")))),
-        ("an id with a trailing newline fails", bool(checked(clean, v(id="acme-free\n")))),
-        ("a currency with a trailing newline fails", bool(checked(clean, v(currency="USD\n")))),
-        # Issue 36: commercial_use, provider_hq, name and provider keep their README types.
-        ("a string commercial_use fails", bool(checked(clean, v(commercial_use="only on weekends")))),
-        ("a country name as provider_hq fails", bool(checked(clean, v(provider_hq="United States of America")))),
-        ("a lowercase provider_hq fails", bool(checked(clean, v(provider_hq="us")))),
-        ("a null provider_hq passes", not checked(clean, v(provider_hq=None))),
-        ("a number as name fails", bool(checked(clean, v(name=5)))),
-        ("a list as provider fails", bool(checked(clean, v(provider=["Acme"])))),
-        ("a blank-padded name fails", bool(checked(clean, v(name=" Acme Free ")))),
-        ("a blank provider fails", bool(checked(clean, v(provider="   ")))),
+    from catalog_selftest import CLEAN as clean, NEW as new, NO_ROWS as no_rows, OLD as old, OTHER as other, SHUFFLED as shuffled_bytes
+    from catalog_selftest import build, check_cases, check_file, format_file, merge_cases, merge_findings
+    cases = merge_cases() + check_cases() + [
         # Issue 20: a source row with no lane, or a lane the catalog does not know, is a finding, not a crash.
         ("a source row with an unknown lane is reported, not a crash",
          any("lanes" in f for f in merge_findings([dict(new, lane="storage")]) or [])),
@@ -378,10 +302,8 @@ def self_test():
         ("a catalog that is a UTF-8 file still checks", check_file(render(clean).encode()) == []),
         # Issue 21: --format never tracebacks: a bad or missing catalog is exit 2, a wrong shape is left for --check.
         ("--format on a missing catalog cannot check (exit 2)", format_file(None) == ("cannot check", None)),
-        ("--format on a catalog that is not JSON cannot check (exit 2)",
-         format_file(b"{not json") == ("cannot check", b"{not json")),
-        ("--format on a catalog that is not UTF-8 cannot check (exit 2)",
-         format_file(b"\xe9") == ("cannot check", b"\xe9")),
+        ("--format on a catalog that is not JSON cannot check (exit 2)", format_file(b"{not json") == ("cannot check", b"{not json")),
+        ("--format on a catalog that is not UTF-8 cannot check (exit 2)", format_file(b"\xe9") == ("cannot check", b"\xe9")),
         ("--format on a catalog with no rows list leaves it for --check",
          format_file(no_rows) == ("ok", no_rows) and bool(check_file(no_rows))),
         ("--format on a catalog whose rows are not objects leaves it for --check",
