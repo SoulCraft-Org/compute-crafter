@@ -8,7 +8,7 @@ import { join } from 'node:path';
 import { test } from 'node:test';
 import { fileURLToPath } from 'node:url';
 
-import { localOnlyIds, privacyProblems, termsPattern, textProblems } from './privacy.mjs';
+import { localOnlyIds, noSecretsByDesign, privacyProblems, termsPattern, textProblems } from './privacy.mjs';
 
 // A targets folder with one local-only metric and one read from GitHub.
 function targetsDir() {
@@ -93,7 +93,7 @@ test('privacy: the gate fails a home path planted in a file under --dist', () =>
   writeFileSync(join(root, 'latest.json'), JSON.stringify(cleanRun()));
   mkdirSync(join(root, 'dist', 'tab'), { recursive: true });
   writeFileSync(join(root, 'dist', 'index.html'), '<p>clean</p>');
-  const gate = () => spawnSync(process.execPath, [fileURLToPath(new URL('./privacy.mjs', import.meta.url)), join(root, 'latest.json'), '--dist', join(root, 'dist')], { encoding: 'utf8', env: { PATH: process.env.PATH } });
+  const gate = () => spawnSync(process.execPath, [fileURLToPath(new URL('./privacy.mjs', import.meta.url)), join(root, 'latest.json'), '--dist', join(root, 'dist')], { encoding: 'utf8', env: { PATH: process.env.PATH, PRIVACY_TERMS: 'no-such-term-here' } });
   assert.equal(gate().status, 0);
   writeFileSync(join(root, 'dist', 'tab', 'page.html'), '<p class="src">/Users/example/project</p>');
   const run = gate();
@@ -126,10 +126,36 @@ test('privacy: the gate fails a private term in a --dist file and prints the fil
   assert.ok(!/exampleterm/.test(run.stderr + run.stdout), 'the log holds no match');
 });
 
-test('privacy: with PRIVACY_TERMS unset the gate notes the skip and passes, as a fork or Dependabot pull request needs', () => {
-  const run = gateWith({});
-  assert.equal(run.status, 0);
-  assert.match(run.stdout, /PRIVACY_TERMS is not set/);
+// An event file as GitHub writes it, with the head repo of the pull request.
+function eventFile(head) {
+  const file = join(mkdtempSync(join(tmpdir(), 'privacy-event-')), 'event.json');
+  writeFileSync(file, JSON.stringify({ pull_request: { head: { repo: { full_name: head } } } }));
+  return file;
+}
+
+test('privacy: no secret is expected only on a pull_request from a fork or Dependabot', () => {
+  const own = { GITHUB_REPOSITORY: 'owner/repo' };
+  assert.equal(noSecretsByDesign({ ...own, GITHUB_EVENT_NAME: 'pull_request', GITHUB_EVENT_PATH: eventFile('someone/repo') }), true, 'a fork');
+  assert.equal(noSecretsByDesign({ ...own, GITHUB_EVENT_NAME: 'pull_request', GITHUB_ACTOR: 'dependabot[bot]' }), true, 'Dependabot');
+  assert.equal(noSecretsByDesign({ ...own, GITHUB_EVENT_NAME: 'pull_request', GITHUB_EVENT_PATH: eventFile('owner/repo') }), false, 'a branch of this repo');
+  assert.equal(noSecretsByDesign({ ...own, GITHUB_EVENT_NAME: 'pull_request' }), false, 'no event file');
+  assert.equal(noSecretsByDesign({ ...own, GITHUB_EVENT_NAME: 'push', GITHUB_ACTOR: 'dependabot[bot]' }), false, 'a push');
+  assert.equal(noSecretsByDesign({}), false, 'a local run');
+});
+
+test('privacy: with PRIVACY_TERMS unset the gate skips, with a notice, only on a fork or Dependabot pull request', () => {
+  const fork = gateWith({ GITHUB_EVENT_NAME: 'pull_request', GITHUB_REPOSITORY: 'owner/repo', GITHUB_EVENT_PATH: eventFile('someone/repo') });
+  assert.equal(fork.status, 0);
+  assert.match(fork.stdout, /PRIVACY_TERMS is not available to this pull request/);
+  assert.equal(gateWith({ GITHUB_EVENT_NAME: 'pull_request', GITHUB_ACTOR: 'dependabot[bot]' }).status, 0);
+});
+
+test('privacy: with PRIVACY_TERMS unset the gate exits 2 on a push, on a pull request of this repo and on a local run', () => {
+  for (const extra of [{ GITHUB_EVENT_NAME: 'push', GITHUB_REPOSITORY: 'owner/repo' }, { GITHUB_EVENT_NAME: 'pull_request', GITHUB_REPOSITORY: 'owner/repo', GITHUB_EVENT_PATH: eventFile('owner/repo') }, {}]) {
+    const run = gateWith(extra);
+    assert.equal(run.status, 2, JSON.stringify(extra));
+    assert.match(run.stderr, /PRIVACY_TERMS is empty/);
+  }
 });
 
 test('privacy: an invalid PRIVACY_TERMS is a usage error that quotes none of it', () => {

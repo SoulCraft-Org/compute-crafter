@@ -2,26 +2,13 @@ name: pages
 
 # Compute Crafter's public pages, built by Git Crafter's actions/pages at a full commit SHA (Git Crafter
 # templates/ci/pages.yml): the Quality page (the 11 library tabs and Credits) and the Process page (the library maps and the Spend map). A pull request builds
-# both and runs the privacy gate; only a push to main publishes. Both triggers list the paths the pages read (the doc
-# globs among them, for the docs.unmapped gate); workflow_dispatch builds on demand.
+# both and runs the privacy gate; only a push to main publishes. A pull request lists the paths the pages read (the doc
+# globs among them, for the docs.unmapped gate); every push to main builds, as the pages read live pull requests, issues,
+# runs and alerts.
 # The build runs in CI mode, so it holds no reading from a maintainer's machine; tests/privacy.mjs checks.
 on:
   push:
     branches: [main]
-    paths:
-      - "collectors/**"
-      - "tools/**"
-      - "tests/**"
-      - "catalog/**"
-      - "guides/**"
-      - "ideals/**"
-      - "maps/**"
-      - "targets/**"
-      - "templates/**"
-      - "quality/**"
-      - "pack.json"
-      - "**/*.md"
-      - ".github/workflows/pages.yml"
   pull_request:
     paths:
       - "collectors/**"

@@ -1,5 +1,5 @@
 {
- "comment": "Compute Crafter's Process page config, and its maps file too (docs.maps names it): Git Crafter templates/process/config.json at v7.0.2. Its maps are the library maps whose steps sit on this repo's Quality tabs (delivery, triage, contribute, adopt, measure, code, secure, document) and the Spend map, maps/spend.json, with all 5 steps. Left out: board (4 of 6 steps score on the Projects tab, which this repo drops: no Project board) and deploy (all 4 steps score on the Pages tab, dropped: no site but this page). Dropped steps: triage card (projects.latest_cycle_hours) and contribute deploy (deploy.failure_rate_last10). A Spend step whose metric needs local files shows not measured in CI. tests/pack.test.mjs checks the Spend map agrees with maps/spend.json. Keys: Git Crafter actions/pages/action.yml; maps: pages/maps/README.md.",
+ "comment": "Compute Crafter's Process page config, and its maps file too (docs.maps names it): Git Crafter templates/process/config.json at v7.0.2. Its maps are the library maps whose steps sit on this repo's Quality tabs (delivery, triage, contribute, board, adopt, measure, code, secure, document) and the Spend map, maps/spend.json, with all 5 steps. Left out: deploy (all 4 steps score on the Pages tab, dropped: no site but this page). Dropped steps, each on a tab this repo drops: board card, start, done and watch (Projects: no Project board), triage card (projects.latest_cycle_hours) and contribute deploy (deploy.failure_rate_last10). A Spend step whose metric needs local files shows not measured in CI. tests/pack.test.mjs checks the Spend map agrees with maps/spend.json. Keys: Git Crafter actions/pages/action.yml; maps: pages/maps/README.md.",
  "repos": [
   "compute-crafter"
  ],
@@ -23,6 +23,23 @@
    "use": "contribute",
    "steps": {
     "deploy": {
+     "drop": true
+    }
+   }
+  },
+  {
+   "use": "board",
+   "steps": {
+    "card": {
+     "drop": true
+    },
+    "start": {
+     "drop": true
+    },
+    "done": {
+     "drop": true
+    },
+    "watch": {
      "drop": true
     }
    }

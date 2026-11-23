@@ -13,7 +13,8 @@
 //   a match of PRIVACY_TERMS          one regex, the org secret PRIVATE_TERMS that CI passes
 // A --dist file is text, so only the last four apply to it.
 // A PRIVACY_TERMS finding prints the file only, never the match: a public repo's Actions log is public too.
-// A pull request from a fork or Dependabot gets no secret, so an unset PRIVACY_TERMS prints a notice and skips that check.
+// An unset PRIVACY_TERMS is skipped, with a notice, only on a pull_request from a fork or Dependabot, which GitHub gives
+// no secret (the rule of tools/private_terms.py). Anywhere else, a push to main included, it is exit 2.
 // Exit 0 clean, 1 findings (each printed), 2 usage error.
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
@@ -44,6 +45,18 @@ export function filesUnder(dir) {
 export function termsPattern(value) {
   const text = String(value ?? '').trim();
   return text ? new RegExp(text.replace(/^\(\?i\)/, ''), 'i') : null;
+}
+
+// Whether GitHub withholds secrets from this run by design: a pull_request whose head is a fork, or Dependabot's.
+export function noSecretsByDesign(env = process.env) {
+  if (env.GITHUB_EVENT_NAME !== 'pull_request') return false;
+  if (env.GITHUB_ACTOR === 'dependabot[bot]') return true;
+  try {
+    const head = JSON.parse(readFileSync(env.GITHUB_EVENT_PATH, 'utf8')).pull_request.head.repo.full_name;
+    return head !== env.GITHUB_REPOSITORY;
+  } catch {
+    return false;
+  }
 }
 
 // Every home path, email, listed name or private term in a text; [] when clean. A term hit never names the match.
@@ -94,7 +107,13 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
     console.error(`privacy: ${err.message}`);
     process.exit(2);
   }
-  if (!terms) console.log('::notice::privacy: PRIVACY_TERMS is not set, so the private-term check is skipped (a fork or Dependabot pull request gets no secret)');
+  if (!terms) {
+    if (!noSecretsByDesign()) {
+      console.error('::error::privacy: PRIVACY_TERMS is empty; set the org secret PRIVATE_TERMS for this repo (only a fork or Dependabot pull request may run without it)');
+      process.exit(2);
+    }
+    console.log('::notice::privacy: PRIVACY_TERMS is not available to this pull request; the push to main runs the check');
+  }
   const found = privacyProblems(run, { localIds, names, terms });
   for (const page of pages) for (const f of textProblems(readFileSync(page, 'utf8'), names, terms)) found.push(`${page}: ${f}`);
   for (const f of found) console.error(`::error::privacy: ${f}`);

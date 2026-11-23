@@ -3,9 +3,25 @@
 # turns it on or off for every repository at once. Its comments are review threads: resolve each before merging.
 name: gemini-review
 
+# A pull request that touches none of the paths below has nothing to review, so it skips the run (the Actions tab's
+# ci.skip_unchanged_share).
 on:
   pull_request:
     types: [opened, reopened, ready_for_review]
+    paths:
+      - "collectors/**"
+      - "tools/**"
+      - "tests/**"
+      - "catalog/**"
+      - "guides/**"
+      - "ideals/**"
+      - "maps/**"
+      - "targets/**"
+      - "templates/**"
+      - "quality/**"
+      - "pack.json"
+      - "**/*.md"
+      - ".github/workflows/**"
 
 permissions: {}
 

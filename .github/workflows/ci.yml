@@ -35,6 +35,7 @@ jobs:
         pack.json
         **/*.md
         .github/workflows/ci.yml
+        .github/workflows/pages.yml
         .github/dependabot.yml
       node-version: "26"
       short: |
