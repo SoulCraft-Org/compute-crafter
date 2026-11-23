@@ -11,7 +11,7 @@ What goes wrong with the Claude API, and the pages this guide read, each dated u
 | One organization per plan | A plan links to one Console organization and you cannot change it yourself. Link the one you build in ([API credits][credits]) |
 | One shared balance | Every key and workspace in the linked organization draws from the same balance. Give a project its own workspace and set that workspace's spend limit ([API credits][credits]) |
 | Bought credits | They expire one year after purchase, and the date cannot be extended ([Pay for API usage][pay]) |
-| Immutable subject | GitHub repos created after July 15, 2026 get a `sub` with owner and repo IDs, `repo:<owner>@<id>/<repo>@<id>:ref:...` ([OIDC][oidc]). The Console wizard writes the old form, so each exchange fails `match_subject_prefix`. `gh api repos/<owner>/<repo>/actions/oidc/customization/sub` prints the prefix to use |
+| Immutable subject | GitHub repos created after July 15, 2026 get a `sub` with owner and repo IDs ([OIDC][oidc]). Seen on this repo on 2026-11-23: `repo:<owner>@<id>/<repo>@<id>:ref:...`, while the Console wizard filled in the old form, so each exchange failed `match_subject_prefix`. `gh api repos/<owner>/<repo>/actions/oidc/customization/sub` prints the prefix to use |
 | Single-use tokens | A JWT with a `jti` claim exchanges once. A retry loop that presents it again fails with `jti_reused` ([WIF][wif]) |
 | Token lifetime | The WIF page gives the rule a range of 60 to 86,400 seconds, default 3,600 ([WIF][wif]). The SDK refreshes before expiry |
 | Workspace ID | A rule that covers more than one workspace needs the workspace ID in each exchange. A key with no workspace scope needs the `anthropic-workspace-id` header. Without it the API returns 400 ([Authentication][auth]) |
