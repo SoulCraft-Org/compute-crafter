@@ -5,7 +5,6 @@ version: 'v0.0.3'
 workflows:
     '.github/workflows/catalog-reread.yml':
         - 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1'
-        - 'anthropics/claude-code-action@b5e37652b7d48df841bfddfd6520610e19bf3136'
     '.github/workflows/ci.yml': []
     '.github/workflows/claude-review.yml':
         - 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1'
@@ -61,13 +60,6 @@ dependencies:
     'anthropics/claude-code-action@aa8a7738e48bf30a40ee499ce818bef081c5ab5e':
         ref: 'v1.0.257'
         commit: 'sha1-aa8a7738e48bf30a40ee499ce818bef081c5ab5e'
-        owner_id: 76263028
-        repo_id: 986421638
-        uses:
-            - 'oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6'
-    'anthropics/claude-code-action@b5e37652b7d48df841bfddfd6520610e19bf3136':
-        ref: 'v1.0.287'
-        commit: 'sha1-b5e37652b7d48df841bfddfd6520610e19bf3136'
         owner_id: 76263028
         repo_id: 986421638
         uses:
