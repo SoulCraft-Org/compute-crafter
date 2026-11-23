@@ -22,6 +22,7 @@ flowchart LR
 | [Modal](modal.md) | GPU | Serverless GPUs for your own code, and Shared Endpoints |
 | [RunPod](runpod.md) | GPU | Prepaid GPU pods and Serverless endpoints, the RunPod MCP server |
 | [AMD](amd.md) | GPU | ROCm, and one-time AMD Developer Cloud credit |
+| [Google Cloud](google-cloud.md) | CPU, GPU | The $300 Free Trial credit and what it cannot pay for, the upgrade, and budgets, a kill switch and quotas |
 | [ComfyUI](comfyui.md) | GPU | Comfy Cloud, comfy-cli, and the [comfyui-base](https://github.com/SoulCraft-Org/comfyui-base) installer |
 | [Claude Desktop MCP](claude-desktop-mcp.md) | Client | One MCP server for the Code tab and Cowork: a custom connector, or a desktop extension that bridges a loopback app |
 | [GitHub](github.md) | CI, tools | Actions, `gh` login, the GitHub MCP server, the App manifest flow, Copilot in OpenCode |
