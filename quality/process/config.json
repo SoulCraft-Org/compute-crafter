@@ -1,5 +1,5 @@
 {
- "comment": "Compute Crafter's Process page config, and its maps file too (docs.maps names it): Git Crafter templates/process/config.json at v7.0.2. Its maps are the library maps whose steps sit on this repo's Quality tabs (delivery, triage, contribute, board, adopt, measure, code, secure, document) and the Spend map, maps/spend.json, with all 5 steps. Left out: deploy (all 4 steps score on the Pages tab, dropped: no site but this page). Dropped steps, each on a tab this repo drops: board card, start, done and watch (Projects: no Project board), triage card (projects.latest_cycle_hours) and contribute deploy (deploy.failure_rate_last10). A Spend step whose metric needs local files shows not measured in CI. tests/pack.test.mjs checks the Spend map agrees with maps/spend.json. Keys: Git Crafter actions/pages/action.yml; maps: pages/maps/README.md.",
+ "comment": "Compute Crafter's Process page config, and its maps file too (docs.maps names it): Git Crafter templates/process/config.json at v7.1.0. Its maps are the library maps whose steps sit on this repo's Quality tabs (delivery, triage, contribute, board, adopt, measure, code, secure, document, release, score, discuss) and the Spend map, maps/spend.json, with all 5 steps. Left out: deploy (all 4 steps score on the Pages tab, dropped: no site but this page). Dropped steps, each on a tab this repo drops: board card, start, done and watch (Projects: no Project board), triage card (projects.latest_cycle_hours), discuss card (projects.done_with_pr) and contribute deploy (deploy.failure_rate_last10). Release and score keep all their steps: their metrics sit on the Settings, Dependabot, Actions, Code and Issues tabs this repo keeps, and the Settings step shows not measured in CI. Discuss keeps its Discussions and Settings steps the same way. A Spend step whose metric needs local files shows not measured in CI. tests/pack.test.mjs checks the Spend map agrees with maps/spend.json. Keys: Git Crafter actions/pages/action.yml; maps: pages/maps/README.md.",
  "repos": [
   "compute-crafter"
  ],
@@ -58,6 +58,20 @@
   },
   {
    "use": "document"
+  },
+  {
+   "use": "release"
+  },
+  {
+   "use": "score"
+  },
+  {
+   "use": "discuss",
+   "steps": {
+    "card": {
+     "drop": true
+    }
+   }
   },
   {
    "id": "spend",
