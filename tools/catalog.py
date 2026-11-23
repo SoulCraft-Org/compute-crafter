@@ -82,6 +82,7 @@ def real_date(s):
 
 
 def load(path):
+    """The JSON file at path; CannotCheck (infrastructure, not a finding) when it is missing or unreadable."""
     try:
         with open(path, encoding="utf-8") as f:
             return json.load(f, parse_constant=no_constant)
@@ -92,13 +93,11 @@ def load(path):
 
 
 def strings(v):
+    """Every string inside a JSON value, however deep."""
     if isinstance(v, str):
         yield v
-    elif isinstance(v, dict):
-        for x in v.values():
-            yield from strings(x)
-    elif isinstance(v, list):
-        for x in v:
+    elif isinstance(v, (dict, list)):
+        for x in (v.values() if isinstance(v, dict) else v):
             yield from strings(x)
 
 
@@ -114,25 +113,29 @@ def public_row(row, lanes):
     return out
 
 
-def merge(dirs):
-    """(catalog document, ledger lines). Deterministic: same input, same bytes."""
-    best, lanes, ledger = {}, {}, []
+def source_rows(dirs):
+    """(rank, row) for every row of every source file, in source order: an earlier folder has the lower rank."""
     for rank, d in enumerate(dirs):
         for name in SOURCE_FILES:
             path = os.path.join(d, name)
-            if not os.path.exists(path):
-                continue
-            doc = load(path)
-            for row in doc.get("rows", []):
-                rid = row.get("id")
-                if rid in DROP:
-                    ledger.append(f"drop {rid}: {DROP[rid]}")
-                    continue
-                lanes.setdefault(rid, set()).add(row.get("lane"))
-                checked = row.get("checked")
-                key = (checked if isinstance(checked, str) else "", -rank)
-                if rid not in best or key > best[rid][0]:
-                    best[rid] = (key, row)
+            if os.path.exists(path):
+                for row in load(path).get("rows", []):
+                    yield rank, row
+
+
+def merge(dirs):
+    """(catalog document, ledger lines). Deterministic: same input, same bytes."""
+    best, lanes, ledger = {}, {}, []
+    for rank, row in source_rows(dirs):
+        rid = row.get("id")
+        if rid in DROP:
+            ledger.append(f"drop {rid}: {DROP[rid]}")
+            continue
+        lanes.setdefault(rid, set()).add(row.get("lane"))
+        checked = row.get("checked")
+        key = (checked if isinstance(checked, str) else "", -rank)
+        if rid not in best or key > best[rid][0]:
+            best[rid] = (key, row)
     rows = []
     for rid, (_, row) in best.items():  # the newest row decides: a plan closed since stays out
         if row.get("status", "live") != "live" or row.get("exclude"):
@@ -159,12 +162,14 @@ def newest(rows):
 
 
 def sort_key(r):
+    """Row order: first lane (an unknown lane last), provider, name, id."""
     lanes = r.get("lanes") or ["~"]
     return (LANES.index(lanes[0]) if lanes[0] in LANES else len(LANES), str(r.get("provider")).lower(),
             str(r.get("name")).lower(), str(r.get("id")))
 
 
 def render(doc):
+    """The catalog's canonical text: JSON with one space of indent, non-ASCII kept, and a final newline."""
     return json.dumps(doc, indent=1, ensure_ascii=False, allow_nan=False) + "\n"
 
 
@@ -240,6 +245,7 @@ def check_doc(doc, text):
 
 
 def check(root):
+    """(findings, row count) for root's catalog file; CannotCheck when it is missing or unreadable."""
     path = os.path.join(root, CATALOG)
     try:
         with open(path, encoding="utf-8") as f:
@@ -483,36 +489,36 @@ def self_test():
     return 1 if bad else 0
 
 
-def main(argv):
-    args = argv[1:]
-    if args == ["--self-test"]:
-        return self_test()
-    if args and args[0] == "merge" and len(args) > 1:
-        try:
-            doc, ledger = merge(args[1:])
-        except CannotCheck as e:
-            print(f"catalog: could not merge ({e})")
-            return 2
-        findings = check_doc(doc, render(doc))
-        for line in ledger:
-            print(line)
-        if findings:
-            print("\n".join(findings))
-            return 1
-        with open(os.path.join(ROOT, CATALOG), "w", encoding="utf-8") as f:
-            f.write(render(doc))
-        print(f"catalog: wrote {CATALOG}, {len(doc['rows'])} rows, {sum(r['verified'] for r in doc['rows'])} verified")
-        return 0
-    if args == ["--format"]:
-        try:
-            format_catalog(ROOT)
-        except CannotCheck as e:
-            print(f"catalog: could not format ({e}); infrastructure, not a finding")
-            return 2
-        args = ["--check"]
-    if args != ["--check"]:
-        print(__doc__)
+def run_merge(dirs):
+    """merge: write catalog/plans.json from the source folders. Exit 0 written, 1 a finding, 2 could not merge."""
+    try:
+        doc, ledger = merge(dirs)
+    except CannotCheck as e:
+        print(f"catalog: could not merge ({e})")
         return 2
+    findings = check_doc(doc, render(doc))
+    for line in ledger + findings:
+        print(line)
+    if findings:
+        return 1
+    with open(os.path.join(ROOT, CATALOG), "w", encoding="utf-8") as f:
+        f.write(render(doc))
+    print(f"catalog: wrote {CATALOG}, {len(doc['rows'])} rows, {sum(r['verified'] for r in doc['rows'])} verified")
+    return 0
+
+
+def run_format():
+    """--format: sort and rewrite the catalog, then check it. Exit 2 when it cannot be formatted."""
+    try:
+        format_catalog(ROOT)
+    except CannotCheck as e:
+        print(f"catalog: could not format ({e}); infrastructure, not a finding")
+        return 2
+    return run_check()
+
+
+def run_check():
+    """--check: print each finding. Exit 0 clean, 1 a finding, 2 could not check."""
     try:
         findings, n = check(ROOT)
     except CannotCheck as e:
@@ -525,6 +531,18 @@ def main(argv):
         return 1
     print(f"catalog: {CATALOG} is valid, {n} rows")
     return 0
+
+
+def main(argv):
+    """Run the one command argv names (--self-test, --check, --format, merge DIR ...); print the usage for any other."""
+    args = argv[1:]
+    commands = {"--self-test": self_test, "--format": run_format, "--check": run_check}
+    if len(args) > 1 and args[0] == "merge":
+        return run_merge(args[1:])
+    if len(args) == 1 and args[0] in commands:
+        return commands[args[0]]()
+    print(__doc__)
+    return 2
 
 
 if __name__ == "__main__":
