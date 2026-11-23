@@ -30,7 +30,7 @@ sequenceDiagram
 ## Set up
 
 1. As an organization admin, open [Workload identity](https://platform.claude.com/settings/workload-identity-federation) in the Console and choose **Connect workload**, then the GitHub Actions tile. It creates the issuer, a service account and a rule, and tests the exchange ([WIF](https://platform.claude.com/docs/en/manage-claude/workload-identity-federation), read 2026-11-23).
-2. Give the job `id-token: write` and pass the three IDs the wizard shows. They name identities, not secrets ([Setup](https://github.com/anthropics/claude-code-action/blob/main/docs/setup.md), read 2026-11-23). Plan credits cannot pay for the action, which runs Claude Code. For plan credits, run the Claude Agent SDK with the same IDs as `ANTHROPIC_*` env vars and the job's OIDC token in `ANTHROPIC_IDENTITY_TOKEN_FILE`, as `tools/reread_agent.py` does.
+2. Give the job `id-token: write` and pass the three IDs the wizard shows. They name identities, not secrets ([Setup](https://github.com/anthropics/claude-code-action/blob/main/docs/setup.md), read 2026-11-23). Plan credits cannot pay for the action, which runs Claude Code. On them, run the Agent SDK with these IDs, as `tools/reread_agent.py` does.
 
    ```yaml
    permissions:
@@ -43,7 +43,7 @@ sequenceDiagram
          anthropic_service_account_id: <svac_ id>
    ```
 
-3. Set no API key next to it. A static key wins over federation, so remove `ANTHROPIC_API_KEY` from the job and run `ant auth status` to see which source won ([WIF](https://platform.claude.com/docs/en/manage-claude/workload-identity-federation), read 2026-11-23).
+3. Set no API key next to it: a static key wins over federation. `ant auth status` shows which source won ([WIF](https://platform.claude.com/docs/en/manage-claude/workload-identity-federation), read 2026-11-23).
 4. Use a key only when the client cannot exchange a token. A federated token goes in `Authorization: Bearer`, so a client that sends only `x-api-key` needs a key ([Authentication](https://platform.claude.com/docs/en/manage-claude/authentication), read 2026-11-23). Make a service account key for one workspace, pick an expiry of 3 hours to 30 days, and name it for its consumer, as in [Names](reference/names.md). Store it as a CI secret.
 
 Traps and sources: [Claude API traps and sources](detail/claude-api.md).
