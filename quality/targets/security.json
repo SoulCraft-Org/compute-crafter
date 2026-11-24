@@ -1,0 +1,8 @@
+[
+  {
+    "id": "security.features_dollars_per_month",
+    "goal": 49,
+    "near": 68,
+    "goal_source": "Owner decision, 2026-11-24: flat monthly subscriptions that give a lot of value are welcome; pay-per-token is not (Git Crafter rules/compute.md, Money). The $49 is Code Security and Secret Protection for one committer on one private repo, recorded in compute.spend_exceptions. Near adds one more committer's Secret Protection ($19, github.com/security/plans)."
+  }
+]
