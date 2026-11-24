@@ -10,9 +10,9 @@ flowchart LR
 | Job | GPU memory | Hardware on a lane | Notes |
 | --- | --- | --- | --- |
 | Evaluation, small-model smoke tests | 24 GB | 1x L4 24 GB, $0.80 an hour on Hugging Face Jobs ([Jobs pricing](https://huggingface.co/docs/hub/jobs-pricing), read 2026-11-24). | Run the eval before and after every training run. |
-| LoRA, mid-size model | 48 to 80 GB | L40S 48 GB is $1.80 an hour on Hugging Face Jobs ([Jobs pricing](https://huggingface.co/docs/hub/jobs-pricing), read 2026-11-24). A100 large 80 GB is $2.50 ([Jobs pricing](https://huggingface.co/docs/hub/jobs-pricing), read 2026-11-24). | Use a 4-bit or 8-bit base to stay in the smaller card. |
+| LoRA, mid-size model | 48 to 80 GB | L40S 48 GB is $1.80 an hour on Hugging Face Jobs ([Jobs pricing](https://huggingface.co/docs/hub/jobs-pricing), read 2026-11-24). A100 large 80 GB is $2.50 ([Jobs pricing](https://huggingface.co/docs/hub/jobs-pricing), read 2026-11-24). L40S, A100 80 GB and H100 per-second prices are on [Modal](https://modal.com/pricing), read 2026-11-24. | Use a 4-bit or 8-bit base to stay in the smaller card. |
 | Single-GPU RL (GRPO) | 80 GB | A100 large 80 GB, $2.50 an hour ([Jobs pricing](https://huggingface.co/docs/hub/jobs-pricing), read 2026-11-24). A100 80 GB is $0.000694 a second on Modal ([Modal pricing](https://modal.com/pricing), read 2026-11-24). | RL holds the policy, the rollouts and often a reference model at once. Give it the largest card you have. |
-| A 27B model | 96 GB or more | RTX PRO 6000 96 GB is $2.75 an hour ([Jobs pricing](https://huggingface.co/docs/hub/jobs-pricing), read 2026-11-24). H200 141 GB is $5.00 an hour ([Jobs pricing](https://huggingface.co/docs/hub/jobs-pricing), read 2026-11-24). | A monthly credit buys about an hour. Plan one short run. |
+| A 27B model | 96 GB or more | RTX PRO 6000 96 GB is $2.75 an hour ([Jobs pricing](https://huggingface.co/docs/hub/jobs-pricing), read 2026-11-24). H200 141 GB is $5.00 an hour per the same page. | Plan one short run. |
 
 ## Order of work
 

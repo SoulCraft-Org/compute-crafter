@@ -26,12 +26,13 @@ What goes wrong with each route, and the pages this guide read. The routes are i
 | Page | Read |
 | --- | --- |
 | [Add a connector that isn't in the directory](https://claude.com/docs/connectors/custom/add-unlisted) | 2026-11-20 |
-| [Get started with custom connectors using remote MCP](https://support.claude.com/en/articles/11175166-get-started-with-custom-connectors-using-remote-mcp) | 2026-11-20 |
+| [Get started with custom connectors using remote MCP](https://support.claude.com/en/articles/11175166-get-started-with-custom-connectors-using-remote-mcp) | 2026-11-24 |
 | [Get started with connectors](https://claude.com/docs/connectors/getting-started) | 2026-11-20 |
 | [Build a desktop extension with MCPB](https://claude.com/docs/connectors/building/mcpb) | 2026-11-20 |
 | [MCPB README and v0.4 manifest schema](https://github.com/modelcontextprotocol/mcpb) | 2026-11-20 |
 | [MCPB CLI](https://github.com/modelcontextprotocol/mcpb/blob/main/CLI.md) | 2026-11-20 |
 | [Claude Code: connect to MCP servers](https://code.claude.com/docs/en/mcp) | 2026-11-20 |
-| [Claude Code: the desktop app](https://code.claude.com/docs/en/desktop) | 2026-11-20 |
+| [Claude Code: the desktop app](https://code.claude.com/docs/en/desktop) | 2026-11-24 |
+| [OpenCode: MCP servers](https://opencode.ai/docs/mcp-servers) | 2026-11-24 |
 
 </details>

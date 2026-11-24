@@ -7,18 +7,20 @@ What the Meshy guide moved out of its page. Traps and sources: [Meshy traps and 
 | Spend | Stop | Source, read 2026-11-24 |
 | --- | --- | --- |
 | Plan credits | Too few gets HTTP 402. Plan credits reset monthly and do not accumulate | [Errors](https://docs.meshy.ai/en/api/errors), [Pricing](https://www.meshy.ai/pricing) |
-| Extra credit pack | Permanent credits remove the stop. Git Crafter's compute rules forbid one | [Pricing](https://www.meshy.ai/pricing) |
+| Extra credit pack | Permanent credits remove the stop. [Git Crafter compute rules](https://github.com/SoulCraft-Org/git-crafter/blob/main/rules/compute.md) forbid one | [Pricing](https://www.meshy.ai/pricing) |
 | One API key | A Monthly credit limit on the key | [Authentication](https://docs.meshy.ai/en/api/authentication) |
 | One run | `--max-credits` refuses a run estimated over it. `--dry-run` prints an estimate | [INSTALL.md](https://github.com/meshy-dev/meshy-3d-agent/blob/main/INSTALL.md) |
 
 ## Set up
 
 1. Subscribe to Pro at https://www.meshy.ai/pricing. Buy no extra pack.
-2. Install the CLI. The skills are written for meshy-cli 0.8 on Node.js 22.12 or later ([meshy-3d-agent](https://github.com/meshy-dev/meshy-3d-agent), read 2026-11-24).
+2. Install the CLI (`meshy --version` checks it). The skills are written for meshy-cli 0.8 on Node.js 22.12 or later ([meshy-3d-agent](https://github.com/meshy-dev/meshy-3d-agent), read 2026-11-24).
 3. In the Claude Desktop App, open Plugins and add the marketplace `meshy-dev/meshy-3d-agent`. Install `meshy-3d-generation`. The Plugins screen is in the [Desktop docs](https://code.claude.com/docs/en/desktop), read 2026-11-24. The marketplace step was not tried here.
 4. Sign in with the device flow and approve the code at `https://www.meshy.ai/device` within 10 minutes. The CLI keeps the session encrypted under a Keychain key on macOS ([INSTALL.md](https://github.com/meshy-dev/meshy-3d-agent/blob/main/INSTALL.md), read 2026-11-24).
 5. Price a run, then run it, then read the balance.
-6. Save each model as its task finishes. Meshy deletes API output three days after generation ([Terms of Use](https://www.meshy.ai/terms-of-use), read 2026-11-24).
+6. Save each model as its task finishes. Meshy deletes API output three days after generation ([Terms of Use](https://www.meshy.ai/terms-of-use), read 2026-11-24). Pro lists "Asset retention" of 3 days ([Pricing](https://www.meshy.ai/pricing), read 2026-11-24).
+
+The marketplace lists `meshy-3d-generation` and `meshy-3d-printing`. Meshy's docs install the same skills with `npx skills add meshy-dev/meshy-3d-agent` ([AI integration](https://docs.meshy.ai/en/api/ai), read 2026-11-24).
 
 ## Local MCP server
 

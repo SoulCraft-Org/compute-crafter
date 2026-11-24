@@ -8,9 +8,9 @@ flowchart LR
   Q -->|Yes| F[Free lanes]
   Q -->|Card can bill| R[Card at risk]
   Q -->|Metered| A[Avoid]
-  F --> O[OpenCode Desktop App<br/>not available]
-  F --> C[Claude Desktop App, Code tab<br/>not available]
-  F --> W[Claude Desktop App, Cowork<br/>not available]
+  F -.-> O[OpenCode Desktop App<br/>not confirmed]
+  F -.-> C[Claude Desktop App, Code tab<br/>not confirmed]
+  F -.-> W[Claude Desktop App, Cowork<br/>not confirmed]
 ```
 
 The rule: a lane counts as free only when it stops at its limit or never takes a card. A lane that can bill a card without a verified stop is never presented as free.
@@ -26,9 +26,9 @@ The rule: a lane counts as free only when it stops at its limit or never takes a
 
 | Host | Plugs in as | Source, read 2026-11-24 |
 | --- | --- | --- |
-| OpenCode Desktop App | Not available. A training run is a Job on a lane, started from that lane's CLI or API. | [HF Jobs pricing](https://huggingface.co/docs/hub/jobs-pricing) |
-| Claude Desktop App, Code tab | Not available. Hugging Face's connector reads the Hub; its page names no training step. | [HF MCP Server](https://huggingface.co/docs/hub/agents-mcp) |
-| Claude Desktop App, Cowork | Not available. No page read names Cowork for training. | [Desktop docs](https://code.claude.com/docs/en/desktop) |
+| OpenCode Desktop App | No page read names this host. | [HF Jobs pricing](https://huggingface.co/docs/hub/jobs-pricing) |
+| Claude Desktop App, Code tab | No page read names this host. | [HF MCP Server](https://huggingface.co/docs/hub/agents-mcp) |
+| Claude Desktop App, Cowork | No page read names this host. | [Desktop docs](https://code.claude.com/docs/en/desktop) |
 
 <details>
 <summary>Commands</summary>
