@@ -2,272 +2,535 @@
   "comment": "The data behind map.html. One node per guide page in guides/, from each guide's opening table. A figure names the vendor page and the date the guide read it. tests/site.test.mjs checks every guide has a node and every path exists.",
   "repo": "https://github.com/SoulCraft-Org/compute-crafter/blob/main/",
   "hosts": [
-    { "id": "opencode", "name": "OpenCode desktop", "short": "OpenCode", "rank": "first" },
-    { "id": "claude", "name": "Claude Code", "short": "Claude Code", "rank": "second" }
+    {
+      "id": "opencode",
+      "name": "OpenCode Desktop App",
+      "short": "OpenCode",
+      "rank": "first"
+    },
+    {
+      "id": "claude",
+      "name": "Claude Desktop App (Code and Cowork)",
+      "short": "Claude Desktop App",
+      "rank": "second"
+    }
   ],
   "lanes": [
-    { "id": "inference", "label": "Inference" },
-    { "id": "gpu", "label": "GPU" },
-    { "id": "cpu", "label": "CPU" },
-    { "id": "ci", "label": "CI" },
-    { "id": "tools", "label": "Tools" }
+    {
+      "id": "inference",
+      "label": "Inference"
+    },
+    {
+      "id": "gpu",
+      "label": "GPU"
+    },
+    {
+      "id": "cpu",
+      "label": "CPU"
+    },
+    {
+      "id": "ci",
+      "label": "CI"
+    },
+    {
+      "id": "tools",
+      "label": "Tools"
+    }
   ],
   "kinds": [
-    { "id": "provider", "short": "Provider", "label": "OpenCode provider config", "shape": "circle" },
-    { "id": "openai", "short": "OpenAI API", "label": "OpenAI-compatible endpoint", "shape": "square" },
-    { "id": "anthropic", "short": "Anthropic API", "label": "Anthropic-compatible endpoint", "shape": "diamond" },
-    { "id": "mcp", "short": "MCP", "label": "MCP server", "shape": "triangle" },
-    { "id": "link", "short": "Agent link", "label": "Agent link: ACP or GitHub Action", "shape": "hexagon" }
+    {
+      "id": "provider",
+      "short": "Provider",
+      "label": "OpenCode provider config",
+      "shape": "circle"
+    },
+    {
+      "id": "openai",
+      "short": "OpenAI API",
+      "label": "OpenAI-compatible endpoint",
+      "shape": "square"
+    },
+    {
+      "id": "anthropic",
+      "short": "Anthropic API",
+      "label": "Anthropic-compatible endpoint",
+      "shape": "diamond"
+    },
+    {
+      "id": "mcp",
+      "short": "MCP",
+      "label": "MCP server",
+      "shape": "triangle"
+    },
+    {
+      "id": "link",
+      "short": "Agent link",
+      "label": "Agent link: ACP or GitHub Action",
+      "shape": "hexagon"
+    }
   ],
   "nodes": [
     {
-      "id": "ollama", "name": "Ollama", "guide": "guides/ollama.md", "detail": "guides/detail/ollama.md",
-      "lanes": ["inference"],
+      "id": "ollama",
+      "name": "Ollama",
+      "guide": "guides/ollama.md",
+      "detail": "guides/detail/ollama.md",
+      "lanes": [
+        "inference"
+      ],
       "tagline": "Open-weight cloud models, paid per token from usage credits.",
       "free": "Pay as you go costs $0 a month and includes no cloud usage. Each request spends usage credits; Pro includes $60 of them a month (Ollama Pricing, read 2026-11-20).",
       "signin": "One account per person, signed in at ollama.com.",
       "key": "`ollama signin` for the app and CLI. `OLLAMA_API_KEY` for direct API calls.",
       "wires": {
-        "opencode": { "kind": "provider", "how": "Provider `ollama-cloud`, which reads `OLLAMA_API_KEY`." },
-        "claude": { "kind": "anthropic", "how": "Ollama's Anthropic-compatible API: `ollama launch claude`, or base URL `https://ollama.com`. No hosted MCP server." }
+        "opencode": {
+          "kind": "provider",
+          "how": "Provider `ollama-cloud`, which reads `OLLAMA_API_KEY`."
+        },
+        "claude": {
+          "kind": "anthropic",
+          "how": "Ollama's Anthropic-compatible API: `ollama launch claude`, or base URL `https://ollama.com`. No hosted MCP server."
+        }
       }
     },
     {
-      "id": "openrouter", "name": "OpenRouter", "guide": "guides/openrouter.md", "detail": "guides/detail/openrouter.md",
-      "lanes": ["inference"],
+      "id": "openrouter",
+      "name": "OpenRouter",
+      "guide": "guides/openrouter.md",
+      "detail": "guides/detail/openrouter.md",
+      "lanes": [
+        "inference"
+      ],
       "tagline": "One OpenAI-compatible API over many vendors, with free variants.",
       "free": "Model IDs ending in `:free` get 20 requests a minute and 50 a day. Buying 10 credits raises the daily cap to 1000 (OpenRouter Limits, read 2026-11-12).",
       "signin": "Anyone with an email. Credits are bought by card or crypto.",
       "key": "OAuth through the MCP server or `/connect`; else `OPENROUTER_API_KEY`.",
       "wires": {
-        "opencode": { "kind": "provider", "how": "Provider `openrouter`, built in." },
-        "claude": { "kind": "mcp", "how": "Hosted MCP server `https://mcp.openrouter.ai/mcp`, with an OAuth sign-in." }
+        "opencode": {
+          "kind": "provider",
+          "how": "Provider `openrouter`, built in."
+        },
+        "claude": {
+          "kind": "mcp",
+          "how": "Hosted MCP server `https://mcp.openrouter.ai/mcp`, with an OAuth sign-in."
+        }
       }
     },
     {
-      "id": "groq", "name": "Groq", "guide": "guides/groq.md", "detail": "guides/detail/groq.md",
-      "lanes": ["inference"],
+      "id": "groq",
+      "name": "Groq",
+      "guide": "guides/groq.md",
+      "detail": "guides/detail/groq.md",
+      "lanes": [
+        "inference"
+      ],
       "tagline": "Fast hosted open-weight models on a free plan.",
       "free": "Free plan, per model: 30 requests a minute, 1K a day and 200K tokens a day (Groq Rate Limits, read 2026-11-12).",
       "signin": "A GroqCloud console sign-in. A payment method is asked for only on upgrade to Developer.",
       "key": "`GROQ_API_KEY`, from a key made in the console.",
       "wires": {
-        "opencode": { "kind": "provider", "how": "Provider `groq`, through `/connect`." },
+        "opencode": {
+          "kind": "provider",
+          "how": "Provider `groq`, through `/connect`."
+        },
         "claude": null
       },
       "note": "No hosted MCP server."
     },
     {
-      "id": "hugging-face", "name": "Hugging Face", "guide": "guides/hugging-face.md", "detail": "guides/detail/hugging-face.md",
-      "lanes": ["inference", "gpu"],
+      "id": "hugging-face",
+      "name": "Hugging Face",
+      "guide": "guides/hugging-face.md",
+      "detail": "guides/detail/hugging-face.md",
+      "lanes": [
+        "inference",
+        "gpu"
+      ],
       "tagline": "Hub models, ZeroGPU Spaces, Inference Providers and an MCP server.",
       "free": "ZeroGPU gives a free account 5 minutes a day. Inference Providers has no monthly credit for free users (Hugging Face ZeroGPU docs, read 2026-11-12).",
       "signin": "Anyone with an email address.",
       "key": "`hf auth login` in the browser. Tools that need a token read `HF_TOKEN`.",
       "wires": {
-        "opencode": { "kind": "provider", "how": "Provider `huggingface`, reads `HF_TOKEN`, base URL `https://router.huggingface.co/v1`." },
-        "claude": { "kind": "mcp", "how": "Hosted MCP server `https://huggingface.co/mcp`, with a browser sign-in." }
+        "opencode": {
+          "kind": "provider",
+          "how": "Provider `huggingface`, reads `HF_TOKEN`, base URL `https://router.huggingface.co/v1`."
+        },
+        "claude": {
+          "kind": "mcp",
+          "how": "Hosted MCP server `https://huggingface.co/mcp`, with a browser sign-in."
+        }
       }
     },
     {
-      "id": "nvidia", "name": "NVIDIA", "guide": "guides/nvidia.md", "detail": "guides/detail/nvidia.md",
-      "lanes": ["inference", "gpu"],
+      "id": "nvidia",
+      "name": "NVIDIA",
+      "guide": "guides/nvidia.md",
+      "detail": "guides/detail/nvidia.md",
+      "lanes": [
+        "inference",
+        "gpu"
+      ],
       "tagline": "Trial NIM endpoints, NGC containers and a CUDA docs MCP server.",
       "free": "build.nvidia.com offers free inference for testing, not production. No credit amount or rate limit is published (NVIDIA API Trial Terms, read 2026-11-12).",
       "signin": "Anyone with an email address. An API key makes you a member of the NVIDIA Developer Program.",
       "key": "`NVIDIA_API_KEY` for the API catalog. `ngc config set` for NGC.",
       "wires": {
-        "opencode": { "kind": "provider", "how": "Provider `nvidia`, reads `NVIDIA_API_KEY`, base URL `https://integrate.api.nvidia.com/v1`." },
-        "claude": { "kind": "mcp", "how": "The CUDA docs MCP server, with an NVIDIA Developer sign-in. The API catalog has none." }
+        "opencode": {
+          "kind": "provider",
+          "how": "Provider `nvidia`, reads `NVIDIA_API_KEY`, base URL `https://integrate.api.nvidia.com/v1`."
+        },
+        "claude": {
+          "kind": "mcp",
+          "how": "The CUDA docs MCP server, with an NVIDIA Developer sign-in. The API catalog has none."
+        }
       }
     },
     {
-      "id": "together", "name": "Together AI", "guide": "guides/together.md", "detail": "guides/detail/together.md",
-      "lanes": ["inference"],
+      "id": "together",
+      "name": "Together AI",
+      "guide": "guides/together.md",
+      "detail": "guides/detail/together.md",
+      "lanes": [
+        "inference"
+      ],
       "tagline": "Prepaid, pay-per-token open-weight models.",
       "free": "None. Together AI offers no free trial, and the first purchase is at least $15 (Together Billing and credits, read 2026-11-12).",
       "signin": "A Google or GitHub account. Together signs in only through OAuth.",
       "key": "`TOGETHER_API_KEY`. Together Link stores it with `togetherlink configure`.",
       "wires": {
-        "opencode": { "kind": "provider", "how": "Provider `togetherai`, reads `TOGETHER_API_KEY`." },
-        "claude": { "kind": "mcp", "how": "A docs-only MCP server at `https://docs.together.ai/mcp`." }
+        "opencode": {
+          "kind": "provider",
+          "how": "Provider `togetherai`, reads `TOGETHER_API_KEY`."
+        },
+        "claude": {
+          "kind": "mcp",
+          "how": "A docs-only MCP server at `https://docs.together.ai/mcp`."
+        }
       }
     },
     {
-      "id": "cloudflare-workers-ai", "name": "Cloudflare Workers AI", "guide": "guides/cloudflare-workers-ai.md", "detail": "guides/detail/cloudflare-workers-ai.md",
-      "lanes": ["inference"],
+      "id": "cloudflare-workers-ai",
+      "name": "Cloudflare Workers AI",
+      "guide": "guides/cloudflare-workers-ai.md",
+      "detail": "guides/detail/cloudflare-workers-ai.md",
+      "lanes": [
+        "inference"
+      ],
       "tagline": "Open-weight models on Cloudflare's network, with hosted MCP servers.",
       "free": "10,000 Neurons a day at no charge, on Workers Free and Workers Paid (Cloudflare Workers AI pricing, read 2026-11-12).",
       "signin": "A Cloudflare account on the Workers Free plan.",
       "key": "`wrangler login` (browser OAuth). The REST API takes a Workers AI API token.",
       "wires": {
-        "opencode": { "kind": "provider", "how": "Provider `cloudflare-workers-ai`." },
-        "claude": { "kind": "mcp", "how": "Hosted MCP server `https://mcp.cloudflare.com/mcp`." }
+        "opencode": {
+          "kind": "provider",
+          "how": "Provider `cloudflare-workers-ai`."
+        },
+        "claude": {
+          "kind": "mcp",
+          "how": "Hosted MCP server `https://mcp.cloudflare.com/mcp`."
+        }
       }
     },
     {
-      "id": "claude-api", "name": "Claude API", "guide": "guides/claude-api.md", "detail": "guides/detail/claude-api.md",
-      "lanes": ["inference", "ci"],
+      "id": "claude-api",
+      "name": "Claude API",
+      "guide": "guides/claude-api.md",
+      "detail": "guides/detail/claude-api.md",
+      "lanes": [
+        "inference",
+        "ci"
+      ],
       "tagline": "Plan API credits, and keyless CI through workload identity federation.",
       "free": "Max gets $100 a month of API credits and Ultra $200. They do not cover Claude Code (Anthropic API credits page, read 2026-11-23).",
       "signin": "A Claude Console organization at platform.claude.com.",
       "key": "CI uses federation and no key. Otherwise one service account key per consumer in `ANTHROPIC_API_KEY`.",
       "wires": {
-        "opencode": { "kind": "provider", "how": "Provider `anthropic`, env `ANTHROPIC_API_KEY`." },
-        "claude": { "kind": "link", "how": "The `anthropics/claude-code-action` GitHub Action takes the federation inputs." }
+        "opencode": {
+          "kind": "provider",
+          "how": "Provider `anthropic`, env `ANTHROPIC_API_KEY`."
+        },
+        "claude": {
+          "kind": "link",
+          "how": "The `anthropics/claude-code-action` GitHub Action takes the federation inputs."
+        }
       }
     },
     {
-      "id": "local-models", "name": "Local models", "guide": "guides/local-models.md", "detail": "guides/detail/local-models.md",
-      "lanes": ["inference"],
+      "id": "local-models",
+      "name": "Local models",
+      "guide": "guides/local-models.md",
+      "detail": "guides/detail/local-models.md",
+      "lanes": [
+        "inference"
+      ],
       "tagline": "MLX or LM Studio serving a model on your own port.",
       "free": "No account and no bill. A Mac with Apple silicon serves the model on your own hardware.",
       "signin": "None.",
       "key": "None. Both servers bind localhost by default, and you pass an explicit port.",
       "wires": {
-        "opencode": { "kind": "openai", "how": "MLX: a custom OpenAI-compatible provider on `http://127.0.0.1:3101/v1`. LM Studio: the built-in `lmstudio` provider." },
-        "claude": { "kind": "anthropic", "how": "LM Studio only: `ANTHROPIC_BASE_URL=http://127.0.0.1:3102`. MLX has no Anthropic route." }
+        "opencode": {
+          "kind": "openai",
+          "how": "MLX: a custom OpenAI-compatible provider on `http://127.0.0.1:3101/v1`. LM Studio: the built-in `lmstudio` provider."
+        },
+        "claude": {
+          "kind": "anthropic",
+          "how": "LM Studio only: `ANTHROPIC_BASE_URL=http://127.0.0.1:3102`. MLX has no Anthropic route."
+        }
       }
     },
     {
-      "id": "modal", "name": "Modal", "guide": "guides/modal.md", "detail": "guides/detail/modal.md",
-      "lanes": ["gpu", "inference"],
+      "id": "modal",
+      "name": "Modal",
+      "guide": "guides/modal.md",
+      "detail": "guides/detail/modal.md",
+      "lanes": [
+        "gpu",
+        "inference"
+      ],
       "tagline": "Serverless GPUs for your code, and per-token Shared Endpoints.",
       "free": "Starter gives $30 a month of free compute credits. Shared Endpoint tokens are not covered (Modal Plan pricing, read 2026-11-12).",
       "signin": "A browser sign-in. Whether Starter needs a card is not published.",
       "key": "`modal setup` (browser login). Shared Endpoints take a proxy token in `MODAL_PROXY_TOKEN`.",
       "wires": {
-        "opencode": { "kind": "provider", "how": "Provider `modal`, base URL `https://inference.us-west.modal.direct/v1`, connected with `/connect`." },
+        "opencode": {
+          "kind": "provider",
+          "how": "Provider `modal`, base URL `https://inference.us-west.modal.direct/v1`, connected with `/connect`."
+        },
         "claude": null
       },
       "note": "Modal documents hosting your own MCP server, not one of its own."
     },
     {
-      "id": "runpod", "name": "RunPod", "guide": "guides/runpod.md", "detail": "guides/detail/runpod.md",
-      "lanes": ["gpu"],
+      "id": "runpod",
+      "name": "RunPod",
+      "guide": "guides/runpod.md",
+      "detail": "guides/detail/runpod.md",
+      "lanes": [
+        "gpu"
+      ],
       "tagline": "Prepaid GPU pods and Serverless endpoints by the second.",
       "free": "Not published. Billing is prepaid credit, charged per second (RunPod Billing, read 2026-11-12).",
       "signin": "A verified email. A pod needs a payment method and purchased credits first.",
       "key": "MCP: OAuth through Sign in with Runpod. CLI: `runpodctl doctor`; else `RUNPOD_API_KEY`.",
       "wires": {
-        "opencode": { "kind": "openai", "how": "Not a built-in provider. A Serverless vLLM endpoint is OpenAI-compatible at `https://api.runpod.ai/v2/<ENDPOINT_ID>/openai/v1`." },
-        "claude": { "kind": "mcp", "how": "Hosted MCP server `https://mcp.runpod.io/`, with an OAuth sign-in." }
+        "opencode": {
+          "kind": "openai",
+          "how": "Not a built-in provider. A Serverless vLLM endpoint is OpenAI-compatible at `https://api.runpod.ai/v2/<ENDPOINT_ID>/openai/v1`."
+        },
+        "claude": {
+          "kind": "mcp",
+          "how": "Hosted MCP server `https://mcp.runpod.io/`, with an OAuth sign-in."
+        }
       }
     },
     {
-      "id": "amd", "name": "AMD", "guide": "guides/amd.md", "detail": "guides/detail/amd.md",
-      "lanes": ["gpu"],
+      "id": "amd",
+      "name": "AMD",
+      "guide": "guides/amd.md",
+      "detail": "guides/detail/amd.md",
+      "lanes": [
+        "gpu"
+      ],
       "tagline": "ROCm, and one-time Developer Cloud credit on Instinct MI300X.",
       "free": "A $100 credit that expires 30 days from deposit. ROCm itself is open source (AMD Developer Cloud page, read 2026-11-12).",
       "signin": "An AMD AI Developer Program member, which is free to join. AMD awards the credit on your stated use case.",
       "key": "A browser sign-in to the AMD Developer Cloud console. ROCm needs no key.",
       "wires": {
-        "opencode": { "kind": "openai", "how": "A model you serve on the droplet with an OpenAI-compatible server is a custom provider." },
+        "opencode": {
+          "kind": "openai",
+          "how": "A model you serve on the droplet with an OpenAI-compatible server is a custom provider."
+        },
         "claude": null
       },
       "note": "No hosted MCP server."
     },
     {
-      "id": "google-cloud", "name": "Google Cloud", "guide": "guides/google-cloud.md", "detail": "guides/detail/google-cloud.md",
-      "lanes": ["cpu", "gpu"],
+      "id": "google-cloud",
+      "name": "Google Cloud",
+      "guide": "guides/google-cloud.md",
+      "detail": "guides/detail/google-cloud.md",
+      "lanes": [
+        "cpu",
+        "gpu"
+      ],
       "tagline": "A trial credit for CPUs and storage, with exclusions.",
       "free": "Free Trial: a $300 credit valid for 90 days, and no billing unless you upgrade (Google Free cloud features, read 2026-11-23).",
       "signin": "A Google account. Sign-up needs a payment method valid for the trial.",
       "key": "`gcloud auth login`, a browser sign-in. Keep service account keys out of CI.",
-      "wires": { "opencode": null, "claude": null },
+      "wires": {
+        "opencode": null,
+        "claude": null
+      },
       "note": "The credit pays for no connector. It cannot pay for Gemini on Vertex AI or for partner models offered as a managed API."
     },
     {
-      "id": "comfyui", "name": "ComfyUI", "guide": "guides/comfyui.md", "detail": "guides/detail/comfyui.md",
-      "lanes": ["gpu"],
+      "id": "comfyui",
+      "name": "ComfyUI",
+      "guide": "guides/comfyui.md",
+      "detail": "guides/detail/comfyui.md",
+      "lanes": [
+        "gpu"
+      ],
       "tagline": "Open-weight image and video workflows on Comfy Cloud or your own GPU.",
       "free": "Free: 5 free runs on real GPUs and free Comfy Agent credits for new users (Comfy Cloud pricing, read 2026-11-12).",
       "signin": "A Comfy account for Comfy Cloud. Self-hosted ComfyUI needs none.",
       "key": "`comfy cloud login` (browser OAuth). The MCP server uses OAuth through `/mcp`.",
       "wires": {
-        "opencode": { "kind": "mcp", "how": "Add the Comfy Cloud MCP server with `opencode mcp add`." },
-        "claude": { "kind": "mcp", "how": "Comfy Cloud MCP server `https://cloud.comfy.org/mcp`. A local `comfy-mcp` drives your own box." }
+        "opencode": {
+          "kind": "mcp",
+          "how": "Add the Comfy Cloud MCP server with `opencode mcp add`."
+        },
+        "claude": {
+          "kind": "mcp",
+          "how": "Comfy Cloud MCP server `https://cloud.comfy.org/mcp`. A local `comfy-mcp` drives your own box."
+        }
       }
     },
     {
-      "id": "training", "name": "Training", "guide": "guides/training.md", "detail": null,
-      "lanes": ["gpu"],
+      "id": "training",
+      "name": "Training",
+      "guide": "guides/training.md",
+      "detail": null,
+      "lanes": [
+        "gpu"
+      ],
       "tagline": "LoRA, then reinforcement learning, on free and subscription credits.",
       "free": "Free lanes only. A lane counts as free when it stops at its limit or never takes a card.",
       "signin": "One per lane. The guide lists them.",
       "key": "One per lane, kept as in that lane's own guide.",
-      "wires": { "opencode": null, "claude": null },
+      "wires": {
+        "opencode": null,
+        "claude": null
+      },
       "note": "A method, not a connector: it runs on the GPU lanes above."
     },
     {
-      "id": "github", "name": "GitHub", "guide": "guides/github.md", "detail": "guides/detail/github.md",
-      "lanes": ["ci", "tools"],
+      "id": "github",
+      "name": "GitHub",
+      "guide": "guides/github.md",
+      "detail": "guides/detail/github.md",
+      "lanes": [
+        "ci",
+        "tools"
+      ],
       "tagline": "Free CI on Actions, a hosted MCP server and Copilot models.",
       "free": "Standard runners are free in public repositories. Free plans include $12 of compute a month (GitHub Actions billing, read 2026-11-12).",
       "signin": "Anyone with an email, on the GitHub Free plan.",
       "key": "`gh auth login` (browser OAuth). The token stays in the system credential store.",
       "wires": {
-        "opencode": { "kind": "provider", "how": "Provider `github-copilot`, through `/connect` and Login with GitHub Copilot." },
-        "claude": { "kind": "mcp", "how": "Hosted MCP server `https://api.githubcopilot.com/mcp/`." }
+        "opencode": {
+          "kind": "provider",
+          "how": "Provider `github-copilot`, through `/connect` and Login with GitHub Copilot."
+        },
+        "claude": {
+          "kind": "mcp",
+          "how": "Hosted MCP server `https://api.githubcopilot.com/mcp/`."
+        }
       }
     },
     {
-      "id": "meshy", "name": "Meshy", "guide": "guides/meshy.md", "detail": "guides/detail/meshy.md",
-      "lanes": ["tools"],
+      "id": "meshy",
+      "name": "Meshy",
+      "guide": "guides/meshy.md",
+      "detail": "guides/detail/meshy.md",
+      "lanes": [
+        "tools"
+      ],
       "tagline": "A picture or prompt to a textured, rigged, animated 3D model.",
       "free": "Free: 100 credits a month. Tasks from Claude Code need Pro, $20 a month for 1,000 credits (Meshy Pricing, read 2026-11-24).",
       "signin": "Email or Google sign-in. Free needs no credit card.",
       "key": "`meshy auth login --device` keeps the key off the machine. The MCP server reads `MESHY_API_KEY`.",
       "wires": {
-        "opencode": { "kind": "mcp", "how": "The local `@meshy-ai/meshy-mcp-server` runs in any stdio MCP client." },
-        "claude": { "kind": "mcp", "how": "The `meshy-3d-generation` plugin, or the local `@meshy-ai/meshy-mcp-server`. Meshy's hosted server admits only ChatGPT today." }
+        "opencode": {
+          "kind": "mcp",
+          "how": "The local `@meshy-ai/meshy-mcp-server` runs in any stdio MCP client."
+        },
+        "claude": {
+          "kind": "mcp",
+          "how": "The `meshy-3d-generation` plugin, or the local `@meshy-ai/meshy-mcp-server`. Meshy's hosted server admits only ChatGPT today."
+        }
       }
     },
     {
-      "id": "goose", "name": "Goose", "guide": "guides/goose.md", "detail": "guides/detail/goose.md",
-      "lanes": ["tools"],
+      "id": "goose",
+      "name": "Goose",
+      "guide": "guides/goose.md",
+      "detail": "guides/detail/goose.md",
+      "lanes": [
+        "tools"
+      ],
       "tagline": "An open-source coding agent, CLI and desktop app.",
       "free": "Goose costs nothing. Models bill through the provider you pick (aaif-goose/goose, read 2026-11-20).",
       "signin": "None. Each model provider has its own account.",
       "key": "`goose configure` stores a provider key in the system keyring.",
       "wires": {
         "opencode": null,
-        "claude": { "kind": "link", "how": "The `claude-acp` provider runs Claude Code through ACP, with an active Claude Code subscription." }
+        "claude": {
+          "kind": "link",
+          "how": "The `claude-acp` provider runs Claude Code through ACP, with an active Claude Code subscription."
+        }
       },
       "note": "Goose and OpenCode are peer agents. Both run in Zed."
     },
     {
-      "id": "zed", "name": "Zed", "guide": "guides/zed.md", "detail": "guides/detail/zed.md",
-      "lanes": ["tools"],
+      "id": "zed",
+      "name": "Zed",
+      "guide": "guides/zed.md",
+      "detail": "guides/detail/zed.md",
+      "lanes": [
+        "tools"
+      ],
       "tagline": "An editor on your own provider keys, with coding agents over ACP.",
       "free": "Zed Free is $0 forever, with unlimited use of your own API keys or external agents (Zed Pricing, read 2026-11-20).",
       "signin": "None for the editor. A Zed sign-in is only for Zed-hosted models.",
       "key": "Keys saved in the editor's LLM Providers settings go to the system keychain.",
       "wires": {
-        "opencode": { "kind": "link", "how": "From the ACP Registry, or a custom agent that runs `opencode acp`." },
-        "claude": { "kind": "link", "how": "Claude Agent from the ACP Registry. It owns its login and billing." }
+        "opencode": {
+          "kind": "link",
+          "how": "From the ACP Registry, or a custom agent that runs `opencode acp`."
+        },
+        "claude": {
+          "kind": "link",
+          "how": "Claude Agent from the ACP Registry. It owns its login and billing."
+        }
       }
     },
     {
-      "id": "claude-desktop-mcp", "name": "Claude Desktop MCP", "guide": "guides/claude-desktop-mcp.md", "detail": null,
-      "lanes": ["tools"],
+      "id": "claude-desktop-mcp",
+      "name": "Claude Desktop MCP",
+      "guide": "guides/claude-desktop-mcp.md",
+      "detail": null,
+      "lanes": [
+        "tools"
+      ],
       "tagline": "One MCP server for the Code tab and Cowork.",
       "free": "It adds no cost of its own. It picks the route that reaches both places.",
       "signin": "A Claude account. On Team and Enterprise an Owner adds the connector for the organization.",
       "key": "Per server. A server on a public HTTPS URL becomes a custom connector.",
       "wires": {
         "opencode": null,
-        "claude": { "kind": "mcp", "how": "A custom connector for a public HTTPS server, or a desktop extension for one that listens only on 127.0.0.1." }
+        "claude": {
+          "kind": "mcp",
+          "how": "A custom connector for a public HTTPS server, or a desktop extension for one that listens only on 127.0.0.1."
+        }
       }
     },
     {
-      "id": "logins", "name": "Logins", "guide": "guides/logins.md", "detail": "guides/detail/logins.md",
-      "lanes": ["tools"],
+      "id": "logins",
+      "name": "Logins",
+      "guide": "guides/logins.md",
+      "detail": "guides/detail/logins.md",
+      "lanes": [
+        "tools"
+      ],
       "tagline": "One sign-in order for every vendor.",
       "free": "It adds no cost. The logins catalog holds vendor facts, never an account or a secret.",
       "signin": "One order for every vendor in these guides.",
       "key": "Each passkey and code sits in a known place, in Apple Passwords.",
-      "wires": { "opencode": null, "claude": null },
+      "wires": {
+        "opencode": null,
+        "claude": null
+      },
       "note": "A sign-in method, not a connector."
     }
   ]

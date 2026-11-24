@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light dark">
 <title>Wiring map</title>
-<meta name="description" content="How each provider guide wires into OpenCode desktop and Claude Code.">
+<meta name="description" content="How each provider guide wires into the OpenCode Desktop App and the Claude Desktop App.">
 <style>
 :root{
   --bg:#f2f4f1; --surf:#fcfcfb; --ink:#14201e; --ink2:#46524f; --mute:#5d6967; --line:#d3d9d6; --bus:#a9b4b0;
@@ -118,7 +118,7 @@ h1{margin:0;font-size:clamp(30px,6vw,46px);line-height:1.05;font-weight:780;lett
 <body>
 <div class="wrap">
   <h1>Wiring map</h1>
-  <p class="lede" id="lede">Which provider guides wire into OpenCode desktop, and which into Claude Code.</p>
+  <p class="lede" id="lede">Which provider guides wire into the OpenCode Desktop App, and which into the Claude Desktop App (Code and Cowork).</p>
   <div class="filters">
     <div class="group" id="lanes" role="group" aria-labelledby="gl"><span id="gl">Lane</span></div>
     <div class="group" id="hosts" role="group" aria-labelledby="gh"><span id="gh">Wires into</span></div>
@@ -170,7 +170,7 @@ function port(h, n) {
     <line x1="0" x2="100%" y1="17" y2="17" ${dash(w.kind)}/><text x="6" y="10">${esc(k.short)}</text>
     <svg x="100%" y="17" width="1" height="1" overflow="visible"><g class="gl" fill="var(--k-${w.kind})">${SHAPES[k.shape]}</g></svg></svg>`;
 }
-// The Claude Code wire crosses the OpenCode column on its own sub-row.
+// The Claude Desktop App wire crosses the OpenCode column on its own sub-row.
 const pass = (n) => `<svg class="pt" aria-hidden="true"><line x1="0" x2="100%" y1="17" y2="17" ${dash(n.wires[CC].kind)}/></svg>`;
 
 const rowFor = (n) => {
