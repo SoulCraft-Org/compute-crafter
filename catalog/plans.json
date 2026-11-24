@@ -1,7 +1,7 @@
 {
  "version": 1,
  "about": "Free tiers and plans for compute, CI and AI inference, public fields only. Built by tools/catalog.py; every row names the vendor page it was read on and the date. verified: true means every figure was read on that first-party page on that date; false means it was not re-read since.",
- "checked": "2026-11-23",
+ "checked": "2026-11-24",
  "lanes": [
   "ci",
   "cpu",
@@ -3734,6 +3734,64 @@
    "source": "https://www.magnific.com/pricing",
    "sources_extra": [],
    "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "meshy-free",
+   "name": "Meshy Free",
+   "provider": "Meshy",
+   "provider_hq": "US",
+   "lanes": [
+    "tools"
+   ],
+   "price_month": 0,
+   "currency": "USD",
+   "price_note": "$0 a month, no credit card needed.",
+   "includes": "100 credits a month, up to 10 assets, 1 concurrent task, low queue priority. Image to 3D, Text to 3D and AI Texturing in the web app. Assets under CC BY 4.0.",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "No pay-as-you-go rate is published. API prices for comparison: Image to 3D with 2K or 4K textures 30 credits, rigging 5, animation 3 per action.",
+   "card": false,
+   "overage": "stops",
+   "trains_on_data": true,
+   "commercial_use": true,
+   "limits": "No API access. Through the CLI, the API or the MCP server a Free account can sign in, but creating tasks is refused with HTTP 402 plan_upgrade_required. Credits reset at 00:00 UTC on the first of each month. CC BY 4.0 asks for credit to Meshy.",
+   "source": "https://www.meshy.ai/pricing",
+   "sources_extra": [
+    "https://github.com/meshy-dev/meshy-3d-agent",
+    "https://docs.meshy.ai/en/api/errors",
+    "https://docs.meshy.ai/en/api/pricing",
+    "https://www.meshy.ai/terms-of-use"
+   ],
+   "checked": "2026-11-24",
+   "verified": true
+  },
+  {
+   "id": "meshy-pro",
+   "name": "Meshy Pro",
+   "provider": "Meshy",
+   "provider_hq": "US",
+   "lanes": [
+    "tools"
+   ],
+   "price_month": 20,
+   "currency": "USD",
+   "price_note": "$20 billed monthly. On 2026-11-24 a sale (Nov 23 to Dec 2, 2026) showed $144 billed yearly. Premium is $40 billed monthly for 3,000 credits.",
+   "includes": "1,000 credits a month, API and MCP access, up to 100 assets, 10 concurrent tasks, 20 requests per second, high queue priority, customer-owned private assets. About 26 rigged characters with one animation each, at 38 credits apiece (Image to 3D with textures 30, rigging 5, one action 3; computed).",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "No pay-as-you-go rate is published, and extra credit pack prices are not on the page. On the plan a credit costs $0.02 ($20 / 1,000, computed), so one textured Image to 3D task (30 credits) costs about $0.60.",
+   "card": null,
+   "overage": "stops",
+   "trains_on_data": true,
+   "commercial_use": true,
+   "limits": "Plan credits reset monthly and do not accumulate. A request without enough credits gets HTTP 402. Extra credit packs are permanent credits that do not expire; the 40% pack discount is yearly only. API output is deleted three days after generation for non-Enterprise customers. Inputs and outputs may train Meshy's models unless opted out through support.",
+   "source": "https://www.meshy.ai/pricing",
+   "sources_extra": [
+    "https://docs.meshy.ai/en/api/pricing",
+    "https://docs.meshy.ai/en/api/errors",
+    "https://www.meshy.ai/mcp",
+    "https://www.meshy.ai/terms-of-use"
+   ],
+   "checked": "2026-11-24",
    "verified": true
   },
   {
