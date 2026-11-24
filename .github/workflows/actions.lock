@@ -21,6 +21,7 @@ workflows:
     '.github/workflows/scorecard.yml':
         - 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1'
         - 'ossf/scorecard-action@fa7117db83c52d787ae5a89f350999701505d78e'
+    '.github/workflows/secret-scan.yml': []
     '.github/workflows/wiki.yml':
         - 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1'
 dependencies:
