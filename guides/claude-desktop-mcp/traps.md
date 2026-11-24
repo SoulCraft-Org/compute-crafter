@@ -12,7 +12,7 @@ What goes wrong with each route, and the pages this guide read. The routes are i
 | Changing a connector's sign-in | Authentication settings are fixed once added. Remove the connector, add it again, and members reconnect |
 | A shared key on Team or Enterprise | A request-header credential gives every member who connects that credential's access. Use a key limited to what members should reach |
 | `~/.claude.json` for Cowork | Cowork doesn't read Claude Code's config. A server there reaches the Code tab only |
-| The same URL in two places | A server added in Claude Code wins over a connector with the same URL. Then `/mcp` lists the connector as hidden ([Claude Code MCP](https://code.claude.com/docs/en/mcp#use-mcp-servers-from-claude-ai)). |
+| The same URL in two places | A server added in Claude Code wins over a connector with the same URL. Then the connector shows as hidden ([Claude Code MCP](https://code.claude.com/docs/en/mcp#use-mcp-servers-from-claude-ai)). |
 | An API key login | Claude Code in the terminal fetches connectors only under a Claude subscription login. `ANTHROPIC_API_KEY` or `apiKeyHelper` turns them off |
 | Extensions turned off | An organization can turn extensions off or limit them. Then Extensions doesn't appear in settings |
 | Always allow on write tools | Always allow skips the prompt for good. Keep it to read-only tools on servers you trust |

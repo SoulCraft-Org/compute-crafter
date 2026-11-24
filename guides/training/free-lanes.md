@@ -1,6 +1,6 @@
 # Training lanes that give GPU time for free
 
-Lanes that give GPU time free or inside a flat plan. Each row stops at its limit or takes no card. Every figure is from the vendor's own page, read on 2026-11-23, unless a cell says otherwise. The jobs and the rule are in [Training](../training.md).
+Lanes that give GPU time free or inside a flat plan. Each row stops at its limit or takes no card. Every figure is from the vendor's own page, read on 2026-11-23, unless a cell says otherwise. The rule is in [Training](../training.md). The jobs are in [Training jobs by GPU size](jobs.md).
 
 ```mermaid
 flowchart LR
