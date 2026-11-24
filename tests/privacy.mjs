@@ -82,12 +82,24 @@ export function privacyProblems(run, { localIds = new Set(), names = [], terms =
   if (text.includes('private term')) {
     // Where, never what: the ids of the metrics (or top-level keys) whose JSON holds the match.
     const where = [
-      ...Object.entries(run?.metrics ?? {}).filter(([, m]) => terms.test(JSON.stringify(m))).map(([id]) => `metric ${id}`),
+      ...Object.entries(run?.metrics ?? {}).filter(([, m]) => terms.test(JSON.stringify(m))).map(([id, m]) => `metric ${id} (${termPaths(m, terms).slice(0, 4).join(', ')})`),
       ...Object.entries(run ?? {}).filter(([k, v]) => k !== 'metrics' && terms.test(JSON.stringify(v))).map(([k]) => `key ${k}`),
     ];
     if (where.length) found.push(`private term in ${where.slice(0, 8).join(', ')}`);
   }
   return [...found, ...text];
+}
+
+// The key paths inside a value whose string (key or leaf) holds a private term, such as detail[2].title; never the match.
+export function termPaths(value, terms, path = '') {
+  if (typeof value === 'string') return terms.test(value) ? [path || '(value)'] : [];
+  if (value === null || typeof value !== 'object') return [];
+  const out = [];
+  for (const [k, v] of Array.isArray(value) ? value.map((v, i) => [i, v]) : Object.entries(value)) {
+    const p = Array.isArray(value) ? `${path}[${k}]` : `${path ? path + '.' : ''}${terms.test(k) ? '(key)' : k}`;
+    out.push(...termPaths(v, terms, p));
+  }
+  return out;
 }
 
 // Where a private term sits in a page: the id of the nearest element that opens before it, never the match.
