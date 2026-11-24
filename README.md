@@ -1,8 +1,8 @@
 # Compute Crafter
 
-![Open-weight models flow through a guide, a sign-in and a spend stop into OpenCode desktop first and Claude Code second](assets/hero.svg)
+![Open-weight models flow through a guide, a sign-in and a spend stop into the OpenCode Desktop App first and the Claude Desktop App second](assets/hero.svg)
 
-Wire open-source and open-weight compute into OpenCode desktop first and Claude Code second, on free credits and flat monthly subscriptions. Then keep your own list, sign-ins and score page.
+Wire open-source and open-weight compute into the OpenCode Desktop App first and the Claude Desktop App (Code and Cowork) second, on free credits and flat monthly subscriptions. Then keep your own list, sign-ins and score page.
 
 ## [📊 Open the live score page](https://soulcraft-org.github.io/compute-crafter/)
 
@@ -10,7 +10,7 @@ Wire open-source and open-weight compute into OpenCode desktop first and Claude 
 
 ```mermaid
 flowchart LR
-  G[Pick a provider guide] --> S[Sign in] --> C[Set the spend stop] --> W[Wire into OpenCode or Claude Code] --> Q[Score it]
+  G[Pick a provider guide] --> S[Sign in] --> C[Set the spend stop] --> W[Wire into the OpenCode Desktop App or the Claude Desktop App] --> Q[Score it]
 ```
 
 ## Provider guides
@@ -70,6 +70,6 @@ Copy one folder. Each README has its steps and a fake example.
 
 ## Built on
 
-[Git Crafter](https://github.com/SoulCraft-Org/git-crafter) supplies the CI standard and the Claude Code rules. The Credits pack (`pack.json`) moved from it ([NOTICE](NOTICE)). [pages.yml](.github/workflows/pages.yml) builds the Quality page (11 library tabs plus Credits) and the Process page (every library map plus Spend) after the [privacy gate](tests/privacy.mjs), and shows only what CI reads. The [ComfyUI guide](guides/comfyui.md) links the [comfyui-base](https://github.com/SoulCraft-Org/comfyui-base) installer.
+[Git Crafter](https://github.com/SoulCraft-Org/git-crafter) supplies the CI standard and the Claude rules. The Credits pack (`pack.json`) moved from it ([NOTICE](NOTICE)). [pages.yml](.github/workflows/pages.yml) builds the Quality page (11 library tabs plus Credits) and the Process page (every library map plus Spend) after the [privacy gate](tests/privacy.mjs), and shows only what CI reads. The [ComfyUI guide](guides/comfyui.md) links the [comfyui-base](https://github.com/SoulCraft-Org/comfyui-base) installer.
 
 Published by [SoulCraft-Org](https://github.com/SoulCraft-Org) under [Apache-2.0](LICENSE).
