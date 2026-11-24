@@ -32,5 +32,19 @@
         "area: sign-ins"
       ]
     }
+  },
+  {
+    "id": "security.threat_model_current",
+    "params": {
+      "threat_model": "THREAT-MODEL.md",
+      "threat_model_covers": [
+        "collectors",
+        "catalog",
+        "tests/privacy.mjs",
+        "tools",
+        ".github/workflows"
+      ],
+      "threat_model_grace_days": 7
+    }
   }
 ]
