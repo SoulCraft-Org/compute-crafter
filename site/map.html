@@ -99,10 +99,10 @@ h1{margin:0;font-size:clamp(30px,6vw,46px);line-height:1.05;font-weight:780;lett
 @media (max-width:879px){
   .hint{display:none}
   .card.empty-card{display:none}
-  .card{position:fixed;left:0;right:0;bottom:0;max-height:64vh;overflow:auto;border-radius:14px 14px 0 0;z-index:10;box-shadow:0 -8px 28px rgba(0,0,0,.22)}
+  .card{position:fixed;left:0;right:0;bottom:0;max-height:56vh;overflow:auto;border-radius:14px 14px 0 0;z-index:10;box-shadow:0 -8px 28px rgba(0,0,0,.22)}
   .row{scroll-margin-top:96px}
 }
-.wrap:has(#card:not(.empty-card)){padding-bottom:62vh}
+.wrap:has(#card:not(.empty-card)){padding-bottom:56vh}
 @media (min-width:880px){.wrap:has(#card:not(.empty-card)){padding-bottom:72px}}
 @media (min-width:880px){.card{position:sticky;top:12px}.close{display:none}}
 .foot{margin-top:28px;font-size:12.5px;color:var(--mute);max-width:60ch}
@@ -144,7 +144,7 @@ const SHAPES = {
   circle: '<circle r="5.5"/>', square: '<rect x="-5" y="-5" width="10" height="10" rx="1.5"/>',
   diamond: '<path d="M0-7 7 0 0 7-7 0Z"/>', triangle: '<path d="M0-6.5 6.5 5.5h-13Z"/>', hexagon: '<path d="M-3.5-6h7l3.5 6-3.5 6h-7L-7 0Z"/>',
 };
-const DASH = { provider: 'none', openai: '6 4', anthropic: '0.1 5', mcp: '10 3 2 3', link: '16 5' };
+const DASH = { provider: 'none', openai: '6 4', anthropic: '0.1 6', mcp: '10 3 2 3', link: '16 5' };
 
 let D;
 try {
@@ -161,7 +161,7 @@ const wires = (n) => D.hosts.filter((h) => n.wires[h.id]).length;
 const glyph = (k, size = 16) => `<svg width="${size}" height="${size}" viewBox="-8 -8 16 16" aria-hidden="true"><g fill="var(--k-${k})" stroke="var(--surf)" stroke-width="1.5" paint-order="stroke">${SHAPES[kind[k].shape]}</g></svg>`;
 
 // One port cell: a rail in the wire's style, a tag above it, and the kind's shape where it meets the host's bus.
-const dash = (k) => `stroke="var(--k-${k})" stroke-dasharray="${DASH[k]}" stroke-linecap="${k === 'anthropic' ? 'round' : 'butt'}"`;
+const dash = (k) => `stroke="var(--k-${k})" stroke-dasharray="${DASH[k]}" stroke-linecap="${k === 'anthropic' ? 'round' : 'butt'}"${k === 'anthropic' ? ' style="stroke-width:3.4px"' : ''}`;
 function port(h, n) {
   const w = n.wires[h];
   if (!w) return '<svg class="pt" aria-hidden="true"><text class="none" x="6" y="17">none</text></svg>';
@@ -258,12 +258,13 @@ function card(n) {
 
 const cardEl = $('card');
 function select(id, { focus = false } = {}) {
+  const prev = selected;
   if (selected) { const r = rows.get(selected); r.classList.remove('sel'); r.querySelector('.node').setAttribute('aria-pressed', 'false'); }
   selected = id;
   if (!id) {
     cardEl.className = 'card empty-card';
     cardEl.innerHTML = '<p class="hint">Pick a guide to see its free tier, sign-in, key and how it wires in.</p>';
-    if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+    if (prev) history.replaceState(null, '', location.pathname + location.search);
     return;
   }
   const r = rows.get(id);
