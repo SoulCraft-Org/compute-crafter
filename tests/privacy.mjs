@@ -82,8 +82,8 @@ export function privacyProblems(run, { localIds = new Set(), names = [], terms =
   if (text.includes('private term')) {
     // Where, never what: the ids of the metrics (or top-level keys) whose JSON holds the match.
     const where = [
-      ...Object.entries(run?.metrics ?? {}).filter(([, m]) => terms.test(JSON.stringify(m))).map(([id, m]) => `metric ${id} (${termPaths(m, terms).slice(0, 4).join(', ')})`),
-      ...Object.entries(run ?? {}).filter(([k, v]) => k !== 'metrics' && terms.test(JSON.stringify(v))).map(([k]) => `key ${k}`),
+      ...Object.entries(run?.metrics ?? {}).filter(([, m]) => terms.test(JSON.stringify(m))).map(([id, m]) => `metric ${terms.test(id) ? '(id)' : id} (${termPaths(m, terms).slice(0, 4).join(', ')})`),
+      ...Object.entries(run ?? {}).filter(([k, v]) => k !== 'metrics' && terms.test(JSON.stringify(v))).map(([k]) => `key ${terms.test(k) ? '(key)' : k}`),
     ];
     if (where.length) found.push(`private term in ${where.slice(0, 8).join(', ')}`);
   }

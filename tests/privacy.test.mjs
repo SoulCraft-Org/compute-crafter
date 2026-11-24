@@ -176,3 +176,11 @@ test('privacy: a term hit names where it sits (metric id or nearest element id),
   assert.equal(termWhere('<section id="tab-docs"><p>ok</p></section><div id="m-issues.b"><span>exampleterm</span></div>', termsPattern('exampleterm')), 'near #m-issues.b');
   assert.equal(termWhere('<p>clean</p>', termsPattern('exampleterm')), null);
 });
+
+test('privacy: a metric id or top-level key that holds the term is masked, never printed', () => {
+  const run = { mode: 'ci', exampleterm_meta: 'x', metrics: { 'docs.exampleterm': { value: 1, source: 'an exampleterm source' } } };
+  const found = privacyProblems(run, { terms: termsPattern('exampleterm') });
+  assert.ok(found.some((f) => f.startsWith('private term in metric (id) (source at 3 of 21)')), JSON.stringify(found));
+  assert.ok(found.some((f) => /key \(key\)/.test(f)), JSON.stringify(found));
+  assert.ok(!found.some((f) => /exampleterm/.test(f)), 'no finding quotes the match');
+});
