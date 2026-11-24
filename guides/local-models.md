@@ -13,7 +13,7 @@ flowchart LR
 
 | Tool | Serves | Port | Claude Desktop App | OpenCode | Guard |
 | --- | --- | --- | --- | --- | --- |
-| MLX `mlx_lm.server` | `/v1/chat/completions` and `/v1/models` ([SERVER.md](https://github.com/ml-explore/mlx-lm/blob/main/mlx_lm/SERVER.md), read 2026-11-24) | Default 8080. Pass `--port 3101` | None found: no Anthropic route is documented | Custom provider, base URL `http://127.0.0.1:3101/v1` | Local only. MLX calls it not for production, with basic security checks. No `--trust-remote-code` on a shared folder |
+| MLX `mlx_lm.server` | `/v1/chat/completions`, `/v1/completions` and `/v1/models` ([server.py](https://github.com/ml-explore/mlx-lm/blob/main/mlx_lm/server.py), read 2026-11-24) | Default 8080. Pass `--port 3101` | None found: no Anthropic route is documented | Custom provider, base URL `http://127.0.0.1:3101/v1` | Local only. MLX calls it not for production, with basic security checks ([SERVER.md](https://github.com/ml-explore/mlx-lm/blob/main/mlx_lm/SERVER.md), read 2026-11-24). No `--trust-remote-code` on a shared folder |
 | LM Studio `lms` | OpenAI `/v1` and Anthropic `/v1/messages` ([Anthropic compatibility](https://lmstudio.ai/docs/developer/anthropic-compat), read 2026-11-24) | Reuses the last port. Pass `--port 3102` | Not confirmed. LM Studio's page names Claude Code, not the app | Built-in `lmstudio`, base URL `http://127.0.0.1:3102/v1` | `--bind` defaults to `127.0.0.1` ([lms server start](https://lmstudio.ai/docs/cli/server-start), read 2026-11-24). Never bind 0.0.0.0 without authentication |
 
 Both run on your own hardware, so no spend stop applies. Git Crafter's money and compute split still does: [Git Crafter compute rules](https://github.com/SoulCraft-Org/git-crafter/blob/main/rules/compute.md).

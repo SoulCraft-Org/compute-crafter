@@ -30,6 +30,7 @@ What goes wrong with RunPod, and the pages this guide read. The guard and steps 
 | [RunPod MCP servers](https://docs.runpod.io/get-started/mcp-servers) | 2026-11-24 |
 | [Serverless vLLM OpenAI compatibility](https://docs.runpod.io/serverless/vllm/openai-compatibility) | 2026-11-24 |
 | [OpenCode providers](https://opencode.ai/docs/providers) | 2026-11-24 |
+| [runpodctl README](https://github.com/runpod/runpodctl) | 2026-11-24 |
 | [OpenCode MCP servers](https://opencode.ai/docs/mcp-servers) | 2026-11-24 |
 | [Claude Desktop docs](https://code.claude.com/docs/en/desktop) | 2026-11-24 |
 

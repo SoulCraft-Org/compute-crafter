@@ -1,6 +1,6 @@
 # AMD
 
-AMD gives ROCm, its open-source GPU stack for open-weight models, and a one-time AMD Developer Cloud credit on Instinct MI300X. It has no connector for either Desktop app.
+AMD gives ROCm, its open-source GPU stack for open-weight models, and a one-time AMD Developer Cloud credit on Instinct MI300X. It names no connector for either Desktop app.
 
 ```mermaid
 flowchart LR
@@ -12,7 +12,7 @@ flowchart LR
 
 | Account | Free tier | Login or key | Claude connector | OpenCode | Guard |
 | --- | --- | --- | --- | --- | --- |
-| A free AMD AI Developer Program member. AMD awards credit on your stated use case ([AMD Developer Cloud](https://www.amd.com/en/developer/resources/cloud-access/amd-developer-cloud.html), read 2026-11-24). | $100 credit, expiring 30 days after deposit unless your email says otherwise ([AMD Developer Cloud](https://www.amd.com/en/developer/resources/cloud-access/amd-developer-cloud.html), read 2026-11-24). | AMD sign-on to the Developer Cloud console. ROCm needs no key. | None found. | None for ROCm. A model you serve yourself is a custom provider. | With no card, the VM and its data are destroyed at expiry. A card removes the stop. [Guard detail](detail/amd.md#guard). See [Git Crafter compute rules](https://github.com/SoulCraft-Org/git-crafter/blob/main/rules/compute.md). |
+| An AMD AI Developer Program member, which is "free to join" ([Program](https://www.amd.com/en/developer/ai-dev-program.html), read 2026-11-24). Credit goes to "independent developers and open-source project contributors" on your use case ([AMD Developer Cloud](https://www.amd.com/en/developer/resources/cloud-access/amd-developer-cloud.html), read 2026-11-24). | $100 credit, expiring 30 days after deposit unless your email says otherwise ([AMD Developer Cloud](https://www.amd.com/en/developer/resources/cloud-access/amd-developer-cloud.html), read 2026-11-24). One use per account ([DigitalOcean AMD credits](https://docs.digitalocean.com/products/amd/details/credits/), read 2026-11-24). | AMD sign-on to the Developer Cloud console. ROCm needs no key. | None found. | None for ROCm. A model you serve yourself is a custom provider ([OpenCode providers](https://opencode.ai/docs/providers), read 2026-11-24). | With no card, the VM and its data are destroyed at expiry. A card removes the stop. [Guard detail](detail/amd.md#guard). See [Git Crafter compute rules](https://github.com/SoulCraft-Org/git-crafter/blob/main/rules/compute.md). |
 
 ## Wiring
 

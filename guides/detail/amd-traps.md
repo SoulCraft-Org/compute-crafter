@@ -29,6 +29,6 @@ What goes wrong with AMD, and the pages this guide read. The guard and steps are
 | [OpenCode providers](https://opencode.ai/docs/providers) | 2026-11-24 |
 | [models.dev](https://models.dev/api.json) | 2026-11-24 |
 | [ROCm install](https://rocm.docs.amd.com/en/latest/install/rocm.html) | 2026-11-12 |
-| [AMD AI Developer Program](https://www.amd.com/en/developer/ai-dev-program.html) | 2026-11-12 |
+| [AMD AI Developer Program](https://www.amd.com/en/developer/ai-dev-program.html) | 2026-11-24 |
 
 </details>

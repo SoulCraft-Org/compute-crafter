@@ -19,7 +19,7 @@ flowchart LR
 | Host | Plugs in as | Source, read 2026-11-24 |
 | --- | --- | --- |
 | OpenCode Desktop App | Remote MCP server `runpod` under `mcp`, then `opencode mcp auth runpod`. A Serverless vLLM endpoint is OpenAI-compatible, so it fits a custom provider. | [RunPod MCP servers](https://docs.runpod.io/get-started/mcp-servers), [vLLM compatibility](https://docs.runpod.io/serverless/vllm/openai-compatibility), [OpenCode providers](https://opencode.ai/docs/providers) |
-| Claude Desktop App, Code tab | RunPod's page: Settings, Connectors, Add custom connector, `https://mcp.runpod.io/`. It names no Code tab. Desktop adds connectors from the plus button. | [RunPod MCP servers](https://docs.runpod.io/get-started/mcp-servers), [Desktop docs](https://code.claude.com/docs/en/desktop) |
+| Claude Desktop App, Code tab | Add custom connector `https://mcp.runpod.io/` (RunPod). Connectors added with the plus button reach local Code sessions (Desktop docs). | [RunPod MCP servers](https://docs.runpod.io/get-started/mcp-servers), [Desktop docs: Connect external tools](https://code.claude.com/docs/en/desktop) |
 | Claude Desktop App, Cowork | Not confirmed. RunPod's page does not mention Cowork. Cowork takes connectors from your claude.ai account. | [RunPod MCP servers](https://docs.runpod.io/get-started/mcp-servers), [Desktop docs](https://code.claude.com/docs/en/desktop) |
 
 <details>
@@ -29,6 +29,7 @@ flowchart LR
 opencode mcp add runpod --global --url https://mcp.runpod.io/
 opencode mcp auth runpod
 opencode mcp list
+opencode mcp add runpod-docs --global --url https://docs.runpod.io/mcp
 brew install runpod/runpodctl/runpodctl
 runpodctl doctor
 runpodctl pod stop <pod_id>
