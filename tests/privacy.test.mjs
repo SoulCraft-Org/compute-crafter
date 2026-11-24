@@ -170,8 +170,8 @@ test('privacy: an invalid PRIVACY_TERMS is a usage error that quotes none of it'
 test('privacy: a term hit names where it sits (metric id or nearest element id), never the match', () => {
   const run = { mode: 'ci', metrics: { 'docs.a': { value: 1, detail: ['clean'] }, 'issues.b': { value: 1, detail: ['an exampleterm row'] } } };
   const found = privacyProblems(run, { terms: termsPattern('exampleterm') });
-  assert.ok(found.includes('private term in metric issues.b (detail[0])'), JSON.stringify(found));
-  assert.deepEqual(termPaths({ rows: [{ title: 'x' }, { title: 'an exampleterm' }], exampleterm: 1 }, termsPattern('exampleterm')), ['rows[1].title']);
+  assert.ok(found.includes('private term in metric issues.b (detail[0] at 3 of 18)'), JSON.stringify(found));
+  assert.deepEqual(termPaths({ rows: [{ title: 'x' }, { title: 'an exampleterm' }], exampleterm: 1 }, termsPattern('exampleterm')), ['rows[1].title at 3 of 14']);
   assert.ok(!found.some((f) => /exampleterm/.test(f)), 'no finding quotes the match');
   assert.equal(termWhere('<section id="tab-docs"><p>ok</p></section><div id="m-issues.b"><span>exampleterm</span></div>', termsPattern('exampleterm')), 'near #m-issues.b');
   assert.equal(termWhere('<p>clean</p>', termsPattern('exampleterm')), null);

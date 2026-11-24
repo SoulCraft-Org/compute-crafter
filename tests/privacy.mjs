@@ -90,9 +90,9 @@ export function privacyProblems(run, { localIds = new Set(), names = [], terms =
   return [...found, ...text];
 }
 
-// The key paths inside a value whose string (key or leaf) holds a private term, such as detail[2].title; never the match.
+// The key paths inside a value whose string (key or leaf) holds a private term, with the match's offset and the string's length, such as detail[2].title at 4 of 30; never the match.
 export function termPaths(value, terms, path = '') {
-  if (typeof value === 'string') return terms.test(value) ? [path || '(value)'] : [];
+  if (typeof value === 'string') return terms.test(value) ? [`${path || '(value)'} at ${value.search(terms)} of ${value.length}`] : [];
   if (value === null || typeof value !== 'object') return [];
   const out = [];
   for (const [k, v] of Array.isArray(value) ? value.map((v, i) => [i, v]) : Object.entries(value)) {
