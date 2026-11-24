@@ -1,5 +1,5 @@
 {
- "comment": "Compute Crafter's Process page config, and its maps file too (docs.maps names it): Git Crafter templates/process/config.json at v7.1.0. Its maps are the library maps whose steps sit on this repo's Quality tabs (delivery, triage, contribute, board, adopt, measure, code, secure, document, release, score, discuss) and the Spend map, maps/spend.json, with all 5 steps. Left out: deploy (all 4 steps score on the Pages tab, dropped: no site but this page). Dropped steps, each on a tab this repo drops: board card, start, done and watch (Projects: no Project board), triage card (projects.latest_cycle_hours), discuss card (projects.done_with_pr) and contribute deploy (deploy.failure_rate_last10). Release and score keep all their steps: their metrics sit on the Settings, Dependabot, Actions, Code and Issues tabs this repo keeps, and the Settings step shows not measured in CI. Discuss keeps its Discussions and Settings steps the same way. A Spend step whose metric needs local files shows not measured in CI. tests/pack.test.mjs checks the Spend map agrees with maps/spend.json. Keys: Git Crafter actions/pages/action.yml; maps: pages/maps/README.md.",
+ "comment": "Compute Crafter's Process page config, and its maps file too (docs.maps names it): Git Crafter templates/process/config.json at v7.1.0, with every library map: delivery, deploy, triage, contribute, board, adopt, measure, code, secure, document, release, score and discuss. The Spend map, maps/spend.json, keeps all 5 steps. The five Claudius pack maps (guard, decide, equip, publish, visibility) are named by use, from the pack pinned in quality/config.json (quality_config). Steps dropped before (Board, Triage and Discuss cards, and Contribute deploy) are back with their tabs, Projects and Pages. A step whose metric needs a Projects-read token or local files shows not measured in CI. tests/pack.test.mjs checks the Spend map agrees with maps/spend.json. Keys: Git Crafter actions/pages/action.yml; maps: pages/maps/README.md. The Equip map's Keep step points at Claude Code's plugin loading page, not at the pack's own README: the privacy gate refuses the pack repo's owner name on this page (tests/privacy.mjs, PRIVATE_TERMS).",
  "repos": [
   "compute-crafter"
  ],
@@ -7,42 +7,22 @@
   "maps": "quality/process/config.json"
  },
  "repo_url": "https://github.com/SoulCraft-Org/compute-crafter/blob/main",
+ "quality_config": "quality/config.json",
  "maps": [
   {
    "use": "delivery"
   },
   {
-   "use": "triage",
-   "steps": {
-    "card": {
-     "drop": true
-    }
-   }
+   "use": "deploy"
   },
   {
-   "use": "contribute",
-   "steps": {
-    "deploy": {
-     "drop": true
-    }
-   }
+   "use": "triage"
   },
   {
-   "use": "board",
-   "steps": {
-    "card": {
-     "drop": true
-    },
-    "start": {
-     "drop": true
-    },
-    "done": {
-     "drop": true
-    },
-    "watch": {
-     "drop": true
-    }
-   }
+   "use": "contribute"
+  },
+  {
+   "use": "board"
   },
   {
    "use": "adopt"
@@ -66,12 +46,27 @@
    "use": "score"
   },
   {
-   "use": "discuss",
+   "use": "discuss"
+  },
+  {
+   "use": "guard"
+  },
+  {
+   "use": "decide"
+  },
+  {
+   "use": "equip",
    "steps": {
-    "card": {
-     "drop": true
+    "keep": {
+     "rule_ref": "https://code.claude.com/docs/en/plugins/loading"
     }
    }
+  },
+  {
+   "use": "publish"
+  },
+  {
+   "use": "visibility"
   },
   {
    "id": "spend",

@@ -18,5 +18,33 @@
         "package-lock.json"
       ]
     }
+  },
+  {
+    "id": "issues.area_labeled",
+    "params": {
+      "comment": "The area labels every issue names (Compute Crafter's labels, 2026-11-24): guides, catalog, ci, quality, site, sign-ins.",
+      "area_labels": [
+        "area: guides",
+        "area: catalog",
+        "area: ci",
+        "area: quality",
+        "area: site",
+        "area: sign-ins"
+      ]
+    }
+  },
+  {
+    "id": "security.threat_model_current",
+    "params": {
+      "threat_model": "THREAT-MODEL.md",
+      "threat_model_covers": [
+        "collectors",
+        "catalog",
+        "tests/privacy.mjs",
+        "tools",
+        ".github/workflows"
+      ],
+      "threat_model_grace_days": 7
+    }
   }
 ]

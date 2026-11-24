@@ -1,0 +1,29 @@
+[
+  {
+    "id": "design.raw_hex",
+    "params": {
+      "comment": "The Pages tab reads this repo's public page, the Quality page, at its Pages URL (the live site, built by .github/workflows/pages.yml). origin is the production URL; site_dir stays empty because the build writes quality/dist after the readings.",
+      "origin": "https://soulcraft-org.github.io/compute-crafter/",
+      "site_dir": ""
+    }
+  },
+  {
+    "id": "usability.reading_grade",
+    "params": {
+      "comment": "The usability metrics read the site from this entry: origin and site_dir match design.raw_hex. key_pages are the two pages the repo ships.",
+      "origin": "https://soulcraft-org.github.io/compute-crafter/",
+      "site_dir": "",
+      "key_pages": [
+        "/",
+        "/process.html"
+      ]
+    }
+  },
+  {
+    "id": "deploy.waiting_merges",
+    "params": {
+      "comment": "platform pages reads GitHub Pages deploys through the GitHub API.",
+      "platform": "pages"
+    }
+  }
+]
