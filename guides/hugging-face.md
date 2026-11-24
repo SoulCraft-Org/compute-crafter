@@ -12,7 +12,7 @@ flowchart LR
 
 | Account | Free tier | Login or key | Claude connector | OpenCode | Guard |
 | --- | --- | --- | --- | --- | --- |
-| Anyone with an email address. Hosting ZeroGPU Spaces needs a verified email and an account older than 30 days ([ZeroGPU](https://huggingface.co/docs/hub/spaces-zerogpu), read 2026-11-12). | ZeroGPU: 5 minutes a day on a free account, 2 minutes signed out, 40 minutes on PRO. A free account hosts up to 2 ZeroGPU Spaces ([ZeroGPU](https://huggingface.co/docs/hub/spaces-zerogpu), read 2026-11-12). CPU Basic: 2 vCPU, 16 GB, free ([Spaces overview](https://huggingface.co/docs/hub/spaces-overview), read 2026-11-12). Inference Providers: no monthly credit for free users, $2.00 for PRO ([Pricing and Billing](https://huggingface.co/docs/inference-providers/pricing), read 2026-11-12). PRO costs $9 a month ([Pricing](https://huggingface.co/pricing), read 2026-11-12). | `hf auth login` (browser). Tools that need a token read `HF_TOKEN`. | `https://huggingface.co/mcp` ([Hugging Face MCP Server](https://huggingface.co/docs/hub/agents-mcp), read 2026-11-24). | `huggingface`, reads `HF_TOKEN`, base URL `https://router.huggingface.co/v1` ([models.dev](https://models.dev), read 2026-11-24). | A free account has no Inference Providers credit, so routed calls need a credit purchase first ([Pricing and Billing](https://huggingface.co/docs/inference-providers/pricing), read 2026-11-12). Free ZeroGPU stops at the daily quota. Buying credits removes the stop: on PRO, ZeroGPU past quota bills "$1 per 10 minutes" automatically ([ZeroGPU](https://huggingface.co/docs/hub/spaces-zerogpu), read 2026-11-12). See [Git Crafter compute rules](https://github.com/SoulCraft-Org/git-crafter/blob/main/rules/compute.md). |
+| Anyone with an email. Hosting ZeroGPU Spaces needs a verified email and an account older than 30 days ([ZeroGPU](https://huggingface.co/docs/hub/spaces-zerogpu), read 2026-11-12). | ZeroGPU: 5 minutes a day free, 40 on PRO ([ZeroGPU](https://huggingface.co/docs/hub/spaces-zerogpu), read 2026-11-12). PRO costs $9 a month ([Pricing](https://huggingface.co/pricing), read 2026-11-12). [More](detail/hugging-face.md#free-tier). | `hf auth login` (browser). Tools that need a token read `HF_TOKEN`. | `https://huggingface.co/mcp` ([Hugging Face MCP Server](https://huggingface.co/docs/hub/agents-mcp), read 2026-11-24). | `huggingface`, reads `HF_TOKEN`, base URL `https://router.huggingface.co/v1` ([models.dev](https://models.dev), read 2026-11-24). | A free account has no routed-call credit: buy credits first ([Pricing and Billing](https://huggingface.co/docs/inference-providers/pricing), read 2026-11-12). [More](detail/hugging-face.md#guard). See [Git Crafter compute rules](https://github.com/SoulCraft-Org/git-crafter/blob/main/rules/compute.md). |
 
 ## Wiring
 
@@ -28,11 +28,9 @@ flowchart LR
 ```bash
 uvx hf auth login
 uvx hf auth whoami
-claude mcp add --transport http hf-mcp-server "https://huggingface.co/mcp?login"
-claude mcp login hf-mcp-server
 opencode auth login huggingface --method key
 ```
 
 </details>
 
-Set-up notes, traps and sources: [Hugging Face traps and sources](detail/hugging-face.md).
+Free tier, guard and set up: [Hugging Face detail](detail/hugging-face.md). Traps and sources: [Hugging Face traps and sources](detail/hugging-face-traps.md).

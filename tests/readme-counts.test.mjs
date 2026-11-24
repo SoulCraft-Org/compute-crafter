@@ -1,5 +1,5 @@
 // A count in README.md or catalog/README.md is a claim about the data: it fails when catalog/plans.json or
-// catalog/logins.json says otherwise. guides/README.md's claim about the table each guide opens with is checked here too, within the first 20 lines: a pilot page opens with a diagram.
+// catalog/logins.json says otherwise. guides/README.md's claim about the table each guide opens with is checked here too.
 import assert from 'node:assert/strict';
 import { readdirSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
@@ -51,6 +51,15 @@ test('guides/README.md: the guides that do not open with the provider table are 
   for (const file of readdirSync(join(ROOT, 'guides')).filter((f) => f.endsWith('.md') && !['README.md', 'CHECKLIST.md'].includes(f))) {
     assert.ok(listed.includes(file), `guides/README.md does not list ${file}`);
   }
-  const without = listed.filter((f) => !read('guides', f).split('\n').slice(0, 20).includes(PROVIDER)).sort();
+  // The first table line outside a code fence: a pilot page opens with a diagram, then the provider table.
+  const firstTable = (text) => {
+    let fenced = false;
+    for (const line of text.split('\n')) {
+      if (line.startsWith('```')) fenced = !fenced;
+      else if (!fenced && line.startsWith('|')) return line;
+    }
+    return undefined;
+  };
+  const without = listed.filter((f) => firstTable(read('guides', f)) !== PROVIDER).sort();
   assert.deepEqual(without, named);
 });

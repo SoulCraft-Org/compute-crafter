@@ -14,9 +14,9 @@ flowchart LR
 
 | Guide | Lane | OpenCode Desktop App | Code tab | Cowork | Covers |
 | --- | --- | --- | --- | --- | --- |
-| [Ollama](ollama.md) | 🧠 Inference | ✅ | ⬜ | ✅ | Cloud models on usage credits |
-| [OpenRouter](openrouter.md) | 🧠 Inference | ✅ | ✅ | ✅ | One API, many vendors, `:free` variants |
-| [Hugging Face](hugging-face.md) | 🧠 Inference, ⚡ GPU | ✅ | ✅ | ✅ | Hub models, ZeroGPU Spaces, Inference Providers, MCP server |
+| [Ollama](ollama.md) | 🧠 Inference | ✅ | ❔ | ✅ | Cloud models on usage credits |
+| [OpenRouter](openrouter.md) | 🧠 Inference | ✅ | ✅ | ❔ | One API, many vendors, `:free` variants |
+| [Hugging Face](hugging-face.md) | 🧠 Inference, ⚡ GPU | ✅ | ❔ | ❔ | Hub models, ZeroGPU Spaces, Inference Providers, MCP server |
 | [NVIDIA](nvidia.md) | 🧠 Inference | ⬜ | ⬜ | ⬜ | NIM trial endpoints, NGC containers, CUDA docs MCP server |
 | [Groq](groq.md) | 🧠 Inference | ⬜ | ⬜ | ⬜ | Fast open-weight models on a free plan |
 | [Together AI](together.md) | 🧠 Inference | ⬜ | ⬜ | ⬜ | Prepaid per-token open-weight models |
@@ -36,7 +36,7 @@ flowchart LR
 | [Local models](local-models.md) | 🏠 Local | ⬜ | ⬜ | ⬜ | MLX and LM Studio on your own port |
 | [Logins](logins.md) | 🔑 Accounts | ⬜ | ⬜ | ⬜ | One sign-in order, passkeys, logins catalog |
 
-✅ wired, ⬜ not yet confirmed (issue #192), ➖ not available. The three provider rows were read 2026-11-24, the Claude Desktop MCP row 2026-11-20.
+✅ a vendor or OpenCode page documents it, ❔ not confirmed, ➖ not available, ⬜ not reviewed yet (issue #192). Marks follow each guide's wiring table. The three provider rows were read 2026-11-24, the Claude Desktop MCP row 2026-11-20.
 
 Every free-tier figure cites the vendor's page and read date. [catalog/plans.json](../catalog/plans.json) holds every plan.
 
