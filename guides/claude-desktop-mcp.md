@@ -1,29 +1,39 @@
 # Claude Desktop: one MCP server for the Code tab and Cowork
 
-The Claude desktop app has two places that use MCP tools: the Code tab (Claude Code) and Cowork. This guide picks the route that gives one server to both.
-
-| Your server | Use | Reaches | Who adds it | Source |
-| --- | --- | --- | --- | --- |
-| A public HTTPS URL | A custom connector. | claude.ai, the mobile app, and the desktop app's chat, Cowork and Code tab. Claude Code in a terminal too, when signed in with a Claude account. | Free, Pro, Max and Ultra: you, at Customize > Connectors. Team and Enterprise: an Owner adds it for the organization. Each member then connects. | [Custom connectors](https://support.claude.com/en/articles/11175166-get-started-with-custom-connectors-using-remote-mcp), [unlisted connectors](https://claude.com/docs/connectors/custom/add-unlisted), [Claude Code MCP](https://code.claude.com/docs/en/mcp#how-connectors-reach-claude-code), read 2026-11-20 |
-| An app that listens only on `127.0.0.1` | A desktop extension (`.mcpb`) built from [loopback-bridge/](loopback-bridge/). | The desktop app on that computer: Cowork and the Code tab's local sessions (source: a test on 2026-11-20). Not claude.ai, the mobile app or cloud sessions. | You, on each computer. Installation is per user. | [MCPB page](https://claude.com/docs/connectors/building/mcpb), read 2026-11-20 |
-| A server in `~/.claude.json` or `.mcp.json` | Claude Code's own config. | Claude Code only, the Code tab included. Cowork takes its connectors from your Claude account, not from `~/.claude`. | You, with `claude mcp add`. | [Desktop docs](https://code.claude.com/docs/en/desktop#extend-claude-code), read 2026-11-20 |
-| A server in `claude_desktop_config.json` | Claude Desktop's local config. | The desktop app, and a Cowork session running on this computer. Not claude.ai or cloud Cowork. | You. Claude Code copies it with `claude mcp add-from-claude-desktop`. | [Custom connectors](https://support.claude.com/en/articles/11175166-get-started-with-custom-connectors-using-remote-mcp), [Claude Code MCP](https://code.claude.com/docs/en/mcp#import-mcp-servers-from-claude-desktop), read 2026-11-20 |
+The Code tab and Cowork both use MCP tools. This guide picks the route that gives one server to both.
 
 ```mermaid
 flowchart LR
-  Q{Where does your server run?} -->|Public HTTPS URL| C[Custom connector]
+  Q{Where does your server run?} -->|Public HTTPS URL| C[Custom connector<br/>sign in with Claude]
   Q -->|Loopback only| B[Desktop extension]
-  Q -->|Claude Code only| J[Claude Code config]
-  Q -->|Desktop app only| D[Desktop config]
+  C --> T[Claude Desktop App, Code tab]
+  C --> W[Claude Desktop App, Cowork]
+  B --> T
+  B --> W
+  C -.-> O[OpenCode Desktop App<br/>not confirmed]
 ```
 
-## Set up: a remote server
+| Your server | Use | Reaches | Who adds it |
+| --- | --- | --- | --- |
+| A public HTTPS URL | A custom connector ([Connectors](https://support.claude.com/en/articles/11175166-get-started-with-custom-connectors-using-remote-mcp), read 2026-11-24). | Desktop chat, Cowork and the Code tab, claude.ai and mobile ([Claude Code MCP](https://code.claude.com/docs/en/mcp#how-connectors-reach-claude-code), read 2026-11-20). | You, at Customize > Connectors ([Connectors](https://support.claude.com/en/articles/11175166-get-started-with-custom-connectors-using-remote-mcp), read 2026-11-24). A Team or Enterprise Owner adds it first. |
+| An app on `127.0.0.1` only | A desktop extension (`.mcpb`) from [loopback-bridge/](loopback-bridge/) ([MCPB page](https://claude.com/docs/connectors/building/mcpb), read 2026-11-20). | Cowork and the Code tab's local sessions on that computer (a test, 2026-11-20). | You, on each computer. |
+| A server in Claude Code's own config (`~/.claude.json`, `.mcp.json`; `claude mcp add` writes there) | That file. | The Code tab only. Cowork takes connectors from your Claude account ([Desktop docs](https://code.claude.com/docs/en/desktop), read 2026-11-24). | You, in the file. |
+| A server in `claude_desktop_config.json` | Desktop's local config. | A Cowork session on this computer, not claude.ai or cloud Cowork ([Connectors](https://support.claude.com/en/articles/11175166-get-started-with-custom-connectors-using-remote-mcp), read 2026-11-24). | You. |
 
-1. On Free, Pro, Max or Ultra, go to Customize > Connectors, select Add, then Add custom connector.
-2. On Team or Enterprise, an Owner goes to Organization settings > Connectors, selects Add, then Custom, then Web.
-3. Enter a name and the server URL exactly as the provider documents it, path included, such as `https://example.com/mcp`. Keep any authentication option marked Detected unless the server's docs say otherwise. Select Add.
-4. On Team or Enterprise, each member goes to Customize > Connectors, finds the connector labeled Custom, and selects Connect.
-5. For a read-only docs connector, open its page under Customize > Connectors. Under Tool permissions, set the group of read-only tools to Always allow, so Cowork stops asking before every lookup. Leave write tools at Needs approval.
-6. Start a new Code tab session. A session that was already open did not list a new connector (source: a test on 2026-11-20).
+## Wiring
+
+| Host | Plugs in as | Source, read 2026-11-24 |
+| --- | --- | --- |
+| OpenCode Desktop App | No Desktop route here. OpenCode takes its own config. | [OpenCode MCP](https://opencode.ai/docs/mcp-servers) |
+| Claude Desktop App, Code tab | A custom connector, added at Customize > Connectors. Open a new session after adding (seen in a test, 2026-11-20). | [Connectors](https://support.claude.com/en/articles/11175166-get-started-with-custom-connectors-using-remote-mcp), [Desktop docs](https://code.claude.com/docs/en/desktop) |
+| Claude Desktop App, Cowork | The same connector. Cowork takes connectors from your claude.ai account. | [Desktop docs](https://code.claude.com/docs/en/desktop) |
+
+## Set up a remote server
+
+1. On Free, Pro, Max or Ultra, go to Customize > Connectors, select Add, then Add custom connector. On Team or Enterprise, an Owner goes to Organization settings > Connectors first ([Connectors](https://support.claude.com/en/articles/11175166-get-started-with-custom-connectors-using-remote-mcp), read 2026-11-24).
+2. Enter a name and the server URL as the provider documents it, path included. Keep the Detected authentication option, then select Add.
+3. On Team or Enterprise, each member selects Connect on the Custom connector.
+4. For a read-only docs connector, set its read-only tools to Always allow under Tool permissions. Leave write tools at Needs approval.
+5. Start a new Code tab session. An open session did not list a new connector (a test, 2026-11-20).
 
 For an app on this computer only, see [the loopback bridge](claude-desktop-mcp/loopback.md). Traps and sources: [Claude Desktop MCP traps and sources](claude-desktop-mcp/traps.md).

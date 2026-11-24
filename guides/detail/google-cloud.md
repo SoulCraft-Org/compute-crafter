@@ -1,39 +1,22 @@
-# Google Cloud: traps and sources
+# Google Cloud: guard and set up
 
-What goes wrong with Google Cloud, and the pages this guide read. The steps are in [Google Cloud](../google-cloud.md).
+What the Google Cloud guide moved out of its page. Traps and sources: [Google Cloud traps and sources](google-cloud-traps.md). The diagram and wiring are in [Google Cloud](../google-cloud.md).
 
-## Spend caps
+## Guard
 
 | Control | What it does | Limit |
 | --- | --- | --- |
-| Budget | Sends alerts. It does not cap spending. The page defaults the thresholds to 50, 90 and 100 percent ([Budgets](https://docs.cloud.google.com/billing/docs/how-to/budgets), read 2026-11-23) | Alerts can take several hours. Set the budget below your available funds |
-| Net cost | With all Savings types selected, which is the default, spend is cost minus discounts and credits. Select none to count cost before credits ([Budgets](https://docs.cloud.google.com/billing/docs/how-to/budgets), read 2026-11-23) | An alert may not fire while credits keep net cost under the threshold |
-| Kill switch | A budget notice goes to a Pub/Sub topic. A Cloud Run function then removes the project's billing account when cost passes the budget ([Disable billing](https://docs.cloud.google.com/billing/docs/how-to/disable-billing-with-notifications), read 2026-11-23) | Notices arrive after costs. Google says the steps do not guarantee spend stays under budget |
-| Unlinking billing | It shuts down all resources. Google says they can be irretrievably deleted ([Disable billing](https://docs.cloud.google.com/billing/docs/how-to/disable-billing-with-notifications), read 2026-11-23) | Re-enabling billing is manual, and recovery is not assured. It needs `roles/billing.admin` |
-| Quotas | A per-API request limit, set under **IAM & Admin**, then **Quotas** ([Capping API usage](https://docs.cloud.google.com/apis/docs/capping-api-usage), read 2026-11-23) | It caps request volume, not spend. Enforcement has a latency, so keep a safety buffer |
+| Unbilled trial | Not billed unless you upgrade. At the end, 30 days of grace, then Google permanently deletes the resources ([Free cloud features](https://docs.cloud.google.com/free/docs/free-cloud-features), read 2026-11-24) | Upgrading removes this stop |
+| Budget | Alerts only. Defaults are 50, 90 and 100 percent ([Budgets](https://docs.cloud.google.com/billing/docs/how-to/budgets), read 2026-11-24) | Alerts take several hours. Set the budget below your funds |
+| Net cost | All Savings types selected is the default, so spend is cost minus credits. Deselect them to count gross cost ([Budgets](https://docs.cloud.google.com/billing/docs/how-to/budgets), read 2026-11-24) | An alert may not fire while credits cover the cost |
+| Kill switch | A budget notice goes to Pub/Sub. A Cloud Run function then disables the project's billing ([Disable billing](https://docs.cloud.google.com/billing/docs/how-to/disable-billing-with-notifications), read 2026-11-24) | Google says it "doesn't guarantee" spend stays under budget. Resources can be irretrievably deleted. Re-enabling billing is manual, with no guarantee of recovery. It needs `roles/billing.admin` |
+| Quotas | Set under IAM & Admin, Quotas ([Capping API usage](https://docs.cloud.google.com/apis/docs/capping-api-usage), read 2026-11-24) | They cap request volume, not spend, and enforcement lags |
 
-## Traps
+## Set up
 
-| Trap | What happens |
-| --- | --- |
-| The upgrade | Upgrading ends the Free Trial. You keep unused credit until 90 days after sign-up. Then every cost is money ([Free cloud features](https://docs.cloud.google.com/free/docs/free-cloud-features), read 2026-11-23) |
-| Vertex AI after 2026-11-16 | The credit cannot pay for Gemini platform (Vertex AI) services. This applies to a sign-up or upgrade on or after that date ([Free cloud features](https://docs.cloud.google.com/free/docs/free-cloud-features), read 2026-11-23) |
-| Grace period | A trial that ends without an upgrade has 30 days to upgrade. After that, Google permanently deletes the trial's resources ([Free cloud features](https://docs.cloud.google.com/free/docs/free-cloud-features), read 2026-11-23) |
-| A budget is not a stop | An alerts-only budget does not stop use or billing ([Budgets](https://docs.cloud.google.com/billing/docs/how-to/budgets), read 2026-11-23) |
-| A billing-locked project | Billing cannot be disabled on a project locked to a billing account ([Disable billing](https://docs.cloud.google.com/billing/docs/how-to/disable-billing-with-notifications), read 2026-11-23) |
-| Per-user quotas | Without a signed-in user they fall back to client IP, and shared IPs pool into one bucket ([Capping API usage](https://docs.cloud.google.com/apis/docs/capping-api-usage), read 2026-11-23) |
+1. Sign up for the Free Trial in the Cloud console. Note the date: the credit ends 90 days later ([Free cloud features](https://docs.cloud.google.com/free/docs/free-cloud-features), read 2026-11-24).
+2. Stay on the trial for CPU work. While it is unbilled you cannot add GPUs, use Marketplace or request a quota increase.
+3. Upgrade only for a GPU or a quota increase. On the Welcome page choose **Activate**. Google then bills usage the credit and Free Tier do not cover.
+4. On a paid account, set a budget, then a kill switch, then a quota. In the kill-switch sample, `SIMULATE_DEACTIVATION` is `True` by default. Set it to `False` only after you test it ([Disable billing](https://docs.cloud.google.com/billing/docs/how-to/disable-billing-with-notifications), read 2026-11-24).
 
-## Sources
-
-<details>
-<summary>Pages read and their dates</summary>
-
-| Page | Read |
-| --- | --- |
-| [Free cloud features](https://docs.cloud.google.com/free/docs/free-cloud-features) | 2026-11-23 |
-| [Budgets and budget alerts](https://docs.cloud.google.com/billing/docs/how-to/budgets) | 2026-11-23 |
-| [Disable billing with notifications](https://docs.cloud.google.com/billing/docs/how-to/disable-billing-with-notifications) | 2026-11-23 |
-| [Capping API usage](https://docs.cloud.google.com/apis/docs/capping-api-usage) | 2026-11-23 |
-| [models.dev provider catalog](https://models.dev/api.json) | 2026-11-23 |
-
-</details>
+A net-cost budget plus a kill switch is the right pair, because the budget counts what you really pay.

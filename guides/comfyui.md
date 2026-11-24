@@ -1,59 +1,45 @@
 # ComfyUI
 
-ComfyUI runs open-weight image and video workflows, and its MCP servers let Claude Code drive it on Comfy Cloud, a rented GPU or your own box.
-
-| Account | Free tier | Login or key | Claude connector | OpenCode | Guard |
-| --- | --- | --- | --- | --- | --- |
-| A Comfy account for Comfy Cloud. Whether the Free plan needs a card is not published. Self-hosted ComfyUI needs no account | Free: "5 free runs on real GPUs and free Comfy Agent credits for new users". Standard: $20 a month or $192 billed yearly, 50,400 credits per year ([Comfy Cloud pricing](https://www.comfy.org/cloud/pricing), read 2026-11-12) | `comfy cloud login` (browser OAuth with PKCE). MCP: OAuth through `/mcp` | Comfy Cloud MCP `https://cloud.comfy.org/mcp`: `claude mcp add --transport http comfy-cloud https://cloud.comfy.org/mcp`. Local: `comfy-mcp` | None as a model provider. Add the Cloud MCP with `opencode mcp add` | Plan credits pay for GPU time and Partner Nodes; top-ups are manual ([Comfy Cloud pricing](https://www.comfy.org/cloud/pricing), read 2026-11-12). Buying a top-up raises the stop. [Git Crafter compute rules](https://github.com/SoulCraft-Org/git-crafter/blob/main/rules/compute.md), [Git Crafter Comfy rules](https://github.com/SoulCraft-Org/git-crafter/blob/main/rules/comfy.md) |
+ComfyUI runs open-weight image and video workflows. Comfy Cloud's MCP server lets the Claude Desktop App drive it, and a local one drives a ComfyUI on your own machine.
 
 ```mermaid
 flowchart LR
-  I[Install comfy-cli<br/>telemetry off] --> W{Where does ComfyUI run?}
-  W -->|Comfy Cloud| L[Log in and read<br/>the balance] --> M[Connect the cloud MCP] --> R[Run, then compare balances]
-  W -->|Your machine| S[Install the local MCP] --> P[Start on an explicit port]
+  P[ComfyUI] --> S[Sign in<br/>Comfy account, OAuth] --> G[Spend stop<br/>plan credit, manual top-ups]
+  G --> O[OpenCode Desktop App<br/>remote MCP server]
+  G --> C[Claude Desktop App, Code tab<br/>custom connector]
+  G -.-> W[Claude Desktop App, Cowork<br/>not confirmed]
 ```
 
-## Set up
+| Account | Free tier | Login or key | Claude connector | OpenCode | Guard |
+| --- | --- | --- | --- | --- | --- |
+| A Comfy account for Comfy Cloud. Self-hosted ComfyUI needs none ([Comfy MCP](https://docs.comfy.org/agent-tools/mcp), read 2026-11-24). | Free plan, $0: 5 free runs and free Comfy Agent credits ([Comfy Cloud pricing](https://www.comfy.org/cloud/pricing), read 2026-11-24). | `comfy cloud login`, a browser sign-in. MCP: OAuth. | `https://cloud.comfy.org/mcp` ([Comfy MCP](https://docs.comfy.org/agent-tools/mcp), read 2026-11-24). | `opencode mcp add comfy-cloud --global --url https://cloud.comfy.org/mcp` ([OpenCode MCP servers](https://opencode.ai/docs/mcp-servers), read 2026-11-24). | Plan credit, then manual top-ups. Team spending limits and auto-recharge are not yet available ([Comfy Cloud pricing](https://www.comfy.org/cloud/pricing), read 2026-11-24). [Guard detail](detail/comfyui.md#guard). See [Git Crafter compute rules](https://github.com/SoulCraft-Org/git-crafter/blob/main/rules/compute.md). |
 
-1. To run ComfyUI on a GPU you rent or own, use [ComfyUI Base](https://github.com/SoulCraft-Org/comfyui-base). Its README and handbook hold the installer, the per-host recipes and its MCP driver.
-2. Install comfy-cli ([Comfy CLI getting started](https://docs.comfy.org/comfy-cli/getting-started), read 2026-11-12). Turn its telemetry off.
+## Wiring
 
-   ```bash
-   pip install comfy-cli
-   comfy tracking disable
-   ```
+| Host | Plugs in as | Source, read 2026-11-24 |
+| --- | --- | --- |
+| OpenCode Desktop App | Comfy: any MCP client with remote HTTP transport can connect. OpenCode documents remote servers under `mcp`, with OAuth on by default. | [Comfy MCP](https://docs.comfy.org/agent-tools/mcp), [OpenCode MCP servers](https://opencode.ai/docs/mcp-servers) |
+| Claude Desktop App, Code tab | Customize, Connectors, Add custom connector, the URL above (Comfy). Connectors added with the plus button reach local Code sessions (Desktop docs). | [Comfy MCP](https://docs.comfy.org/agent-tools/mcp), [Desktop docs: Connect external tools](https://code.claude.com/docs/en/desktop) |
+| Claude Desktop App, Cowork | Not confirmed. Comfy's page does not mention Cowork. Cowork takes connectors from your claude.ai account. | [Comfy MCP](https://docs.comfy.org/agent-tools/mcp), [Desktop docs](https://code.claude.com/docs/en/desktop) |
 
-3. For Comfy Cloud, log in and read the balance before any run.
+The local `comfy-mcp` has its own Claude Desktop step, an edit to `claude_desktop_config.json` ([Comfy MCP local](https://docs.comfy.org/agent-tools/local), read 2026-11-24).
 
-   ```bash
-   comfy cloud login
-   comfy cloud whoami
-   comfy cloud status
-   ```
+<details>
+<summary>Commands</summary>
 
-4. Connect the Comfy Cloud MCP. Generations need an active Comfy Cloud subscription; searching templates, models and nodes is free ([Comfy MCP](https://docs.comfy.org/agent-tools/mcp), read 2026-11-12).
+```bash
+pip install comfy-cli
+comfy tracking disable
+comfy cloud login
+comfy cloud whoami
+comfy cloud status
+opencode mcp add comfy-cloud --global --url https://cloud.comfy.org/mcp
+comfy skills install
+comfy skills list
+pip install comfy-mcp
+comfy launch -- --listen 127.0.0.1 --port 3103
+```
 
-   ```bash
-   claude mcp add --transport http comfy-cloud -s user https://cloud.comfy.org/mcp
-   opencode mcp add comfy-cloud --global --url https://cloud.comfy.org/mcp
-   ```
+</details>
 
-   In Claude Code, run `/mcp`, pick **comfy-cloud** and choose **Authenticate**.
-
-5. For a ComfyUI on your own machine, install the local server and register it ([Comfy MCP local](https://docs.comfy.org/agent-tools/local), read 2026-11-12). Set `COMFY_BIN` with `-e` only when `comfy` is off the client's PATH.
-
-   ```bash
-   pip install comfy-mcp
-   claude mcp add comfy-mcp --scope user -- comfy-mcp
-   ```
-
-6. Start a local ComfyUI on an explicit port, not the vendor default. Arguments after `--` go to ComfyUI.
-
-   ```bash
-   comfy launch -- --listen 127.0.0.1 --port 3103
-   ```
-
-7. Agent skills install with `comfy skills install`; `comfy skills list` names them.
-8. After a paid run, run `comfy cloud status` again and compare the two balances.
-
-Traps and sources: [ComfyUI traps and sources](detail/comfyui.md).
+Guard and set up: [ComfyUI detail](detail/comfyui.md). Traps and sources: [ComfyUI traps and sources](detail/comfyui-traps.md).
