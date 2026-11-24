@@ -6,6 +6,8 @@ name: pages
 # globs among them, for the docs.unmapped gate); every push to main builds, as the pages read live pull requests, issues,
 # runs and alerts.
 # The build runs in CI mode, so it holds no reading from a maintainer's machine; tests/privacy.mjs checks.
+# The build job runs on ubuntu-latest, not ubuntu-slim: the Pages tab's design and usability reads drive Chrome, which
+# ubuntu-latest ships and ubuntu-slim does not (Git Crafter pages.yml, visual-check). deploy stays on ubuntu-slim.
 on:
   push:
     branches: [main]
@@ -37,7 +39,7 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-slim
+    runs-on: ubuntu-latest
     timeout-minutes: 15
     # The Credits collector reads catalog/plans.json from the checkout, and no provider key: CI passes none.
     # The Process page's collector reads this repo's pull requests, runs, checks and issues (Git Crafter
@@ -56,6 +58,32 @@ jobs:
           persist-credentials: false
           fetch-depth: 0
 
+      # The SoulCraft Quality Reader App's installation token. The client ID is the org variable
+      # QUALITY_READER_CLIENT_ID and the key is the org secret QUALITY_READER_KEY.
+      # It is read-only, one hour long and scoped to this repository.
+      # It is minted on main only, so a pull request's code never runs with it.
+      # It reads the Settings, Scanning and Projects metrics: settings, alerts and secret names, never values.
+      # Code quality is not among the App's permissions, so those reads stay not measured.
+      # A missing variable or key fails the step on main, where the App is installed.
+      - id: quality-reader
+        if: github.ref == 'refs/heads/main'
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        with:
+          client-id: ${{ vars.QUALITY_READER_CLIENT_ID }}
+          private-key: ${{ secrets.QUALITY_READER_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: ${{ github.event.repository.name }}
+          # Read access to these nine permissions, nothing else.
+          permission-administration: read
+          permission-environments: read
+          permission-secrets: read
+          permission-secret-scanning-alerts: read
+          permission-security-events: read
+          permission-vulnerability-alerts: read
+          permission-organization-administration: read
+          permission-members: read
+          permission-organization-projects: read
+
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 26
@@ -65,6 +93,8 @@ jobs:
           pages: process quality
           config: quality/process/config.json
           quality-config: quality/config.json
+          # On main only, so a pull request builds with none and those metrics read not measured there.
+          admin-read-token: ${{ github.ref == 'refs/heads/main' && steps.quality-reader.outputs.token || '' }}
 
       # The run the page is drawn from: CI mode, no local-only value, no home path or email, no private term.
       # Every file the deploy uploads, quality/dist, gets the same home path and email checks.
