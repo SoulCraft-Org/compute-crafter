@@ -4,7 +4,8 @@
     "params": {
       "always_run": {
         "private-terms.yml": "A privacy gate: it must run on every change, so a skip would be a gap.",
-        "pages.yml": "It rebuilds the score page on every merge, so it never skips by design."
+        "pages.yml": "It rebuilds the score page on every merge, so it never skips by design.",
+        "secret-scan.yml": "A secret scan: any changed file can hold a key, so it scans every change."
       }
     }
   }
