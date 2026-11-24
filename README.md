@@ -1,60 +1,75 @@
 # Compute Crafter
 
-Wire open-source and open-weight compute to Claude Code and OpenCode on free tiers and included credits, then keep your own list, sign-ins and score page. Published by [SoulCraft-Org](https://github.com/SoulCraft-Org) under [Apache-2.0](LICENSE).
+![Open-weight models flow through a guide, a sign-in and a spend stop into the OpenCode Desktop App first and the Claude Desktop App second](assets/hero.svg)
 
-**[Live score page](https://soulcraft-org.github.io/compute-crafter/)** · [Guides](guides/README.md) · [Plan catalog](catalog/README.md) · [Starters](#starters)
+Wire open-source and open-weight compute into the OpenCode Desktop App first and the Claude Desktop App (Code and Cowork) second, on free credits and flat monthly subscriptions. Then keep your own list, sign-ins and score page.
 
-| Plans | Lanes | Sign-in vendors | Verified plans | Starters |
-| :-: | :-: | :-: | :-: | :-: |
-| **170 plans** | **6 lanes** | **66 sign-in vendors** | **166 verified** | **4 starters** |
+## [📊 Open the live score page](https://soulcraft-org.github.io/compute-crafter/)
+
+[![170 plans](https://img.shields.io/badge/plans-170-0b5fc4)](catalog/README.md) ![6 lanes](https://img.shields.io/badge/lanes-6-0b5fc4) [![66 sign-in vendors](https://img.shields.io/badge/sign--in_vendors-66-0b5fc4)](catalog/logins.json) ![166 verified](https://img.shields.io/badge/verified-166-2ea44f) [![4 starters](https://img.shields.io/badge/starters-4-c4572b)](#starters) [![Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-555)](LICENSE)
 
 ```mermaid
 flowchart LR
-  P[plans.json] --> L[compute-list starter]
-  G[logins.json] --> N[logins starter]
-  K[Credits pack] --> Q[quality starter]
-  K --> R[process starter]
-  L & N & Q & R --> Y[Your private repo and score page]
+  G[Pick a provider guide] --> S[Sign in] --> C[Set the spend stop] --> W[Wire into the OpenCode Desktop App or the Claude Desktop App] --> Q[Score it]
 ```
+
+## Provider guides
+
+Each opens with one table: account, free tier, login or key, Claude connector, OpenCode, guard. [All guides](guides/README.md).
+
+| Guide | Lane |
+| --- | --- |
+| 🤗 [Hugging Face](guides/hugging-face.md) | Inference, GPU |
+| 🟩 [NVIDIA](guides/nvidia.md) | Inference |
+| ⚡ [Groq](guides/groq.md) | Inference |
+| 🔀 [OpenRouter](guides/openrouter.md) | Inference |
+| 🤝 [Together AI](guides/together.md) | Inference |
+| ☁️ [Cloudflare Workers AI](guides/cloudflare-workers-ai.md) | Inference |
+| 🦙 [Ollama](guides/ollama.md) | Inference |
+| 🧠 [Claude API](guides/claude-api.md) | Inference |
+| 🧱 [Modal](guides/modal.md) | GPU |
+| 🖥️ [RunPod](guides/runpod.md) | GPU |
+| 🔴 [AMD](guides/amd.md) | GPU |
+| 🌐 [Google Cloud](guides/google-cloud.md) | CPU, GPU |
+| 🎨 [ComfyUI](guides/comfyui.md) | GPU |
+| 🧊 [Meshy](guides/meshy.md) | 3D |
+| 🧩 [Claude Desktop MCP](guides/claude-desktop-mcp.md) | Client |
+| 🐙 [GitHub](guides/github.md) | CI, tools |
+| 💻 [Local models](guides/local-models.md) | Local |
+| 🔑 [Logins](guides/logins.md) | Accounts |
+| 🏋️ [Training](guides/training.md) | GPU |
+| ✏️ [Zed](guides/zed.md) | Client |
+| 🪿 [Goose](guides/goose.md) | Client |
 
 ## Starters
 
 Copy one folder. Each README has its steps and a fake example.
 
-| Starter | You get | One command |
-| --- | --- | --- |
-| [templates/compute-list](templates/compute-list/README.md) | A sheet and a board of your plans, from the plan catalog | `bash sync.sh`, then `bash sheet.sh vendor/plans.json mine.json --write README.md` |
-| [templates/logins](templates/logins/README.md) | A sheet and a board of your sign-ins, from the sign-in catalog | `bash sync.sh`, then `bash sheet.sh vendor/logins.json sites.json --write README.md` |
-| [templates/quality](templates/quality/README.md) | Your own Quality, Speed and Consumption page: the six Credits metrics | `node <git-crafter>/quality/collect.mjs --local --only credits` |
-| [templates/process](templates/process/README.md) | The five-step Spend map on your Process page | `mkdir -p <your repo>/quality/process && cp templates/process/config.json <your repo>/quality/process/config.json` |
-
-## What is here
-
-| Part | Holds |
+| Starter | You get |
 | --- | --- |
-| [guides/](guides/README.md) | One page per provider, each opening with one table of account, free tier, key, connector and guard |
-| [guides/local-models.md](guides/local-models.md) | MLX and LM Studio serving a model on your own port |
-| [guides/logins.md](guides/logins.md) | One sign-in order, passkeys and codes in Apple Passwords, six lockout-safe steps per account |
-| [catalog/](catalog/README.md) | `plans.json`: 170 plans across CI, CPU, GPU, inference, hosting and AI tools, each with its vendor page and the date read |
-| [catalog/logins.json](catalog/logins.json) | What 66 sign-in vendors offer: methods, passkeys, 2FA, linking, email change, each with its vendor page and the date read |
-| Credits pack: `pack.json`, `targets/`, `ideals/`, `maps/`, `collectors/credits/` | The Credits Quality tab and Spend map, moved from Git Crafter ([NOTICE](NOTICE), [tests/moved.json](tests/moved.json)) |
-| [quality/config.json](quality/config.json), [quality/process/config.json](quality/process/config.json), [pages.yml](.github/workflows/pages.yml) | Public pages built by Git Crafter's `actions/pages` in CI mode after the [privacy gate](tests/privacy.mjs). The Quality page shows the 11 library tabs plus Credits, the Process page every library map plus Spend. They show only what CI reads |
+| 🗂️ [compute-list](templates/compute-list/README.md) | A sheet and a board of your plans |
+| 🔐 [logins](templates/logins/README.md) | A sheet and a board of your sign-ins |
+| 📈 [quality](templates/quality/README.md) | Your own Quality, Speed and Consumption page: the six Credits metrics, pinned to this pack |
+| 🗺️ [process](templates/process/README.md) | The five-step Spend map on your Process page |
 
-## Add the pack to another repo
+## Three doors
 
-In its `quality/config.json`, set `"packs": ["SoulCraft-Org/compute-crafter@<40-hex sha>"]` ([Git Crafter's CONFIG.md](https://github.com/SoulCraft-Org/git-crafter/blob/main/quality/CONFIG.md)), on an engine that no longer ships the credits tab. The [quality starter](templates/quality/README.md) does this for you.
+| Door | Holds |
+| --- | --- |
+| 🔌 [compute-crafter](https://github.com/SoulCraft-Org/compute-crafter) | This repo: guides, sign-ins, starters, score pages |
+| 💳 [compute-credits](https://github.com/Colorado-Compute/compute-credits) | The plan catalog and its Credits Explorer. [catalog/](catalog/README.md) here is a pinned copy |
+| 🚀 [startup-credits](https://github.com/Colorado-Startups/startup-credits) | Startup programs |
 
 ## Rules every page follows
 
 | Rule | Source |
 | --- | --- |
-| Free tiers and included credits only; never metered billing past an included amount | [Git Crafter compute rules](https://github.com/SoulCraft-Org/git-crafter/blob/main/rules/compute.md) |
+| Free credits, plus flat monthly subscriptions that give a lot of usage or functionality; never pay-per-token or pay-per-use consumption | [Git Crafter compute rules](https://github.com/SoulCraft-Org/git-crafter/blob/main/rules/compute.md) |
 | A session never holds a key value: CLI logins and OAuth first, env var names only | [Git Crafter key rules](https://github.com/SoulCraft-Org/git-crafter/blob/main/rules/keys.md) |
 | Every free-tier figure cites the vendor's own page and the date it was read | [CONTRIBUTING.md](CONTRIBUTING.md) |
 
-## Related
+## Built on
 
-| Repo | Use |
-| --- | --- |
-| [SoulCraft-Org/git-crafter](https://github.com/SoulCraft-Org/git-crafter) | The CI standard this repo runs on, and the Claude Code rules and guards |
-| [SoulCraft-Org/comfyui-base](https://github.com/SoulCraft-Org/comfyui-base) | The ComfyUI installer and handbook that [guides/comfyui.md](guides/comfyui.md) links |
+[Git Crafter](https://github.com/SoulCraft-Org/git-crafter) supplies the CI standard and the Claude rules. The Credits pack (`pack.json`) moved from it ([NOTICE](NOTICE)). [pages.yml](.github/workflows/pages.yml) builds the Quality page (11 library tabs plus Credits) and the Process page (every library map plus Spend) after the [privacy gate](tests/privacy.mjs), and shows only what CI reads. The [ComfyUI guide](guides/comfyui.md) links the [comfyui-base](https://github.com/SoulCraft-Org/comfyui-base) installer.
+
+Published by [SoulCraft-Org](https://github.com/SoulCraft-Org) under [Apache-2.0](LICENSE).
