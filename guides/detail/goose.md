@@ -5,7 +5,7 @@ What the Goose guide moved out of its page. Traps and sources: [Goose traps and 
 ## Set up
 
 1. Install with Homebrew, which also updates it. The CLI is `block-goose-cli` and the desktop app is the `block-goose` cask ([Install goose](https://goose-docs.ai/docs/getting-started/installation), read 2026-11-24).
-2. Run `goose configure`, choose **Configure Providers**, then enter the key at the prompt so it goes to the keyring.
+2. Run `goose configure`, choose **Configure Providers**, then enter the key at the prompt so it goes to the keyring. On macOS that is the Keychain item with service `goose` and account `secrets` ([config/base.rs](https://github.com/aaif-goose/goose/blob/main/crates/goose/src/config/base.rs), read 2026-11-20). The Desktop app can store the key there too ([Providers](https://goose-docs.ai/docs/getting-started/providers), read 2026-11-24).
 3. For Ollama's cloud, pick the **Ollama Cloud** provider, which reads `OLLAMA_CLOUD_API_KEY`. Use cloud models only; the plain **Ollama** provider is for a local server ([Providers](https://goose-docs.ai/docs/getting-started/providers), read 2026-11-24). See [Ollama](../ollama.md) for its credits.
 4. For another OpenAI-compatible endpoint, add a custom provider file in `~/.config/goose/custom_providers/`. Its `api_key_env` names the variable that holds the key ([Providers](https://goose-docs.ai/docs/getting-started/providers), read 2026-11-24).
 

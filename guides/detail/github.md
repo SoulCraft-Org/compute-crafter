@@ -1,4 +1,4 @@
-# GitHub: guard and set up
+# GitHub: guard, set up and App tokens
 
 What the GitHub guide moved out of its page. Traps and sources: [GitHub traps and sources](github-traps.md). The diagram and wiring are in [GitHub](../github.md).
 
@@ -7,6 +7,7 @@ What the GitHub guide moved out of its page. Traps and sources: [GitHub traps an
 | Spend | Stop | Source |
 | --- | --- | --- |
 | Actions on private repositories | Blocked once the included compute is spent, with no payment method | [Actions billing](https://docs.github.com/en/billing/concepts/product-billing/github-actions), read 2026-11-24 |
+| Free plan storage | 500 MB of artifacts and 10 GB of cache per repository | [Actions billing](https://docs.github.com/en/billing/concepts/product-billing/github-actions), read 2026-11-24 |
 | Same, with a payment method | A budget above zero removes the stop | [Actions billing](https://docs.github.com/en/billing/concepts/product-billing/github-actions), read 2026-11-24 |
 | Copilot cloud sandboxes, from 2026-11-23 | Draw on the same included compute | [Copilot cloud experience](https://github.blog/changelog/2026-10-28-work-from-anywhere-with-a-new-connected-copilot-cloud-experience/), read 2026-11-20 |
 | Sandbox budget | **Stop usage when budget limit is reached** blocks them at the limit | [Billing for cloud and local sandboxes](https://docs.github.com/en/billing/concepts/product-billing/cloud-and-local-sandboxes), read 2026-11-20 |
@@ -22,3 +23,12 @@ What the GitHub guide moved out of its page. Traps and sources: [GitHub traps an
    - POST that code to `/app-manifests/{code}/conversions`. The reply carries the App ID, private key and webhook secret.
    - Finish all three steps within one hour ([Registering a GitHub App from a manifest](https://docs.github.com/en/apps/sharing-github-apps/registering-a-github-app-from-a-manifest), read 2026-11-12).
    - Store the private key straight into a secret store. Never print it.
+
+## Why an App token beats a personal access token
+
+| App installation token | Personal access token |
+| --- | --- |
+| Expires after 1 hour ([Generating an installation access token](https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/generating-an-installation-access-token-for-a-github-app), read 2026-11-12) | Lives until its set expiry or revocation |
+| Narrows to listed repositories and permissions, never past the install's grant | Carries the person's access within its scopes |
+| Not tied to a user, and uses no seat ([Deciding when to build a GitHub App](https://docs.github.com/en/apps/creating-github-apps/about-creating-github-apps/deciding-when-to-build-a-github-app), read 2026-11-12) | Breaks when its owner loses access |
+| Activity is attributed to the app ([About authentication with a GitHub App](https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/about-authentication-with-a-github-app), read 2026-11-12) | Activity is attributed to the person |

@@ -1,23 +1,23 @@
 # Claude API: traps and sources
 
-What goes wrong with the Claude API, and the pages this guide read. The steps are in [Claude API detail](claude-api.md).
+What goes wrong with the Claude API, and the pages this guide read. The steps are in [Claude API CI](claude-api-ci.md).
 
 ## Traps
 
 | Trap | What happens |
 | --- | --- |
-| A leftover key | `ANTHROPIC_API_KEY` sits above the federation settings, so a key left in the environment silently overrides federation ([WIF][wif]). The action's `anthropic_api_key` and `claude_code_oauth_token` inputs do the same ([Setup][setup]) |
-| Plan credits and Claude Code | A run on an organization holding only these credits fails at once: `Credit balance too low` ([API credits][credits]) |
-| One organization per plan | A plan links to one Console organization, and you cannot change it yourself ([API credits][credits]) |
-| One shared balance | Every key and workspace in the organization draws from one balance. Give a project its own workspace and set its spend limit ([API credits][credits]) |
-| Bought credits | They expire one year after purchase, and the date cannot be extended ([Pay for API usage][pay]) |
-| Immutable subject | GitHub repos created after July 15, 2026 get a `sub` with owner and repo IDs ([OIDC][oidc]). Seen on this repo on 2026-11-23, the wizard filled in the old form, so each exchange failed `match_subject_prefix`. `gh api repos/<owner>/<repo>/actions/oidc/customization/sub` prints the prefix to use |
-| Single-use tokens | A JWT with a `jti` claim exchanges once. A retry that presents it again fails with `jti_reused` ([WIF][wif]) |
+| A leftover key | A key left in `ANTHROPIC_API_KEY` silently overrides federation ([WIF][wif], read 2026-11-24). So do the action's `anthropic_api_key` and `claude_code_oauth_token` inputs ([Setup][setup], read 2026-11-24) |
+| Plan credits and Claude Code | A run on an organization holding only these credits fails at once: `Credit balance too low` ([API credits][credits], read 2026-11-24) |
+| One organization per plan | A plan links to one Console organization, and you cannot change it yourself. Link the one you build in ([API credits][credits], read 2026-11-24) |
+| One shared balance | Every key and workspace draws from one balance. Give a project its own workspace and spend limit ([API credits][credits], read 2026-11-24) |
+| Bought credits | They expire one year after purchase, and the date cannot be extended ([Pay for API usage][pay], read 2026-11-24) |
+| Immutable subject | GitHub repos created after July 15, 2026 get a `sub` with owner and repo IDs ([OIDC][oidc], read 2026-11-24). Seen on this repo on 2026-11-23: `repo:<owner>@<id>/<repo>@<id>:ref:...`, while the wizard filled in the old form, so each exchange failed `match_subject_prefix`. `gh api repos/<owner>/<repo>/actions/oidc/customization/sub` prints the prefix to use |
+| Single-use tokens | A JWT with a `jti` claim exchanges once. A retry fails with `jti_reused` ([WIF][wif], read 2026-11-24) |
 | Token lifetime | Per the WIF page, a rule's lifetime runs from 60 to 86,400 seconds, default 3,600. The SDK refreshes before expiry ([WIF][wif], read 2026-11-24) |
-| Workspace ID | A rule that covers more than one workspace needs the workspace ID in each exchange. Without it the API returns 400 ([Authentication][auth]) |
-| Inline comment classification | The action's `classify_inline_comments` needs `anthropic_api_key`. With federation it is skipped ([Setup][setup]) |
-| Expiry is set once | A key's expiry is fixed at creation. An expired key returns 401 ([Authentication][auth]) |
-| Message Batches | Per the credits page, they cost 50 percent less. Check the Billing page before a large batch ([API credits][credits]) |
+| Workspace ID | A rule that covers more than one workspace needs the workspace ID in each exchange. A key with no workspace scope needs the `anthropic-workspace-id` header. Without it the API returns 400 ([Authentication][auth], read 2026-11-24) |
+| Inline comment classification | `classify_inline_comments` needs `anthropic_api_key`, so federation skips it ([Setup][setup], read 2026-11-24) |
+| Expiry is set once | A key's expiry is fixed at creation. An expired key returns 401 and cannot be reactivated ([Authentication][auth], read 2026-11-24) |
+| Message Batches | Per the credits page, they cost 50 percent less. ([API credits][credits], read 2026-11-24) |
 
 ## Sources
 
@@ -29,10 +29,10 @@ What goes wrong with the Claude API, and the pages this guide read. The steps ar
 | [API credits for Max, Ultra and Team plans][credits] | 2026-11-24 |
 | [Workload identity federation][wif] | 2026-11-24 |
 | [OpenCode providers](https://opencode.ai/docs/providers) | 2026-11-24 |
-| [Authentication][auth] | 2026-11-23 |
-| [How do I pay for my Claude API usage][pay] | 2026-11-23 |
-| [claude-code-action setup][setup] | 2026-11-23 |
-| [GitHub OpenID Connect][oidc] | 2026-11-23 |
+| [Authentication][auth] | 2026-11-24 |
+| [How do I pay for my Claude API usage][pay] | 2026-11-24 |
+| [claude-code-action setup][setup] | 2026-11-24 |
+| [GitHub OpenID Connect][oidc] | 2026-11-24 |
 | [models.dev provider catalog][models] | 2026-11-23 |
 
 </details>
