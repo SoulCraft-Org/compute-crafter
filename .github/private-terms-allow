@@ -4,3 +4,5 @@
 # The Apache 2.0 attribution in NOTICE, and the README row that points at the same organisation.
 Colorado-Startups/claudius
 Colorado-Startups/startup-credits
+# The public repo the catalog is pinned from (catalog/PIN, catalog/sync.sh, AGENTS.md).
+Colorado-Compute/compute-credits
