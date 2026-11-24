@@ -1,6 +1,6 @@
 # Provider guides
 
-One page per provider. Each has one table: account, free tier, login or key, Claude connector, OpenCode, guard. The pilot pages add a diagram and a wiring table. Four topic pages open with their own table or text: [Local models](local-models.md), [Logins](logins.md), [Training](training.md) and [Claude Desktop MCP](claude-desktop-mcp.md).
+One page per provider. Each opens with a diagram, then one table: account, free tier, login or key, Claude connector, OpenCode, guard. A Wiring table follows for the three hosts. Four topic pages open with their own table or text: [Local models](local-models.md), [Logins](logins.md), [Training](training.md) and [Claude Desktop MCP](claude-desktop-mcp.md).
 
 ```mermaid
 flowchart LR
@@ -17,26 +17,26 @@ flowchart LR
 | [Ollama](ollama.md) | 🧠 Inference | ✅ | ❔ | ✅ | Cloud models on usage credits |
 | [OpenRouter](openrouter.md) | 🧠 Inference | ✅ | ✅ | ❔ | One API, many vendors, `:free` variants |
 | [Hugging Face](hugging-face.md) | 🧠 Inference, ⚡ GPU | ✅ | ❔ | ❔ | Hub models, ZeroGPU Spaces, Inference Providers, MCP server |
-| [NVIDIA](nvidia.md) | 🧠 Inference | ⬜ | ⬜ | ⬜ | NIM trial endpoints, NGC containers, CUDA docs MCP server |
-| [Groq](groq.md) | 🧠 Inference | ⬜ | ⬜ | ⬜ | Fast open-weight models on a free plan |
-| [Together AI](together.md) | 🧠 Inference | ⬜ | ⬜ | ⬜ | Prepaid per-token open-weight models |
-| [Cloudflare Workers AI](cloudflare-workers-ai.md) | 🧠 Inference | ⬜ | ⬜ | ⬜ | Free daily Neurons, hosted MCP servers |
-| [Claude API](claude-api.md) | 🧠 Inference | ⬜ | ⬜ | ⬜ | API credits in Max, Ultra and Team plans, keyless CI |
-| [Modal](modal.md) | ⚡ GPU | ⬜ | ⬜ | ⬜ | Serverless GPUs, Shared Endpoints |
-| [RunPod](runpod.md) | ⚡ GPU | ⬜ | ⬜ | ⬜ | Prepaid pods and Serverless endpoints, RunPod MCP server |
-| [AMD](amd.md) | ⚡ GPU | ⬜ | ⬜ | ⬜ | ROCm, one-time AMD Developer Cloud credit |
-| [Google Cloud](google-cloud.md) | 🖥️ CPU, ⚡ GPU | ⬜ | ⬜ | ⬜ | The $300 Free Trial, budget kill switch, quotas |
-| [ComfyUI](comfyui.md) | ⚡ GPU | ⬜ | ⬜ | ⬜ | Comfy Cloud, comfy-cli, [comfyui-base](https://github.com/SoulCraft-Org/comfyui-base) installer |
-| [Training](training.md) | ⚡ GPU | ⬜ | ⬜ | ⬜ | LoRA, then RL such as GRPO, on free credits |
-| [Meshy](meshy.md) | 🧊 3D | ⬜ | ⬜ | ⬜ | Picture or prompt to rigged 3D model, CLI, skills, MCP server |
-| [GitHub](github.md) | 🔧 CI, tools | ⬜ | ⬜ | ⬜ | Actions, `gh` login, MCP server, App manifest, Copilot in OpenCode |
-| [Claude Desktop MCP](claude-desktop-mcp.md) | 🔌 Client | ➖ | ✅ | ✅ | One MCP server for Code tab and Cowork |
-| [Zed](zed.md) | 🔌 Client | ⬜ | ⬜ | ⬜ | Editor on your keys, agents over ACP |
-| [Goose](goose.md) | 🔌 Client | ⬜ | ⬜ | ⬜ | Open-source agent, keys in the keyring |
-| [Local models](local-models.md) | 🏠 Local | ⬜ | ⬜ | ⬜ | MLX and LM Studio on your own port |
-| [Logins](logins.md) | 🔑 Accounts | ⬜ | ⬜ | ⬜ | One sign-in order, passkeys, logins catalog |
+| [NVIDIA](nvidia.md) | 🧠 Inference | ✅ | ❔ | ❔ | NIM trial endpoints, NGC containers, CUDA docs MCP server |
+| [Groq](groq.md) | 🧠 Inference | ✅ | ❔ | ❔ | Fast open-weight models on a free plan |
+| [Together AI](together.md) | 🧠 Inference | ✅ | ✅ | ✅ | Prepaid per-token open-weight models |
+| [Cloudflare Workers AI](cloudflare-workers-ai.md) | 🧠 Inference | ✅ | ❔ | ❔ | Free daily Neurons, hosted MCP servers |
+| [Claude API](claude-api.md) | 🧠 Inference | ❔ | ➖ | ➖ | API credits in Max, Ultra and Team plans, keyless CI |
+| [Modal](modal.md) | ⚡ GPU | ✅ | ❔ | ❔ | Serverless GPUs, Model APIs |
+| [RunPod](runpod.md) | ⚡ GPU | ✅ | ✅ | ❔ | Prepaid pods and Serverless endpoints, RunPod MCP server |
+| [AMD](amd.md) | ⚡ GPU | ❔ | ❔ | ❔ | ROCm, one-time AMD Developer Cloud credit |
+| [Google Cloud](google-cloud.md) | 🖥️ CPU, ⚡ GPU | ❔ | ❔ | ❔ | The $300 Free Trial, budget kill switch, quotas |
+| [ComfyUI](comfyui.md) | ⚡ GPU | ✅ | ✅ | ❔ | Comfy Cloud, comfy-cli, [comfyui-base](https://github.com/SoulCraft-Org/comfyui-base) installer |
+| [Training](training.md) | ⚡ GPU | ❔ | ❔ | ❔ | LoRA, then RL such as GRPO, on free credits |
+| [Meshy](meshy.md) | 🧊 3D | ❔ | ❔ | ❔ | Picture or prompt to rigged 3D model, CLI, skills, MCP server |
+| [GitHub](github.md) | 🔧 CI, tools | ✅ | ➖ | ➖ | Actions, `gh` login, MCP server, App manifest, Copilot in OpenCode |
+| [Claude Desktop MCP](claude-desktop-mcp.md) | 🔌 Client | ❔ | ✅ | ✅ | One MCP server for Code tab and Cowork |
+| [Zed](zed.md) | 🔌 Client | ❔ | ❔ | ❔ | Editor on your keys, agents over ACP |
+| [Goose](goose.md) | 🔌 Client | ❔ | ❔ | ❔ | Open-source agent, keys in the keyring |
+| [Local models](local-models.md) | 🏠 Local | ✅ | ❔ | ❔ | MLX and LM Studio on your own port |
+| [Logins](logins.md) | 🔑 Accounts | ❔ | ❔ | ❔ | One sign-in order, passkeys, logins catalog |
 
-✅ a vendor or OpenCode page documents it, ❔ not confirmed, ➖ not available, ⬜ not reviewed yet (issue #192). Marks follow each guide's wiring table. The three provider rows were read 2026-11-24, the Claude Desktop MCP row 2026-11-20.
+✅ a vendor or OpenCode page documents it, ❔ not confirmed, ➖ a page says it is not available. Each mark follows its guide's Wiring table, which dates every source (issue #192).
 
 Every free-tier figure cites the vendor's page and read date. [catalog/plans.json](../catalog/plans.json) holds every plan.
 
