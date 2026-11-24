@@ -23,6 +23,7 @@ on:
       - "targets/**"
       - "templates/**"
       - "quality/**"
+      - "site/**"
       - "pack.json"
       - "**/*.md"
       - ".github/workflows/pages.yml"
@@ -95,6 +96,11 @@ jobs:
           quality-config: quality/config.json
           # On main only, so a pull request builds with none and those metrics read not measured there.
           admin-read-token: ${{ github.ref == 'refs/heads/main' && steps.quality-reader.outputs.token || '' }}
+
+      # The Wiring map: site/map.html reads site/wiring.json. Copied in after the action builds, so the privacy gate
+      # below checks it with the rest of quality/dist.
+      - name: Add the Wiring map
+        run: cp -R site/. quality/dist/
 
       # The run the page is drawn from: CI mode, no local-only value, no home path or email, no private term.
       # Every file the deploy uploads, quality/dist, gets the same home path and email checks.
