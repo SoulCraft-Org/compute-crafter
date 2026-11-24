@@ -1,5 +1,5 @@
 {
-  "comment": "Compute Crafter's own Quality page: all 13 tabs Git Crafter's templates/quality/README.md lists, this repo's own Credits tab (read from this repo's collectors and ideals), and the 8 tabs of the Claudius pack (Colorado-Startups/claudius v1.2.0, pinned by commit). Built in CI only. Projects was dropped (no Project board) and is back: it needs a Projects-read token CI does not hold, so its 9 metrics read not measured, which leaves it out of the score and never counts 0. Pages was dropped (no site but this page) and is back, reading the live page at its Pages URL (quality/targets/web.json). A Claudius metric that needs local files reads not measured in CI, and tests/privacy.mjs fails the build if one carries a value. Credits targets are quality/targets/credits.json: the pack's six metrics from targets/credits.json, with params.catalog_file set so credits.registry_age_days reads catalog/plans.json; the five that need local files show not measured in CI. A template goal is overridden only in quality/targets/ with a cited goal_source. tests/pack.test.mjs checks the pack and the page agree. Keys: Git Crafter quality/CONFIG.md.",
+  "comment": "Compute Crafter's own Quality page: all 13 tabs Git Crafter's templates/quality/README.md lists, this repo's own Credits tab (read from this repo's collectors and ideals), and the 8 tabs of the Claudius pack (Colorado-Startups/claudius v1.2.0, pinned by commit). Built in CI only. Projects was dropped (no Project board) and is back: it needs a Projects-read token CI does not hold, so its 9 metrics read not measured, which leaves it out of the score and never counts 0. Pages was dropped (no site but this page) and is back, reading the live page at its Pages URL (quality/targets/web.json). Each Claudius tab is named as [id, name], as Claudius's own config does: the step that checks out the pack reads this file before the pack is there, so a bare pack tab id stops it (exit 2). A Claudius metric that needs local files reads not measured in CI, and tests/privacy.mjs fails the build if one carries a value. Credits targets are quality/targets/credits.json: the pack's six metrics from targets/credits.json, with params.catalog_file set so credits.registry_age_days reads catalog/plans.json; the five that need local files show not measured in CI. A template goal is overridden only in quality/targets/ with a cited goal_source. tests/pack.test.mjs checks the pack and the page agree. Keys: Git Crafter quality/CONFIG.md.",
   "tabs": [
     "code",
     "documentation",
@@ -18,14 +18,38 @@
       "credits",
       "Credits"
     ],
-    "claude",
-    "claude-settings",
-    "desktop-app",
-    "blockers",
-    "tokens",
-    "instructions",
-    "practices",
-    "visibility"
+    [
+      "claude",
+      "Claude"
+    ],
+    [
+      "claude-settings",
+      "Claude settings"
+    ],
+    [
+      "desktop-app",
+      "Claude desktop app"
+    ],
+    [
+      "blockers",
+      "Blockers"
+    ],
+    [
+      "tokens",
+      "Tokens"
+    ],
+    [
+      "instructions",
+      "Instructions"
+    ],
+    [
+      "practices",
+      "Best practices"
+    ],
+    [
+      "visibility",
+      "Visibility"
+    ]
   ],
   "packs": [
     "Colorado-Startups/claudius@31476068e317cedfdcb62bf392f5b51c7254dd04"
