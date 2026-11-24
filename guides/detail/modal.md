@@ -9,6 +9,7 @@ What the Modal guide moved out of its page. The diagram and wiring are in [Modal
 | Spend limit | A monthly cap on net charges after credits. Owners and Managers set it under Settings, Usage & Billing | [Budgets](https://modal.com/docs/guide/budgets), read 2026-11-24 |
 | Default | Without a custom value, it equals the usage limit minus credits | [Budgets](https://modal.com/docs/guide/budgets), read 2026-11-24 |
 | Removal | **Reset to default** clears a custom value | [Budgets](https://modal.com/docs/guide/budgets), read 2026-11-24 |
+| Members | Inviting members needs a payment method | [Workspaces](https://modal.com/docs/guide/workspaces), read 2026-11-12 |
 | Credit coverage | Included usage "does not apply to Model APIs, which are billed per token" | [Plan pricing](https://modal.com/pricing), read 2026-11-24 |
 
 ## Set up

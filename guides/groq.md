@@ -16,11 +16,11 @@ flowchart LR
 
 ## Wiring
 
-| Host | Plugs in as | Source, read 2026-11-24 |
+| Host | Plugs in as | Source |
 | --- | --- | --- |
 | OpenCode Desktop App | Connect provider Groq with a console key. OpenCode 2 stores it as an account in its database. | [OpenCode + Groq](https://console.groq.com/docs/coding-with-groq/opencode) (read 2026-11-12), [CLI providers](https://opencode.ai/docs/cli/providers) (read 2026-11-20) |
-| Claude Desktop App, Code tab | Not confirmed. Groq's pages name no Claude Desktop step. | [Examples](https://console.groq.com/docs/examples) |
-| Claude Desktop App, Cowork | Not confirmed. The listed MCP server is local, and no page names Cowork. | [Examples](https://console.groq.com/docs/examples) |
+| Claude Desktop App, Code tab | Not confirmed. Groq's pages name no Claude Desktop step. | [Examples](https://console.groq.com/docs/examples), read 2026-11-24 |
+| Claude Desktop App, Cowork | Not confirmed. The listed MCP server is local, and no page names Cowork. | [Examples](https://console.groq.com/docs/examples), read 2026-11-24 |
 
 <details>
 <summary>Commands</summary>

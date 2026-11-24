@@ -11,6 +11,7 @@ What goes wrong with NVIDIA, and the pages this guide read. The set up is in [NV
 | Old credit wording | The NIM FAQ says "sign up for free credits" with no amount ([NIM FAQ](https://docs.api.nvidia.com/nim/docs/faq), read 2026-11-12) |
 | Self-hosted NIM is paid | It needs NVIDIA AI Enterprise. The price is "$4500 per GPU per year or $1 per GPU per hour in the cloud" ([NIM FAQ](https://docs.api.nvidia.com/nim/docs/faq), read 2026-11-12) |
 | Two kinds of key | The build.nvidia.com key and the NGC Personal API Key come from different pages |
+| Entitled content | Guest pulls cover public content only. Entitled and third-party content needs a subscription or an ISV license key ([NGC Catalog guide](https://docs.nvidia.com/ngc/latest/ngc-catalog-user-guide.html), read 2026-11-12) |
 | Key on a command line | `docker login -p` and `ngc config set` flags put the key in shell history |
 | macOS install needs admin | The NGC CLI package installs with `sudo installer` ([NGC CLI setup](https://catalog.ngc.nvidia.com/orgs/nvidia/ngc-apps/resources/ngc_cli/-/setup), read 2026-11-12) |
 
@@ -30,6 +31,6 @@ What goes wrong with NVIDIA, and the pages this guide read. The set up is in [NV
 | [NGC CLI setup](https://catalog.ngc.nvidia.com/orgs/nvidia/ngc-apps/resources/ngc_cli/-/setup) | 2026-11-12 |
 | [NGC Catalog guide](https://docs.nvidia.com/ngc/latest/ngc-catalog-user-guide.html) | 2026-11-12 |
 | [models.dev](https://models.dev) | 2026-11-12 |
-| [OpenCode providers](https://opencode.ai/docs/providers) | 2026-11-24 |
+| [NIM LLM APIs](https://docs.api.nvidia.com/nim/reference/llm-apis) | 2026-11-12 |
 
 </details>

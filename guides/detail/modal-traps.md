@@ -13,7 +13,7 @@ What goes wrong with Modal, and the pages this guide read. The set up is in [Mod
 | Token in the environment | `MODAL_TOKEN_ID` and `MODAL_TOKEN_SECRET` outrank `~/.modal.toml` ([Config reference](https://modal.com/docs/reference/modal.config), read 2026-11-12) |
 | Environment budgets | Listed for Team and Enterprise, not Starter ([Plan pricing](https://modal.com/pricing), read 2026-11-24) |
 | Service users for CI | They need Team or Enterprise ([Service users](https://modal.com/docs/guide/service-users), read 2026-11-12) |
-| Claude Code recipe | Modal's page sets `ANTHROPIC_BASE_URL` and `ANTHROPIC_AUTH_TOKEN` for the CLI ([Endpoint integrations](https://modal.com/docs/guide/endpoint-integrations), read 2026-11-24). These outrank a subscription login ([Authentication](https://code.claude.com/docs/en/iam), read 2026-11-12). A local Desktop session ignores them ([Desktop docs](https://code.claude.com/docs/en/desktop), read 2026-11-24) |
+| Anthropic variables | `ANTHROPIC_BASE_URL` and `ANTHROPIC_AUTH_TOKEN` outrank a subscription login ([Authentication](https://code.claude.com/docs/en/iam), read 2026-11-12) |
 
 ## Sources
 
@@ -32,6 +32,6 @@ What goes wrong with Modal, and the pages this guide read. The set up is in [Mod
 | [models.dev](https://models.dev/api.json) | 2026-11-12 |
 | [OpenCode CLI providers](https://opencode.ai/docs/cli/providers) | 2026-11-20 |
 | [Claude Code authentication](https://code.claude.com/docs/en/iam) | 2026-11-12 |
-| [Claude Desktop docs](https://code.claude.com/docs/en/desktop) | 2026-11-24 |
+| [Workspaces](https://modal.com/docs/guide/workspaces) | 2026-11-12 |
 
 </details>

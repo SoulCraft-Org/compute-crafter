@@ -16,11 +16,11 @@ flowchart LR
 
 ## Wiring
 
-| Host | Plugs in as | Source, read 2026-11-24 |
+| Host | Plugs in as | Source |
 | --- | --- | --- |
-| OpenCode Desktop App | Connect provider NVIDIA with a build.nvidia.com key. | [models.dev](https://models.dev), [OpenCode providers](https://opencode.ai/docs/providers) |
-| Claude Desktop App, Code tab | Not confirmed. Nsight AI names Claude Code, Codex, Cursor and Antigravity, not the Desktop App. | [Nsight AI](https://developer.nvidia.com/nsight-ai) |
-| Claude Desktop App, Cowork | Not confirmed. No NVIDIA page names Cowork. | [Nsight AI](https://developer.nvidia.com/nsight-ai) |
+| OpenCode Desktop App | Connect provider NVIDIA with a build.nvidia.com key. | [models.dev](https://models.dev), read 2026-11-12 |
+| Claude Desktop App, Code tab | Not confirmed. Nsight AI names Claude Code, Codex, Cursor and Antigravity, not the Desktop App. | [Nsight AI](https://developer.nvidia.com/nsight-ai), read 2026-11-24 |
+| Claude Desktop App, Cowork | Not confirmed. No NVIDIA page names Cowork. | [Nsight AI](https://developer.nvidia.com/nsight-ai), read 2026-11-24 |
 
 <details>
 <summary>Commands</summary>
