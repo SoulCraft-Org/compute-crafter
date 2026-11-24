@@ -14,4 +14,4 @@ Instructions for every coding agent in this repo. OpenCode reads this file, and 
 | Figures | Every free-tier figure cites the vendor's own page and the date it was read. A third-party page never verifies a figure |
 | Writing | One idea per sentence, no em dashes. Attribute every figure in its sentence |
 | Logins catalog | Edit `catalog/logins.json` by hand. Keys and values follow `FIELDS` in `tests/logins.test.mjs`; run `node --test tests/logins.test.mjs`. Vendor facts only: never an account, an email or progress |
-| Catalog | Edit `catalog/plans.json` by hand or with `tools/catalog.py merge`; keep only `PUBLIC_FIELDS`; run `--format` then `--check` |
+| Catalog | Plan rows are edited in Colorado-Compute/compute-credits by pull request, never here. `catalog/plans.json` is a checked copy of that repo at the commit and sha256 in `catalog/PIN`. Update it with `bash catalog/sync.sh --update <sha>` (a full commit SHA), then run `python3 -I tools/catalog.py --check` |

@@ -271,6 +271,30 @@
    "verified": true
   },
   {
+   "id": "teamcity-cloud-trial",
+   "name": "TeamCity Cloud free trial",
+   "provider": "JetBrains",
+   "provider_hq": "CZ",
+   "lanes": [
+    "ci"
+   ],
+   "price_month": 0,
+   "currency": "USD",
+   "price_note": "A 14-day trial.",
+   "includes": "12,000 build credits, good for up to 20 build hours on the Linux small instance type.",
+   "resets": null,
+   "unit_cost_vs_payg": "Credits are purchased in packs of 25,000; the page gives no price.",
+   "card": null,
+   "overage": "unknown",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "The page does not say whether a card is required or what happens when the trial ends.",
+   "source": "https://www.jetbrains.com/help/teamcity/cloud/teamcity-cloud-subscription-and-licensing.html",
+   "sources_extra": [],
+   "checked": "2026-11-24",
+   "verified": true
+  },
+  {
    "id": "semaphore-free-credits",
    "name": "Semaphore Cloud free monthly credits",
    "provider": "Semaphore",
@@ -312,7 +336,7 @@
    "overage": "stops",
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": "The Free plan ends 6 months after account creation or when credits run out, whichever comes first, and cannot be extended. AWS then suspends the account; data is kept 90 days, during which an upgrade to the Paid plan restores access, after which the account and content are erased. Usage past Always Free limits is paid from credits; once credits are exhausted you must upgrade. Paid plan: spend limit from $20 per project can pause resources. Accounts that already had an AWS account are not eligible. The FAQ gives two different credit expiry periods after an upgrade (12 months in one answer, 6 months in another).",
+   "limits": "The Free plan ends 6 months after account creation or when credits run out, whichever comes first, and cannot be extended. AWS then suspends the account; data is kept 90 days, during which an upgrade to the Paid plan restores access, after which the account and content are erased. Usage past Always Free limits is paid from credits; once credits are exhausted you must upgrade. Paid plan: spend limit from $20 per project can pause resources. Accounts that already had an AWS account are not eligible. The FAQ gives two different credit expiry periods after an upgrade (12 months in one answer, 6 months in another). A Free plan account is not eligible for promotional credits; a Paid plan account is.",
    "source": "https://aws.amazon.com/free/",
    "sources_extra": [
     "https://aws.amazon.com/free/free-tier-faqs/"
@@ -492,6 +516,55 @@
    "source": "https://contabo.com/en-us/pricing/",
    "sources_extra": [],
    "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "databricks-free-edition",
+   "name": "Databricks Free Edition",
+   "provider": "Databricks",
+   "provider_hq": "US",
+   "lanes": [
+    "cpu"
+   ],
+   "price_month": 0,
+   "currency": "USD",
+   "price_note": "Forever free with daily limits on usage, one serverless workspace.",
+   "includes": "One serverless workspace with a daily compute quota. No classic compute and no custom compute configurations.",
+   "resets": "daily",
+   "unit_cost_vs_payg": "Free",
+   "card": null,
+   "overage": "stops",
+   "trains_on_data": null,
+   "commercial_use": false,
+   "limits": "Serverless compute only. No GPU serving endpoints, no custom models on GPU and no batch inference. If you pass the daily quota, compute is shut down for the rest of the day; data and settings are kept. Free Edition accounts may not be used for commercial purposes. Databricks may delete accounts inactive for a prolonged period. The page states nothing on cards or on training with your data.",
+   "source": "https://docs.databricks.com/aws/en/getting-started/free-edition-limitations",
+   "sources_extra": [],
+   "checked": "2026-11-24",
+   "verified": true
+  },
+  {
+   "id": "databricks-trial",
+   "name": "Databricks free trial",
+   "provider": "Databricks",
+   "provider_hq": "US",
+   "lanes": [
+    "cpu",
+    "inference"
+   ],
+   "price_month": 0,
+   "currency": "USD",
+   "price_note": "Free for two weeks, no card. Access pauses at the end and Databricks does not charge you.",
+   "includes": "Up to $400 in free usage over two weeks of full platform access, which the page says is for business evaluation.",
+   "resets": null,
+   "unit_cost_vs_payg": "$0 within the free usage",
+   "card": false,
+   "overage": "stops",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "After the trial you choose to upgrade by adding a payment method; if you do not, access is paused and Databricks does not charge you. Per-model inference rates were not read. This catalog lists none of the OpenAI, xAI or SpaceX models the platform may also host.",
+   "source": "https://www.databricks.com/try-databricks",
+   "sources_extra": [],
+   "checked": "2026-11-24",
    "verified": true
   },
   {
@@ -818,6 +891,31 @@
    "verified": true
   },
   {
+   "id": "azure-free-account",
+   "name": "Azure free account",
+   "provider": "Microsoft",
+   "provider_hq": "US",
+   "lanes": [
+    "cpu",
+    "hosting"
+   ],
+   "price_month": 0,
+   "currency": "USD",
+   "price_note": "$200 credit for 30 days, then pay as you go. Needs a phone number, a non-prepaid credit or debit card and a Microsoft or GitHub account.",
+   "includes": "$200 credit to use within 30 days. Free monthly amounts of 20+ popular services for 12 months. Free monthly amounts of 65+ always-free services.",
+   "resets": null,
+   "unit_cost_vs_payg": "$0 within the credit and the free amounts",
+   "card": true,
+   "overage": "stops",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "New Azure customers only, one account with free services and the $200 credit per new customer. Move to pay-as-you-go within 30 days or after you use the credit; if you do not, the account and services are disabled, and you resume by moving to pay as you go. Only credit cards are accepted in Hong Kong and Brazil. This catalog lists none of the OpenAI, xAI or SpaceX models the platform may also host.",
+   "source": "https://azure.microsoft.com/en-us/pricing/purchase-options/azure-account",
+   "sources_extra": [],
+   "checked": "2026-11-24",
+   "verified": true
+  },
+  {
    "id": "namespace-team",
    "name": "Namespace Team",
    "provider": "Namespace",
@@ -899,7 +997,7 @@
    ],
    "price_month": 0,
    "currency": "USD",
-   "price_note": "Always Free resources have no time limit. The Free Tier also adds a US$300 Free Trial credit for up to 30 days.",
+   "price_note": "Always Free resources have no time limit. The Free Tier also adds a US$300 Free Trial credit for up to 30 days, available in select countries.",
    "includes": "1,500 OCPU hours and 9,000 GB hours per month on VM.Standard.A1.Flex (Arm), which Oracle states equals 2 OCPUs and 12 GB of memory. 200 GB of combined boot and block volume storage plus five volume backups. Up to two AMD VM.Standard.E2.1.Micro VMs.",
    "resets": "monthly",
    "unit_cost_vs_payg": "Oracle charges nothing for Always Free resources after an upgrade to Pay As You Go, and bills only usage above the Always Free limits. Per-unit rates were not read today.",
@@ -907,12 +1005,12 @@
    "overage": "stops",
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": "Oracle may reclaim an Always Free instance as idle if, over 7 days, 95th-percentile CPU, network and (A1 only) memory utilization are each under 20%. Accounts left idle 30 days or more may be suspended or terminated. After a Free Trial, an account holding more A1 capacity than the Always Free limit has all A1 instances disabled, then deleted after 30 days. Signup card checks place temporary authorization holds; prepaid, virtual and PIN debit cards are refused. Paid resources need an upgrade, so a Free Tier account cannot run past the limits.",
+   "limits": "Oracle may reclaim an Always Free instance as idle if, over 7 days, 95th-percentile CPU, network and (A1 only) memory utilization are each under 20%. Accounts left idle 30 days or more may be suspended or terminated. After a Free Trial, an account holding more A1 capacity than the Always Free limit has all A1 instances disabled, then deleted after 30 days. Signup card checks place temporary authorization holds; prepaid, virtual and PIN debit cards are refused. Paid resources need an upgrade, so a Free Tier account cannot run past the limits. One Oracle Cloud Free Trial or Always Free account is permitted per person; creating or attempting to create multiple free accounts is prohibited.",
    "source": "https://docs.oracle.com/en-us/iaas/Content/FreeTier/freetier_topic-Always_Free_Resources.htm",
    "sources_extra": [
     "https://www.oracle.com/cloud/free/faq/"
    ],
-   "checked": "2026-11-23",
+   "checked": "2026-11-24",
    "verified": true
   },
   {
@@ -1014,6 +1112,34 @@
    "verified": true
   },
   {
+   "id": "snowflake-trial",
+   "name": "Snowflake free trial",
+   "provider": "Snowflake",
+   "provider_hq": "US",
+   "lanes": [
+    "cpu",
+    "inference"
+   ],
+   "price_month": 0,
+   "currency": "USD",
+   "price_note": "Sign-up needs no payment information. AI features stay off until you add a credit card, which does not upgrade the trial.",
+   "includes": "$400 in free credits for 30 days, or until the free usage is used up. Credits pay for virtual warehouses, storage and serverless features, AI features included.",
+   "resets": null,
+   "unit_cost_vs_payg": "$0 within the free credits",
+   "card": false,
+   "overage": "stops",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "Credits expire after 30 days. At the end of the trial the account is suspended: you can log in but cannot run warehouses, load data or query; to reactivate, add a card and upgrade. External network access, hybrid tables, outbound private connectivity, Openflow and Duo MFA are unavailable. Trial accounts are cancelled only through Snowflake Support. This catalog lists none of the OpenAI, xAI or SpaceX models the platform may also host.",
+   "source": "https://www.snowflake.com/en/snowflake-trial/",
+   "sources_extra": [
+    "https://signup.snowflake.com/",
+    "https://docs.snowflake.com/en/user-guide/admin-trial-account"
+   ],
+   "checked": "2026-11-24",
+   "verified": true
+  },
+  {
    "id": "ubicloud",
    "name": "Ubicloud runners",
    "provider": "Ubicloud",
@@ -1059,6 +1185,30 @@
    "source": "https://www.warpbuild.com/pricing",
    "sources_extra": [],
    "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "amd-developer-cloud-credit",
+   "name": "AMD Developer Cloud complimentary credit (MI300X)",
+   "provider": "AMD",
+   "provider_hq": "US",
+   "lanes": [
+    "gpu"
+   ],
+   "price_month": 0,
+   "currency": "USD",
+   "price_note": "An initial $100 credit for qualified developers who apply and join the AMD AI Developer Program.",
+   "includes": "$100 of complimentary credit for AMD Instinct MI300X GPUs on the AMD Developer Cloud (run on DigitalOcean's platform).",
+   "resets": null,
+   "unit_cost_vs_payg": "$0 within the credit",
+   "card": null,
+   "overage": "bills",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "Awarded by application, at AMD's sole discretion, from the intended use and a description of how you plan to use the GPU credit. Deposited within three business days of approval. Credit hours expire 30 days from deposit unless the confirmation email says otherwise. The credit covers MI300X GPUs only, not volumes, object storage or backups, and a powered-off instance still uses credit until destroyed. With no payment method on file when the credit expires or runs out, your GPU VM and its data are destroyed; with a payment method, it is charged automatically.",
+   "source": "https://www.amd.com/en/developer/resources/cloud-access/amd-developer-cloud.html",
+   "sources_extra": [],
+   "checked": "2026-11-24",
    "verified": true
   },
   {
@@ -1248,6 +1398,30 @@
     "https://docs.digitalocean.com/products/amd/details/credits/"
    ],
    "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "paperspace-free",
+   "name": "Paperspace (DigitalOcean) Gradient Free",
+   "provider": "DigitalOcean (Paperspace)",
+   "provider_hq": null,
+   "lanes": [
+    "gpu"
+   ],
+   "price_month": 0,
+   "currency": "USD",
+   "price_note": "The Free plan has no hourly or monthly charge listed.",
+   "includes": "Free CPU (C4) and Free GPU (M4000) notebook machines, and 5 GB of included storage.",
+   "resets": null,
+   "unit_cost_vs_payg": "Free machines carry no hourly rate; extra storage is $0.29/GB-month.",
+   "card": null,
+   "overage": "bills",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "Free machines can only be used for Notebooks in private workspaces. The page states no session limit, no hour cap and no card rule for the Free plan. The A4000, RTX4000, RTX5000, P4000 and P5000 free machines need Pro ($8 a month for a user, $12 for a team) and the A5000, A6000 and A100-80G need Growth.",
+   "source": "https://docs.digitalocean.com/products/paperspace/pricing",
+   "sources_extra": [],
+   "checked": "2026-11-24",
    "verified": true
   },
   {
@@ -2109,6 +2283,30 @@
    "verified": true
   },
   {
+   "id": "aqua-voice-api",
+   "name": "Aqua Voice API first $1.00 free",
+   "provider": "Aqua Voice",
+   "provider_hq": null,
+   "lanes": [
+    "inference"
+   ],
+   "price_month": 0,
+   "currency": "USD",
+   "price_note": "Your first $1.00 of usage is free, and the first request needs no card.",
+   "includes": "$1.00 of free usage. Transcription (Avalon) is $0.39 per hour of audio and dictation (Aqua) is $0.49 per hour. Edit Mode is priced at the dictation rate.",
+   "resets": null,
+   "unit_cost_vs_payg": "Both are billed per second with a 10-second minimum; failed requests and idempotent replays are never billed, and there are no seat fees.",
+   "card": null,
+   "overage": "unknown",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "The page does not say what happens when the $1.00 is used up or state rate limits and training terms. Retention depends on the user's privacy and zero-data-retention settings.",
+   "source": "https://aquavoice.com/api",
+   "sources_extra": [],
+   "checked": "2026-11-24",
+   "verified": true
+  },
+  {
    "id": "arliai-core",
    "name": "ArliAI Core (Plus $20, Pro $30)",
    "provider": "ArliAI",
@@ -2154,6 +2352,30 @@
    "source": "https://support.assemblyai.com/articles/5370767329-can-i-sign-up-for-free",
    "sources_extra": [],
    "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "baseten-credit-referral",
+   "name": "Baseten new-customer credits",
+   "provider": "Baseten",
+   "provider_hq": null,
+   "lanes": [
+    "inference"
+   ],
+   "price_month": 0,
+   "currency": "USD",
+   "price_note": "Choose $250 in Dedicated Inference or $100 in Model API credits; the page says they expire in 1 month.",
+   "includes": "Either $250 in Dedicated Inference or $100 in Model API credits.",
+   "resets": null,
+   "unit_cost_vs_payg": "$0 within the credit",
+   "card": null,
+   "overage": "unknown",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "New Baseten customers only. Credits go only to valid business emails for valid business use cases, and terms apply. The page does not say how the credit is issued beyond a request form. This catalog lists none of the OpenAI, xAI or SpaceX models the platform may also host.",
+   "source": "https://www.baseten.co/talk-to-us/credit-referral/",
+   "sources_extra": [],
+   "checked": "2026-11-24",
    "verified": true
   },
   {
@@ -2282,6 +2504,30 @@
     "https://developers.cloudflare.com/workers-ai/platform/limits/"
    ],
    "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "deepgram-startup",
+   "name": "Deepgram Startup Program",
+   "provider": "Deepgram",
+   "provider_hq": null,
+   "lanes": [
+    "inference"
+   ],
+   "price_month": 0,
+   "currency": "USD",
+   "price_note": "By application: direct applicants start at a $1,000 starter offer.",
+   "includes": "A $1,000 starter offer for direct applicants, with larger tiers as usage grows, up to $100,000 in credits over 12 months.",
+   "resets": null,
+   "unit_cost_vs_payg": "$0 within the credit",
+   "card": null,
+   "overage": "unknown",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "Open to an AI builder or early-stage startup in production or launching within 6 months, who commits to engage with Deepgram's community. The page states no incorporation requirement. Companies that raised over $10M and existing customers are reviewed case by case. Each grant expires 12 months after issue. Deepgram typically replies within a week and credits appear in the console 24 to 48 hours after acceptance. Agencies building for clients are excluded. The separate $200 sign-up credit is not part of the program.",
+   "source": "https://deepgram.com/startup-program",
+   "sources_extra": [],
+   "checked": "2026-11-24",
    "verified": true
   },
   {
@@ -2505,20 +2751,20 @@
    "price_month": 0,
    "currency": "USD",
    "price_note": "Free plan; the Developer plan is the paid upgrade.",
-   "includes": "openai/gpt-oss-120b and gpt-oss-20b: 30 RPM, 1K requests per day, 8K TPM, 200K tokens per day. qwen/qwen3.8-27b has the same limits. whisper-large-v3: 20 RPM, 2K requests per day, 7.2K audio seconds per hour, 28.8K audio seconds per day.",
+   "includes": "The docs page lists these base limits for its models, and says they are the Developer plan's: openai/gpt-oss-120b and gpt-oss-20b at 30 RPM, 1K requests per day, 8K TPM and 200K tokens per day; qwen/qwen3.8-27b with the same limits; whisper-large-v3 at 20 RPM, 2K requests per day, 7.2K audio seconds per hour and 28.8K per day.",
    "resets": "daily",
    "unit_cost_vs_payg": "Free",
    "card": null,
    "overage": "stops",
    "trains_on_data": null,
    "commercial_use": null,
-   "limits": "Limits are per organization and shown on the console limits page. Requests over a limit get HTTP 429. Groq does not retain inference data by default but may log it for up to 30 days for reliability or abuse checks.",
+   "limits": "The page shows only the Developer plan's base limits, so the Free plan's own limits may differ; they are on the console limits page. Limits are per organization. Requests over a limit get HTTP 429. Groq does not retain inference data by default but may log it for up to 30 days for reliability or abuse checks.",
    "source": "https://console.groq.com/docs/rate-limits",
    "sources_extra": [
     "https://console.groq.com/docs/your-data"
    ],
-   "checked": "2026-11-23",
-   "verified": true
+   "checked": "2026-11-24",
+   "verified": false
   },
   {
    "id": "hf-pro-inference",
@@ -2589,13 +2835,13 @@
    "overage": "unknown",
    "trains_on_data": true,
    "commercial_use": null,
-   "limits": "The API quickstart now lists 'a plan with API access' as a prerequisite and points to billing setup, so whether a Free mode key works with no payment method is not stated on the pages read. Per the help article, Free mode input and output may be used for training, and you can opt out at any time.",
+   "limits": "The API quickstart lists 'a plan with API access' as a prerequisite and links to billing setup to add a payment method, and the pages do not say a Free plan can generate a key. Per the help article, Free mode input and output may be used for training, and you can opt out at any time.",
    "source": "https://mistral.ai/pricing",
    "sources_extra": [
     "https://docs.mistral.ai/getting-started/quickstarts/studio/activate-and-generate-api-key",
     "https://help.mistral.ai/en/articles/347617-do-you-use-my-user-data-to-train-your-artificial-intelligence-models"
    ],
-   "checked": "2026-11-23",
+   "checked": "2026-11-24",
    "verified": false
   },
   {
@@ -2829,6 +3075,32 @@
     "https://cloud.sambanova.ai/plans"
    ],
    "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "snowflake-cortex-code-trial",
+   "name": "Snowflake CoCo (Cortex Code) trial",
+   "provider": "Snowflake",
+   "provider_hq": "US",
+   "lanes": [
+    "inference"
+   ],
+   "price_month": 0,
+   "currency": "USD",
+   "price_note": "An introductory trial with $400 in credits, of which $40 is for CoCo inference. After it, a $20 monthly subscription applies.",
+   "includes": "$400 in credits for the first 30 days or until used up, whichever is earlier: $40 for Snowflake CoCo inference (CLI, Desktop and Web only) and $360 for all other fees, including compute, storage and other AI features.",
+   "resets": null,
+   "unit_cost_vs_payg": "$0 within the credits; Snowflake bills CoCo by token consumption.",
+   "card": null,
+   "overage": "bills",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "After the trial you are charged a $20 USD monthly subscription for all CoCo inference and data platform consumption, and you may cancel anytime. Subscriptions are subject to usage limits across AI and compute, and access may be suspended when they are reached. The page states no included inference amount for the subscription, so it has no row. This catalog lists none of the OpenAI, xAI or SpaceX models the platform may also host.",
+   "source": "https://signup.snowflake.com/cortex-code/",
+   "sources_extra": [
+    "https://www.snowflake.com/en/product/features/cortex-code/"
+   ],
+   "checked": "2026-11-24",
    "verified": true
   },
   {
@@ -3298,6 +3570,56 @@
    "verified": true
   },
   {
+   "id": "zoho-catalyst-free-tier",
+   "name": "Zoho Catalyst free tier",
+   "provider": "Zoho",
+   "provider_hq": "IN",
+   "lanes": [
+    "hosting",
+    "cpu"
+   ],
+   "price_month": 0,
+   "currency": "USD",
+   "price_note": "US$5 worth of free credits a month, forever. You pay only after you exceed them.",
+   "includes": "US$5 of free credits a month. The pricing calculator shows 25,000 GB-seconds of Functions, 900 GB-minutes of AppSail and 2,000 Circuits state transitions free. The FAQ says the tier covers more than 70 components, applied per account across all projects.",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "Free within the tier; past it, usage bills at the pay-as-you-go rates (Functions US$0.000016 per GB-second, AppSail US$0.0013 per GB-minute).",
+   "card": null,
+   "overage": "bills",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "If a project exceeds the free tier limits in an account, a minimum billing of US$5 applies. The page does not say whether a card is needed to use the free tier.",
+   "source": "https://catalyst.zoho.com/pricing.html",
+   "sources_extra": [],
+   "checked": "2026-11-24",
+   "verified": true
+  },
+  {
+   "id": "zoho-catalyst-trial",
+   "name": "Zoho Catalyst free trial",
+   "provider": "Zoho",
+   "provider_hq": "IN",
+   "lanes": [
+    "hosting",
+    "cpu"
+   ],
+   "price_month": 0,
+   "currency": "USD",
+   "price_note": "US$250 of credits for 6 months. The page says to add a card to claim them.",
+   "includes": "US$250 in wallet credits. The trial lasts 6 months or until you use the US$250, whichever is earlier.",
+   "resets": null,
+   "unit_cost_vs_payg": "$0 within the credits",
+   "card": true,
+   "overage": "bills",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "Unused wallet credits expire after 6 months. Once the credits are used, invoicing starts from the next month for usage above them. Pay-as-you-go rates on the page include US$0.000016 per GB-second for Functions and US$0.0013 per GB-minute for AppSail. A paid subscription adds only US$5 a month of credits (the US$25 plan gives US$30), so it has no row here.",
+   "source": "https://catalyst.zoho.com/pricing.html",
+   "sources_extra": [],
+   "checked": "2026-11-24",
+   "verified": true
+  },
+  {
    "id": "kiro-free",
    "name": "Kiro Free",
    "provider": "Amazon (Kiro)",
@@ -3487,6 +3809,30 @@
    "verified": true
   },
   {
+   "id": "cognee-cloud-standard",
+   "name": "Cognee Cloud Standard",
+   "provider": "Cognee",
+   "provider_hq": null,
+   "lanes": [
+    "tools"
+   ],
+   "price_month": 0,
+   "currency": "USD",
+   "price_note": "$0 a month base, 100M tokens included, no card required.",
+   "includes": "100M tokens, one workspace, unlimited users and API calls.",
+   "resets": null,
+   "unit_cost_vs_payg": "$0.10 per 1M tokens past the included 100M.",
+   "card": false,
+   "overage": "bills",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "Extra workspaces are $5 each per month. The page does not say how often the 100M tokens reset. The open-source engine can be self-hosted free.",
+   "source": "https://www.cognee.ai/pricing",
+   "sources_extra": [],
+   "checked": "2026-11-24",
+   "verified": true
+  },
+  {
    "id": "devin-pro",
    "name": "Devin (former Windsurf) Pro",
    "provider": "Cognition (Devin)",
@@ -3508,6 +3854,30 @@
    "source": "https://devin.ai/pricing",
    "sources_extra": [],
    "checked": "2026-11-23",
+   "verified": true
+  },
+  {
+   "id": "firecrawl-free",
+   "name": "Firecrawl Free plan",
+   "provider": "Firecrawl",
+   "provider_hq": null,
+   "lanes": [
+    "tools"
+   ],
+   "price_month": 0,
+   "currency": "USD",
+   "price_note": "1,000 free credits every month, no credit card required.",
+   "includes": "1,000 credits a month, 2 concurrent requests and 2 concurrent browsers. /scrape, /map and /search allow 10 requests per minute; /crawl, /agent and /interact allow 2 per minute.",
+   "resets": "monthly",
+   "unit_cost_vs_payg": "Free. Paid plans start at Hobby $19 a month ($16 billed annually).",
+   "card": false,
+   "overage": "unknown",
+   "trains_on_data": null,
+   "commercial_use": null,
+   "limits": "Pay-as-you-go is for paid plans only, not Free. The page does not say what happens when the Free credits run out.",
+   "source": "https://www.firecrawl.dev/pricing",
+   "sources_extra": [],
+   "checked": "2026-11-24",
    "verified": true
   },
   {

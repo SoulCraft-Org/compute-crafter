@@ -6,7 +6,7 @@ Wire open-source and open-weight compute to Claude Code and OpenCode on free tie
 
 | Plans | Lanes | Sign-in vendors | Verified plans | Starters |
 | :-: | :-: | :-: | :-: | :-: |
-| **155 plans** | **6 lanes** | **66 sign-in vendors** | **152 verified** | **4 starters** |
+| **170 plans** | **6 lanes** | **66 sign-in vendors** | **166 verified** | **4 starters** |
 
 ```mermaid
 flowchart LR
@@ -35,7 +35,7 @@ Copy one folder. Each README has its steps and a fake example.
 | [guides/](guides/README.md) | One page per provider, each opening with one table of account, free tier, key, connector and guard |
 | [guides/local-models.md](guides/local-models.md) | MLX and LM Studio serving a model on your own port |
 | [guides/logins.md](guides/logins.md) | One sign-in order, passkeys and codes in Apple Passwords, six lockout-safe steps per account |
-| [catalog/](catalog/README.md) | `plans.json`: 155 plans across CI, CPU, GPU, inference, hosting and AI tools, each with its vendor page and the date read |
+| [catalog/](catalog/README.md) | `plans.json`: 170 plans across CI, CPU, GPU, inference, hosting and AI tools, each with its vendor page and the date read |
 | [catalog/logins.json](catalog/logins.json) | What 66 sign-in vendors offer: methods, passkeys, 2FA, linking, email change, each with its vendor page and the date read |
 | [tools/catalog.py](tools/catalog.py) | The field allowlist, the merge and the self-test |
 | Credits pack: `pack.json`, `targets/`, `ideals/`, `maps/`, `collectors/credits/` | The Credits Quality tab and Spend map, moved from Git Crafter ([NOTICE](NOTICE), [tests/moved.json](tests/moved.json)) |
