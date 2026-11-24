@@ -40,8 +40,6 @@ jobs:
         .github/dependabot.yml
       node-version: "26"
       short: |
-        python3 -I tools/catalog.py --self-test
-        python3 -I tools/catalog.py --check
         python3 -I tools/voice_lint.py --self-test
         git ls-files -z '*.md' | xargs -0 python3 -I tools/voice_lint.py --rules tools/voice_rules.json
         node --test tests/*.test.mjs

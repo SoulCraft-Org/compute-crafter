@@ -37,7 +37,6 @@ Copy one folder. Each README has its steps and a fake example.
 | [guides/logins.md](guides/logins.md) | One sign-in order, passkeys and codes in Apple Passwords, six lockout-safe steps per account |
 | [catalog/](catalog/README.md) | `plans.json`: 170 plans across CI, CPU, GPU, inference, hosting and AI tools, each with its vendor page and the date read |
 | [catalog/logins.json](catalog/logins.json) | What 66 sign-in vendors offer: methods, passkeys, 2FA, linking, email change, each with its vendor page and the date read |
-| [tools/catalog.py](tools/catalog.py) | The field allowlist, the merge and the self-test |
 | Credits pack: `pack.json`, `targets/`, `ideals/`, `maps/`, `collectors/credits/` | The Credits Quality tab and Spend map, moved from Git Crafter ([NOTICE](NOTICE), [tests/moved.json](tests/moved.json)) |
 | [quality/config.json](quality/config.json), [quality/process/config.json](quality/process/config.json), [pages.yml](.github/workflows/pages.yml) | Public pages built by Git Crafter's `actions/pages` in CI mode after the [privacy gate](tests/privacy.mjs). The Quality page shows the 11 library tabs plus Credits, the Process page every library map plus Spend. They show only what CI reads |
 
