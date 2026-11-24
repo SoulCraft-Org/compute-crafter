@@ -22,7 +22,7 @@ const MAX_PAGES = 5;
 // page, read 2026-11-23) also sends oauth-2025-04-20 in the same header: the claude-api skill says raw OAuth calls need it, the
 // endpoint page's curl omits it, and a keyless run got HTTP 403 from the legacy report with the bearer alone (#151). The legacy
 // GET /v1/organizations/cost_report (daily buckets, cents) serves only a month that starts before 2026-01-01. Empty data
-// refreshed before the month, or data refreshed over 48 hours before the range ends, is not read. The token wins over the key.
+// refreshed before the month, or any data refreshed over 48 hours before the range ends, is not read. The token wins over the key.
 // No credential, no data, a refused call or a bad amount is a why, never 0; secrets are cut.
 export async function readClaudeCost(reader, { env = process.env, fetch = globalThis.fetch, now = new Date() } = {}) {
   const cred = credential(env);
@@ -43,7 +43,7 @@ export async function readClaudeCost(reader, { env = process.env, fetch = global
         if (!body.data.length && refreshed === null) return { why: 'claude_cost: not read: the cost report has no data yet for this month (data_refreshed_at is null)' };
         if (!finite(at)) throw new Error('data_refreshed_at is missing or not a timestamp');
         if (!body.data.length && at < start.getTime()) return { why: `claude_cost: not read: data refreshed ${refreshed} predates this month` };
-        if (body.data.length && end.getTime() - at > 48 * HOUR) return { why: `claude_cost: not read: data refreshed ${refreshed} is over 48 hours before the range end ${end.toISOString()}` };
+        if (end.getTime() - at > 48 * HOUR) return { why: `claude_cost: not read: data refreshed ${refreshed} is over 48 hours before the range end ${end.toISOString()}` };
       }
       cents += legacy ? sumBuckets(body, start) : sumCents(body);
       if (!body.has_more) return { used: { value: round(cents / 100, 2), as_of: refreshed, source: costSource(url, start, end, refreshed) } };

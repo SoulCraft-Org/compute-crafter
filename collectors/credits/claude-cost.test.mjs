@@ -66,9 +66,9 @@ test('claude_cost: analytics/cost is for 2026-01-01 on; the legacy cost_report o
   assert.match(jan[0].url, /\/analytics\/cost\?/, 'the first month the analytics endpoint covers');
 });
 
-test('claude_cost: empty data refreshed before the month starts is not read, with that time in the reason', async () => {
-  const old = await read(pages([page([], { data_refreshed_at: '2026-10-31T23:00:00Z' })]));
-  assert.equal(old.why, 'claude_cost: not read: data refreshed 2026-10-31T23:00:00Z predates this month');
+test('claude_cost: empty data refreshed before the month, or mid-month but over 48 hours before the range end, is not read, never 0', async () => {
+  assert.equal((await read(pages([page([], { data_refreshed_at: '2026-10-31T23:00:00Z' })]))).why, 'claude_cost: not read: data refreshed 2026-10-31T23:00:00Z predates this month');
+  assert.match((await read(pages([page([], { data_refreshed_at: '2026-11-02T00:00:00Z' })]))).why, /data refreshed 2026-11-02T00:00:00Z is over 48 hours before the range end 2026-11-12T09:00:00\.000Z/);
 });
 
 test('claude_cost: the value carries data_refreshed_at as as_of; data refreshed over 48 hours before the range end is not read with both times', async () => {
