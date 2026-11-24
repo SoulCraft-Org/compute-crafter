@@ -2,7 +2,7 @@
 
 ![Open-weight models flow through a guide, a sign-in and a spend stop into OpenCode desktop first and Claude Code second](assets/hero.svg)
 
-Wire open-source and open-weight compute into OpenCode desktop first and Claude Code second, on free tiers and included credits. Then keep your own list, sign-ins and score page.
+Wire open-source and open-weight compute into OpenCode desktop first and Claude Code second, on free credits and flat monthly subscriptions. Then keep your own list, sign-ins and score page.
 
 ## [📊 Open the live score page](https://soulcraft-org.github.io/compute-crafter/)
 

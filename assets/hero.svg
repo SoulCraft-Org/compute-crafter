@@ -49,7 +49,7 @@
   <rect class="bg" width="1280" height="400"/>
 
   <text class="ink" x="64" y="84" font-size="44" font-weight="700">Compute Crafter</text>
-  <text class="muted" x="64" y="122" font-size="22">Open-weight models on free tiers, one spend stop.</text>
+  <text class="muted" x="64" y="122" font-size="22">Open-weight models on free credits and flat plans, one spend stop.</text>
 
   <text class="muted" x="64" y="176" font-size="18" font-weight="600" letter-spacing="1.5">OPEN-WEIGHT MODELS</text>
   <g font-size="22" font-weight="600" text-anchor="middle">
