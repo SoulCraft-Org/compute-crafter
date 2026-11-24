@@ -1,35 +1,23 @@
-# ComfyUI: traps and sources
+# ComfyUI: guard and set up
 
-What goes wrong with ComfyUI, and the pages this guide read. The steps are in [ComfyUI](../comfyui.md).
+What the ComfyUI guide moved out of its page. Traps and sources: [ComfyUI traps and sources](comfyui-traps.md). The diagram and wiring are in [ComfyUI](../comfyui.md).
 
-## Traps
+## Guard
 
-| Trap | What happens |
-| --- | --- |
-| Free plan and MCP generations | The MCP runs generations only on an active subscription ([Comfy MCP](https://docs.comfy.org/agent-tools/mcp), read 2026-11-12). |
-| Partner Nodes | They spend the same credit pool as GPU time ([Comfy Cloud pricing](https://www.comfy.org/cloud/pricing), read 2026-11-12). Price a graph before it runs |
-| Spend controls | Team spending limits and auto-recharge are announced, not shipped ([Comfy Cloud pricing](https://www.comfy.org/cloud/pricing), read 2026-11-12). The plan's credit is the only stop |
-| `--api-key` on `comfy generate` | It puts the key on the command line. Prefer `comfy cloud login`; a key goes in `COMFY_API_KEY` from your password manager ([Comfy CLI reference](https://docs.comfy.org/comfy-cli/reference), read 2026-11-12) |
-| Automatic consent | `comfy generate consent always`, `--yes` on a spend and `spend.auto_confirm=true` skip the spend prompt. Git Crafter's Comfy rules forbid all three |
-| Cloud upload telemetry | `comfy tracking disable` does not cover it. Only `DO_NOT_TRACK` or `COMFY_NO_TELEMETRY` turns it off ([comfy-cli README](https://github.com/Comfy-Org/comfy-cli), read 2026-11-12) |
-| A committed `.mcp.json` | It starts a command on every machine that trusts the repo. Register MCP servers at user scope |
+| Spend | Stop | Source |
+| --- | --- | --- |
+| Standard plan | $20 a month, or $192 billed yearly with 50,400 credits a year | [Comfy Cloud pricing](https://www.comfy.org/cloud/pricing), read 2026-11-24 |
+| Top-ups | Bought by hand at any time. Plan credits spend first, and top-ups stay valid 1 year | [Comfy Cloud pricing](https://www.comfy.org/cloud/pricing), read 2026-11-24 |
+| Limits | Per-user, per-project and workspace spending limits, and auto-recharge, are planned, not shipped | [Comfy Cloud pricing](https://www.comfy.org/cloud/pricing), read 2026-11-24 |
+| Rule | Read the balance before and after a paid run | [Git Crafter Comfy rules](https://github.com/SoulCraft-Org/git-crafter/blob/main/rules/comfy.md) |
 
-## Sources
+## Set up
 
-<details>
-<summary>Pages read and their dates</summary>
-
-| Page | Read |
-| --- | --- |
-| [Comfy Cloud pricing](https://www.comfy.org/cloud/pricing) | 2026-11-12 |
-| [Comfy CLI getting started](https://docs.comfy.org/comfy-cli/getting-started) | 2026-11-12 |
-| [Comfy CLI reference](https://docs.comfy.org/comfy-cli/reference) | 2026-11-12 |
-| [comfy-cli README](https://github.com/Comfy-Org/comfy-cli) | 2026-11-12 |
-| [Comfy MCP](https://docs.comfy.org/agent-tools/mcp) | 2026-11-12 |
-| [Comfy MCP local](https://docs.comfy.org/agent-tools/local) | 2026-11-12 |
-| [ComfyUI Base README](https://github.com/SoulCraft-Org/comfyui-base) | 2026-11-12 |
-| [OpenCode MCP servers](https://opencode.ai/docs/mcp-servers) | 2026-11-12 |
-| [Claude Code MCP](https://code.claude.com/docs/en/mcp) | 2026-11-12 |
-| [Git Crafter Comfy rules](https://github.com/SoulCraft-Org/git-crafter/blob/main/rules/comfy.md) | 2026-11-12 |
-
-</details>
+1. To run ComfyUI on a GPU you rent or own, use [ComfyUI Base](https://github.com/SoulCraft-Org/comfyui-base). Its README holds the installer and per-host recipes.
+2. Install comfy-cli and turn its telemetry off ([getting started](https://docs.comfy.org/comfy-cli/getting-started), read 2026-11-24).
+3. For Comfy Cloud, run `comfy cloud login`, then `comfy cloud status` to read the balance before any run.
+4. Claude Desktop App: Customize, Connectors, the plus button, Add custom connector. Name it, enter `https://cloud.comfy.org/mcp`, click Add, then pick your workspace in the browser ([Comfy MCP](https://docs.comfy.org/agent-tools/mcp), read 2026-11-24).
+5. Browsing templates, models and nodes is free with a Comfy account. Running generations needs an active subscription. Credits alone do not count.
+6. OpenCode Desktop App: not confirmed. Comfy's page says any client with remote HTTP MCP can use the URL, and gives no OpenCode steps.
+7. For a ComfyUI on your own machine, install `comfy-mcp` and leave `comfy launch` running. The server does not start ComfyUI ([Comfy MCP local](https://docs.comfy.org/agent-tools/local), read 2026-11-24).
+8. Start local ComfyUI on an explicit port, not the vendor default. After a paid run, run `comfy cloud status` again and compare.

@@ -1,34 +1,38 @@
 # Google Cloud
 
-Google Cloud gives a Claude Code or OpenCode user a trial credit for CPUs and storage, which Google's Free Trial page ([Free cloud features](https://docs.cloud.google.com/free/docs/free-cloud-features), read 2026-11-23) sets at $300. The credit has exclusions, and an upgrade can turn covered usage into a bill.
-
-| Account | Free tier | Login or key | Claude connector | OpenCode | Guard |
-| --- | --- | --- | --- | --- | --- |
-| A Google account. Sign-up needs a credit card or other payment method valid for the trial ([Free cloud features](https://docs.cloud.google.com/free/docs/free-cloud-features), read 2026-11-23). | Free Trial: $300 Welcome credit valid for 90 days, and no billing unless you upgrade ([Free cloud features](https://docs.cloud.google.com/free/docs/free-cloud-features), read 2026-11-23). | `gcloud auth login`, a browser sign-in. Keep service account keys out of CI. | None the credit pays for. It cannot pay for partner models offered as a managed API ([Free cloud features](https://docs.cloud.google.com/free/docs/free-cloud-features), read 2026-11-23). | `google-vertex` exists in [models.dev](https://models.dev/api.json) (read 2026-11-23). The credit cannot pay for it from 2026-11-16. | A Free Trial account is not billed. After 90 days or when the credit ends, it has a 30-day grace period, then Google deletes its resources. Upgrading removes that stop. |
+Google Cloud gives a Free Trial credit for CPUs and storage, which Google's Free Trial page ([Free cloud features](https://docs.cloud.google.com/free/docs/free-cloud-features), read 2026-11-24) sets at $300. It does not pay for Gemini models, so it wires to neither Desktop app as inference.
 
 ```mermaid
 flowchart LR
-  T[Free Trial<br/>$300, 90 days] -->|Credit or days end| G[30-day grace]
-  G -->|No upgrade| X[Resources deleted]
-  T -->|Activate| P[Paid account<br/>GPUs, quota increases, charges]
-  G -->|Activate| P
-  P --> E[Credit expires 90 days<br/>after sign-up]
-  E --> M[Every cost is money]
+  P[Google Cloud] --> S[Sign in<br/>Google account, card] --> G[Spend stop<br/>trial not billed, 30-day grace]
+  G -.-> O[OpenCode Desktop App<br/>not confirmed]
+  G -.-> C[Claude Desktop App, Code tab<br/>not confirmed]
+  G -.-> W[Claude Desktop App, Cowork<br/>not confirmed]
 ```
+
+| Account | Free tier | Login or key | Claude connector | OpenCode | Guard |
+| --- | --- | --- | --- | --- | --- |
+| A Google account. Sign-up needs a card or other payment method valid for the trial ([Free cloud features](https://docs.cloud.google.com/free/docs/free-cloud-features), read 2026-11-24). | Google says a $300 Welcome credit over 90 days. No GPUs while the trial is unbilled ([Free cloud features](https://docs.cloud.google.com/free/docs/free-cloud-features), read 2026-11-24). | `gcloud auth login`, a browser sign-in. | None found. | `google-vertex` is in the catalog. The credit cannot pay for Vertex AI from 2026-11-16. | Unbilled trial; after it ends, 30 days of grace, then deletion. Upgrading removes the stop. [Guard detail](detail/google-cloud.md#guard). See [Git Crafter compute rules](https://github.com/SoulCraft-Org/git-crafter/blob/main/rules/compute.md). |
+
+## Wiring
+
+| Host | Plugs in as | Source, read 2026-11-24 |
+| --- | --- | --- |
+| OpenCode Desktop App | Not confirmed. The catalog lists `google-vertex` with key variables `GOOGLE_VERTEX_PROJECT`, `GOOGLE_VERTEX_LOCATION` and `GOOGLE_APPLICATION_CREDENTIALS`. The credit does not pay for it. | [models.dev](https://models.dev/api.json), [Free cloud features](https://docs.cloud.google.com/free/docs/free-cloud-features) |
+| Claude Desktop App, Code tab | Not confirmed. The pages read name no Google Cloud connector. | [Free cloud features](https://docs.cloud.google.com/free/docs/free-cloud-features) |
+| Claude Desktop App, Cowork | Not confirmed. The pages read name no Google Cloud connector. | [Free cloud features](https://docs.cloud.google.com/free/docs/free-cloud-features) |
 
 ## What the credit cannot pay for
 
-Google's page says the credit cannot pay for the Gemini platform (Vertex AI) if you sign up or upgrade on or after 2026-11-16. It also cannot pay for the Gemini API in AI Studio, or for partner models offered as a managed API ([Free cloud features](https://docs.cloud.google.com/free/docs/free-cloud-features), read 2026-11-23). Run those on a Free Tier, a prepay plan, or a different vendor in this repo.
+For a sign-up or upgrade on or after 2026-11-16, it cannot pay for the Gemini platform (Vertex AI). It cannot pay for the Gemini API in AI Studio, and Google points to the Free tier or a prepay plan instead ([Free cloud features](https://docs.cloud.google.com/free/docs/free-cloud-features), read 2026-11-24).
 
-## Set up
+<details>
+<summary>Commands</summary>
 
-1. Sign up for the Free Trial in the Cloud console. Write down the sign-up date: the credit ends 90 days after it ([Free cloud features](https://docs.cloud.google.com/free/docs/free-cloud-features), read 2026-11-23).
-2. Stay on the trial for CPU work. While it lasts, you cannot add GPUs, use Marketplace, or request a quota increase ([Free cloud features](https://docs.cloud.google.com/free/docs/free-cloud-features), read 2026-11-23).
-3. Upgrade only when you need a GPU or a quota increase. On the Welcome page choose **Activate**. Google then bills usage that the credit and the Free Tier do not cover ([Free cloud features](https://docs.cloud.google.com/free/docs/free-cloud-features), read 2026-11-23).
-4. On a paid account, set a budget, then a kill switch, then a quota. Detail and limits: [Google Cloud spend caps](detail/google-cloud.md#spend-caps).
+```bash
+gcloud auth login
+```
 
-## The lesson
+</details>
 
-On a paid account, a net-cost budget plus a kill switch is the right pair, because the budget counts what you really pay. An upgrade is the moment usage the credit covered can become real charges.
-
-Traps and sources: [Google Cloud traps and sources](detail/google-cloud.md).
+Guard and set up: [Google Cloud detail](detail/google-cloud.md). Traps and sources: [Google Cloud traps and sources](detail/google-cloud-traps.md).
