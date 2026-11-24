@@ -1,5 +1,5 @@
 {
-  "comment": "Compute Crafter's own Quality page: the 11 tabs Git Crafter's templates/quality/README.md keeps for a Library, and this repo's own Credits tab, read from this repo's collectors and ideals, built in CI only. Pages is dropped (the only site is this score page) and so is Projects (no Project board). Credits targets are quality/targets/credits.json: the pack's six metrics from targets/credits.json, with params.catalog_file set so credits.registry_age_days reads catalog/plans.json; the five that need local files show not measured in CI. A template goal is overridden only in quality/targets/ with a cited goal_source. tests/pack.test.mjs checks the pack and the page agree. Keys: Git Crafter quality/CONFIG.md.",
+  "comment": "Compute Crafter's own Quality page: all 13 tabs Git Crafter's templates/quality/README.md lists, this repo's own Credits tab (read from this repo's collectors and ideals), and the 8 tabs of the Claudius pack (Colorado-Startups/claudius v1.2.0, pinned by commit). Built in CI only. Projects was dropped (no Project board) and is back: it needs a Projects-read token CI does not hold, so its 9 metrics read not measured, which leaves it out of the score and never counts 0. Pages was dropped (no site but this page) and is back, reading the live page at its Pages URL (quality/targets/web.json). A Claudius metric that needs local files reads not measured in CI, and tests/privacy.mjs fails the build if one carries a value. Credits targets are quality/targets/credits.json: the pack's six metrics from targets/credits.json, with params.catalog_file set so credits.registry_age_days reads catalog/plans.json; the five that need local files show not measured in CI. A template goal is overridden only in quality/targets/ with a cited goal_source. tests/pack.test.mjs checks the pack and the page agree. Keys: Git Crafter quality/CONFIG.md.",
   "tabs": [
     "code",
     "documentation",
@@ -7,15 +7,28 @@
     "pull-requests",
     "discussions",
     "actions",
+    "projects",
     "security",
     "dependabot",
     "scanning",
     "insights",
     "settings",
+    "pages",
     [
       "credits",
       "Credits"
-    ]
+    ],
+    "claude",
+    "claude-settings",
+    "desktop-app",
+    "blockers",
+    "tokens",
+    "instructions",
+    "practices",
+    "visibility"
+  ],
+  "packs": [
+    "Colorado-Startups/claudius@31476068e317cedfdcb62bf392f5b51c7254dd04"
   ],
   "targets": "quality/targets",
   "collectors": "collectors",
