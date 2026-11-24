@@ -17,6 +17,10 @@
           "area": []
         },
         {
+          "doc": ".claude/skills/**",
+          "area": []
+        },
+        {
           "doc": "**",
           "area": [
             "{dir}/"
