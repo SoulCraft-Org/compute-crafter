@@ -18,6 +18,7 @@ const NOT_GUIDES = new Set(['README.md', 'CHECKLIST.md']);
 const guides = readdirSync(join(ROOT, 'guides'), { withFileTypes: true })
   .filter((e) => e.isFile() && e.name.endsWith('.md') && !NOT_GUIDES.has(e.name))
   .map((e) => `guides/${e.name}`);
+const MARKS = ['✅', '❔', '➖'];
 const ids = (list) => new Set(list.map((x) => x.id));
 
 test('every guide page has exactly one node', () => {
@@ -48,12 +49,24 @@ test('every lane, host and wire kind a node names is defined', () => {
   for (const n of data.nodes) {
     for (const lane of n.lanes) assert.ok(lanes.has(lane), `${n.id}: unknown lane ${lane}`);
     for (const [host, wire] of Object.entries(n.wires)) {
-      if (wire === null) continue;
-      assert.ok(kinds.has(wire.kind), `${n.id} to ${host}: unknown kind ${wire.kind}`);
-      assert.ok(wire.how.trim(), `${n.id} to ${host}: no description`);
+      // A kind of null means no page names a route; the mark then cannot be documented.
+      assert.ok(wire.kind === null ? wire.mark !== '✅' : kinds.has(wire.kind), `${n.id} to ${host}: unknown kind ${wire.kind}`);
+      assert.ok(MARKS.includes(wire.mark), `${n.id} to ${host}: unknown mark ${wire.mark}`);
+      assert.ok(wire.how.trim().split(/\s+/).length <= 20, `${n.id} to ${host}: how is over 20 words`);
+      assert.doesNotMatch(wire.how, /ANTHROPIC_BASE_URL|\bclaude [a-z-]+\b.*--|`claude\b/, `${n.id} to ${host}: no Claude Code CLI recipe`);
     }
   }
-  assert.deepEqual(data.hosts.map((h) => h.id), ['opencode', 'claude'], 'OpenCode first, Claude Code second');
+  assert.deepEqual(data.hosts.map((h) => h.id), ['opencode', 'code', 'cowork'], 'OpenCode first, then the Code tab and Cowork');
+});
+
+test('each node marks match its row in guides/README.md', () => {
+  const readme = readFileSync(join(ROOT, 'guides', 'README.md'), 'utf8');
+  const rows = new Map([...readme.matchAll(/^\| \[[^\]]+\]\(([\w-]+\.md)\) \|.*$/gm)].map((m) => [`guides/${m[1]}`, m[0].split('|').map((c) => c.trim())]));
+  for (const n of data.nodes) {
+    const cells = rows.get(n.guide);
+    assert.ok(cells, `${n.id}: no row in guides/README.md`);
+    assert.deepEqual(data.hosts.map((h) => n.wires[h.id].mark), cells.slice(3, 6), `${n.id}: marks differ from the README row`);
+  }
 });
 
 test('a figure names its source and read date; the data holds no dash, home path, email or private shape', () => {

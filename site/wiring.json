@@ -6,13 +6,19 @@
       "id": "opencode",
       "name": "OpenCode Desktop App",
       "short": "OpenCode",
-      "rank": "first"
+      "app": "Desktop App"
     },
     {
-      "id": "claude",
-      "name": "Claude Desktop App (Code and Cowork)",
-      "short": "Claude Desktop App",
-      "rank": "second"
+      "id": "code",
+      "name": "Claude Desktop App, Code tab",
+      "short": "Code tab",
+      "app": "Claude Desktop App"
+    },
+    {
+      "id": "cowork",
+      "name": "Claude Desktop App, Cowork",
+      "short": "Cowork",
+      "app": "Claude Desktop App"
     }
   ],
   "lanes": [
@@ -85,11 +91,18 @@
       "wires": {
         "opencode": {
           "kind": "provider",
-          "how": "Provider `ollama-cloud`, which reads `OLLAMA_API_KEY`."
+          "mark": "✅",
+          "how": "Provider `ollama-cloud`, key `OLLAMA_API_KEY`. The Desktop App shows no connect screen for it."
         },
-        "claude": {
+        "code": {
           "kind": "anthropic",
-          "how": "Ollama's Anthropic-compatible API: `ollama launch claude`, or base URL `https://ollama.com`. No hosted MCP server."
+          "mark": "❔",
+          "how": "Not confirmed. Ollama's page names no tab."
+        },
+        "cowork": {
+          "kind": "anthropic",
+          "mark": "✅",
+          "how": "Ollama app: Apps, Connect Claude, macOS only. Ollama lists Cowork as supported."
         }
       }
     },
@@ -108,11 +121,18 @@
       "wires": {
         "opencode": {
           "kind": "provider",
-          "how": "Provider `openrouter`, built in."
+          "mark": "✅",
+          "how": "Settings, Providers, OpenRouter, Connect, API key. The MCP server is optional."
         },
-        "claude": {
+        "code": {
           "kind": "mcp",
-          "how": "Hosted MCP server `https://mcp.openrouter.ai/mcp`, with an OAuth sign-in."
+          "mark": "✅",
+          "how": "Custom connector with the MCP URL, then Connect. Or the Gateway under Configure Third-Party Inference."
+        },
+        "cowork": {
+          "kind": "mcp",
+          "mark": "❔",
+          "how": "Not confirmed. Connectors come from your claude.ai account. OpenRouter's pages name no Cowork step."
         }
       }
     },
@@ -131,9 +151,19 @@
       "wires": {
         "opencode": {
           "kind": "provider",
-          "how": "Provider `groq`, through `/connect`."
+          "mark": "✅",
+          "how": "Connect provider Groq with a console key."
         },
-        "claude": null
+        "code": {
+          "kind": null,
+          "mark": "❔",
+          "how": "Not confirmed. Groq's pages name no Claude Desktop step."
+        },
+        "cowork": {
+          "kind": "mcp",
+          "mark": "❔",
+          "how": "Not confirmed. The listed MCP server is local, and no page names Cowork."
+        }
       },
       "note": "No hosted MCP server."
     },
@@ -153,11 +183,18 @@
       "wires": {
         "opencode": {
           "kind": "provider",
-          "how": "Provider `huggingface`, reads `HF_TOKEN`, base URL `https://router.huggingface.co/v1`."
+          "mark": "✅",
+          "how": "Connect provider Hugging Face with a fine-grained token that has the Inference Providers permission."
         },
-        "claude": {
+        "code": {
           "kind": "mcp",
-          "how": "Hosted MCP server `https://huggingface.co/mcp`, with a browser sign-in."
+          "mark": "❔",
+          "how": "Not confirmed. A connector gallery entry covers tools. Hugging Face names only the Claude Code CLI for models."
+        },
+        "cowork": {
+          "kind": "mcp",
+          "mark": "❔",
+          "how": "Not confirmed. Same connector, taken from your claude.ai account. Hugging Face names no Cowork step."
         }
       }
     },
@@ -177,11 +214,18 @@
       "wires": {
         "opencode": {
           "kind": "provider",
-          "how": "Provider `nvidia`, reads `NVIDIA_API_KEY`, base URL `https://integrate.api.nvidia.com/v1`."
+          "mark": "✅",
+          "how": "Connect provider NVIDIA with a build.nvidia.com key."
         },
-        "claude": {
-          "kind": "mcp",
-          "how": "The CUDA docs MCP server, with an NVIDIA Developer sign-in. The API catalog has none."
+        "code": {
+          "kind": null,
+          "mark": "❔",
+          "how": "Not confirmed. Nsight AI names Claude Code and others, not the Desktop App."
+        },
+        "cowork": {
+          "kind": null,
+          "mark": "❔",
+          "how": "Not confirmed. No NVIDIA page names Cowork."
         }
       }
     },
@@ -200,11 +244,18 @@
       "wires": {
         "opencode": {
           "kind": "provider",
-          "how": "Provider `togetherai`, reads `TOGETHER_API_KEY`."
+          "mark": "✅",
+          "how": "Connect provider Together AI with a key. Together Link also launches OpenCode 2."
         },
-        "claude": {
-          "kind": "mcp",
-          "how": "A docs-only MCP server at `https://docs.together.ai/mcp`."
+        "code": {
+          "kind": "link",
+          "mark": "✅",
+          "how": "Together Link's Claude Desktop mode, beta on macOS and Linux."
+        },
+        "cowork": {
+          "kind": "link",
+          "mark": "✅",
+          "how": "The same mode. Together's page says it covers Cowork and Code."
         }
       }
     },
@@ -223,11 +274,18 @@
       "wires": {
         "opencode": {
           "kind": "provider",
-          "how": "Provider `cloudflare-workers-ai`."
+          "mark": "✅",
+          "how": "Connect provider Workers AI with a token, and give OpenCode the account ID."
         },
-        "claude": {
+        "code": {
           "kind": "mcp",
-          "how": "Hosted MCP server `https://mcp.cloudflare.com/mcp`."
+          "mark": "❔",
+          "how": "Not confirmed. The page names a Claude Code Skills plugin, not a Desktop tab."
+        },
+        "cowork": {
+          "kind": "mcp",
+          "mark": "❔",
+          "how": "Not confirmed. The page does not name Cowork."
         }
       }
     },
@@ -247,11 +305,18 @@
       "wires": {
         "opencode": {
           "kind": "provider",
-          "how": "Provider `anthropic`, env `ANTHROPIC_API_KEY`."
+          "mark": "❔",
+          "how": "Not confirmed. OpenCode's providers page has no Anthropic section."
         },
-        "claude": {
-          "kind": "link",
-          "how": "The `anthropics/claude-code-action` GitHub Action takes the federation inputs."
+        "code": {
+          "kind": "anthropic",
+          "mark": "➖",
+          "how": "Not available. The credits cover the API, Agent SDK and Playground, and exclude Claude Code."
+        },
+        "cowork": {
+          "kind": "anthropic",
+          "mark": "➖",
+          "how": "Not available. The credits exclude Claude Code and extra usage in the Claude apps."
         }
       }
     },
@@ -270,11 +335,18 @@
       "wires": {
         "opencode": {
           "kind": "openai",
-          "how": "MLX: a custom OpenAI-compatible provider on `http://127.0.0.1:3101/v1`. LM Studio: the built-in `lmstudio` provider."
+          "mark": "✅",
+          "how": "LM Studio: provider `lmstudio`. MLX: a custom OpenAI-compatible provider with the model listed by hand."
         },
-        "claude": {
+        "code": {
           "kind": "anthropic",
-          "how": "LM Studio only: `ANTHROPIC_BASE_URL=http://127.0.0.1:3102`. MLX has no Anthropic route."
+          "mark": "❔",
+          "how": "Not confirmed. A local session ignores the base URL; third-party inference needs a gateway."
+        },
+        "cowork": {
+          "kind": "anthropic",
+          "mark": "❔",
+          "how": "Not confirmed. The Gateway page says Cowork sessions use the gateway, and names no local server."
         }
       }
     },
@@ -294,9 +366,19 @@
       "wires": {
         "opencode": {
           "kind": "provider",
-          "how": "Provider `modal`, base URL `https://inference.us-west.modal.direct/v1`, connected with `/connect`."
+          "mark": "✅",
+          "how": "Run `/connect`, pick Modal, enter the proxy token, then pick your Model API with `/models`."
         },
-        "claude": null
+        "code": {
+          "kind": null,
+          "mark": "❔",
+          "how": "Not confirmed. Modal's page names Claude Code with environment variables, not the Desktop App."
+        },
+        "cowork": {
+          "kind": null,
+          "mark": "❔",
+          "how": "Not confirmed. No Modal page names Cowork."
+        }
       },
       "note": "Modal documents hosting your own MCP server, not one of its own."
     },
@@ -314,12 +396,19 @@
       "key": "MCP: OAuth through Sign in with Runpod. CLI: `runpodctl doctor`; else `RUNPOD_API_KEY`.",
       "wires": {
         "opencode": {
-          "kind": "openai",
-          "how": "Not a built-in provider. A Serverless vLLM endpoint is OpenAI-compatible at `https://api.runpod.ai/v2/<ENDPOINT_ID>/openai/v1`."
-        },
-        "claude": {
           "kind": "mcp",
-          "how": "Hosted MCP server `https://mcp.runpod.io/`, with an OAuth sign-in."
+          "mark": "✅",
+          "how": "Remote MCP server `runpod` under `mcp`, then `opencode mcp auth runpod`. A vLLM endpoint fits a custom provider."
+        },
+        "code": {
+          "kind": "mcp",
+          "mark": "✅",
+          "how": "Custom connector `https://mcp.runpod.io/`. Plus-button connectors reach local Code sessions."
+        },
+        "cowork": {
+          "kind": "mcp",
+          "mark": "❔",
+          "how": "Not confirmed. RunPod's page does not mention Cowork."
         }
       }
     },
@@ -338,9 +427,19 @@
       "wires": {
         "opencode": {
           "kind": "openai",
-          "how": "A model you serve on the droplet with an OpenAI-compatible server is a custom provider."
+          "mark": "❔",
+          "how": "Not confirmed. A model served on the droplet with an OpenAI-compatible server fits a custom provider."
         },
-        "claude": null
+        "code": {
+          "kind": null,
+          "mark": "❔",
+          "how": "Not confirmed. AMD's pages name no MCP server or connector."
+        },
+        "cowork": {
+          "kind": null,
+          "mark": "❔",
+          "how": "Not confirmed. AMD's pages name no MCP server or connector."
+        }
       },
       "note": "No hosted MCP server."
     },
@@ -358,8 +457,21 @@
       "signin": "A Google account. Sign-up needs a payment method valid for the trial.",
       "key": "`gcloud auth login`, a browser sign-in. Keep service account keys out of CI.",
       "wires": {
-        "opencode": null,
-        "claude": null
+        "opencode": {
+          "kind": "provider",
+          "mark": "❔",
+          "how": "Not confirmed. The catalog lists `google-vertex`, but the credit does not pay for Vertex AI from 2026-11-16."
+        },
+        "code": {
+          "kind": null,
+          "mark": "❔",
+          "how": "Not confirmed. The pages read name no Google Cloud connector."
+        },
+        "cowork": {
+          "kind": null,
+          "mark": "❔",
+          "how": "Not confirmed. The pages read name no Google Cloud connector."
+        }
       },
       "note": "The credit pays for no connector. It cannot pay for Gemini on Vertex AI or for partner models offered as a managed API."
     },
@@ -378,11 +490,18 @@
       "wires": {
         "opencode": {
           "kind": "mcp",
-          "how": "Add the Comfy Cloud MCP server with `opencode mcp add`."
+          "mark": "✅",
+          "how": "Remote MCP server under `mcp`, with OAuth on by default."
         },
-        "claude": {
+        "code": {
           "kind": "mcp",
-          "how": "Comfy Cloud MCP server `https://cloud.comfy.org/mcp`. A local `comfy-mcp` drives your own box."
+          "mark": "✅",
+          "how": "Customize, Connectors, Add custom connector with the Comfy URL."
+        },
+        "cowork": {
+          "kind": "mcp",
+          "mark": "❔",
+          "how": "Not confirmed. Comfy's page does not mention Cowork."
         }
       }
     },
@@ -399,8 +518,21 @@
       "signin": "One per lane. The guide lists them.",
       "key": "One per lane, kept as in that lane's own guide.",
       "wires": {
-        "opencode": null,
-        "claude": null
+        "opencode": {
+          "kind": null,
+          "mark": "❔",
+          "how": "No page read names this host."
+        },
+        "code": {
+          "kind": null,
+          "mark": "❔",
+          "how": "No page read names this host."
+        },
+        "cowork": {
+          "kind": null,
+          "mark": "❔",
+          "how": "No page read names this host."
+        }
       },
       "note": "A method, not a connector: it runs on the GPU lanes above."
     },
@@ -420,11 +552,18 @@
       "wires": {
         "opencode": {
           "kind": "provider",
-          "how": "Provider `github-copilot`, through `/connect` and Login with GitHub Copilot."
+          "mark": "✅",
+          "how": "Run `/connect`, GitHub Copilot, then Login with GitHub Copilot. Copilot Free counts."
         },
-        "claude": {
+        "code": {
           "kind": "mcp",
-          "how": "Hosted MCP server `https://api.githubcopilot.com/mcp/`."
+          "mark": "➖",
+          "how": "Not available for the hosted server: its OAuth is not supported in Claude Desktop."
+        },
+        "cowork": {
+          "kind": "mcp",
+          "mark": "➖",
+          "how": "Not available for the hosted server. GitHub offers a local Docker server instead."
         }
       }
     },
@@ -443,11 +582,18 @@
       "wires": {
         "opencode": {
           "kind": "mcp",
-          "how": "The local `@meshy-ai/meshy-mcp-server` runs in any stdio MCP client."
+          "mark": "❔",
+          "how": "Not confirmed. Meshy says any stdio MCP client works; OpenCode's page names no Desktop screen."
         },
-        "claude": {
+        "code": {
           "kind": "mcp",
-          "how": "The `meshy-3d-generation` plugin, or the local `@meshy-ai/meshy-mcp-server`. Meshy's hosted server admits only ChatGPT today."
+          "mark": "❔",
+          "how": "Not confirmed. Meshy's page names the Code tab and gives no route."
+        },
+        "cowork": {
+          "kind": "mcp",
+          "mark": "❔",
+          "how": "Not confirmed. Meshy names no Cowork step."
         }
       }
     },
@@ -464,10 +610,20 @@
       "signin": "None. Each model provider has its own account.",
       "key": "`goose configure` stores a provider key in the system keyring.",
       "wires": {
-        "opencode": null,
-        "claude": {
+        "opencode": {
           "kind": "link",
-          "how": "The `claude-acp` provider runs Claude Code through ACP, with an active Claude Code subscription."
+          "mark": "❔",
+          "how": "Not confirmed. Goose's pages name no OpenCode link. Both run as ACP agents."
+        },
+        "code": {
+          "kind": "link",
+          "mark": "❔",
+          "how": "Not confirmed. Goose's pages name no Claude Desktop step."
+        },
+        "cowork": {
+          "kind": null,
+          "mark": "❔",
+          "how": "Not confirmed. No page names a Goose step for Cowork."
         }
       },
       "note": "Goose and OpenCode are peer agents. Both run in Zed."
@@ -487,11 +643,18 @@
       "wires": {
         "opencode": {
           "kind": "link",
-          "how": "From the ACP Registry, or a custom agent that runs `opencode acp`."
+          "mark": "❔",
+          "how": "Not confirmed. Zed runs `opencode acp`; the Desktop App is not named."
         },
-        "claude": {
-          "kind": "link",
-          "how": "Claude Agent from the ACP Registry. It owns its login and billing."
+        "code": {
+          "kind": null,
+          "mark": "❔",
+          "how": "Not confirmed. Zed's page does not name Claude Desktop."
+        },
+        "cowork": {
+          "kind": null,
+          "mark": "❔",
+          "how": "Not confirmed. No page names a Zed step for Cowork."
         }
       }
     },
@@ -508,10 +671,20 @@
       "signin": "A Claude account. On Team and Enterprise an Owner adds the connector for the organization.",
       "key": "Per server. A server on a public HTTPS URL becomes a custom connector.",
       "wires": {
-        "opencode": null,
-        "claude": {
+        "opencode": {
+          "kind": null,
+          "mark": "❔",
+          "how": "Not confirmed. No Desktop route here. OpenCode takes its own config."
+        },
+        "code": {
           "kind": "mcp",
-          "how": "A custom connector for a public HTTPS server, or a desktop extension for one that listens only on 127.0.0.1."
+          "mark": "✅",
+          "how": "A custom connector at Customize, Connectors. Open a new session after adding."
+        },
+        "cowork": {
+          "kind": "mcp",
+          "mark": "✅",
+          "how": "The same connector. Cowork takes connectors from your claude.ai account."
         }
       }
     },
@@ -528,10 +701,40 @@
       "signin": "One order for every vendor in these guides.",
       "key": "Each passkey and code sits in a known place, in Apple Passwords.",
       "wires": {
-        "opencode": null,
-        "claude": null
+        "opencode": {
+          "kind": null,
+          "mark": "❔",
+          "how": "Not confirmed. No page read names this host."
+        },
+        "code": {
+          "kind": null,
+          "mark": "❔",
+          "how": "Not confirmed. No page read names this host."
+        },
+        "cowork": {
+          "kind": null,
+          "mark": "❔",
+          "how": "Not confirmed. No page read names this host."
+        }
       },
       "note": "A sign-in method, not a connector."
+    }
+  ],
+  "marks": [
+    {
+      "mark": "✅",
+      "label": "Documented",
+      "line": "solid"
+    },
+    {
+      "mark": "❔",
+      "label": "Not confirmed",
+      "line": "dotted"
+    },
+    {
+      "mark": "➖",
+      "label": "A page says not available",
+      "line": "none"
     }
   ]
 }

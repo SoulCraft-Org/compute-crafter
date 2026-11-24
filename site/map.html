@@ -5,13 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light dark">
 <title>Wiring map</title>
-<meta name="description" content="How each provider guide wires into the OpenCode Desktop App and the Claude Desktop App.">
+<meta name="description" content="How each provider guide wires into the OpenCode Desktop App and the Claude Desktop App, in its Code tab and in Cowork.">
 <style>
 :root{
   --bg:#f2f4f1; --surf:#fcfcfb; --ink:#14201e; --ink2:#46524f; --mute:#5d6967; --line:#d3d9d6; --bus:#a9b4b0;
   --sel:#dcebe4; --focus:#0a6b62;
   --k-provider:#2a78d6; --k-openai:#eb6834; --k-anthropic:#1baf7a; --k-mcp:#eda100; --k-link:#e87ba4;
-  --node:164px; --sub:24px;
+  --node:128px;
   color-scheme:light;
 }
 @media (prefers-color-scheme:dark){
@@ -24,6 +24,7 @@
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
+[hidden]{display:none!important}
 body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 "Avenir Next","Segoe UI Variable Text","Segoe UI",system-ui,sans-serif}
 code{font:0.9em ui-monospace,"SF Mono",Menlo,Consolas,monospace;background:color-mix(in srgb,var(--ink) 8%,transparent);padding:.05em .3em;border-radius:3px;overflow-wrap:anywhere}
 button{font:inherit;color:inherit;cursor:pointer}
@@ -34,7 +35,7 @@ h1{margin:0;font-size:clamp(30px,6vw,46px);line-height:1.05;font-weight:780;lett
 .lede{margin:8px 0 20px;color:var(--ink2);max-width:46ch}
 .filters{display:grid;gap:10px;margin-bottom:14px}
 .group{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
-.group>span{width:4.6rem;font-size:13px;font-weight:650;color:var(--ink2)}
+.group>span{width:6.4rem;font-size:13px;font-weight:650;color:var(--ink2)}
 .chip{border:1.5px solid var(--ink);background:transparent;border-radius:99px;padding:3px 12px;font-size:13.5px;font-weight:600;min-height:32px}
 .chip[aria-pressed=true]{background:var(--ink);color:var(--bg)}
 .clear{border:0;background:none;text-decoration:underline;font-size:13px;color:var(--ink2);padding:6px}
@@ -44,39 +45,39 @@ h1{margin:0;font-size:clamp(30px,6vw,46px);line-height:1.05;font-weight:780;lett
 .legend li{display:flex;align-items:center;gap:5px}
 .app{display:grid;gap:24px;margin-top:18px}
 @media (min-width:880px){
-  :root{--node:188px}
-  .app{grid-template-columns:minmax(0,440px) minmax(0,1fr);align-items:start}
+  :root{--node:176px}
+  .app{grid-template-columns:minmax(0,540px) minmax(0,1fr);align-items:start}
 }
-.heads,.row{display:grid;grid-template-columns:var(--node) 1fr 1fr}
+.heads,.row{display:grid;grid-template-columns:var(--node) repeat(var(--hosts,3),minmax(0,1fr))}
 .heads{position:sticky;top:0;z-index:5;background:var(--bg);padding:6px 0 8px}
 .plate{display:flex;flex-direction:column;justify-content:center;min-height:46px;padding:4px 8px;border:2px solid var(--ink);border-radius:8px;margin-left:6px;line-height:1.15}
 .plate b{font-size:13.5px}
 .plate small{font-size:11px;opacity:.85}
 .plate.first{background:var(--ink);color:var(--bg)}
 .heads .lbl{align-self:end;font-size:12px;color:var(--mute)}
-.map{position:relative;margin:0;padding:0;list-style:none}
-.map::before,.map::after{content:"";position:absolute;top:0;bottom:0;width:2px;background:var(--bus);z-index:0;margin-left:-1px}
-.map::before{left:calc(var(--node) + (100% - var(--node)) / 2 - 12px)}
-.map::after{left:calc(100% - 12px)}
-.map.only-opencode :is(.c-cc,.c-pass),.map.only-claude .c-oc{opacity:.22}
+.map{margin:0;padding:0;list-style:none}
+.cell.dim{opacity:.25}
 .band{display:flex;align-items:center;gap:8px;width:var(--node);margin:14px 0 6px;font-size:12.5px;font-weight:700;color:var(--ink2)}
 .band::after{content:"";flex:1;height:1px;background:var(--line)}
-.row{position:relative;z-index:1;grid-template-rows:var(--sub) var(--sub);margin-bottom:6px;border-radius:8px}
+.row{margin-bottom:6px;border-radius:8px;min-height:44px}
 .row:hover{background:color-mix(in srgb,var(--sel) 55%,transparent)}
 .row.sel{background:color-mix(in srgb,var(--sel) 80%,transparent)}
-.node{grid-row:1/3;grid-column:1;text-align:left;border:1.5px solid var(--ink);background:var(--surf);border-radius:8px;padding:2px 9px;line-height:1.15;font-size:13.5px;font-weight:650;display:flex;flex-direction:column;justify-content:center}
+.node{grid-column:1;text-align:left;border:1.5px solid var(--ink);background:var(--surf);border-radius:8px;padding:2px 9px;line-height:1.15;font-size:13.5px;font-weight:650;display:flex;flex-direction:column;justify-content:center}
 .node small{font-weight:500;font-size:11px;color:var(--mute)}
 .row.sel .node{background:var(--ink);color:var(--bg)}
 .row.sel .node small{color:inherit;opacity:.8}
-.pt{display:block;width:100%;height:var(--sub);overflow:visible;font-size:10.5px}
-.pt line{stroke-width:2.2px;stroke-linecap:butt}
+.cell{padding:0 12px 0 4px}
+.pt{display:block;width:100%;height:44px;overflow:visible;font-size:10.5px}
+.pt line{stroke-width:2.4px;stroke-linecap:butt}
 .row.sel .pt line{stroke-width:3.2px}
+.pt line.dots{stroke-width:3.2px;stroke-linecap:round;stroke-dasharray:.1 6.5}
 .pt text{fill:var(--ink2)}
 .pt .none{fill:var(--mute)}
 .pt g.gl{stroke:var(--bg);stroke-width:2.5px;paint-order:stroke}
-.c-oc{grid-column:2;grid-row:1;padding-right:12px}
-.c-pass{grid-column:2;grid-row:2}
-.c-cc{grid-column:3;grid-row:2;padding-right:12px}
+.pt g.gl.hollow{fill:var(--surf);stroke-width:2px}
+@media (max-width:879px){.pt text:not(.none),.pt .nr{display:none}.pt .none{font-size:9.5px}.plate{margin-left:3px;padding:4px 3px;min-width:0}.plate b{font-size:12px}.plate small{display:none}}
+.marks{display:flex;flex-wrap:wrap;gap:4px 14px;margin:6px 0 0;padding:0;list-style:none;font-size:12.5px;color:var(--ink2)}
+.marks li{display:flex;align-items:center;gap:6px}
 .empty{margin:12px 0;color:var(--ink2)}
 .card{background:var(--surf);border:1.5px solid var(--ink);border-radius:12px;padding:16px 16px 18px}
 .card h2{margin:0;font-size:22px;line-height:1.1;letter-spacing:-.01em}
@@ -118,18 +119,19 @@ h1{margin:0;font-size:clamp(30px,6vw,46px);line-height:1.05;font-weight:780;lett
 <body>
 <div class="wrap">
   <h1>Wiring map</h1>
-  <p class="lede" id="lede">Which provider guides wire into the OpenCode Desktop App, and which into the Claude Desktop App (Code and Cowork).</p>
+  <p class="lede" id="lede">Which provider guides wire into the OpenCode Desktop App, and which into the Claude Desktop App, in its Code tab and in Cowork.</p>
   <div class="filters">
     <div class="group" id="lanes" role="group" aria-labelledby="gl"><span id="gl">Lane</span></div>
-    <div class="group" id="hosts" role="group" aria-labelledby="gh"><span id="gh">Wires into</span></div>
+    <div class="group" id="hosts" role="group" aria-labelledby="gh"><span id="gh">Documented in</span></div>
     <p class="status"><span id="status" role="status"></span><button class="clear" id="clear" type="button" hidden>Clear filters</button></p>
   </div>
   <ul class="legend" id="legend" aria-label="Wire kinds"></ul>
+  <ul class="marks" id="marks" aria-label="Marks"></ul>
   <div class="app">
     <section aria-label="Guides and their wires">
       <div class="heads" id="heads"></div>
       <ol class="map" id="map"></ol>
-      <p class="empty" id="empty" hidden>No guide matches both filters.</p>
+      <p class="empty" id="empty" hidden>No guide matches these filters.</p>
     </section>
     <aside class="card empty-card" id="card" aria-live="polite" aria-label="Guide summary"></aside>
   </div>
@@ -156,40 +158,43 @@ try {
 const kind = Object.fromEntries(D.kinds.map((k) => [k.id, k]));
 const lane = Object.fromEntries(D.lanes.map((l) => [l.id, l]));
 const host = Object.fromEntries(D.hosts.map((h) => [h.id, h]));
-const [OC, CC] = D.hosts.map((h) => h.id);
-const wires = (n) => D.hosts.filter((h) => n.wires[h.id]).length;
+const mark = Object.fromEntries(D.marks.map((m) => [m.mark, m]));
+const done = (n, h) => n.wires[h].mark === D.marks[0].mark;
+const wires = (n) => D.hosts.filter((h) => done(n, h.id)).length;
+document.documentElement.style.setProperty('--hosts', D.hosts.length);
 const glyph = (k, size = 16) => `<svg width="${size}" height="${size}" viewBox="-8 -8 16 16" aria-hidden="true"><g fill="var(--k-${k})" stroke="var(--surf)" stroke-width="1.5" paint-order="stroke">${SHAPES[kind[k].shape]}</g></svg>`;
 
-// One port cell: a rail in the wire's style, a tag above it, and the kind's shape where it meets the host's bus.
-const dash = (k) => `stroke="var(--k-${k})" stroke-dasharray="${DASH[k]}" stroke-linecap="${k === 'anthropic' ? 'round' : 'butt'}"${k === 'anthropic' ? ' style="stroke-width:3.4px"' : ''}`;
+// One cell: a rail drawn by its mark (solid, dotted, none), a tag above it, and the kind's shape at the end.
+// A kind of null means no page names a route: the cell says so and draws a dotted rail with no shape.
 function port(h, n) {
-  const w = n.wires[h];
-  if (!w) return '<svg class="pt" aria-hidden="true"><text class="none" x="6" y="17">none</text></svg>';
-  const k = kind[w.kind];
-  return `<svg class="pt" aria-hidden="true"><title>${esc(host[h].short)}: ${esc(k.label)}</title>
-    <line x1="0" x2="100%" y1="17" y2="17" ${dash(w.kind)}/><text x="6" y="10">${esc(k.short)}</text>
-    <svg x="100%" y="17" width="1" height="1" overflow="visible"><g class="gl" fill="var(--k-${w.kind})">${SHAPES[k.shape]}</g></svg></svg>`;
+  const w = n.wires[h], m = mark[w.mark], k = w.kind && kind[w.kind];
+  const lbl = `${host[h].short}: ${m.label.toLowerCase()}${k ? `, ${k.label}` : ''}`;
+  if (m.line === 'none') return `<svg class="pt" aria-hidden="true"><title>${esc(lbl)}</title><text class="none" x="4" y="26">Not available</text></svg>`;
+  const solid = m.line === 'solid';
+  const col = k ? `var(--k-${w.kind})` : 'var(--mute)';
+  return `<svg class="pt" aria-hidden="true"><title>${esc(lbl)}</title>
+    <line class="${solid ? '' : 'dots'}" x1="0" x2="100%" y1="28" y2="28" stroke="${col}"/>
+    ${k ? `<text x="4" y="19">${esc(k.short)}</text><svg x="100%" y="28" width="1" height="1" overflow="visible"><g class="gl${solid ? '' : ' hollow'}" fill="var(--k-${w.kind})"${solid ? '' : ` style="stroke:var(--k-${w.kind})"`}>${SHAPES[k.shape]}</g></svg>` : '<text class="none nr" x="4" y="19">No route named</text>'}</svg>`;
 }
-// The Claude Desktop App wire crosses the OpenCode column on its own sub-row.
-const pass = (n) => `<svg class="pt" aria-hidden="true"><line x1="0" x2="100%" y1="17" y2="17" ${dash(n.wires[CC].kind)}/></svg>`;
 
 const rowFor = (n) => {
   const li = document.createElement('li');
   li.className = 'row'; li.dataset.id = n.id;
   const also = n.lanes.slice(1).map((l) => lane[l].label).join(', ');
-  const spoken = D.hosts.map((h) => `${h.short}: ${n.wires[h.id] ? kind[n.wires[h.id].kind].label : 'no wire'}`).join('. ');
-  li.innerHTML = `<button class="node" type="button" aria-pressed="false" aria-controls="card" aria-label="${esc(n.name)}. ${esc(spoken)}">${esc(n.name)}${also ? `<small>also ${esc(also)}</small>` : ''}</button>
-    <div class="c-oc">${port(OC, n)}</div>${n.wires[CC] ? `<div class="c-pass">${pass(n)}</div>` : ''}<div class="c-cc">${port(CC, n)}</div>`;
+  const spoken = D.hosts.map((h) => `${h.short}: ${mark[n.wires[h.id].mark].label.toLowerCase()}`).join('. ');
+  li.innerHTML = `<button class="node" type="button" aria-pressed="false" aria-controls="card" aria-label="${esc(n.name)}. ${esc(spoken)}">${esc(n.name)}${also ? `<small>also ${esc(also)}</small>` : ''}</button>`
+    + D.hosts.map((h) => `<div class="cell" data-h="${h.id}">${port(h.id, n)}</div>`).join('');
   return li;
 };
 
 // Head plates, legend and filter chips.
-$('heads').innerHTML = `<span class="lbl">Guide</span>` + D.hosts.map((h, i) => `<div class="plate ${i ? 'second' : 'first'}"><b>${esc(h.short)}</b><small>${i ? '' : 'desktop, '}${esc(h.rank)}</small></div>`).join('');
+$('heads').innerHTML = `<span class="lbl">Guide</span>` + D.hosts.map((h, i) => `<div class="plate ${i ? '' : 'first'}"><b>${esc(h.short)}</b><small>${esc(h.app)}</small></div>`).join('');
+$('marks').innerHTML = D.marks.map((m) => `<li><svg width="34" height="12" viewBox="0 0 34 12" aria-hidden="true">${m.line === 'none' ? '' : `<line x1="1" x2="33" y1="6" y2="6" stroke="var(--ink2)" stroke-width="${m.line === 'solid' ? 2.4 : 3.2}"${m.line === 'solid' ? '' : ' stroke-dasharray=".1 6.5" stroke-linecap="round"'}/>`}</svg><span>${esc(m.mark)} ${esc(m.label)}</span></li>`).join('');
 $('legend').innerHTML = D.kinds.map((k) => `<li>${glyph(k.id, 14)}<span>${esc(k.label)}</span></li>`).join('');
 const chip = (group, id, label) => `<button class="chip" type="button" data-g="${group}" data-v="${esc(id)}" aria-pressed="false">${esc(label)}</button>`;
 $('lanes').insertAdjacentHTML('beforeend', D.lanes.map((l) => chip('lane', l.id, l.label)).join(''));
 $('hosts').insertAdjacentHTML('beforeend', D.hosts.map((h) => chip('host', h.id, h.short)).join(''));
-$('lede').textContent = `${D.nodes.length} guides, ${D.nodes.reduce((s, n) => s + wires(n), 0)} wires. Pick a guide to see its free tier, sign-in and key.`;
+$('lede').textContent = `${D.nodes.length} guides, ${D.nodes.reduce((s, n) => s + wires(n), 0)} documented wires. Pick a guide to see its free tier, sign-in and key.`;
 
 // The list: a band per primary lane, a row per guide.
 const map = $('map');
@@ -208,14 +213,13 @@ let selected = null;
 function apply() {
   let shown = 0;
   for (const n of D.nodes) {
-    const ok = (!on.lane.size || n.lanes.some((l) => on.lane.has(l))) && [...on.host].every((h) => n.wires[h]);
+    const ok = (!on.lane.size || n.lanes.some((l) => on.lane.has(l))) && [...on.host].every((h) => done(n, h));
     rows.get(n.id).hidden = !ok;
     shown += ok;
   }
   const live = new Set(D.nodes.filter((n) => !rows.get(n.id).hidden).map((n) => n.lanes[0]));
   for (const [id, b] of bands) b.hidden = !live.has(id);
-  map.classList.toggle('only-opencode', on.host.size === 1 && on.host.has(OC));
-  map.classList.toggle('only-claude', on.host.size === 1 && on.host.has(CC));
+  map.querySelectorAll('.cell').forEach((c) => c.classList.toggle('dim', on.host.size > 0 && !on.host.has(c.dataset.h)));
   $('empty').hidden = shown > 0;
   $('clear').hidden = !(on.lane.size || on.host.size);
   $('status').textContent = `${shown} of ${D.nodes.length} guides shown`;
@@ -238,8 +242,8 @@ document.querySelector('.filters').addEventListener('click', (e) => {
 
 function card(n) {
   const way = (h) => {
-    const w = n.wires[h.id];
-    return `<tr><th scope="row">${esc(h.short)}</th><td>${w ? `<div class="way">${glyph(w.kind)}<div><b>${esc(kind[w.kind].label)}</b>${fmt(w.how)}</div></div>` : '<span class="none">No wire.</span>'}</td></tr>`;
+    const w = n.wires[h.id], k = w.kind && kind[w.kind];
+    return `<tr><th scope="row">${esc(h.short)}</th><td><div class="way">${k ? glyph(w.kind) : ''}<div><b>${esc(w.mark)} ${esc(mark[w.mark].label)}${k ? `, ${esc(k.label)}` : ''}</b>${fmt(w.how)}</div></div></td></tr>`;
   };
   const guide = D.repo + n.guide;
   return `<button class="close" type="button" aria-label="Close the summary">×</button>
