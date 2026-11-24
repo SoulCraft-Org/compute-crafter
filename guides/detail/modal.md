@@ -1,40 +1,24 @@
-# Modal: traps and sources
+# Modal: guard and set up
 
-What goes wrong with Modal, and the pages this guide read. The steps are in [Modal](../modal.md).
+What the Modal guide moved out of its page. The diagram and wiring are in [Modal](../modal.md).
 
-## Traps
+## Guard
 
-| Trap | What happens |
+| Item | Figure | Source |
+| --- | --- | --- |
+| Spend limit | A monthly cap on net charges after credits. Owners and Managers set it under Settings, Usage & Billing | [Budgets](https://modal.com/docs/guide/budgets), read 2026-11-24 |
+| Default | Without a custom value, it equals the usage limit minus credits | [Budgets](https://modal.com/docs/guide/budgets), read 2026-11-24 |
+| Removal | **Reset to default** clears a custom value | [Budgets](https://modal.com/docs/guide/budgets), read 2026-11-24 |
+| Credit coverage | Included usage "does not apply to Model APIs, which are billed per token" | [Plan pricing](https://modal.com/pricing), read 2026-11-24 |
+
+## Set up
+
+| Step | What |
 | --- | --- |
-| Shared Endpoints and the free credit | Plan credits cannot pay for Shared Endpoint tokens ([Shared Endpoints](https://modal.com/docs/guide/shared-endpoints), read 2026-11-12). The first request bills money, not credit |
-| A deployed app left running | `modal deploy` keeps the app live. `modal app stop <app>` stops it and terminates its containers ([CLI app](https://modal.com/docs/reference/cli/app), read 2026-11-12). Do it the same day |
-| `modal config show --no-redact` | It shows secret credential values. Use `modal token info` to check the login |
-| `modal token set --token-secret` | It puts the secret on the command line and in shell history. Use `modal setup` |
-| Token in the environment | `MODAL_TOKEN_ID` and `MODAL_TOKEN_SECRET` take precedence over `~/.modal.toml` ([Config reference](https://modal.com/docs/reference/modal.config), read 2026-11-12). Keep them out of dotfiles |
-| Environment budgets | They need the Team plan ([Plan pricing](https://modal.com/pricing), read 2026-11-12). On Starter the workspace spend limit is the only cap |
-| Service users for CI | They need the Team or Enterprise plan ([Service users](https://modal.com/docs/guide/service-users), read 2026-11-12) |
+| 1. CLI | `pip install modal`, then `modal setup` opens a browser login. `modal token info` checks it |
+| 2. Spend limit | Set it before the first run. Lower it if the default is above what you accept |
+| 3. Your own GPU code | `modal run` is one run. `modal deploy` keeps an app live until `modal app stop <app>` ([CLI app](https://modal.com/docs/reference/cli/app), read 2026-11-12) |
+| 4. Model API | Create one and a proxy token. Join the token ID and secret with a period and keep it in your password manager |
+| 5. OpenCode | Set `MODAL_PROXY_TOKEN` from that store in one shell, never a dotfile. Start `opencode --standalone`: the shared service cannot see it ([CLI providers](https://opencode.ai/docs/cli/providers), read 2026-11-20) |
 
-## Sources
-
-<details>
-<summary>Pages read and their dates</summary>
-
-| Page | Read |
-| --- | --- |
-| [Modal plan pricing](https://modal.com/pricing) | 2026-11-12 |
-| [Modal user account setup](https://modal.com/docs/guide/modal-user-account-setup) | 2026-11-12 |
-| [Modal budgets and spend limits](https://modal.com/docs/guide/budgets) | 2026-11-12 |
-| [Modal workspaces](https://modal.com/docs/guide/workspaces) | 2026-11-12 |
-| [Modal Endpoints](https://modal.com/docs/guide/endpoints) | 2026-11-12 |
-| [Modal Shared Endpoints](https://modal.com/docs/guide/shared-endpoints) | 2026-11-12 |
-| [Modal endpoint integrations](https://modal.com/docs/guide/endpoint-integrations) | 2026-11-12 |
-| [Modal config reference](https://modal.com/docs/reference/modal.config) | 2026-11-12 |
-| [Modal CLI: config](https://modal.com/docs/reference/cli/config) | 2026-11-12 |
-| [Modal CLI: app](https://modal.com/docs/reference/cli/app) | 2026-11-12 |
-| [Modal service users](https://modal.com/docs/guide/service-users) | 2026-11-12 |
-| [models.dev provider catalog](https://models.dev/api.json) | 2026-11-12 |
-| [OpenCode providers](https://opencode.ai/docs/providers) | 2026-11-12 |
-| [OpenCode CLI providers](https://opencode.ai/docs/cli/providers) | 2026-11-20 |
-| [Claude Code authentication](https://code.claude.com/docs/en/iam) | 2026-11-12 |
-
-</details>
+Traps and sources: [Modal traps and sources](modal-traps.md).
