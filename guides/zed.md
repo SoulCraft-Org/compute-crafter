@@ -1,36 +1,38 @@
 # Zed
 
-Zed is a free editor that runs open-weight models through your own provider keys, and runs Claude Code, OpenCode and Goose as external agents over the Agent Client Protocol (ACP).
-
-| Account | Free tier | Login or key | Claude connector | OpenCode | Guard |
-| --- | --- | --- | --- | --- | --- |
-| None for the editor itself ([Plans & Pricing](https://zed.dev/docs/ai/plans-and-usage), read 2026-11-20). A Zed sign-in is needed only for Zed-hosted models. | Zed Free is $0 forever, with unlimited use of your own API keys or external agents ([Pricing](https://zed.dev/pricing), read 2026-11-20). Zed-hosted models and Edit Predictions need Pro ([Plans & Pricing](https://zed.dev/docs/ai/plans-and-usage), read 2026-11-20). | Keys saved in **Settings > AI > LLM Providers** go to the system keychain, not `settings.json`. A non-empty environment variable wins over the keychain. An OpenAI-compatible provider reads `<PROVIDER_ID>_API_KEY` in upper snake case ([Use API Access](https://zed.dev/docs/ai/use-api-access), read 2026-11-20). | Claude Agent from the ACP Registry. It owns its own login and billing ([External Agents](https://zed.dev/docs/ai/external-agents), read 2026-11-20). | From the ACP Registry, or a custom agent that runs `opencode acp` ([ACP](https://opencode.ai/docs/cli/acp), read 2026-11-20). | On Zed Free, Zed bills nothing: each provider's own guard applies to its key. On Pro, the Monthly Spend Limit caps token spend past the $5 included; it defaults to $10, accepts $0, and stops usage when hit ([Plans & Pricing](https://zed.dev/docs/ai/plans-and-usage), read 2026-11-20). Per the same page, any limit above $0 lets tokens bill past the included $5. See [Git Crafter compute rules](https://github.com/SoulCraft-Org/git-crafter/blob/main/rules/compute.md). |
+Zed is a free editor that runs open-weight models on your own provider keys. It runs OpenCode, Goose and Claude Agent as external agents over the Agent Client Protocol (ACP).
 
 ```mermaid
 flowchart LR
-  K[Provider key in the keychain] --> O[OpenAI-compatible provider<br/>in settings.json] --> OL[Ollama cloud models]
-  K --> A[External agents over ACP:<br/>OpenCode, Goose, Claude Agent]
+  P[Zed editor] --> S[Sign in<br/>none for the editor,<br/>keys in the keychain] --> G[Spend stop<br/>Zed Free bills nothing,<br/>Pro spend limit]
+  G -.-> O[OpenCode Desktop App<br/>not confirmed]
+  G -.-> C[Claude Desktop App, Code tab<br/>not confirmed]
+  G -.-> W[Claude Desktop App, Cowork<br/>not confirmed]
 ```
 
-## Set up
+| Account | Free tier | Login or key | Claude connector | OpenCode | Guard |
+| --- | --- | --- | --- | --- | --- |
+| None for the editor. A Zed sign-in is needed only for Zed-hosted models ([Plans & Pricing](https://zed.dev/docs/ai/plans-and-usage), read 2026-11-24). | Zed Free is $0 forever, with unlimited use of your own API keys or external agents ([Pricing](https://zed.dev/pricing), read 2026-11-24). | Keys saved in **Settings > AI > LLM Providers** go to the keychain, not `settings.json` ([Use API Access](https://zed.dev/docs/ai/use-api-access), read 2026-11-24). | Claude Agent from the ACP Registry. It owns its own login ([External Agents](https://zed.dev/docs/ai/external-agents), read 2026-11-24). | Not confirmed for the Desktop App. Zed runs `opencode acp` ([OpenCode ACP](https://opencode.ai/docs/cli/acp), read 2026-11-24). | On Free, Zed bills nothing. On Pro, the spend limit defaults to $10 and accepts $0 ([Plans & Pricing](https://zed.dev/docs/ai/plans-and-usage), read 2026-11-24). [More](detail/zed.md#guard). See [Git Crafter compute rules](https://github.com/SoulCraft-Org/git-crafter/blob/main/rules/compute.md). |
 
-1. Add a provider key in the editor. Run `agent: open settings` from the command palette, open **LLM Providers**, and paste the key there; Zed stores it in the keychain ([Use API Access](https://zed.dev/docs/ai/use-api-access), read 2026-11-20).
+## Wiring
 
-2. Add an OpenAI-compatible provider, such as one from these guides, in `settings.json`. Name the provider ID with care: it sets the variable Zed reads, so `my-gateway` reads `MY_GATEWAY_API_KEY` ([Use API Access](https://zed.dev/docs/ai/use-api-access), read 2026-11-20). Keep the key itself out of this file.
+| Host | Plugs in as | Source |
+| --- | --- | --- |
+| OpenCode Desktop App | Not confirmed. Zed runs `opencode acp` with the credentials the OpenCode CLI holds. The Desktop App is not named. | [OpenCode ACP](https://opencode.ai/docs/cli/acp), read 2026-11-24; [External Agents](https://zed.dev/docs/ai/external-agents), read 2026-11-24 |
+| Claude Desktop App, Code tab | Not confirmed. Zed's page does not name Claude Desktop. The Desktop docs list Zed only as an editor for Open in. | [External Agents](https://zed.dev/docs/ai/external-agents), read 2026-11-24; [Desktop docs](https://code.claude.com/docs/en/desktop), read 2026-11-24 |
+| Claude Desktop App, Cowork | Not confirmed. Neither Zed's pages nor the Desktop docs name a Cowork step. | [External Agents](https://zed.dev/docs/ai/external-agents), read 2026-11-24; [Desktop docs](https://code.claude.com/docs/en/desktop), read 2026-11-24 |
+
+<details>
+<summary>Commands</summary>
+
+```bash
+opencode auth login
+```
 
 ```json
-{
-  "language_models": {
-    "openai_compatible": {
-      "<provider-id>": {
-        "api_url": "https://<base-url>/v1",
-        "available_models": [{ "name": "<model>", "max_tokens": 128000 }]
-      }
-    }
-  }
-}
+{ "agent_servers": { "OpenCode": { "type": "custom", "command": "opencode", "args": ["acp"] } } }
 ```
 
-3. For Ollama, use its cloud models only, never a local pull. Set the API URL to `https://ollama.com` and give Zed a key in the provider UI or `OLLAMA_API_KEY` ([Use a Local Model](https://zed.dev/docs/ai/use-a-local-model), [Ollama: Zed](https://docs.ollama.com/integrations/zed), read 2026-11-20). See [Ollama](ollama.md) for its credits.
+</details>
 
-Steps 4 to 6 add OpenCode, Goose and Claude Agent as external agents: see [Zed agents, traps and sources](detail/zed.md).
+Providers, guard and agents: [Zed detail](detail/zed.md). Traps and sources: [Zed traps and sources](detail/zed-traps.md).
