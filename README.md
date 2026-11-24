@@ -57,7 +57,7 @@ Copy one folder. Each README has its steps and a fake example.
 | Door | Holds |
 | --- | --- |
 | 🔌 [compute-crafter](https://github.com/SoulCraft-Org/compute-crafter) | This repo: guides, sign-ins, starters, score pages |
-| 💳 [compute-credits](https://github.com/Colorado-Compute/compute-credits) | The plan catalog and its [Credits Explorer](https://colorado-compute.github.io/compute-credits/). [catalog/](catalog/README.md) here is a pinned copy |
+| 💳 [compute-credits](https://github.com/Colorado-Compute/compute-credits) | The plan catalog and its Credits Explorer. [catalog/](catalog/README.md) here is a pinned copy |
 | 🚀 [startup-credits](https://github.com/Colorado-Startups/startup-credits) | Startup programs |
 
 ## Rules every page follows
