@@ -1,45 +1,37 @@
-# Claude API: traps and sources
+# Claude API: guard, credits and keyless CI
 
-What goes wrong with the Claude API, and the pages this guide read, each dated under Sources. The steps are in [Claude API](../claude-api.md).
+What the Claude API guide moved out of its page. Traps and sources: [Claude API traps and sources](claude-api-traps.md). The diagram and wiring are in [Claude API](../claude-api.md).
 
-## Traps
+## Guard
 
-| Trap | What happens |
-| --- | --- |
-| A leftover key | `ANTHROPIC_API_KEY` sits above the federation settings, so a key left in the environment silently overrides federation ([WIF][wif]). The same holds for the action's `anthropic_api_key` and `claude_code_oauth_token` inputs ([Setup][setup]) |
-| Plan credits and Claude Code | The plan credits do not cover Claude Code, `claude-code-action` included. On an organization that holds only these credits, a run fails at once: `Credit balance too low` ([API credits][credits]) |
-| One organization per plan | A plan links to one Console organization and you cannot change it yourself. Link the one you build in ([API credits][credits]) |
-| One shared balance | Every key and workspace in the linked organization draws from the same balance. Give a project its own workspace and set that workspace's spend limit ([API credits][credits]) |
-| Bought credits | They expire one year after purchase, and the date cannot be extended ([Pay for API usage][pay]) |
-| Immutable subject | GitHub repos created after July 15, 2026 get a `sub` with owner and repo IDs ([OIDC][oidc]). Seen on this repo on 2026-11-23: `repo:<owner>@<id>/<repo>@<id>:ref:...`, while the Console wizard filled in the old form, so each exchange failed `match_subject_prefix`. `gh api repos/<owner>/<repo>/actions/oidc/customization/sub` prints the prefix to use |
-| Single-use tokens | A JWT with a `jti` claim exchanges once. A retry loop that presents it again fails with `jti_reused` ([WIF][wif]) |
-| Token lifetime | The WIF page gives the rule a range of 60 to 86,400 seconds, default 3,600 ([WIF](https://platform.claude.com/docs/en/manage-claude/workload-identity-federation), read 2026-11-23). The SDK refreshes before expiry |
-| Workspace ID | A rule that covers more than one workspace needs the workspace ID in each exchange. A key with no workspace scope needs the `anthropic-workspace-id` header. Without it the API returns 400 ([Authentication][auth]) |
-| Inline comment classification | The action's `classify_inline_comments` needs `anthropic_api_key`. With federation it is skipped ([Setup][setup]) |
-| Expiry is set once | A key's expiry is fixed at creation. An expired key returns 401 and cannot be reactivated ([Authentication][auth]) |
-| Message Batches | The credits page lists four covered products. It names Message Batches only as a way to spend less, at 50 percent off ([API credits](https://platform.claude.com/docs/en/about-claude/api-credits-for-subscribers), read 2026-11-23). Check the Billing page before a large batch |
+| Item | Detail | Source |
+| --- | --- | --- |
+| Covered | Claude API, Managed Agents, the Agent SDK and the Playground | [API credits](https://platform.claude.com/docs/en/about-claude/api-credits-for-subscribers), read 2026-11-24 |
+| Not covered | Claude Code, extra usage in the Claude apps, cloud platforms | [API credits](https://platform.claude.com/docs/en/about-claude/api-credits-for-subscribers), read 2026-11-24 |
+| Expiry | End of each billing cycle, no rollover | [API credits](https://platform.claude.com/docs/en/about-claude/api-credits-for-subscribers), read 2026-11-24 |
+| Order | Included credits first, then purchased ones. Auto-reload counts only the purchased balance | [API credits](https://platform.claude.com/docs/en/about-claude/api-credits-for-subscribers), read 2026-11-24 |
+| At zero | Requests stop, and usage is never charged to your plan. Buying credits or auto-reload removes the stop | [API credits](https://platform.claude.com/docs/en/about-claude/api-credits-for-subscribers), read 2026-11-24 |
+| Eligibility | Free, Pro and Enterprise are not eligible. New subscribers claim after 7 days | [API credits](https://platform.claude.com/docs/en/about-claude/api-credits-for-subscribers), read 2026-11-24 |
 
-## Sources
+Read the Console's [Billing page](https://platform.claude.com/settings/billing) before a long run. It lists **Promotional credits** with amounts and expiry dates.
 
-<details>
-<summary>Pages read and their dates</summary>
+## CI without a key
 
-| Page | Read |
-| --- | --- |
-| [Workload identity federation][wif] | 2026-11-23 |
-| [Authentication][auth] | 2026-11-23 |
-| [API credits for Max, Ultra and Team plans][credits] | 2026-11-23 |
-| [How do I pay for my Claude API usage][pay] | 2026-11-23 |
-| [claude-code-action setup][setup] | 2026-11-23 |
-| [GitHub OpenID Connect][oidc] | 2026-11-23 |
-| [models.dev provider catalog][models] | 2026-11-23 |
+```mermaid
+sequenceDiagram
+  participant J as GitHub Actions job
+  participant G as GitHub OIDC
+  participant A as Claude API
+  J->>G: Ask for a token (id-token: write)
+  G-->>J: Signed JWT
+  J->>A: Send JWT and rule ID
+  A-->>J: Short-lived access token
+  J->>A: Messages calls with that token
+```
 
-</details>
+## Set up
 
-[wif]: https://platform.claude.com/docs/en/manage-claude/workload-identity-federation
-[auth]: https://platform.claude.com/docs/en/manage-claude/authentication
-[credits]: https://platform.claude.com/docs/en/about-claude/api-credits-for-subscribers
-[pay]: https://support.claude.com/en/articles/8977456-how-do-i-pay-for-my-claude-api-usage
-[setup]: https://github.com/anthropics/claude-code-action/blob/main/docs/setup.md
-[oidc]: https://docs.github.com/en/actions/concepts/security/openid-connect
-[models]: https://models.dev/api.json
+1. As an organization admin, open [Workload identity](https://platform.claude.com/settings/workload-identity-federation), choose **Connect workload**, then the GitHub Actions tile. It creates the issuer, a service account and a rule, and tests the exchange ([WIF](https://platform.claude.com/docs/en/manage-claude/workload-identity-federation), read 2026-11-24).
+2. Give the job `id-token: write` and pass the three IDs the wizard shows. They name identities, not secrets ([Setup](https://github.com/anthropics/claude-code-action/blob/main/docs/setup.md), read 2026-11-23). Plan credits cannot pay for `claude-code-action`. On them, run the Agent SDK with these IDs, as the re-read agent in [Colorado-Compute/compute-credits](https://github.com/Colorado-Compute/compute-credits/blob/main/tools/reread_agent.py) does.
+3. Set no API key next to it: a static key wins over federation. `ant auth status` shows which source won ([WIF](https://platform.claude.com/docs/en/manage-claude/workload-identity-federation), read 2026-11-24).
+4. Use a key only when the client cannot exchange a token. Make a service account key for one workspace, pick an expiry of 3 hours to 30 days, and name it as in [Names](../reference/names.md). Store it as a CI secret ([Authentication](https://platform.claude.com/docs/en/manage-claude/authentication), read 2026-11-23).
