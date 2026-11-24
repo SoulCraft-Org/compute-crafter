@@ -19,7 +19,7 @@ flowchart LR
 | Hugging Face ZeroGPU | when the daily quota is spent the Space answers that the ZeroGPU quota is exceeded, with a wait of about 9 hours, and offers paid minutes. Paid minutes are per-use billing | the Space's error text |
 | Meshy | image to 3D: hero model 30 credits, game model 15, rig with a walk clip 5 | each task's `consumed_credits` |
 | Meshy | a hero GLB arrives at 67 to 145 MB; `gltf-transform optimize` brings it to 1.5 to 3.2 MB | file sizes, 2026-11-24 |
-| Meshy | it rigs two-legged and four-legged bodies only, and forcing an A-pose drops a prop held in the hand | docs.meshy.ai `api/rigging-and-animation`; one run |
+| Meshy | it rigs two-legged and four-legged bodies only, and forcing an A-pose drops a prop held in the hand | [Meshy rigging docs](https://docs.meshy.ai/en/api/rigging); one run |
 
 ## Next (cards on the board)
 
