@@ -8,7 +8,7 @@ import { join } from 'node:path';
 import { test } from 'node:test';
 import { fileURLToPath } from 'node:url';
 
-import { localOnlyIds, noSecretsByDesign, privacyProblems, termsPattern, textProblems } from './privacy.mjs';
+import { localOnlyIds, noSecretsByDesign, privacyProblems, termWhere, termsPattern, textProblems } from './privacy.mjs';
 
 // A targets folder with one local-only metric and one read from GitHub.
 function targetsDir() {
@@ -116,7 +116,9 @@ test('privacy: PRIVACY_TERMS reads the PRIVATE_TERMS regex, case-insensitive, wi
   assert.equal(termsPattern(undefined), null);
   for (const value of ['exampleterm', '(?i)EXAMPLETERM', 'other|ExampleTerm']) assert.deepEqual(textProblems('an exampleterm here', [], termsPattern(value)), ['private term'], value);
   assert.deepEqual(textProblems('nothing here', [], termsPattern('exampleterm')), []);
-  assert.deepEqual(privacyProblems(cleanRun(), { localIds, terms: termsPattern('fixture') }), ['private term']);
+  const found = privacyProblems(cleanRun(), { localIds, terms: termsPattern('fixture') });
+  assert.equal(found.at(-1), 'private term');
+  assert.ok(found.every((f) => !/fixture/i.test(f.replace(/^private term in .*/, ''))), 'no finding quotes the match');
 });
 
 test('privacy: the gate fails a private term in a --dist file and prints the file, never the match', () => {
@@ -163,4 +165,13 @@ test('privacy: an invalid PRIVACY_TERMS is a usage error that quotes none of it'
   assert.equal(run.status, 2);
   assert.match(run.stderr, /PRIVACY_TERMS is not a valid regex/);
   assert.ok(!/secretname/.test(run.stderr + run.stdout));
+});
+
+test('privacy: a term hit names where it sits (metric id or nearest element id), never the match', () => {
+  const run = { mode: 'ci', metrics: { 'docs.a': { value: 1, detail: ['clean'] }, 'issues.b': { value: 1, detail: ['an exampleterm row'] } } };
+  const found = privacyProblems(run, { terms: termsPattern('exampleterm') });
+  assert.ok(found.includes('private term in metric issues.b'), JSON.stringify(found));
+  assert.ok(!found.some((f) => /exampleterm/.test(f)), 'no finding quotes the match');
+  assert.equal(termWhere('<section id="tab-docs"><p>ok</p></section><div id="m-issues.b"><span>exampleterm</span></div>', termsPattern('exampleterm')), 'near #m-issues.b');
+  assert.equal(termWhere('<p>clean</p>', termsPattern('exampleterm')), null);
 });

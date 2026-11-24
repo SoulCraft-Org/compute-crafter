@@ -78,7 +78,24 @@ export function privacyProblems(run, { localIds = new Set(), names = [], terms =
   for (const [id, m] of Object.entries(run?.metrics ?? {})) {
     if (localIds.has(id) && (m?.value != null || m?.detail?.length)) found.push(`${id} needs local files but carries a value`);
   }
-  return [...found, ...textProblems(JSON.stringify(run), names, terms)];
+  const text = textProblems(JSON.stringify(run), names, terms);
+  if (text.includes('private term')) {
+    // Where, never what: the ids of the metrics (or top-level keys) whose JSON holds the match.
+    const where = [
+      ...Object.entries(run?.metrics ?? {}).filter(([, m]) => terms.test(JSON.stringify(m))).map(([id]) => `metric ${id}`),
+      ...Object.entries(run ?? {}).filter(([k, v]) => k !== 'metrics' && terms.test(JSON.stringify(v))).map(([k]) => `key ${k}`),
+    ];
+    if (where.length) found.push(`private term in ${where.slice(0, 8).join(', ')}`);
+  }
+  return [...found, ...text];
+}
+
+// Where a private term sits in a page: the id of the nearest element that opens before it, never the match.
+export function termWhere(html, terms) {
+  const at = terms ? html.search(terms) : -1;
+  if (at < 0) return null;
+  const ids = [...html.slice(0, at).matchAll(/\sid="([^"]+)"/g)];
+  return ids.length ? `near #${ids[ids.length - 1][1]}` : 'before any element id';
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
@@ -115,7 +132,10 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
     console.log('::notice::privacy: PRIVACY_TERMS is not available to this pull request; the push to main runs the check');
   }
   const found = privacyProblems(run, { localIds, names, terms });
-  for (const page of pages) for (const f of textProblems(readFileSync(page, 'utf8'), names, terms)) found.push(`${page}: ${f}`);
+  for (const page of pages) {
+    const html = readFileSync(page, 'utf8');
+    for (const f of textProblems(html, names, terms)) found.push(`${page}: ${f}${f === 'private term' ? ` (${termWhere(html, terms)})` : ''}`);
+  }
   for (const f of found) console.error(`::error::privacy: ${f}`);
   console.log(`privacy: ${Object.keys(run.metrics ?? {}).length} metrics, ${localIds.size} local-only ids, ${pages.length} dist files, ${found.length} findings`);
   process.exit(found.length ? 1 : 0);
