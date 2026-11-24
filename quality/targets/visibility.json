@@ -1,0 +1,8 @@
+[
+  {
+    "id": "visibility.personal_author_emails",
+    "goal": 0,
+    "near": 1,
+    "goal_source": "Owner decision, 2026-11-24: public history is not rewritten to remove an author email. That would need a force push to main. The goal stays 0, so each miss stays visible. Template source: GitHub Docs, Setting your commit email address (read 2026-11-19)."
+  }
+]
