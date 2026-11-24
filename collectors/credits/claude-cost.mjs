@@ -16,19 +16,14 @@ const MAX_PAGES = 5;
 // The organization's Claude API spend this UTC month in USD, which the plan's API credits are spent against. Claude Docs,
 // "Get Cost By Dimension" (https://platform.claude.com/docs/en/api/beta/organization/analytics/cost/list) and "Usage and Cost
 // Analytics API" (https://platform.claude.com/docs/en/manage-claude/usage-cost-analytics-api), read 2026-11-24: GET
-// /v1/organizations/analytics/cost takes starting_at (no earlier than 2026-01-01) and ending_at (exclusive, at most 31 days
-// on), both rounded down to the hour; with no group_by and no time_bucket_width the range is one row. A row's cost.amount is
-// a decimal string in fractional cents, after discounts and before credits, cost.currency always USD. Paging is
-// page=<next_page> while has_more, limit 1 to 1000. data_refreshed_at is null, with empty data, until an export covers the
-// range. It needs anthropic-beta analytics-usage-cost-2026-08-24 and anthropic-version; an Admin API key goes in x-api-key.
-// Claude Docs, "Admin API" (https://platform.claude.com/docs/en/manage-claude/admin-api, read 2026-11-23): an org:admin
-// OAuth bearer token (ANTHROPIC_AUTH_TOKEN, from Workload Identity Federation in a keyless run) goes in `authorization:
-// Bearer`. A raw bearer call also sends anthropic-beta oauth-2025-04-20 in the same comma-separated header: the claude-api
-// skill's Authentication section says so, the endpoint page's curl example omits it, and a keyless run got HTTP 403 from the
-// legacy report with the bearer alone (#151), so both are sent. The legacy GET /v1/organizations/cost_report (daily buckets,
-// cents) has no date floor and is used only when the month starts before 2026-01-01. The token wins over the Admin key. The
-// cycle is the UTC calendar month. No credential, no data yet, a refused call or a malformed amount is a why, never 0. The
-// key and the token are cut from every reason.
+// /v1/organizations/analytics/cost, starting_at from 2026-01-01, no group_by or time_bucket_width is one row, cost.amount in
+// fractional cents after discounts and before credits, data_refreshed_at null with empty data until an export covers the range,
+// header anthropic-beta analytics-usage-cost-2026-08-24. An Admin key goes in x-api-key. An org:admin bearer token (Admin API
+// page, read 2026-11-23) also sends oauth-2025-04-20 in the same header: the claude-api skill says raw OAuth calls need it, the
+// endpoint page's curl omits it, and a keyless run got HTTP 403 from the legacy report with the bearer alone (#151). The legacy
+// GET /v1/organizations/cost_report (daily buckets, cents) serves only a month that starts before 2026-01-01. Empty data
+// refreshed before the month, or data refreshed over 48 hours before the range ends, is not read. The token wins over the key.
+// No credential, no data, a refused call or a bad amount is a why, never 0; secrets are cut.
 export async function readClaudeCost(reader, { env = process.env, fetch = globalThis.fetch, now = new Date() } = {}) {
   const cred = credential(env);
   if (!cred) return { why: `needs ${KEY_VAR} in a --local collect's environment: an Admin API key (sk-ant-admin...) from a Claude Console organization admin, which a normal API key cannot replace; or ${TOKEN_VAR}, an org:admin OAuth bearer token` };
@@ -43,13 +38,19 @@ export async function readClaudeCost(reader, { env = process.env, fetch = global
     for (let n = 0; n < MAX_PAGES; n++) {
       const body = await getPage(fetch, cred, url, legacy, { starting_at: start.toISOString(), ending_at: end.toISOString(), limit: legacy ? '31' : '1000', ...(page && { page }) });
       if (n === 0) refreshed = body.data_refreshed_at ?? null;
-      if (n === 0 && !legacy && !body.data.length && refreshed === null) return { why: 'claude_cost: not read: the cost report has no data yet for this month (data_refreshed_at is null)' };
+      if (n === 0 && !legacy) {
+        const at = Date.parse(refreshed);
+        if (!body.data.length && refreshed === null) return { why: 'claude_cost: not read: the cost report has no data yet for this month (data_refreshed_at is null)' };
+        if (!finite(at)) throw new Error('data_refreshed_at is missing or not a timestamp');
+        if (!body.data.length && at < start.getTime()) return { why: `claude_cost: not read: data refreshed ${refreshed} predates this month` };
+        if (body.data.length && end.getTime() - at > 48 * HOUR) return { why: `claude_cost: not read: data refreshed ${refreshed} is over 48 hours before the range end ${end.toISOString()}` };
+      }
       cents += legacy ? sumBuckets(body, start) : sumCents(body);
-      if (!body.has_more) return { used: { value: round(cents / 100, 2), source: costSource(url, start, end, refreshed) } };
+      if (!body.has_more) return { used: { value: round(cents / 100, 2), as_of: refreshed, source: costSource(url, start, end, refreshed) } };
       if (typeof body.next_page !== 'string' || !body.next_page) throw new Error('has_more is true but the report gave no next_page');
       page = body.next_page;
     }
-    throw new Error(`more than ${MAX_PAGES} pages of rows`);
+    throw new Error(`more than ${MAX_PAGES} pages of daily buckets`);
   } catch (err) {
     const text = scrub(String(err?.message ?? err), [cred.secret]).trim().split('\n')[0].slice(0, 160);
     return { why: `claude_cost: ${text}` };

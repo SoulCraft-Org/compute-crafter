@@ -1,6 +1,6 @@
 // node --test collectors/credits/claude-cost.test.mjs
-// Offline: every call is a fake fetch, and the key and token are made-up strings. The cost report is read with either
-// present, missing and refused; neither is ever in a reason or a source, and nothing reads as 0 when it could not be read.
+// Offline: every call is a fake fetch, and the key is a made-up string. The cost report is read with the key present,
+// missing and refused; no key is ever in a reason or a source, and nothing reads as 0 when it could not be read.
 
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
@@ -23,7 +23,7 @@ const pages = (list, calls = []) => async (url, init) => {
 const read = (fetch, env = { ANTHROPIC_ADMIN_KEY: KEY }, at = now) => readUse(reader, { now: at, providers: { env, fetch } });
 const params = (call) => new URL(call.url).searchParams;
 
-test('claude_cost: sums the cents of every row and page for this month into USD, the key in x-api-key only', async () => {
+test('claude_cost: sums the cents of this month across pages into USD, the key in x-api-key only', async () => {
   const calls = [];
   const r = await read(pages([page([row('1234.500000'), row('100')], { has_more: true, next_page: 'page_abc' }), page([row('0.5')])], calls));
   assert.equal(r.used.value, 13.35, '1234.5 + 100 + 0.5 cents is 1335 cents');
@@ -66,7 +66,21 @@ test('claude_cost: analytics/cost is for 2026-01-01 on; the legacy cost_report o
   assert.match(jan[0].url, /\/analytics\/cost\?/, 'the first month the analytics endpoint covers');
 });
 
-test('claude_cost: with no credential it names both env vars and an Admin key, and makes no call', async () => {
+test('claude_cost: empty data refreshed before the month starts is not read, with that time in the reason', async () => {
+  const old = await read(pages([page([], { data_refreshed_at: '2026-10-31T23:00:00Z' })]));
+  assert.equal(old.why, 'claude_cost: not read: data refreshed 2026-10-31T23:00:00Z predates this month');
+});
+
+test('claude_cost: the value carries data_refreshed_at as as_of; data refreshed over 48 hours before the range end is not read with both times', async () => {
+  assert.equal((await read(pages([page([row('100')])]))).used.as_of, '2026-11-12T08:00:00Z');
+  assert.equal((await read(pages([page([row('100')], { data_refreshed_at: '2026-11-10T09:00:00Z' })]))).used.as_of, '2026-11-10T09:00:00Z', 'exactly 48 hours is still read');
+  const stale = await read(pages([page([row('100')], { data_refreshed_at: '2026-11-10T08:59:00Z' })]));
+  assert.equal(stale.used, undefined);
+  assert.match(stale.why, /data refreshed 2026-11-10T08:59:00Z is over 48 hours before the range end 2026-11-12T09:00:00\.000Z/);
+  assert.match((await read(pages([page([row('100')], { data_refreshed_at: 'soon' })]))).why, /not a timestamp/);
+});
+
+test('claude_cost: with no key it names the env var and an Admin key, and makes no call', async () => {
   const calls = [];
   for (const env of [{}, { ANTHROPIC_ADMIN_KEY: '  ', ANTHROPIC_AUTH_TOKEN: '' }]) {
     const r = await read(pages([], calls), env);
@@ -76,7 +90,7 @@ test('claude_cost: with no credential it names both env vars and an Admin key, a
   assert.equal(calls.length, 0);
 });
 
-test('claude_cost: a refusal, an offline call, a bad row or a bad cursor is not read, and no key is printed', async () => {
+test('claude_cost: a refusal, an offline call, a bad amount or endless pages is not read, and no key is printed', async () => {
   const refused = await read(pages([{ status: 403 }]));
   assert.match(refused.why, /^claude_cost: GET .*analytics\/cost answered HTTP 403; ANTHROPIC_ADMIN_KEY must be an Admin API key/);
   const offline = await read(async () => { throw new TypeError(`fetch failed, auth ${KEY}`); });
@@ -103,6 +117,13 @@ test('claude_cost: ANTHROPIC_AUTH_TOKEN is a bearer with both beta values in one
   assert.equal(calls[0].headers['x-api-key'], undefined, 'one credential per call');
   assert.ok(!calls[0].url.includes(TOKEN), 'no token in a URL');
   assert.doesNotMatch(JSON.stringify(r), /fake-bearer|fake-admin/);
+});
+
+test('claude_cost: the Admin key alone still goes in x-api-key, never as a bearer', async () => {
+  const calls = [];
+  await read(pages([{ data: [], has_more: false }], calls), { ANTHROPIC_ADMIN_KEY: KEY, ANTHROPIC_AUTH_TOKEN: '  ' });
+  assert.equal(calls[0].headers['x-api-key'], KEY);
+  assert.equal(calls[0].headers.Authorization, undefined);
 });
 
 test('claude_cost: a 403 on the bearer path is not read with its status, never 0', async () => {
