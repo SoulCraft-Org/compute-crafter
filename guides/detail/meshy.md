@@ -44,6 +44,23 @@ The marketplace's `.claude-plugin/marketplace.json` lists `meshy-3d-generation` 
 <details>
 <summary>Pages read</summary>
 
-[Pricing](https://www.meshy.ai/pricing), [MCP](https://www.meshy.ai/mcp), [Terms of Use](https://www.meshy.ai/terms-of-use), [API pricing](https://docs.meshy.ai/en/api/pricing), [API errors](https://docs.meshy.ai/en/api/errors), [API authentication](https://docs.meshy.ai/en/api/authentication), [AI integration](https://docs.meshy.ai/en/api/ai), [meshy-3d-agent](https://github.com/meshy-dev/meshy-3d-agent), [INSTALL.md](https://github.com/meshy-dev/meshy-3d-agent/blob/main/INSTALL.md), `meshy --help`, `meshy auth login --help`, the README of [meshy-cli](https://github.com/meshy-dev/meshy-cli) 0.8.8, [meshy-mcp-server](https://github.com/meshy-dev/meshy-mcp-server), `man security`, [log in with a code](https://help.meshy.ai/en/articles/12636570-can-i-log-into-meshy-with-a-verification-code), [change the account email](https://help.meshy.ai/en/articles/9991893-how-to-change-the-email-address-of-my-account), [Claude Code MCP](https://code.claude.com/docs/en/mcp), [Discover plugins](https://code.claude.com/docs/en/discover-plugins).
+- [Pricing](https://www.meshy.ai/pricing)
+- [MCP](https://www.meshy.ai/mcp)
+- [Terms of Use](https://www.meshy.ai/terms-of-use)
+- [API pricing](https://docs.meshy.ai/en/api/pricing)
+- [API errors](https://docs.meshy.ai/en/api/errors)
+- [API authentication](https://docs.meshy.ai/en/api/authentication)
+- [AI integration](https://docs.meshy.ai/en/api/ai)
+- [meshy-3d-agent](https://github.com/meshy-dev/meshy-3d-agent)
+- [INSTALL.md](https://github.com/meshy-dev/meshy-3d-agent/blob/main/INSTALL.md)
+- `meshy --help`
+- `meshy auth login --help`
+- the README of [meshy-cli](https://github.com/meshy-dev/meshy-cli) 0.8.8
+- [meshy-mcp-server](https://github.com/meshy-dev/meshy-mcp-server)
+- `man security`
+- [log in with a code](https://help.meshy.ai/en/articles/12636570-can-i-log-into-meshy-with-a-verification-code)
+- [change the account email](https://help.meshy.ai/en/articles/9991893-how-to-change-the-email-address-of-my-account)
+- [Claude Code MCP](https://code.claude.com/docs/en/mcp)
+- [Discover plugins](https://code.claude.com/docs/en/discover-plugins)
 
 </details>
