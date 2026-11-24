@@ -80,3 +80,9 @@ test('the page keeps its promises: a viewport, dark mode, reduced motion and a f
   assert.match(page, /prefers-reduced-motion/);
   assert.match(page, /:focus-visible/);
 });
+
+test('lane, host and wire-kind ids are slugs, safe in attributes and CSS custom properties', () => {
+  const ids = [...Object.keys(data.lanes ?? {}), ...Object.keys(data.hosts ?? {}), ...Object.keys(data.kinds ?? {})];
+  assert.ok(ids.length, 'the data defines lanes, hosts and kinds');
+  for (const id of ids) assert.match(id, /^[a-z0-9-]+$/, id);
+});

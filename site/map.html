@@ -186,7 +186,7 @@ const rowFor = (n) => {
 // Head plates, legend and filter chips.
 $('heads').innerHTML = `<span class="lbl">Guide</span>` + D.hosts.map((h, i) => `<div class="plate ${i ? 'second' : 'first'}"><b>${esc(h.short)}</b><small>${i ? '' : 'desktop, '}${esc(h.rank)}</small></div>`).join('');
 $('legend').innerHTML = D.kinds.map((k) => `<li>${glyph(k.id, 14)}<span>${esc(k.label)}</span></li>`).join('');
-const chip = (group, id, label) => `<button class="chip" type="button" data-g="${group}" data-v="${id}" aria-pressed="false">${esc(label)}</button>`;
+const chip = (group, id, label) => `<button class="chip" type="button" data-g="${group}" data-v="${esc(id)}" aria-pressed="false">${esc(label)}</button>`;
 $('lanes').insertAdjacentHTML('beforeend', D.lanes.map((l) => chip('lane', l.id, l.label)).join(''));
 $('hosts').insertAdjacentHTML('beforeend', D.hosts.map((h) => chip('host', h.id, h.short)).join(''));
 $('lede').textContent = `${D.nodes.length} guides, ${D.nodes.reduce((s, n) => s + wires(n), 0)} wires. Pick a guide to see its free tier, sign-in and key.`;
