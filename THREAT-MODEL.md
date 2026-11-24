@@ -34,7 +34,7 @@ flowchart LR
 | Credits collectors | Key lands in a log or page | Redaction tests; keys named by variable | No gitleaks gate: the org's covers other repo kinds. A new collector may skip redaction |
 | Claude cost read | Token theft or reuse | Workload identity federation: no stored key, a short-lived token. The Console rule pins the workflow file | A merged workflow edit can widen the claim |
 | Pages | Raw reading reaches the page | Privacy gate on the run file and the build folder | A collector bug |
-| Workflows | Fork code gets secrets | Read-only default token; each write scope sits on a named job; no `pull_request_target` | Write holders: `catalog-reread` (`contents`), `wiki` (`contents`), `pages` (`pages`, `id-token`), `scorecard` (`id-token`) |
+| Workflows | Fork code gets secrets | Read-only default token; writes on named jobs; no `pull_request_target` | Writers: `catalog-reread` (`contents`), `wiki` (`contents`), `pages` (`pages`, `id-token`), `scorecard` (`id-token`) |
 | Wiki | A branch run publishes its `wiki/` | The `wiki` job runs on `main` only; the wiki is edited by PR | The wiki's own web editor, limited to collaborators |
 | Workflows | Action tag moves | Full-SHA pins in `actions.lock`; 14-day cooldown | `ossf/scorecard-action` pulls its image by tag |
 | `main` | Unreviewed change lands | PR rulesets, `ci / ci-ok`, DCO sign-off | One human |
