@@ -1,18 +1,8 @@
 [
   {
     "id": "visibility.personal_author_emails",
-    "tab": "visibility",
-    "kind": "quality",
-    "group": "Public",
-    "label": "Personal emails in public history",
-    "means": "Distinct author emails, on every branch of each public repo, that are neither GitHub noreply nor the org's domain.",
-    "unit": "emails",
     "goal": 0,
     "near": 1,
-    "direction": "lower",
-    "goal_source": "Owner decision, 2026-11-24: public history is not rewritten to remove an author email. That would need a force push to main. The goal stays 0, so each miss stays visible. Template source: GitHub Docs, Setting your commit email address (read 2026-11-19).",
-    "source": "gh api --paginate repos/<repo>/branches, then every commit of each branch, every page, of every public repo (collectors/visibility/visibility.mjs); detail counts per repo and the forks of those repos, never an address",
-    "needs": "gh",
-    "chart": "table"
+    "goal_source": "Owner decision, 2026-11-24: public history is not rewritten to remove an author email. That would need a force push to main. The goal stays 0, so each miss stays visible. Template source: GitHub Docs, Setting your commit email address (read 2026-11-19)."
   }
 ]
