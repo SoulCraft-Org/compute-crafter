@@ -26,6 +26,8 @@ concurrency:
 
 jobs:
   wiki:
+    # A manual run from another branch would publish that branch's wiki/ with the write token below.
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-slim
     timeout-minutes: 5
     # Write, on this job alone: a push to the wiki's git repository.
