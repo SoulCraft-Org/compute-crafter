@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Wiring map</title>
+<meta name="description" content="How each provider guide wires into the OpenCode Desktop App and the Claude Desktop App.">
+<style>
+:root{
+  --bg:#f2f4f1; --surf:#fcfcfb; --ink:#14201e; --ink2:#46524f; --mute:#5d6967; --line:#d3d9d6; --bus:#a9b4b0;
+  --sel:#dcebe4; --focus:#0a6b62;
+  --k-provider:#2a78d6; --k-openai:#eb6834; --k-anthropic:#1baf7a; --k-mcp:#eda100; --k-link:#e87ba4;
+  --node:164px; --sub:24px;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#111514; --surf:#1a1f1e; --ink:#e8eeec; --ink2:#b3beba; --mute:#93a09c; --line:#2d3633; --bus:#4a5754;
+    --sel:#1e2f2a; --focus:#5ed0c2;
+    --k-provider:#3987e5; --k-openai:#d95926; --k-anthropic:#199e70; --k-mcp:#c98500; --k-link:#d55181;
+    color-scheme:dark;
+  }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 "Avenir Next","Segoe UI Variable Text","Segoe UI",system-ui,sans-serif}
+code{font:0.9em ui-monospace,"SF Mono",Menlo,Consolas,monospace;background:color-mix(in srgb,var(--ink) 8%,transparent);padding:.05em .3em;border-radius:3px;overflow-wrap:anywhere}
+button{font:inherit;color:inherit;cursor:pointer}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.wrap{max-width:1000px;margin:0 auto;padding:28px 16px 72px}
+h1{margin:0;font-size:clamp(30px,6vw,46px);line-height:1.05;font-weight:780;letter-spacing:-.025em}
+.lede{margin:8px 0 20px;color:var(--ink2);max-width:46ch}
+.filters{display:grid;gap:10px;margin-bottom:14px}
+.group{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.group>span{width:4.6rem;font-size:13px;font-weight:650;color:var(--ink2)}
+.chip{border:1.5px solid var(--ink);background:transparent;border-radius:99px;padding:3px 12px;font-size:13.5px;font-weight:600;min-height:32px}
+.chip[aria-pressed=true]{background:var(--ink);color:var(--bg)}
+.clear{border:0;background:none;text-decoration:underline;font-size:13px;color:var(--ink2);padding:6px}
+.status{margin:0;font-size:13px;color:var(--mute)}
+.status .clear{margin-left:6px}
+.legend{display:flex;flex-wrap:wrap;gap:4px 14px;margin:12px 0 0;padding:0;list-style:none;font-size:12.5px;color:var(--ink2)}
+.legend li{display:flex;align-items:center;gap:5px}
+.app{display:grid;gap:24px;margin-top:18px}
+@media (min-width:880px){
+  :root{--node:188px}
+  .app{grid-template-columns:minmax(0,440px) minmax(0,1fr);align-items:start}
+}
+.heads,.row{display:grid;grid-template-columns:var(--node) 1fr 1fr}
+.heads{position:sticky;top:0;z-index:5;background:var(--bg);padding:6px 0 8px}
+.plate{display:flex;flex-direction:column;justify-content:center;min-height:46px;padding:4px 8px;border:2px solid var(--ink);border-radius:8px;margin-left:6px;line-height:1.15}
+.plate b{font-size:13.5px}
+.plate small{font-size:11px;opacity:.85}
+.plate.first{background:var(--ink);color:var(--bg)}
+.heads .lbl{align-self:end;font-size:12px;color:var(--mute)}
+.map{position:relative;margin:0;padding:0;list-style:none}
+.map::before,.map::after{content:"";position:absolute;top:0;bottom:0;width:2px;background:var(--bus);z-index:0;margin-left:-1px}
+.map::before{left:calc(var(--node) + (100% - var(--node)) / 2 - 12px)}
+.map::after{left:calc(100% - 12px)}
+.map.only-opencode :is(.c-cc,.c-pass),.map.only-claude .c-oc{opacity:.22}
+.band{display:flex;align-items:center;gap:8px;width:var(--node);margin:14px 0 6px;font-size:12.5px;font-weight:700;color:var(--ink2)}
+.band::after{content:"";flex:1;height:1px;background:var(--line)}
+.row{position:relative;z-index:1;grid-template-rows:var(--sub) var(--sub);margin-bottom:6px;border-radius:8px}
+.row:hover{background:color-mix(in srgb,var(--sel) 55%,transparent)}
+.row.sel{background:color-mix(in srgb,var(--sel) 80%,transparent)}
+.node{grid-row:1/3;grid-column:1;text-align:left;border:1.5px solid var(--ink);background:var(--surf);border-radius:8px;padding:2px 9px;line-height:1.15;font-size:13.5px;font-weight:650;display:flex;flex-direction:column;justify-content:center}
+.node small{font-weight:500;font-size:11px;color:var(--mute)}
+.row.sel .node{background:var(--ink);color:var(--bg)}
+.row.sel .node small{color:inherit;opacity:.8}
+.pt{display:block;width:100%;height:var(--sub);overflow:visible;font-size:10.5px}
+.pt line{stroke-width:2.2px;stroke-linecap:butt}
+.row.sel .pt line{stroke-width:3.2px}
+.pt text{fill:var(--ink2)}
+.pt .none{fill:var(--mute)}
+.pt g.gl{stroke:var(--bg);stroke-width:2.5px;paint-order:stroke}
+.c-oc{grid-column:2;grid-row:1;padding-right:12px}
+.c-pass{grid-column:2;grid-row:2}
+.c-cc{grid-column:3;grid-row:2;padding-right:12px}
+.empty{margin:12px 0;color:var(--ink2)}
+.card{background:var(--surf);border:1.5px solid var(--ink);border-radius:12px;padding:16px 16px 18px}
+.card h2{margin:0;font-size:22px;line-height:1.1;letter-spacing:-.01em}
+.card .tag{margin:4px 0 8px;color:var(--ink2)}
+.lanes{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 10px;padding:0;list-style:none}
+.lanes li{font-size:12px;font-weight:650;border:1px solid var(--line);border-radius:99px;padding:1px 9px;background:var(--bg)}
+.sum{width:100%;border-collapse:collapse;font-size:14px}
+.sum th,.sum td{padding:8px 0;border-top:1px solid var(--line);vertical-align:top;text-align:left}
+.sum th{width:6.2rem;padding-right:10px;font-weight:650;color:var(--ink2)}
+.sum .none{color:var(--mute)}
+.way{display:flex;gap:6px;align-items:flex-start}
+.way svg{flex:none;margin-top:3px}
+.way b{display:block;font-size:13px}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;align-items:center}
+.btn{display:inline-block;padding:7px 14px;border-radius:8px;background:var(--ink);color:var(--bg);font-weight:650;text-decoration:none;font-size:14px}
+.link{font-size:14px}
+.close{position:absolute;top:8px;right:8px;border:1.5px solid var(--ink);background:var(--surf);border-radius:8px;width:34px;height:34px;line-height:1;font-size:18px}
+.hint{color:var(--ink2);margin:0}
+.card{position:relative}
+@media (max-width:879px){
+  .hint{display:none}
+  .card.empty-card{display:none}
+  .card{position:fixed;left:0;right:0;bottom:0;max-height:56vh;overflow:auto;border-radius:14px 14px 0 0;z-index:10;box-shadow:0 -8px 28px rgba(0,0,0,.22)}
+  .row{scroll-margin-top:96px}
+}
+.wrap:has(#card:not(.empty-card)){padding-bottom:56vh}
+@media (min-width:880px){.wrap:has(#card:not(.empty-card)){padding-bottom:72px}}
+@media (min-width:880px){.card{position:sticky;top:12px}.close{display:none}}
+.foot{margin-top:28px;font-size:12.5px;color:var(--mute);max-width:60ch}
+@media (prefers-reduced-motion:no-preference){
+  .row.sel .pt{animation:reveal .55s cubic-bezier(.2,.7,.2,1)}
+  .card.in{animation:rise .22s ease-out}
+  .chip,.node,.row{transition:background-color .12s,color .12s}
+}
+@keyframes reveal{from{clip-path:inset(0 100% 0 0)}}
+@keyframes rise{from{opacity:0;transform:translateY(6px)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Wiring map</h1>
+  <p class="lede" id="lede">Which provider guides wire into the OpenCode Desktop App, and which into the Claude Desktop App (Code and Cowork).</p>
+  <div class="filters">
+    <div class="group" id="lanes" role="group" aria-labelledby="gl"><span id="gl">Lane</span></div>
+    <div class="group" id="hosts" role="group" aria-labelledby="gh"><span id="gh">Wires into</span></div>
+    <p class="status"><span id="status" role="status"></span><button class="clear" id="clear" type="button" hidden>Clear filters</button></p>
+  </div>
+  <ul class="legend" id="legend" aria-label="Wire kinds"></ul>
+  <div class="app">
+    <section aria-label="Guides and their wires">
+      <div class="heads" id="heads"></div>
+      <ol class="map" id="map"></ol>
+      <p class="empty" id="empty" hidden>No guide matches both filters.</p>
+    </section>
+    <aside class="card empty-card" id="card" aria-live="polite" aria-label="Guide summary"></aside>
+  </div>
+  <p class="foot">Read from <code>wiring.json</code>, which comes from each guide's opening table. A figure names the vendor page and the date the guide read it.</p>
+</div>
+<noscript><p style="padding:16px">The map needs JavaScript. The guides list the same facts: <a href="https://github.com/SoulCraft-Org/compute-crafter/blob/main/guides/README.md">guides/README.md</a>.</p></noscript>
+<script type="module">
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+const fmt = (s) => esc(s).replace(/`([^`]+)`/g, '<code>$1</code>');
+const $ = (id) => document.getElementById(id);
+const SHAPES = {
+  circle: '<circle r="5.5"/>', square: '<rect x="-5" y="-5" width="10" height="10" rx="1.5"/>',
+  diamond: '<path d="M0-7 7 0 0 7-7 0Z"/>', triangle: '<path d="M0-6.5 6.5 5.5h-13Z"/>', hexagon: '<path d="M-3.5-6h7l3.5 6-3.5 6h-7L-7 0Z"/>',
+};
+const DASH = { provider: 'none', openai: '6 4', anthropic: '0.1 6', mcp: '10 3 2 3', link: '16 5' };
+
+let D;
+try {
+  D = await (await fetch('wiring.json', { cache: 'no-cache' })).json();
+} catch {
+  $('lede').textContent = 'The map could not read wiring.json. Open the guides index instead: guides/README.md.';
+  throw new Error('wiring.json unreadable');
+}
+const kind = Object.fromEntries(D.kinds.map((k) => [k.id, k]));
+const lane = Object.fromEntries(D.lanes.map((l) => [l.id, l]));
+const host = Object.fromEntries(D.hosts.map((h) => [h.id, h]));
+const [OC, CC] = D.hosts.map((h) => h.id);
+const wires = (n) => D.hosts.filter((h) => n.wires[h.id]).length;
+const glyph = (k, size = 16) => `<svg width="${size}" height="${size}" viewBox="-8 -8 16 16" aria-hidden="true"><g fill="var(--k-${k})" stroke="var(--surf)" stroke-width="1.5" paint-order="stroke">${SHAPES[kind[k].shape]}</g></svg>`;
+
+// One port cell: a rail in the wire's style, a tag above it, and the kind's shape where it meets the host's bus.
+const dash = (k) => `stroke="var(--k-${k})" stroke-dasharray="${DASH[k]}" stroke-linecap="${k === 'anthropic' ? 'round' : 'butt'}"${k === 'anthropic' ? ' style="stroke-width:3.4px"' : ''}`;
+function port(h, n) {
+  const w = n.wires[h];
+  if (!w) return '<svg class="pt" aria-hidden="true"><text class="none" x="6" y="17">none</text></svg>';
+  const k = kind[w.kind];
+  return `<svg class="pt" aria-hidden="true"><title>${esc(host[h].short)}: ${esc(k.label)}</title>
+    <line x1="0" x2="100%" y1="17" y2="17" ${dash(w.kind)}/><text x="6" y="10">${esc(k.short)}</text>
+    <svg x="100%" y="17" width="1" height="1" overflow="visible"><g class="gl" fill="var(--k-${w.kind})">${SHAPES[k.shape]}</g></svg></svg>`;
+}
+// The Claude Desktop App wire crosses the OpenCode column on its own sub-row.
+const pass = (n) => `<svg class="pt" aria-hidden="true"><line x1="0" x2="100%" y1="17" y2="17" ${dash(n.wires[CC].kind)}/></svg>`;
+
+const rowFor = (n) => {
+  const li = document.createElement('li');
+  li.className = 'row'; li.dataset.id = n.id;
+  const also = n.lanes.slice(1).map((l) => lane[l].label).join(', ');
+  const spoken = D.hosts.map((h) => `${h.short}: ${n.wires[h.id] ? kind[n.wires[h.id].kind].label : 'no wire'}`).join('. ');
+  li.innerHTML = `<button class="node" type="button" aria-pressed="false" aria-controls="card" aria-label="${esc(n.name)}. ${esc(spoken)}">${esc(n.name)}${also ? `<small>also ${esc(also)}</small>` : ''}</button>
+    <div class="c-oc">${port(OC, n)}</div>${n.wires[CC] ? `<div class="c-pass">${pass(n)}</div>` : ''}<div class="c-cc">${port(CC, n)}</div>`;
+  return li;
+};
+
+// Head plates, legend and filter chips.
+$('heads').innerHTML = `<span class="lbl">Guide</span>` + D.hosts.map((h, i) => `<div class="plate ${i ? 'second' : 'first'}"><b>${esc(h.short)}</b><small>${i ? '' : 'desktop, '}${esc(h.rank)}</small></div>`).join('');
+$('legend').innerHTML = D.kinds.map((k) => `<li>${glyph(k.id, 14)}<span>${esc(k.label)}</span></li>`).join('');
+const chip = (group, id, label) => `<button class="chip" type="button" data-g="${group}" data-v="${esc(id)}" aria-pressed="false">${esc(label)}</button>`;
+$('lanes').insertAdjacentHTML('beforeend', D.lanes.map((l) => chip('lane', l.id, l.label)).join(''));
+$('hosts').insertAdjacentHTML('beforeend', D.hosts.map((h) => chip('host', h.id, h.short)).join(''));
+$('lede').textContent = `${D.nodes.length} guides, ${D.nodes.reduce((s, n) => s + wires(n), 0)} wires. Pick a guide to see its free tier, sign-in and key.`;
+
+// The list: a band per primary lane, a row per guide.
+const map = $('map');
+const rows = new Map();
+const bands = new Map();
+for (const l of D.lanes) {
+  const members = D.nodes.filter((n) => n.lanes[0] === l.id);
+  if (!members.length) continue;
+  const b = document.createElement('li'); b.className = 'band'; b.textContent = l.label; map.append(b); bands.set(l.id, b);
+  for (const n of members) { const r = rowFor(n); map.append(r); rows.set(n.id, r); }
+}
+
+const on = { lane: new Set(), host: new Set() };
+let selected = null;
+
+function apply() {
+  let shown = 0;
+  for (const n of D.nodes) {
+    const ok = (!on.lane.size || n.lanes.some((l) => on.lane.has(l))) && [...on.host].every((h) => n.wires[h]);
+    rows.get(n.id).hidden = !ok;
+    shown += ok;
+  }
+  const live = new Set(D.nodes.filter((n) => !rows.get(n.id).hidden).map((n) => n.lanes[0]));
+  for (const [id, b] of bands) b.hidden = !live.has(id);
+  map.classList.toggle('only-opencode', on.host.size === 1 && on.host.has(OC));
+  map.classList.toggle('only-claude', on.host.size === 1 && on.host.has(CC));
+  $('empty').hidden = shown > 0;
+  $('clear').hidden = !(on.lane.size || on.host.size);
+  $('status').textContent = `${shown} of ${D.nodes.length} guides shown`;
+  if (selected && rows.get(selected).hidden) select(null);
+}
+
+document.querySelector('.filters').addEventListener('click', (e) => {
+  const c = e.target.closest('.chip');
+  if (c) {
+    const set = on[c.dataset.g];
+    const was = set.has(c.dataset.v);
+    if (was) set.delete(c.dataset.v); else set.add(c.dataset.v);
+    c.setAttribute('aria-pressed', String(!was));
+  } else if (e.target.id === 'clear') {
+    on.lane.clear(); on.host.clear();
+    document.querySelectorAll('.chip').forEach((x) => x.setAttribute('aria-pressed', 'false'));
+  } else return;
+  apply();
+});
+
+function card(n) {
+  const way = (h) => {
+    const w = n.wires[h.id];
+    return `<tr><th scope="row">${esc(h.short)}</th><td>${w ? `<div class="way">${glyph(w.kind)}<div><b>${esc(kind[w.kind].label)}</b>${fmt(w.how)}</div></div>` : '<span class="none">No wire.</span>'}</td></tr>`;
+  };
+  const guide = D.repo + n.guide;
+  return `<button class="close" type="button" aria-label="Close the summary">×</button>
+    <h2 id="card-h" tabindex="-1">${esc(n.name)}</h2>
+    <p class="tag">${esc(n.tagline)}</p>
+    <ul class="lanes" aria-label="Lanes">${n.lanes.map((l) => `<li>${esc(lane[l].label)}</li>`).join('')}</ul>
+    <table class="sum"><tbody>
+      <tr><th scope="row">Free tier</th><td>${fmt(n.free)}</td></tr>
+      <tr><th scope="row">Sign-in</th><td>${fmt(n.signin)}</td></tr>
+      <tr><th scope="row">Key</th><td>${fmt(n.key)}</td></tr>
+      ${D.hosts.map(way).join('')}
+      ${n.note ? `<tr><th scope="row">Note</th><td>${fmt(n.note)}</td></tr>` : ''}
+    </tbody></table>
+    <div class="actions"><a class="btn" href="${esc(guide)}" rel="noopener">Open the guide</a>${n.detail ? `<a class="link" href="${esc(D.repo + n.detail)}" rel="noopener">Details</a>` : ''}</div>`;
+}
+
+const cardEl = $('card');
+function select(id, { focus = false } = {}) {
+  const prev = selected;
+  if (selected) { const r = rows.get(selected); r.classList.remove('sel'); r.querySelector('.node').setAttribute('aria-pressed', 'false'); }
+  selected = id;
+  if (!id) {
+    cardEl.className = 'card empty-card';
+    cardEl.innerHTML = '<p class="hint">Pick a guide to see its free tier, sign-in, key and how it wires in.</p>';
+    if (prev) history.replaceState(null, '', location.pathname + location.search);
+    return;
+  }
+  const r = rows.get(id);
+  r.classList.add('sel'); r.querySelector('.node').setAttribute('aria-pressed', 'true');
+  cardEl.className = 'card';
+  cardEl.innerHTML = card(D.nodes.find((n) => n.id === id));
+  void cardEl.offsetWidth; cardEl.classList.add('in');
+  history.replaceState(null, '', `#${id}`);
+  if (focus) $('card-h').focus();
+}
+select(null);
+
+map.addEventListener('click', (e) => {
+  const b = e.target.closest('.node');
+  if (!b) return;
+  const id = b.closest('.row').dataset.id;
+  select(id === selected ? null : id, { focus: e.detail === 0 });
+  if (id !== selected) return;
+  if (matchMedia('(max-width:879px)').matches) rows.get(id).scrollIntoView({ block: 'start' });
+});
+map.addEventListener('keydown', (e) => {
+  if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+  const nodes = [...map.querySelectorAll('.row:not([hidden]) .node')];
+  const i = nodes.indexOf(document.activeElement);
+  if (i < 0) return;
+  e.preventDefault();
+  nodes[Math.max(0, Math.min(nodes.length - 1, i + (e.key === 'ArrowDown' ? 1 : -1)))].focus();
+});
+cardEl.addEventListener('click', (e) => { if (e.target.closest('.close')) close(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && selected) close(); });
+function close() { const id = selected; select(null); rows.get(id)?.querySelector('.node').focus(); }
+
+const fromHash = () => { const id = location.hash.slice(1); if (rows.has(id)) select(id); };
+addEventListener('hashchange', fromHash);
+apply();
+fromHash();
+</script>
+</body>
+</html>
