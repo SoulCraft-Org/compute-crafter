@@ -30,7 +30,7 @@ sequenceDiagram
 ## Set up
 
 1. As an organization admin, open [Workload identity](https://platform.claude.com/settings/workload-identity-federation) in the Console and choose **Connect workload**, then the GitHub Actions tile. It creates the issuer, a service account and a rule, and tests the exchange ([WIF](https://platform.claude.com/docs/en/manage-claude/workload-identity-federation), read 2026-11-23).
-2. Give the job `id-token: write` and pass the three IDs the wizard shows. They name identities, not secrets ([Setup](https://github.com/anthropics/claude-code-action/blob/main/docs/setup.md), read 2026-11-23). Plan credits cannot pay for the action, which runs Claude Code. On them, run the Agent SDK with these IDs, as `tools/reread_agent.py` does.
+2. Give the job `id-token: write` and pass the three IDs the wizard shows. They name identities, not secrets ([Setup](https://github.com/anthropics/claude-code-action/blob/main/docs/setup.md), read 2026-11-23). Plan credits cannot pay for the action, which runs Claude Code. On them, run the Agent SDK with these IDs, as the weekly re-read agent in [Colorado-Compute/compute-credits](https://github.com/Colorado-Compute/compute-credits/blob/main/tools/reread_agent.py) does.
 
    ```yaml
    permissions:

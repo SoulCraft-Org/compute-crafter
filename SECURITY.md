@@ -17,8 +17,7 @@ flowchart LR
 | In scope | A finding looks like |
 | --- | --- |
 | A guide | A command that prints, stores or passes a key value, or a step that removes a vendor's spend stop |
-| `catalog/plans.json` | A field outside `PUBLIC_FIELDS`, an account name, or an email address |
+| `catalog/plans.json` | A field outside the allowlist in compute-credits, an account name, or an email address |
 | `catalog/logins.json` | A field outside `FIELDS`, an account name, an email address or a progress note |
 | `templates/` | A starter that commits a sheet, a board input or a status file that names your accounts |
-| `tools/catalog.py` | A private source column that reaches the catalog |
 | `.github/workflows/` | A step that runs untrusted input, or an unpinned action |
