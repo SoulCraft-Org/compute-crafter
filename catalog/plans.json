@@ -3775,7 +3775,7 @@
    ],
    "price_month": 20,
    "currency": "USD",
-   "price_note": "$20 billed monthly. On 2026-11-24 a sale (Nov 23 to Dec 2, 2026) showed $144 billed yearly. Premium is $40 billed monthly for 3,000 credits.",
+   "price_note": "$20 billed monthly. Premium is $40 billed monthly for 3,000 credits. Time-limited sales are in guides/detail/meshy.md.",
    "includes": "1,000 credits a month, API and MCP access, up to 100 assets, 10 concurrent tasks, 20 requests per second, high queue priority, customer-owned private assets. About 26 rigged characters with one animation each, at 38 credits apiece (Image to 3D with textures 30, rigging 5, one action 3; computed).",
    "resets": "monthly",
    "unit_cost_vs_payg": "No pay-as-you-go rate is published, and extra credit pack prices are not on the page. On the plan a credit costs $0.02 ($20 / 1,000, computed), so one textured Image to 3D task (30 credits) costs about $0.60.",
