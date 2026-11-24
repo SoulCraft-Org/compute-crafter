@@ -51,11 +51,14 @@ test('every lane, host and wire kind a node names is defined', () => {
     for (const [host, wire] of Object.entries(n.wires)) {
       // A kind of null means no page names a route; the mark then cannot be documented.
       assert.ok(wire.kind === null ? wire.mark !== '✅' : kinds.has(wire.kind), `${n.id} to ${host}: unknown kind ${wire.kind}`);
+      assert.match(wire.kind ?? 'none', /^[a-z0-9-]+$/, `${n.id} to ${host}: kind is not a slug`);
+      assert.ok(wire.mark !== '➖' || wire.kind === null, `${n.id} to ${host}: a ➖ cell has no wire, so no kind`);
       assert.ok(MARKS.includes(wire.mark), `${n.id} to ${host}: unknown mark ${wire.mark}`);
       assert.ok(wire.how.trim().split(/\s+/).length <= 20, `${n.id} to ${host}: how is over 20 words`);
-      assert.doesNotMatch(wire.how, /ANTHROPIC_BASE_URL|\bclaude [a-z-]+\b.*--|`claude\b/, `${n.id} to ${host}: no Claude Code CLI recipe`);
+      assert.doesNotMatch(wire.how, /ANTHROPIC_BASE_URL|`claude\b|\bclaude (mcp|--|code)\b|Claude Code CLI/i, `${n.id} to ${host}: no Claude Code CLI recipe`);
     }
   }
+  assert.deepEqual(data.marks.map((m) => [m.mark, m.line]), [['✅', 'solid'], ['❔', 'dotted'], ['➖', 'none']]);
   assert.deepEqual(data.hosts.map((h) => h.id), ['opencode', 'code', 'cowork'], 'OpenCode first, then the Code tab and Cowork');
 });
 

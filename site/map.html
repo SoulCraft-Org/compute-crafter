@@ -11,7 +11,7 @@
   --bg:#f2f4f1; --surf:#fcfcfb; --ink:#14201e; --ink2:#46524f; --mute:#5d6967; --line:#d3d9d6; --bus:#a9b4b0;
   --sel:#dcebe4; --focus:#0a6b62;
   --k-provider:#2a78d6; --k-openai:#eb6834; --k-anthropic:#1baf7a; --k-mcp:#eda100; --k-link:#e87ba4;
-  --node:128px;
+  --node:108px;
   color-scheme:light;
 }
 @media (prefers-color-scheme:dark){
@@ -56,7 +56,8 @@ h1{margin:0;font-size:clamp(30px,6vw,46px);line-height:1.05;font-weight:780;lett
 .plate.first{background:var(--ink);color:var(--bg)}
 .heads .lbl{align-self:end;font-size:12px;color:var(--mute)}
 .map{margin:0;padding:0;list-style:none}
-.cell.dim{opacity:.25}
+.cell.dim :is(text,.gl){opacity:.5}
+.cell.dim line{opacity:.25}
 .band{display:flex;align-items:center;gap:8px;width:var(--node);margin:14px 0 6px;font-size:12.5px;font-weight:700;color:var(--ink2)}
 .band::after{content:"";flex:1;height:1px;background:var(--line)}
 .row{margin-bottom:6px;border-radius:8px;min-height:44px}
@@ -70,12 +71,12 @@ h1{margin:0;font-size:clamp(30px,6vw,46px);line-height:1.05;font-weight:780;lett
 .pt{display:block;width:100%;height:44px;overflow:visible;font-size:10.5px}
 .pt line{stroke-width:2.4px;stroke-linecap:butt}
 .row.sel .pt line{stroke-width:3.2px}
-.pt line.dots{stroke-width:3.2px;stroke-linecap:round;stroke-dasharray:.1 6.5}
+.pt line.dots{stroke:color-mix(in srgb,var(--rail) 55%,var(--ink));stroke-width:3.2px;stroke-linecap:round;stroke-dasharray:.1 6.5}
 .pt text{fill:var(--ink2)}
 .pt .none{fill:var(--mute)}
 .pt g.gl{stroke:var(--bg);stroke-width:2.5px;paint-order:stroke}
-.pt g.gl.hollow{fill:var(--surf);stroke-width:2px}
-@media (max-width:879px){.pt text:not(.none),.pt .nr{display:none}.pt .none{font-size:9.5px}.plate{margin-left:3px;padding:4px 3px;min-width:0}.plate b{font-size:12px}.plate small{display:none}}
+.pt g.gl.hollow{fill:var(--surf);stroke:color-mix(in srgb,var(--rail) 55%,var(--ink));stroke-width:2px}
+@media (max-width:879px){.pt text:not(.none){display:none}.pt .none{font-size:9px}.plate{margin-left:3px;padding:4px 6px;min-width:0}.plate b{font-size:11px;overflow-wrap:anywhere}.plate small{font-size:9.5px;overflow-wrap:anywhere}}
 .marks{display:flex;flex-wrap:wrap;gap:4px 14px;margin:6px 0 0;padding:0;list-style:none;font-size:12.5px;color:var(--ink2)}
 .marks li{display:flex;align-items:center;gap:6px}
 .empty{margin:12px 0;color:var(--ink2)}
@@ -135,7 +136,7 @@ h1{margin:0;font-size:clamp(30px,6vw,46px);line-height:1.05;font-weight:780;lett
     </section>
     <aside class="card empty-card" id="card" aria-live="polite" aria-label="Guide summary"></aside>
   </div>
-  <p class="foot">Read from <code>wiring.json</code>, which comes from each guide's opening table. A figure names the vendor page and the date the guide read it.</p>
+  <p class="foot">Read from <code>wiring.json</code>, which comes from each guide's Wiring table. A figure names the vendor page and the date the guide read it.</p>
 </div>
 <noscript><p style="padding:16px">The map needs JavaScript. The guides list the same facts: <a href="https://github.com/SoulCraft-Org/compute-crafter/blob/main/guides/README.md">guides/README.md</a>.</p></noscript>
 <script type="module">
@@ -146,7 +147,6 @@ const SHAPES = {
   circle: '<circle r="5.5"/>', square: '<rect x="-5" y="-5" width="10" height="10" rx="1.5"/>',
   diamond: '<path d="M0-7 7 0 0 7-7 0Z"/>', triangle: '<path d="M0-6.5 6.5 5.5h-13Z"/>', hexagon: '<path d="M-3.5-6h7l3.5 6-3.5 6h-7L-7 0Z"/>',
 };
-const DASH = { provider: 'none', openai: '6 4', anthropic: '0.1 6', mcp: '10 3 2 3', link: '16 5' };
 
 let D;
 try {
@@ -167,21 +167,22 @@ const glyph = (k, size = 16) => `<svg width="${size}" height="${size}" viewBox="
 // One cell: a rail drawn by its mark (solid, dotted, none), a tag above it, and the kind's shape at the end.
 // A kind of null means no page names a route: the cell says so and draws a dotted rail with no shape.
 function port(h, n) {
-  const w = n.wires[h], m = mark[w.mark], k = w.kind && kind[w.kind];
+  const w = n.wires[h], m = mark[w.mark], none = m.line === 'none';
+  const k = !none && w.kind && kind[w.kind];
   const lbl = `${host[h].short}: ${m.label.toLowerCase()}${k ? `, ${k.label}` : ''}`;
-  if (m.line === 'none') return `<svg class="pt" aria-hidden="true"><title>${esc(lbl)}</title><text class="none" x="4" y="26">Not available</text></svg>`;
+  if (none) return `<svg class="pt" aria-hidden="true"><title>${esc(lbl)}</title><text class="none" x="4" y="26">N/A</text></svg>`;
   const solid = m.line === 'solid';
   const col = k ? `var(--k-${w.kind})` : 'var(--mute)';
-  return `<svg class="pt" aria-hidden="true"><title>${esc(lbl)}</title>
+  return `<svg class="pt" aria-hidden="true" style="--rail:${col}"><title>${esc(lbl)}</title>
     <line class="${solid ? '' : 'dots'}" x1="0" x2="100%" y1="28" y2="28" stroke="${col}"/>
-    ${k ? `<text x="4" y="19">${esc(k.short)}</text><svg x="100%" y="28" width="1" height="1" overflow="visible"><g class="gl${solid ? '' : ' hollow'}" fill="var(--k-${w.kind})"${solid ? '' : ` style="stroke:var(--k-${w.kind})"`}>${SHAPES[k.shape]}</g></svg>` : '<text class="none nr" x="4" y="19">No route named</text>'}</svg>`;
+    ${k ? `<text x="4" y="19">${esc(k.short)}</text><svg x="100%" y="28" width="1" height="1" overflow="visible"><g class="gl${solid ? '' : ' hollow'}" fill="var(--k-${w.kind})">${SHAPES[k.shape]}</g></svg>` : '<text class="none nr" x="4" y="19">No route</text>'}</svg>`;
 }
 
 const rowFor = (n) => {
   const li = document.createElement('li');
   li.className = 'row'; li.dataset.id = n.id;
   const also = n.lanes.slice(1).map((l) => lane[l].label).join(', ');
-  const spoken = D.hosts.map((h) => `${h.short}: ${mark[n.wires[h.id].mark].label.toLowerCase()}`).join('. ');
+  const spoken = D.hosts.map((h) => { const w = n.wires[h.id]; return `${h.short}: ${mark[w.mark].label.toLowerCase()}${w.kind && mark[w.mark].line !== 'none' ? `, ${kind[w.kind].label}` : ''}`; }).join('. ');
   li.innerHTML = `<button class="node" type="button" aria-pressed="false" aria-controls="card" aria-label="${esc(n.name)}. ${esc(spoken)}">${esc(n.name)}${also ? `<small>also ${esc(also)}</small>` : ''}</button>`
     + D.hosts.map((h) => `<div class="cell" data-h="${h.id}">${port(h.id, n)}</div>`).join('');
   return li;
@@ -222,7 +223,8 @@ function apply() {
   map.querySelectorAll('.cell').forEach((c) => c.classList.toggle('dim', on.host.size > 0 && !on.host.has(c.dataset.h)));
   $('empty').hidden = shown > 0;
   $('clear').hidden = !(on.lane.size || on.host.size);
-  $('status').textContent = `${shown} of ${D.nodes.length} guides shown`;
+  const hs = D.hosts.filter((h) => on.host.has(h.id)).map((h) => h.short);
+  $('status').textContent = hs.length ? `${shown} of ${D.nodes.length} guides documented in ${hs.join(' and ')}` : `${shown} of ${D.nodes.length} guides shown`;
   if (selected && rows.get(selected).hidden) select(null);
 }
 
@@ -242,7 +244,7 @@ document.querySelector('.filters').addEventListener('click', (e) => {
 
 function card(n) {
   const way = (h) => {
-    const w = n.wires[h.id], k = w.kind && kind[w.kind];
+    const w = n.wires[h.id], k = mark[w.mark].line !== 'none' && w.kind && kind[w.kind];
     return `<tr><th scope="row">${esc(h.short)}</th><td><div class="way">${k ? glyph(w.kind) : ''}<div><b>${esc(w.mark)} ${esc(mark[w.mark].label)}${k ? `, ${esc(k.label)}` : ''}</b>${fmt(w.how)}</div></div></td></tr>`;
   };
   const guide = D.repo + n.guide;

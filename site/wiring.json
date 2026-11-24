@@ -189,7 +189,7 @@
         "code": {
           "kind": "mcp",
           "mark": "❔",
-          "how": "Not confirmed. A connector gallery entry covers tools. Hugging Face names only the Claude Code CLI for models."
+          "how": "Not confirmed. A connector gallery entry covers tools. Hugging Face documents no Code tab route for models."
         },
         "cowork": {
           "kind": "mcp",
@@ -220,7 +220,7 @@
         "code": {
           "kind": null,
           "mark": "❔",
-          "how": "Not confirmed. Nsight AI names Claude Code and others, not the Desktop App."
+          "how": "Not confirmed. Nsight AI names no Desktop App route."
         },
         "cowork": {
           "kind": null,
@@ -280,7 +280,7 @@
         "code": {
           "kind": "mcp",
           "mark": "❔",
-          "how": "Not confirmed. The page names a Claude Code Skills plugin, not a Desktop tab."
+          "how": "Not confirmed. The page names a Skills plugin, not a Desktop tab."
         },
         "cowork": {
           "kind": "mcp",
@@ -309,14 +309,14 @@
           "how": "Not confirmed. OpenCode's providers page has no Anthropic section."
         },
         "code": {
-          "kind": "anthropic",
+          "kind": null,
           "mark": "➖",
-          "how": "Not available. The credits cover the API, Agent SDK and Playground, and exclude Claude Code."
+          "how": "Not available. The credits cover the API, Agent SDK and Playground, only."
         },
         "cowork": {
-          "kind": "anthropic",
+          "kind": null,
           "mark": "➖",
-          "how": "Not available. The credits exclude Claude Code and extra usage in the Claude apps."
+          "how": "Not available. The credits exclude extra usage in the Claude apps."
         }
       }
     },
@@ -372,7 +372,7 @@
         "code": {
           "kind": null,
           "mark": "❔",
-          "how": "Not confirmed. Modal's page names Claude Code with environment variables, not the Desktop App."
+          "how": "Not confirmed. Modal's page names environment variables, not the Desktop App."
         },
         "cowork": {
           "kind": null,
@@ -556,12 +556,12 @@
           "how": "Run `/connect`, GitHub Copilot, then Login with GitHub Copilot. Copilot Free counts."
         },
         "code": {
-          "kind": "mcp",
+          "kind": null,
           "mark": "➖",
           "how": "Not available for the hosted server: its OAuth is not supported in Claude Desktop."
         },
         "cowork": {
-          "kind": "mcp",
+          "kind": null,
           "mark": "➖",
           "how": "Not available for the hosted server. GitHub offers a local Docker server instead."
         }
@@ -588,7 +588,7 @@
         "code": {
           "kind": "mcp",
           "mark": "❔",
-          "how": "Not confirmed. Meshy's page names the Code tab and gives no route."
+          "how": "Not confirmed. Meshy's page gives no Code tab route."
         },
         "cowork": {
           "kind": "mcp",
