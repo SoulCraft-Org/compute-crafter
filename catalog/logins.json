@@ -1,7 +1,7 @@
 {
   "version": 1,
   "about": "What each vendor offers for signing in: methods, passkeys, 2FA, linking and email change. Vendor facts only, each read on the vendor's own pages on the date in checked.",
-  "checked": "2026-11-23",
+  "checked": "2026-11-24",
   "rows": [
     {
       "id": "amd-developer-cloud",
@@ -1252,6 +1252,36 @@
         "https://lmstudio.ai/enterprise-login"
       ],
       "checked": "2026-11-23",
+      "verified": true
+    },
+    {
+      "id": "meshy",
+      "name": "Meshy",
+      "provider": "Meshy",
+      "family": null,
+      "lanes": [
+        "tools"
+      ],
+      "signin": [
+        "google",
+        "email-password",
+        "email-link"
+      ],
+      "passkey": null,
+      "twofa": null,
+      "own_2fa": null,
+      "recovery_codes": null,
+      "link": null,
+      "email_change": true,
+      "security_url": "https://www.meshy.ai/settings/profile",
+      "trap": "Each email holds one Meshy account, and accounts or their assets cannot be merged or moved.",
+      "source": "https://help.meshy.ai/en/articles/12636570-can-i-log-into-meshy-with-a-verification-code",
+      "sources_extra": [
+        "https://help.meshy.ai/en/articles/12636551-how-to-reset-my-password",
+        "https://help.meshy.ai/en/articles/9991893-how-to-change-the-email-address-of-my-account",
+        "https://help.meshy.ai/en/articles/9991887-how-to-permanently-delete-my-account-and-remove-all-the-data"
+      ],
+      "checked": "2026-11-24",
       "verified": true
     },
     {

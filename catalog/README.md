@@ -16,10 +16,10 @@ flowchart LR
 | gpu | 39 | 38 | 7 |
 | inference | 32 | 30 | 11 |
 | hosting | 16 | 16 | 10 |
-| tools | 24 | 24 | 6 |
-| **All** | **153** | **150** | **50** |
+| tools | 26 | 26 | 7 |
+| **All** | **155** | **152** | **51** |
 
-Counts are by each row's first lane, from `plans.json` as built on 2026-11-23. Rows were read between 2026-11-20 and 2026-11-23.
+Counts are by each row's first lane, from `plans.json` as built on 2026-11-24. Rows were read between 2026-11-20 and 2026-11-24.
 
 ## Fields
 

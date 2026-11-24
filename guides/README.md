@@ -7,6 +7,7 @@ flowchart LR
   Q{What do you need?} -->|Hosted open-weight models| I[Inference]
   Q -->|GPUs for your own code| G[GPU]
   Q -->|CI, MCP, Copilot models| T[GitHub]
+  Q -->|3D models from a picture| D[Meshy]
   Q -->|No account, no bill| M[Local models]
 ```
 
@@ -25,6 +26,7 @@ flowchart LR
 | [AMD](amd.md) | GPU | ROCm, and one-time AMD Developer Cloud credit |
 | [Google Cloud](google-cloud.md) | CPU, GPU | The $300 Free Trial, what it cannot pay for, the upgrade, a budget kill switch, quotas |
 | [ComfyUI](comfyui.md) | GPU | Comfy Cloud, comfy-cli, and the [comfyui-base](https://github.com/SoulCraft-Org/comfyui-base) installer |
+| [Meshy](meshy.md) | 3D | Picture or prompt to a textured, rigged, animated model on a Pro subscription, through its CLI and skills or its MCP server |
 | [Claude Desktop MCP](claude-desktop-mcp.md) | Client | One MCP server for the Code tab and Cowork: a custom connector or a desktop extension |
 | [GitHub](github.md) | CI, tools | Actions, `gh` login, the GitHub MCP server, the App manifest flow, Copilot in OpenCode |
 | [Local models](local-models.md) | Local | MLX and LM Studio serving a model on your own port |
