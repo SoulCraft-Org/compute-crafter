@@ -1,34 +1,21 @@
-# AMD: traps and sources
+# AMD: guard and set up
 
-What goes wrong with AMD, and the pages this guide read. The steps are in [AMD](../amd.md).
+What the AMD guide moved out of its page. Traps and sources: [AMD traps and sources](amd-traps.md). The diagram and wiring are in [AMD](../amd.md).
 
-## Traps
+## Guard
 
-| Trap | What happens |
-| --- | --- |
-| Off is not free | A powered-off GPU instance still bills or spends credit until it is destroyed ([AMD Developer Cloud](https://www.amd.com/en/developer/resources/cloud-access/amd-developer-cloud.html), read 2026-11-12). |
-| Payment method wording | DigitalOcean's page says "You must provide a valid payment method to use the credit". AMD's FAQ describes accounts with no payment method. Once a card is on file, usage past the credit bills at standard rates ([DigitalOcean AMD credits](https://docs.digitalocean.com/products/amd/details/credits/), read 2026-11-12). |
-| Data loss at the end | When credit expires with no payment method, the VM and the data on it are gone. Copy results off before the 30-day expiry ([AMD Developer Cloud](https://www.amd.com/en/developer/resources/cloud-access/amd-developer-cloud.html), read 2026-11-12). |
-| GPU only | The credit covers MI300X GPU time only, not volumes, object storage or backups. |
-| ROCm, not CUDA | ROCm runs HIP code. A library with only a CUDA build does not run here; check for a ROCm build before you rent the GPU. |
-| No Mac support | The compatibility matrix lists no macOS, so ROCm work runs on a Linux or Windows host. |
-| China-hosted catalog entry | OpenCode's catalog (models.dev) has an `amd` provider whose base URL is on `developer.amd.com.cn`. That is a separate service from ROCm and the Developer Cloud. |
+| Spend | Stop | Source |
+| --- | --- | --- |
+| Expiry with no card | The GPU VM is destroyed, and you lose the GPUs and their data | [AMD Developer Cloud](https://www.amd.com/en/developer/resources/cloud-access/amd-developer-cloud.html), read 2026-11-24 |
+| Credit used up | Access to the GPU, its data and the Developer Cloud ends | [AMD Developer Cloud](https://www.amd.com/en/developer/resources/cloud-access/amd-developer-cloud.html), read 2026-11-24 |
+| Card on file | AMD says it "will automatically charge" the card once credit is exhausted. That removes the stop | [AMD Developer Cloud](https://www.amd.com/en/developer/resources/cloud-access/amd-developer-cloud.html), read 2026-11-24 |
+| Rate | A 1x MI300X costs $2.59 an hour, so $100 covers about 38 hours | [DigitalOcean AMD pricing](https://docs.digitalocean.com/products/amd/details/pricing/), read 2026-11-24 |
 
-## Sources
+## Set up
 
-<details>
-<summary>Pages read and their dates</summary>
-
-| Page | Read |
-| --- | --- |
-| [ROCm documentation](https://rocm.docs.amd.com/en/latest/) | 2026-11-12 |
-| [ROCm Core SDK install](https://rocm.docs.amd.com/en/latest/install/rocm.html) | 2026-11-12 |
-| [ROCm compatibility matrix](https://rocm.docs.amd.com/en/latest/compatibility/compatibility-matrix.html) | 2026-11-12 |
-| [AMD Developer Cloud](https://www.amd.com/en/developer/resources/cloud-access/amd-developer-cloud.html) | 2026-11-12 |
-| [AMD AI Developer Program](https://www.amd.com/en/developer/ai-dev-program.html) | 2026-11-12 |
-| [DigitalOcean AMD Developer Cloud credits](https://docs.digitalocean.com/products/amd/details/credits/) | 2026-11-12 |
-| [DigitalOcean AMD pricing](https://docs.digitalocean.com/products/amd/details/pricing/) | 2026-11-12 |
-| [OpenCode providers](https://opencode.ai/docs/providers) | 2026-11-12 |
-| [models.dev](https://models.dev) | 2026-11-12 |
-
-</details>
+1. Check your GPU and OS in the [ROCm compatibility matrix](https://rocm.docs.amd.com/en/latest/compatibility/compatibility-matrix.html). Its ROCm 10.2.0 page lists Linux and Windows, and no macOS (read 2026-11-24).
+2. Install ROCm from the [install page](https://rocm.docs.amd.com/en/latest/install/rocm.html).
+3. For cloud time, join the [AMD AI Developer Program](https://www.amd.com/en/developer/ai-dev-program.html) and apply with your use case.
+4. Approved credit lands within 3 business days. Opening the emailed link activates it, and the 30-day clock starts at deposit ([AMD Developer Cloud](https://www.amd.com/en/developer/resources/cloud-access/amd-developer-cloud.html), read 2026-11-24). Hold the link until the job is ready.
+5. Create one MI300X GPU droplet, run the job and copy results off the VM.
+6. Destroy the droplet in the console when the job ends.
