@@ -1,0 +1,38 @@
+name: scorecard
+
+# OpenSSF Scorecard for Compute Crafter, from Git Crafter's templates/ci/scorecard.yml: it grades the repo's
+# supply-chain practices, 0 to 10, and publishes the score to api.scorecard.dev
+# (github.com/ossf/scorecard-action, read 2026-11-24). Free on a public repo.
+# ADVISORY: no ruleset requires this check. It runs on the default branch only, never on a pull request, so no
+# fork's code runs with id-token. No SARIF upload, so a finding opens no code scanning alert and the job needs no
+# security-events scope; the score and its checks are read on api.scorecard.dev.
+# A known gap (THREAT-MODEL.md): Scorecard is a Docker action, so its commit pin fixes action.yaml but its image,
+# ghcr.io/ossf/scorecard-action:v2.5.0, is pulled by tag. Scorecard's server refuses to publish from a step pinned
+# to a digest, so the tag stays. v2.6.0 is under the 14-day cooldown (published 2026-11-19).
+on:
+  schedule:
+    - cron: "41 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  analysis:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      actions: read
+      # Publishing the result signs it with the run's OIDC token.
+      id-token: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: ossf/scorecard-action@fa7117db83c52d787ae5a89f350999701505d78e # v2.5.0
+        with:
+          results_file: results.json
+          results_format: json
+          publish_results: true
