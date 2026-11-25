@@ -27,9 +27,9 @@ flowchart LR
 
 | Guard | Do | Source |
 | --- | --- | --- |
-| Usage credits | Leave them off and keep the spend limit at zero. They bill anything past the plan limit | [Claude Code docs, costs](https://code.claude.com/docs/en/costs), read 2026-11-25 |
+| Usage credits | Leave them off, or keep the spend limit at zero ([rule](https://github.com/SoulCraft-Org/git-crafter/blob/main/rules/compute.md)). They bill anything past the plan limit | [Claude Code docs, costs](https://code.claude.com/docs/en/costs), read 2026-11-25 |
 | Continue after a limit | Project settings, General, "Continue threads automatically when usage limits reset" is on by default. Turn it off to stop spill into the next window | [Claude Code docs, Projects](https://code.claude.com/docs/en/claude-projects), read 2026-11-25 |
-| Ultrareview | Three free runs. Later runs bill as usage credits, so decline the paid prompt | [Claude Code docs, ultrareview](https://code.claude.com/docs/en/ultrareview), read 2026-11-25 |
+| Ultrareview | Three free runs, once per account. Later runs bill as usage credits, so decline the paid prompt | [Claude Code docs, ultrareview](https://code.claude.com/docs/en/ultrareview), read 2026-11-25 |
 | Where to read it | Project settings, Usage shows token use by thread and how much went to the project conversation. Check it weekly | [Claude Code docs, Projects](https://code.claude.com/docs/en/claude-projects), read 2026-11-25 |
 | Model and effort | Use a smaller model or lower effort where the largest is not needed | [Claude Code docs, Projects](https://code.claude.com/docs/en/claude-projects), read 2026-11-25 |
 | Pull request watching | Ask the thread to stop watching once the pull request merges | [Claude Code docs, Projects](https://code.claude.com/docs/en/claude-projects), read 2026-11-25 |
@@ -45,7 +45,7 @@ Anything else needs one question to the owner and a hard cap first.
 
 ## Plans
 
-Pro, Max and Ultra cost $20, $100 and $200 a month, with five and ten times Pro's weekly usage for Max and Ultra ([Claude pricing](https://claude.com/pricing), read 2026-11-25). The upgrade buys capacity, Fable access and API credits, not a cheaper unit.
+Pro, Max and Ultra cost $20, $100 and $200 a month, with five and ten times Pro's weekly usage for Max and Ultra ([Claude pricing](https://claude.com/pricing), read 2026-11-25). The upgrade buys capacity, Fable access and API credits.
 
 ## Hosts and sign-in
 

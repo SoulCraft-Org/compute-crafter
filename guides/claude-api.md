@@ -24,7 +24,7 @@ flowchart LR
 
 ## Worked example: a doc re-read agent
 
-A weekly job re-reads stale pages and pushes a branch for review. Limits from its [script](https://github.com/Colorado-Compute/compute-credits/blob/main/tools/reread_agent.py) and [workflow](https://github.com/Colorado-Compute/compute-credits/blob/main/.github/workflows/catalog-reread.yml), read 2026-11-25.
+A weekly job re-reads stale pages and pushes a branch for review. Limits from its [script](https://github.com/Colorado-Compute/compute-credits/blob/main/tools/reread_agent.py) and [workflow](https://github.com/Colorado-Compute/compute-credits/blob/main/.github/workflows/catalog-reread.yml), read 2026-11-25. Git Crafter's [doc-reread.yml](https://github.com/SoulCraft-Org/git-crafter/blob/main/templates/ci/doc-reread.yml) re-reads each cited page keyless and opens one issue when a page changed.
 
 | Part | Setting |
 | --- | --- |
