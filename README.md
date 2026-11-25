@@ -15,7 +15,7 @@ flowchart LR
 
 ## Quickstart: 3 steps
 
-Re-run end to end in a throwaway private repo on 2026-11-25. The commands in steps 2 and 3 took under a minute. The last one printed a ladder from the example rows.
+In a re-run end to end in a throwaway private repo on 2026-11-25, the commands in steps 2 and 3 took under a minute. The last one printed a ladder from the example rows.
 
 | # | Do | Where |
 |---|---|---|
