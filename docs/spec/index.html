@@ -36,7 +36,7 @@ a{color:var(--acc)}
 <body>
 <main>
 <h1>Compute Crafter spec</h1>
-<p class="sub">One page: what this repo is for, how it works, where it stands, and the one decision that is the owner's. <span class="pill">Draft</span><span class="pill">Read 2026-11-25</span></p>
+<p class="sub">One page: what this repo is for, how it works, where it stands, and the the one decision that was the owner's. <span class="pill">Decided</span><span class="pill">Read 2026-11-25</span></p>
 
 <h2>Purpose</h2>
 <p>Compute Crafter wires open-weight compute into the OpenCode Desktop App first and the Claude Desktop App second. It runs on free credits and flat monthly plans. It never uses pay-per-use billing.</p>
@@ -90,16 +90,17 @@ a{color:var(--acc)}
 <tr><td>Two personal emails in public history</td><td>Not rewritten by decision; privacy switches are on</td><td>234</td></tr>
 </table>
 
-<h2 id="question">The owner's decision</h2>
+<h2 id="question">The owner's decision, made 2026-11-25</h2>
 <div class="card q">
-<p><b style="font-size:1.05rem;color:inherit">How wide should Compute Crafter stay?</b></p>
+<p><b style="font-size:1.05rem;color:inherit">How wide should Compute Crafter stay? Stay narrow.</b></p>
+<p>The repo covers free tiers and flat plans for the two desktop apps. The plan catalog stays in its own repo.</p>
 <table>
-<tr><th>Option</th><th>What it means</th></tr>
-<tr><td>A. Stay narrow <span class="ok">(recommended)</span></td><td>Free tiers and flat plans for the two desktop apps. The catalog stays in its own repo.</td></tr>
-<tr><td>B. Add self-hosted and API lanes</td><td>Guides for running open weights yourself. This grows the page count and the re-read load.</td></tr>
-<tr><td>C. Fold into the catalog repo</td><td>One repo for plans and guides. The desktop-app wiring loses its own home.</td></tr>
+<tr><th>Option</th><th>Result</th></tr>
+<tr><td>A. Stay narrow <span class="ok">(chosen)</span></td><td>Free tiers and flat plans for the two desktop apps.</td></tr>
+<tr><td>B. Add self-hosted and API lanes</td><td>Not now. It would grow the guide count and the re-read load.</td></tr>
+<tr><td>C. Fold into the catalog repo</td><td>Not now. The desktop-app wiring would lose its own home.</td></tr>
 </table>
-<p>Why A: the repo already scores near the top on a narrow scope, and every new lane adds guides that need a vendor-page re-read each cycle.</p>
+<p>Why A: every new lane adds guides that need a vendor-page re-read each cycle.</p>
 </div>
 
 <h2>Decided already</h2>
@@ -109,6 +110,7 @@ a{color:var(--acc)}
 <tr><td>Never pay-per-use; a Claude Code Project stays on its flat plan</td><td>docs/claude-code-projects-spend.md</td></tr>
 <tr><td>Plan rows are edited upstream by pull request</td><td>AGENTS.md</td></tr>
 <tr><td>Public history is not rewritten</td><td>Issue 234</td></tr>
+<tr><td>Stay narrow on free tiers and flat plans for the two desktop apps</td><td>The owner, 2026-11-25</td></tr>
 </table>
 </main>
 </body>
