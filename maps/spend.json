@@ -20,6 +20,7 @@
   "free",
   "read",
   "pool",
+  "paid",
   "idle"
  ],
  "steps": [
@@ -67,6 +68,20 @@
    "metric": "credits.actions_pool_used",
    "gates": [
     "Spend past the included amount waits for the owner's yes (Git Crafter rules/compute.md)"
+   ]
+  },
+  {
+   "id": "paid",
+   "name": "Paid in use",
+   "tools": [
+    "The pool routing starter",
+    "The credits registry"
+   ],
+   "rule": "Keep a paid plan only while work runs on it; pause or drop an idle one.",
+   "rule_ref": "https://github.com/SoulCraft-Org/git-crafter/blob/main/rules/compute.md",
+   "metric": "credits.paid_plans_in_use",
+   "gates": [
+    "A new paid plan waits for the owner's yes (Git Crafter rules/compute.md)"
    ]
   },
   {

@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "comment": "Fake example data. The pool ids are rows of catalog/plans.json and each limit is the figure in that row's includes, read on the row's source page on its checked date. The used numbers are made up: replace every row with your own.",
+  "stop_at_pct": 80,
+  "pools": [
+    {"id": "nvidia-build-free", "lane": "inference", "rung": 1, "unit": "requests", "per": "day", "limit": 10000, "used": 2500, "have": true, "notes": "Example note: first stop for small jobs."},
+    {"id": "cloudflare-workers-ai-free", "lane": "inference", "rung": 2, "unit": "neurons", "per": "day", "limit": 10000, "used": 9000, "have": true, "notes": "Example note: fails past the allowance on Workers Free."},
+    {"id": "ollama-pro", "lane": "inference", "rung": 3, "unit": "USD of credits", "per": "month", "limit": 60, "used": 20, "have": true, "notes": "Example note: buy no extra credits, so it stops."},
+    {"id": "hf-zerogpu-free", "lane": "gpu", "rung": 1, "unit": "minutes", "per": "day", "limit": 5, "used": 1, "have": true, "notes": "Example note: Gradio Spaces only."},
+    {"id": "copilot-pro", "lane": "tools", "rung": 1, "unit": "AI credits", "per": "month", "limit": 1500, "used": 0, "have": true, "notes": "Example note: held and idle, so the paid table flags it."},
+    {"id": "github-actions-free", "lane": "ci", "rung": 1, "unit": "minutes", "per": "month", "limit": 2000, "used": 300, "have": true, "notes": ""},
+    {"id": "opencode-go", "lane": "inference", "rung": 4, "unit": "USD of credits", "per": "month", "have": false, "notes": "Example note: a paid rung waits for your yes."}
+  ]
+}

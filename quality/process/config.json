@@ -1,5 +1,5 @@
 {
- "comment": "Compute Crafter's Process page config, and its maps file too (docs.maps names it): Git Crafter templates/process/config.json at v7.1.0, with every library map: delivery, deploy, triage, contribute, board, adopt, measure, code, secure, document, release, score and discuss. The Spend map, maps/spend.json, keeps all 5 steps. The five Claudius pack maps (guard, decide, equip, publish, visibility) are named by use, from the pack pinned in quality/config.json (quality_config). Steps dropped before (Board, Triage and Discuss cards, and Contribute deploy) are back with their tabs, Projects and Pages. A step whose metric needs a Projects-read token or local files shows not measured in CI. tests/pack.test.mjs checks the Spend map agrees with maps/spend.json. Keys: Git Crafter actions/pages/action.yml; maps: pages/maps/README.md. The Equip map's Keep step points at Claude Code's plugin loading page, not at the pack's own README: the privacy gate refuses the pack repo's owner name on this page (tests/privacy.mjs, PRIVATE_TERMS).",
+ "comment": "Compute Crafter's Process page config, and its maps file too (docs.maps names it): Git Crafter templates/process/config.json at v7.1.0, with every library map: delivery, deploy, triage, contribute, board, adopt, measure, code, secure, document, release, score and discuss. The Spend map, maps/spend.json, keeps all 6 steps. The five Claudius pack maps (guard, decide, equip, publish, visibility) are named by use, from the pack pinned in quality/config.json (quality_config). Steps dropped before (Board, Triage and Discuss cards, and Contribute deploy) are back with their tabs, Projects and Pages. A step whose metric needs a Projects-read token or local files shows not measured in CI. tests/pack.test.mjs checks the Spend map agrees with maps/spend.json. Keys: Git Crafter actions/pages/action.yml; maps: pages/maps/README.md. The Equip map's Keep step points at Claude Code's plugin loading page, not at the pack's own README: the privacy gate refuses the pack repo's owner name on this page (tests/privacy.mjs, PRIVATE_TERMS).",
  "repos": [
   "compute-crafter"
  ],
@@ -97,6 +97,7 @@
     "free",
     "read",
     "pool",
+    "paid",
     "idle"
    ],
    "steps": [
@@ -144,6 +145,20 @@
      "metric": "credits.actions_pool_used",
      "gates": [
       "Spend past the included amount waits for the owner's yes (Git Crafter rules/compute.md)"
+     ]
+    },
+    {
+     "id": "paid",
+     "name": "Paid in use",
+     "tools": [
+      "The pool routing starter",
+      "The credits registry"
+     ],
+     "rule": "Keep a paid plan only while work runs on it; pause or drop an idle one.",
+     "rule_ref": "https://github.com/SoulCraft-Org/git-crafter/blob/main/rules/compute.md",
+     "metric": "credits.paid_plans_in_use",
+     "gates": [
+      "A new paid plan waits for the owner's yes (Git Crafter rules/compute.md)"
      ]
     },
     {

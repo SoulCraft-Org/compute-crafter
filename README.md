@@ -6,7 +6,7 @@ Wire open-weight compute into the OpenCode Desktop App first and the Claude Desk
 
 ## [📊 Open the live score page](https://soulcraft-org.github.io/compute-crafter/)
 
-[![170 plans](https://img.shields.io/badge/plans-170-0b5fc4)](catalog/README.md) ![6 lanes](https://img.shields.io/badge/lanes-6-0b5fc4) [![66 sign-in vendors](https://img.shields.io/badge/sign--in_vendors-66-0b5fc4)](catalog/logins.json) ![166 verified](https://img.shields.io/badge/verified-166-2ea44f) [![4 starters](https://img.shields.io/badge/starters-4-c4572b)](#starters) [![Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-555)](LICENSE)
+[![170 plans](https://img.shields.io/badge/plans-170-0b5fc4)](catalog/README.md) ![6 lanes](https://img.shields.io/badge/lanes-6-0b5fc4) [![66 sign-in vendors](https://img.shields.io/badge/sign--in_vendors-66-0b5fc4)](catalog/logins.json) ![166 verified](https://img.shields.io/badge/verified-166-2ea44f) [![5 starters](https://img.shields.io/badge/starters-5-c4572b)](#starters) [![Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-555)](LICENSE)
 
 ```mermaid
 flowchart LR
@@ -35,7 +35,8 @@ Copy one folder; its README has the steps.
 | 🗂️ [compute-list](templates/compute-list/README.md) | A sheet and board of your plans |
 | 🔐 [logins](templates/logins/README.md) | A sheet and board of your sign-ins |
 | 📈 [quality](templates/quality/README.md) | Your Quality, Speed and Consumption page, pinned to this pack |
-| 🗺️ [process](templates/process/README.md) | The five-step Spend map on your Process page |
+| 🗺️ [process](templates/process/README.md) | The six-step Spend map on your Process page |
+| 🧭 [pools](templates/pools/README.md) | Pool routing, a token budget table and the paid and in use dashboard |
 
 ## Three doors
 
@@ -59,7 +60,7 @@ Copy one folder; its README has the steps.
 | `quality/` | Quality page config, targets, process maps |
 | `site/` | The wiring map page |
 | `targets/` | The Credits tab's targets |
-| `templates/` | The four starters |
+| `templates/` | The five starters |
 | `tests/` | Pin, bridge, logins and pack tests |
 | `tools/` | Voice lint and the private-terms scan |
 
