@@ -17,10 +17,10 @@ flowchart LR
 
 | # | Do | Where |
 |---|---|---|
-| 1 | Copy the compute-list starter into a private repo. Attach that repo to a Code Project, with this repo read-only | [Code Projects](https://code.claude.com/docs/en/claude-projects), [templates/compute-list](templates/compute-list/README.md) |
-| 2 | In the copy, run `bash sync.sh && cp mine.example.json mine.json && bash sheet.sh vendor/plans.json mine.json` | the same page |
+| 1 | Copy the compute-list starter, with its `.gitignore`, into a private repo. Attach that repo to a Code Project, with this repo read-only | [Starter](templates/compute-list/README.md), [Code Projects](https://code.claude.com/docs/en/claude-projects) |
+| 2 | In the copy, with `gh` signed in and `jq` installed, run `bash sync.sh && cp mine.example.json mine.json && bash sheet.sh vendor/plans.json mine.json` | [Starter](templates/compute-list/README.md) |
 
-Then replace the example rows in `mine.json` with your plans, give each a `lane` and a `rung`, and add `--ladders` to the sheet command. Use the first rung with room. A paid rung waits for your yes. [Ladders](templates/compute-list/README.md#ladders)
+Then replace the example rows in `mine.json` with your plans. Give each a `lane` and a `rung`, and add `--ladders` to the sheet command. Use the first rung with room. A paid rung waits for your yes. Write each plan's spend guard in its `notes`. [Ladders](templates/compute-list/README.md#ladders)
 
 ## Provider guides
 
