@@ -341,7 +341,7 @@
         "code": {
           "kind": "link",
           "mark": "✅",
-          "how": "Projects in the sidebar. A thread can run on your own computer through Remote Control."
+          "how": "Projects, in the desktop app's Code tab and at claude.ai/code. A thread can run on your computer through Remote Control."
         },
         "cowork": {
           "kind": null,
