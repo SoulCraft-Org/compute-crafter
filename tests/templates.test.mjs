@@ -197,6 +197,16 @@ test('compute-list: sheet.sh prints one row per plan in your order, and flags an
   assert.deepEqual(json.map((r) => [r.id, r.known]), [['acme-gpu', true], ['no-such-plan', false], ['acme-free', true]]);
 });
 
+test('compute-list: sheet.sh prints a note, a name and a lane as text, never as markup (#224)', () => {
+  const dir = fixture([{ id: 'acme-free', have: true, status: 'use', lane: 'C_I', rung: 1, notes: 'see [x](https://example.com) `code` *b* ~~s~~ R&D <i> \\' }]);
+  const [plans, mine] = [join(dir, 'plans.json'), join(dir, 'mine.json')];
+  const note = String.raw`see \[x\](https://example.com) \`code\` \*b\* \~\~s\~\~ R&amp;D &lt;i> \\`;
+  const row = sheet(plans, mine).stdout.split('\n').find((l) => l.startsWith('| Acme Free'));
+  assert.equal(row.split(' | ')[7], note);
+  const rung = sheet(plans, mine, '--ladders').stdout.trim().split('\n')[2];
+  assert.equal(rung, `| C\\_I | 1 | Acme Free | ✅ | 🟢 use | 🛑 stops | ${note} |`);
+});
+
 test('compute-list: sheet.sh --ladders lists each lane\'s rungs in order and leaves the sheet table as it was', () => {
   const dir = fixture([
     { id: 'acme-gpu', have: false, status: 'want', lane: 'GPU', rung: 2, notes: 'paid, on my yes' },

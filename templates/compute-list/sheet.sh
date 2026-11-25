@@ -39,10 +39,12 @@ rows() {
 
 ICONS='{"use":"🟢 use","idle":"💤 idle","want":"⭐ want","skip":"⏭️ skip","stops":"🛑 stops","bills":"💸 bills"}'
 
+# One table cell, printed as text: a pipe or a line break would split the row, and < & \ ` * _ ~ [ ] would render as markup.
+CELL='def cell: tostring | gsub("[|\r\n]"; " ") | gsub("&"; "&amp;") | gsub("<"; "&lt;") | gsub("(?<c>[\\\\`*_~\\[\\]])"; "\\\(.c)");'
+
 # The Markdown sheet: a count line, then one table row per plan.
 table() {
-  rows | jq -r --argjson i "$ICONS" '
-    def cell: tostring | gsub("[|\r\n]"; " ") | gsub("<"; "&lt;");
+  rows | jq -r --argjson i "$ICONS" "$CELL"'
     def price: if .known | not then "·" elif .price_month == null then "?" elif .price_month == 0 then "free"
                else "\(.currency // "") \(.price_month)" end;
     def limit: if .known | not then "·" else ($i[.overage // ""] // "❔") end;
@@ -60,8 +62,7 @@ table() {
 
 # The ladders: each lane's rungs in order, so you use the first rung that still has room before the next.
 ladders() {
-  rows | jq -r --argjson i "$ICONS" '
-    def cell: tostring | gsub("[|\r\n]"; " ") | gsub("<"; "&lt;");
+  rows | jq -r --argjson i "$ICONS" "$CELL"'
     def status: if .status == null then "?" else ($i[.status] // .status) end;
     def limit: if .known | not then "·" else ($i[.overage // ""] // "❔") end;
     [.[] | select(.lane != null and .rung != null)] as $l
