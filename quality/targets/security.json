@@ -9,6 +9,8 @@
     "id": "security.headers",
     "params": {
       "site_url": "https://soulcraft-org.github.io/compute-crafter/"
-    }
+    },
+    "drop": true,
+    "goal_source": "Off: GitHub Pages sends no custom response headers, and moving the page to a host that does needs a stored deploy token and a second production URL for 0.2 points (issue 249). Its params stay. Delete the drop if the site moves to a host that sets headers"
   }
 ]
