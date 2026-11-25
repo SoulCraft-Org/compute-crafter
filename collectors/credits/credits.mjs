@@ -143,7 +143,17 @@ function identity(spec, system, reg) {
   return {
     id: spec.id,
     label: spec.name ?? system?.name ?? reg?.name ?? spec.id,
-    lane: spec.lane ?? reg?.lane ?? system?.lane ?? null,
+    lane: laneOf(spec, system, reg),
+    ...terms(spec, reg),
+  };
+}
+
+function laneOf(spec, system, reg) {
+  return spec.lane ?? reg?.lane ?? system?.lane ?? null;
+}
+
+function terms(spec, reg) {
+  return {
     pool: Boolean(spec.pool),
     paid: Boolean(spec.paid ?? reg?.price_month > 0),
     resets: spec.resets ?? reg?.resets ?? null,
