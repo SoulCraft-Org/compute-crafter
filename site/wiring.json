@@ -336,7 +336,7 @@
         "opencode": {
           "kind": null,
           "mark": "❔",
-          "how": "Not confirmed. A Project is a Claude feature. Both read the repository's AGENTS.md."
+          "how": "Not confirmed. A Project is a Claude feature, and its docs name CLAUDE.md, not AGENTS.md."
         },
         "code": {
           "kind": "link",
