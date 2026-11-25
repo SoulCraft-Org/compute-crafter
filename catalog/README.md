@@ -2,7 +2,7 @@
 
 [plans.json](plans.json) lists free tiers and plans for CI, CPU, GPU, inference, hosting and AI tools. Each row names the vendor page it was read on and the date.
 
-The catalog is [Colorado-Compute's](https://github.com/Colorado-Compute/compute-credits). `plans.json` is a checked copy that this repo reads and pins. This repo never edits it by hand. Its [catalog README](https://github.com/Colorado-Compute/compute-credits/blob/main/catalog/README.md) holds the fields, the merge rules and the tools.
+The catalog belongs to [Colorado-Compute/compute-credits](https://github.com/Colorado-Compute/compute-credits). `plans.json` is a checked copy that this repo reads and pins. This repo never edits it by hand. Its [catalog README](https://github.com/Colorado-Compute/compute-credits/blob/main/catalog/README.md) holds the fields, the merge rules and the tools.
 
 ```mermaid
 flowchart LR
