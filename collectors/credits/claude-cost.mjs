@@ -27,34 +27,55 @@ const MAX_PAGES = 5;
 export async function readClaudeCost(reader, { env = process.env, fetch = globalThis.fetch, now = new Date() } = {}) {
   const cred = credential(env);
   if (!cred) return { why: `needs ${KEY_VAR} in a --local collect's environment: an Admin API key (sk-ant-admin...) from a Claude Console organization admin, which a normal API key cannot replace; or ${TOKEN_VAR}, an org:admin OAuth bearer token` };
-  const start = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1));
-  const legacy = start.getTime() < ANALYTICS_FROM;
-  const url = legacy ? LEGACY_URL : URL_BASE;
-  const end = legacy ? new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1)) : new Date(Math.max(Math.floor(now.getTime() / HOUR) * HOUR, start.getTime() + HOUR));
   try {
-    let cents = 0;
-    let page = null;
-    let refreshed = null;
-    for (let n = 0; n < MAX_PAGES; n++) {
-      const body = await getPage(fetch, cred, url, legacy, { starting_at: start.toISOString(), ending_at: end.toISOString(), limit: legacy ? '31' : '1000', ...(page && { page }) });
-      if (n === 0) refreshed = body.data_refreshed_at ?? null;
-      if (n === 0 && !legacy) {
-        const at = Date.parse(refreshed);
-        if (!body.data.length && refreshed === null) return { why: 'claude_cost: not read: the cost report has no data yet for this month (data_refreshed_at is null)' };
-        if (!finite(at)) throw new Error('data_refreshed_at is missing or not a timestamp');
-        if (!body.data.length && at < start.getTime()) return { why: `claude_cost: not read: data refreshed ${refreshed} predates this month` };
-        if (end.getTime() - at > 48 * HOUR) return { why: `claude_cost: not read: data refreshed ${refreshed} is over 48 hours before the range end ${end.toISOString()}` };
-      }
-      cents += legacy ? sumBuckets(body, start) : sumCents(body);
-      if (!body.has_more) return { used: { value: round(cents / 100, 2), as_of: refreshed, source: costSource(url, start, end, refreshed) } };
-      if (typeof body.next_page !== 'string' || !body.next_page) throw new Error('has_more is true but the report gave no next_page');
-      page = body.next_page;
-    }
-    throw new Error(`more than ${MAX_PAGES} pages of daily buckets`);
+    return await sumMonth(fetch, cred, monthRange(now));
   } catch (err) {
     const text = scrub(String(err?.message ?? err), [cred.secret]).trim().split('\n')[0].slice(0, 160);
     return { why: `claude_cost: ${text}` };
   }
+}
+
+// Which report serves this UTC month and the span to ask for: the legacy daily report for a month before 2026-01-01, else the analytics report up to the last whole hour.
+function monthRange(now) {
+  const start = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1));
+  const legacy = start.getTime() < ANALYTICS_FROM;
+  const end = legacy ? new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1)) : new Date(Math.max(Math.floor(now.getTime() / HOUR) * HOUR, start.getTime() + HOUR));
+  return { start, end, legacy, url: legacy ? LEGACY_URL : URL_BASE };
+}
+
+// The month's spend in USD from every page of the report, or a why when the first page is stale or empty; a throw is a refused or malformed page.
+async function sumMonth(fetch, cred, { start, end, legacy, url }) {
+  let cents = 0;
+  let page = null;
+  let refreshed = null;
+  for (let n = 0; n < MAX_PAGES; n++) {
+    const body = await getPage(fetch, cred, url, legacy, pageQuery(start, end, legacy, page));
+    if (n === 0) {
+      refreshed = body.data_refreshed_at ?? null;
+      const why = legacy ? null : staleReason(body, refreshed, start, end);
+      if (why) return { why };
+    }
+    cents += legacy ? sumBuckets(body, start) : sumCents(body);
+    if (!body.has_more) return { used: { value: round(cents / 100, 2), as_of: refreshed, source: costSource(url, start, end, refreshed) } };
+    if (typeof body.next_page !== 'string' || !body.next_page) throw new Error('has_more is true but the report gave no next_page');
+    page = body.next_page;
+  }
+  throw new Error(`more than ${MAX_PAGES} pages of daily buckets`);
+}
+
+// The query string of one page: the span, the page size the report allows and the page token once there is one.
+function pageQuery(start, end, legacy, page) {
+  return { starting_at: start.toISOString(), ending_at: end.toISOString(), limit: legacy ? '31' : '1000', ...(page && { page }) };
+}
+
+// Why the analytics report's first page cannot be read, or null when it can: no data yet, data from before the month, or data over 48 hours before the range ends; a missing timestamp throws.
+function staleReason(body, refreshed, start, end) {
+  const at = Date.parse(refreshed);
+  if (!body.data.length && refreshed === null) return 'claude_cost: not read: the cost report has no data yet for this month (data_refreshed_at is null)';
+  if (!finite(at)) throw new Error('data_refreshed_at is missing or not a timestamp');
+  if (!body.data.length && at < start.getTime()) return `claude_cost: not read: data refreshed ${refreshed} predates this month`;
+  if (end.getTime() - at > 48 * HOUR) return `claude_cost: not read: data refreshed ${refreshed} is over 48 hours before the range end ${end.toISOString()}`;
+  return null;
 }
 
 // The credential the environment holds: the bearer token when set, else the Admin key, or null. headers is what it sends.
