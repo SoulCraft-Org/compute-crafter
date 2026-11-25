@@ -197,7 +197,7 @@ test('compute-list: sheet.sh prints one row per plan in your order, and flags an
   assert.deepEqual(json.map((r) => [r.id, r.known]), [['acme-gpu', true], ['no-such-plan', false], ['acme-free', true]]);
 });
 
-test('compute-list: sheet.sh --ladders lists each lane\'s rungs in order and leaves the sheet and board rows as they were', () => {
+test('compute-list: sheet.sh --ladders lists each lane\'s rungs in order and leaves the sheet table as it was', () => {
   const dir = fixture([
     { id: 'acme-gpu', have: false, status: 'want', lane: 'GPU', rung: 2, notes: 'paid, on my yes' },
     { id: 'acme-free', have: true, status: 'use', lane: 'GPU', rung: 1 },
