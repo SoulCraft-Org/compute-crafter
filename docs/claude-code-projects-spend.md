@@ -6,8 +6,8 @@ A Claude Code Project runs many cloud sessions on one flat plan. This page lists
 flowchart LR
   P[Plan: Pro, Max or Ultra] --> T[Coordinator and threads]
   T --> L{Plan limit}
-  L -->|Usage credits off| W[Threads wait, then continue at reset]
-  L -->|Usage credits on| B[Billed per use: set a limit first]
+  L -->|Spend limit zero| W[Threads wait, then continue at reset]
+  L -->|Spend limit raised or unset| B[Billed per use: set a limit first]
   T --> U[Ultrareview]
   U -->|Runs 1 to 3| F[Free]
   U -->|Run 4 on| B
@@ -27,9 +27,9 @@ flowchart LR
 
 | Guard | Do | Source |
 | --- | --- | --- |
-| Usage credits | Leave them off and keep the spend limit at zero. They bill anything past the plan limit | [Claude Code docs, costs](https://code.claude.com/docs/en/costs), read 2026-11-25 |
+| Usage credits | Keep the monthly spend limit at zero, whether the switch is on or off. With no limit set, `/usage` reads Unlimited | [Claude Code docs, costs](https://code.claude.com/docs/en/costs), read 2026-11-25 |
 | Continue after a limit | Project settings, General, "Continue threads automatically when usage limits reset" is on by default. Turn it off to stop spill into the next window | [Claude Code docs, Projects](https://code.claude.com/docs/en/claude-projects), read 2026-11-25 |
-| Ultrareview | Three free runs. Later runs bill as usage credits, so decline the paid prompt | [Claude Code docs, ultrareview](https://code.claude.com/docs/en/ultrareview), read 2026-11-25 |
+| Ultrareview | Three free runs, one time per account, which do not refresh. Later runs bill as usage credits, so decline the paid prompt | [Claude Code docs, ultrareview](https://code.claude.com/docs/en/ultrareview), read 2026-11-25 |
 | Where to read it | Project settings, Usage shows token use by thread and how much went to the project conversation. Check it weekly | [Claude Code docs, Projects](https://code.claude.com/docs/en/claude-projects), read 2026-11-25 |
 | Model and effort | Use a smaller model or lower effort where the largest is not needed | [Claude Code docs, Projects](https://code.claude.com/docs/en/claude-projects), read 2026-11-25 |
 | Pull request watching | Ask the thread to stop watching once the pull request merges | [Claude Code docs, Projects](https://code.claude.com/docs/en/claude-projects), read 2026-11-25 |
@@ -39,7 +39,7 @@ flowchart LR
 | Spend kind | Rule |
 | --- | --- |
 | Monthly subscription that helps | Allowed. It is a flat fee |
-| Overage or metered extra | Goal of $0: leave usage credits off, auto-reload off, and every spend limit at zero |
+| Overage or metered extra | Goal of $0: auto-reload off and every spend limit at zero. The usage-credits switch may stay on at a zero limit |
 
 Anything else needs one question to the owner and a hard cap first.
 
