@@ -44,3 +44,20 @@ flowchart LR
 | `plans[].have` | `true` when you hold the plan |
 | `plans[].status` | `use` (work runs on it), `idle` (held, unused), `want` (to claim) or `skip` |
 | `plans[].notes` | Your words. The sheet prints them as text, never as markup |
+| `plans[].lane`, `plans[].rung` | Optional. A ladder plan: its lane (`GPU`, `Inference`, `CI`, `Agents`) and its place in that lane, 1 first. `--ladders` prints them |
+
+## Ladders
+
+A ladder is your order of use inside one lane: the first rung that still has room, then the next. Free rungs come first, a paid rung last, and a paid rung waits for your yes. Give each plan a `lane` and a `rung` in `mine.json`, then run:
+
+```bash
+bash sheet.sh vendor/plans.json mine.json --ladders
+```
+
+| Lane | Rung | Plan | Have | Status | At the limit | Notes |
+|---|---:|---|:-:|:-:|:-:|---|
+| GPU | 1 | A monthly free credit | ✅ | 🟢 use | 💸 bills | Set a workspace budget so it stops |
+| GPU | 2 | A subscription with a GPU quota | ✅ | 🟢 use | 🛑 stops | Buy no extra credits |
+| GPU | 3 | A paid plan | · | ⭐ want | 💸 bills | Only after rungs 1 and 2 run out, on your yes |
+
+Put the guard for each plan in its notes: a spending limit, a budget, or "buy no credits". The sheet table and `board.json` keep their columns; `--json` rows carry `lane` and `rung`, null when a plan has none.
