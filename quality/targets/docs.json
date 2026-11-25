@@ -2,6 +2,18 @@
   {
     "id": "docs.dead_paths",
     "params": {
+      "skip_dirs": [
+        "node_modules",
+        "worktrees",
+        "vendor",
+        "dist",
+        "build",
+        "coverage",
+        ".venv",
+        ".astro",
+        ".wrangler",
+        ".code-os-packs"
+      ],
       "lint": {
         "interpreter": "python3",
         "script": "tools/voice_lint.py",
