@@ -34,3 +34,15 @@ steps:
 4. Set no API key next to it: a static key wins over federation. `ant auth status` shows which source won ([WIF](https://platform.claude.com/docs/en/manage-claude/workload-identity-federation), read 2026-11-24).
 5. Use a key only when the client cannot exchange a token. A federated token goes in `Authorization: Bearer`, so a client that sends only `x-api-key` needs a key ([Authentication](https://platform.claude.com/docs/en/manage-claude/authentication), read 2026-11-24).
 6. Make a service account key for one workspace, pick an expiry of 3 hours to 30 days, and name it as in [Names](../reference/names.md). Store it as a CI secret ([Authentication](https://platform.claude.com/docs/en/manage-claude/authentication), read 2026-11-24).
+
+## Hard cap
+
+Copy the [keyless workflow](../ci/claude-keyless.yml) to `.github/workflows/` and paste the three IDs over its `<...>` values. It sets a job timeout, a turn cap and cancel-on-push.
+
+| Cap | Where | Value |
+| --- | --- | --- |
+| Run length | `timeout-minutes`, `--max-turns` | In the file |
+| Workspace spend | Claude Console, workspace limit | At or under the monthly credit |
+| Auto-reload | Claude Console billing | Off, so requests stop at zero credit |
+
+A flat subscription is fine. Overage and metered extras have a $0 goal.

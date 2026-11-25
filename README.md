@@ -2,7 +2,7 @@
 
 ![Open-weight models flow through a guide, a sign-in and a spend stop into the OpenCode Desktop App first and the Claude Desktop App second](assets/hero.svg)
 
-Wire open-source and open-weight compute into the OpenCode Desktop App first and the Claude Desktop App (Code and Cowork) second, on free credits and flat monthly subscriptions. Then keep your own list, sign-ins and score page.
+Wire open-weight compute into the OpenCode Desktop App first and the Claude Desktop App second, on free credits and flat subscriptions. Then keep your own list, sign-ins and score page.
 
 ## [📊 Open the live score page](https://soulcraft-org.github.io/compute-crafter/)
 
@@ -17,14 +17,14 @@ flowchart LR
 
 | # | Do | Where |
 |---|---|---|
-| 1 | Make a private repo for your plans. Attach it to a Code Project in the Claude desktop app or claude.ai/code, with this repo read-only | [Code Projects](https://code.claude.com/docs/en/claude-projects) |
+| 1 | Make a private repo for your plans. Attach it to a Code Project, with this repo read-only | [Code Projects](https://code.claude.com/docs/en/claude-projects) |
 | 2 | Copy the compute-list starter into your private repo and run `bash sync.sh` | [templates/compute-list](templates/compute-list/README.md) |
 | 3 | List the plans you hold in `mine.json`, give each a `lane` and a `rung`, and write its spend guard in `notes` | [Ladders](templates/compute-list/README.md#ladders) |
 | 4 | Run `bash sheet.sh vendor/plans.json mine.json --ladders`. Use the first rung with room. A paid rung waits for your yes | the same page |
 
 ## Provider guides
 
-Each opens with one table: account, free tier, login or key, Claude connector, OpenCode, guard. [All guides](guides/README.md).
+Each opens with one table of account, free tier, login, connector and guard. [All guides](guides/README.md).
 
 | Guide | Lane |
 | --- | --- |
@@ -52,13 +52,13 @@ Each opens with one table: account, free tier, login or key, Claude connector, O
 
 ## Starters
 
-Copy one folder. Each README has its steps and a fake example.
+Copy one folder. Each README has its steps.
 
 | Starter | You get |
 | --- | --- |
-| 🗂️ [compute-list](templates/compute-list/README.md) | A sheet and a board of your plans |
-| 🔐 [logins](templates/logins/README.md) | A sheet and a board of your sign-ins |
-| 📈 [quality](templates/quality/README.md) | Your own Quality, Speed and Consumption page: the six Credits metrics, pinned to this pack |
+| 🗂️ [compute-list](templates/compute-list/README.md) | A sheet and board of your plans |
+| 🔐 [logins](templates/logins/README.md) | A sheet and board of your sign-ins |
+| 📈 [quality](templates/quality/README.md) | Your own Quality, Speed and Consumption page, pinned to this pack |
 | 🗺️ [process](templates/process/README.md) | The five-step Spend map on your Process page |
 
 ## Three doors
@@ -80,6 +80,6 @@ Copy one folder. Each README has its steps and a fake example.
 
 ## Built on
 
-[Git Crafter](https://github.com/SoulCraft-Org/git-crafter) supplies the CI standard and the Claude rules. The Credits pack (`pack.json`) moved from it ([NOTICE](NOTICE)). [pages.yml](.github/workflows/pages.yml) builds the Quality page (11 library tabs plus Credits) and the Process page (every library map plus Spend) after the [privacy gate](tests/privacy.mjs), and shows only what CI reads. The [ComfyUI guide](guides/comfyui.md) links the [comfyui-base](https://github.com/SoulCraft-Org/comfyui-base) installer.
+[Git Crafter](https://github.com/SoulCraft-Org/git-crafter) supplies the CI standard and the Claude rules. The Credits pack (`pack.json`) moved from it ([NOTICE](NOTICE)). [pages.yml](.github/workflows/pages.yml) builds the Quality and Process pages after the [privacy gate](tests/privacy.mjs). The [ComfyUI guide](guides/comfyui.md) links the [comfyui-base](https://github.com/SoulCraft-Org/comfyui-base) installer.
 
 Published by [SoulCraft-Org](https://github.com/SoulCraft-Org) under [Apache-2.0](LICENSE).
