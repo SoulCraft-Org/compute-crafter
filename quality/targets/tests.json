@@ -3,10 +3,28 @@
     "id": "tests.e2e_routes",
     "params": {
       "suites": [
-        { "label": "Tests", "dir": "tests/", "file": "\\.test\\.mjs$" },
-        { "label": "Collectors", "dir": "collectors/", "file": "\\.test\\.mjs$" }
+        {
+          "label": "Tests",
+          "dir": "tests/",
+          "file": "\\.test\\.mjs$"
+        },
+        {
+          "label": "Collectors",
+          "dir": "collectors/",
+          "file": "\\.test\\.mjs$"
+        }
       ],
-      "workflows": [{ "file": "ci.yml", "job": ["ci / short"], "role": "suite" }]
-    }
+      "workflows": [
+        {
+          "file": "ci.yml",
+          "job": [
+            "ci / short"
+          ],
+          "role": "suite"
+        }
+      ]
+    },
+    "drop": true,
+    "goal_source": "Off: the repo has no src/pages folder of routes. Its params stay, because the other Tests metrics read them. Reversal: delete drop when a site source is added."
   }
 ]
