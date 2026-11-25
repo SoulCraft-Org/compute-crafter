@@ -3,11 +3,10 @@
     "id": "visibility.personal_author_emails",
     "goal": 0,
     "near": 1,
-    "goal_source": "Owner decision, 2026-11-24: public history is not rewritten to remove an author email. That would need a force push to main. Two domains are not counted as personal (project decision, 2026-11-25). anthropic.com is the tool address Claude Code cloud sessions commit as. The other, listed in org_domains, is a known organization address on four older commits and on git-crafter's cards branch. It stays as an accepted exception, not a rewrite. Any other author address stays a miss. Reversal: delete the domain from org_domains. Template source: GitHub Docs, Setting your commit email address (read 2026-11-19).",
+    "goal_source": "Owner decision, 2026-11-24: public history is not rewritten to remove an author email. That would need a force push to main. The goal stays 0, so each miss stays visible. anthropic.com is not counted: it is the tool address Claude Code cloud sessions commit as. One address at another organization's domain stays a miss, an accepted exception (project decision, 2026-11-25). The domain is a private term and cannot be listed in this public repo, so it cannot go in org_domains. Template source: GitHub Docs, Setting your commit email address (read 2026-11-19).",
     "params": {
       "org_domains": [
-        "anthropic.com",
-        "coloradostartups.org"
+        "anthropic.com"
       ]
     }
   }
