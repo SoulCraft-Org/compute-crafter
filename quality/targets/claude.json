@@ -2,6 +2,6 @@
   {
     "id": "lead_time.hours",
     "drop": true,
-    "goal_source": "Dropped until Colorado-Startups/claudius#115 is fixed and pinned (#202). When the Actions API allowance runs out, the pinned collector writes the raw rate-limit error, which holds an ID, into its public reason, and the privacy gate blocks every build. Reversal: delete this file after the pin bump."
+    "goal_source": "Dropped until issue 115 of the Claudius pack is fixed and pinned (#202). When the Actions API allowance runs out, the pinned collector writes the raw rate-limit error, which holds an ID, into its public reason, and the privacy gate blocks every build. Reversal: delete this file after the pin bump."
   }
 ]
