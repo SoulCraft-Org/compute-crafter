@@ -1,0 +1,69 @@
+name: claude-review
+
+# One Claude security review per pull request that changes code or a workflow, posted as one comment whose first line
+# starts "Security review:". security.claude_review_share counts it (quality/targets/github.json).
+# ADVISORY: no ruleset requires this check.
+#
+# Keyless. The job asks GitHub for a short-lived OIDC token and trades it for an Anthropic token through workload
+# identity federation, so no API key or OAuth token is stored. The three ANTHROPIC_* values are identifiers, not keys
+# (guides/detail/claude-api-ci.md). Do not add ANTHROPIC_API_KEY: a static key wins over federation. Recipe: Anthropic
+# workload identity federation, GitHub Actions page, read 2026-11-25.
+#
+# The Claude plan cannot pay for this. It spends the monthly API credit, one call of at most 1,500 output tokens per push.
+# No pull_request_target: a pull request's code never runs with an outside secret. The script sends the diff as data.
+on:
+  pull_request:
+    types: [opened, synchronize, ready_for_review, reopened]
+    paths:
+      - "**/*.mjs"
+      - "**/*.js"
+      - "**/*.ts"
+      - "**/*.py"
+      - "**/*.sh"
+      - "tools/**"
+      - "actions/**"
+      - ".github/workflows/**"
+      - ".claude/settings.json"
+      - "package.json"
+      - "package-lock.json"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: claude-review-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  security-review:
+    name: claude-review
+    if: github.event.pull_request.draft == false && github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pull-requests: write
+      id-token: write
+    env:
+      ANTHROPIC_FEDERATION_RULE_ID: ${{ secrets.ANTHROPIC_FEDERATION_RULE_ID }}
+      ANTHROPIC_ORGANIZATION_ID: ${{ secrets.ANTHROPIC_ORGANIZATION_ID }}
+      ANTHROPIC_SERVICE_ACCOUNT_ID: ${{ secrets.ANTHROPIC_SERVICE_ACCOUNT_ID }}
+      ANTHROPIC_IDENTITY_TOKEN_FILE: ${{ runner.temp }}/oidc-jwt
+      GH_TOKEN: ${{ github.token }}
+      PR_NUMBER: ${{ github.event.pull_request.number }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Fetch the GitHub OIDC token
+        run: |
+          curl -sSf -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+            "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=https://api.anthropic.com" \
+            | jq -r .value > "$ANTHROPIC_IDENTITY_TOKEN_FILE"
+
+      - name: Review the pull request
+        run: |
+          python3 -m pip install --quiet "anthropic==2.12.0"
+          python3 -I tools/claude_review.py
