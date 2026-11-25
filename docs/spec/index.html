@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Compute Crafter spec</title>
+<style>
+:root{--bg:#fbfbfa;--fg:#1c1f24;--mut:#5a6270;--card:#fff;--line:#d9dde3;--acc:#0b5fc4;--ok:#1e7a3a;--warn:#b35a00}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14171c;--fg:#e8eaee;--mut:#9aa3b2;--card:#1c2027;--line:#2c333d;--acc:#6aa6ff;--ok:#5cc47a;--warn:#f0a050}}
+:root[data-theme="dark"]{--bg:#14171c;--fg:#e8eaee;--mut:#9aa3b2;--card:#1c2027;--line:#2c333d;--acc:#6aa6ff;--ok:#5cc47a;--warn:#f0a050}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
+main{max-width:860px;margin:0 auto;padding:24px 16px 64px}
+h1{font-size:1.7rem;margin:0 0 4px}
+h2{font-size:1.15rem;margin:32px 0 10px;border-bottom:1px solid var(--line);padding-bottom:6px}
+p{margin:8px 0}
+.sub{color:var(--mut);margin:0 0 16px}
+.pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:2px 10px;font-size:.8rem;color:var(--mut);margin-right:6px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.card b{display:block;font-size:1.5rem;color:var(--acc)}
+.card span{color:var(--mut);font-size:.9rem}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top;font-size:.93rem}
+th{color:var(--mut);font-weight:600}
+tr:last-child td{border-bottom:0}
+.ok{color:var(--ok)} .warn{color:var(--warn)}
+svg{width:100%;height:auto;display:block}
+svg text{fill:var(--fg);font:13px system-ui,sans-serif}
+svg .b{fill:var(--card);stroke:var(--line)}
+svg .a{stroke:var(--acc);fill:none;stroke-width:1.6}
+.q{border-left:4px solid var(--acc)}
+a{color:var(--acc)}
+</style>
+</head>
+<body>
+<main>
+<h1>Compute Crafter spec</h1>
+<p class="sub">One page: what this repo is for, how it works, where it stands, and the one decision that is the owner's. <span class="pill">Draft</span><span class="pill">Read 2026-11-25</span></p>
+
+<h2>Purpose</h2>
+<p>Compute Crafter wires open-weight compute into the OpenCode Desktop App first and the Claude Desktop App second. It runs on free credits and flat monthly plans. It never uses pay-per-use billing.</p>
+<p>It also gives each user a list of their plans, a list of their sign-ins and a score page, so the setup stays visible after the first day.</p>
+
+<h2>Who it is for</h2>
+<table>
+<tr><th>User</th><th>Wants</th><th>Gets</th></tr>
+<tr><td>A person with a Code Project</td><td>Cheap or free model compute behind the desktop apps</td><td>A provider guide, the sign-in steps and a spend stop</td></tr>
+<tr><td>A person who holds many plans</td><td>To use the first rung that has room</td><td>The compute-list starter and its ladders</td></tr>
+<tr><td>A maintainer of a Crafter repo</td><td>Plan facts they can cite</td><td>A pinned plan catalog with vendor-page citations</td></tr>
+</table>
+
+<h2>How it works</h2>
+<svg viewBox="0 0 820 120" role="img" aria-label="Pick a guide, sign in, set the spend stop, wire into a desktop app, score it">
+<rect class="b" x="6" y="30" width="136" height="56" rx="8"/><text x="74" y="62" text-anchor="middle">Pick a guide</text>
+<rect class="b" x="170" y="30" width="136" height="56" rx="8"/><text x="238" y="62" text-anchor="middle">Sign in</text>
+<rect class="b" x="334" y="30" width="136" height="56" rx="8"/><text x="402" y="62" text-anchor="middle">Set spend stop</text>
+<rect class="b" x="498" y="30" width="150" height="56" rx="8"/><text x="573" y="55" text-anchor="middle">Wire into the</text><text x="573" y="72" text-anchor="middle">desktop app</text>
+<rect class="b" x="676" y="30" width="136" height="56" rx="8"/><text x="744" y="62" text-anchor="middle">Score it</text>
+<path class="a" d="M142 58H170M306 58H334M470 58H498M648 58H676"/>
+</svg>
+<p>The plan catalog is owned by Colorado-Compute. This repo reads it and pins a checked copy. It never edits it.</p>
+
+<h2>What is in scope</h2>
+<table>
+<tr><th>In</th><th>Out</th></tr>
+<tr><td>Provider guides with a figure, its vendor page and the date read</td><td>Editing plan rows (they live in the catalog repo)</td></tr>
+<tr><td>Sign-in steps by CLI login or OAuth, with env var names only</td><td>Any key value, anywhere</td></tr>
+<tr><td>Four starters: compute list, logins, quality, process</td><td>Pay-per-use or auto-reload spend</td></tr>
+<tr><td>Quality, Speed and Consumption score pages on the Git Crafter engine</td><td>Running models for the user</td></tr>
+</table>
+
+<h2>Where it stands (live score page, read 2026-11-25)</h2>
+<div class="grid">
+<div class="card"><b>170</b><span>plans in the pinned catalog</span></div>
+<div class="card"><b>21</b><span>provider guides, each with a wiring table</span></div>
+<div class="card"><b>66</b><span>sign-in vendors</span></div>
+<div class="card"><b>4</b><span>starters</span></div>
+</div>
+<p>Tab scores, Quality: Code 97, Docs 96, Pages 94, Actions 95, Settings 86, Projects 80, Pull requests 79, Issues 65. Each tab is on the live page with its own misses.</p>
+
+<h2>Gaps, worked in this order</h2>
+<table>
+<tr><th>Gap</th><th>Why it matters</th><th>Issue</th></tr>
+<tr><td>Quickstart ends on "0 ladder plans"</td><td>The first run looks broken</td><td>292</td></tr>
+<tr><td>Words before first action are 121, goal 50</td><td>Readers leave before they act</td><td>285, 286</td></tr>
+<tr><td>Re-read guide cites older than 2026-11-24</td><td>A figure without a fresh date is not verified</td><td>208, 209</td></tr>
+<tr><td>Pushes per merged PR is above 2</td><td>Wasted CI</td><td>232</td></tr>
+<tr><td>Claude security review follow-ups</td><td>Install order, hashed pins</td><td>290</td></tr>
+<tr><td>Two personal emails in public history</td><td>Not rewritten by decision; privacy switches are on</td><td>234</td></tr>
+</table>
+
+<h2 id="question">The owner's decision</h2>
+<div class="card q">
+<p><b style="font-size:1.05rem;color:inherit">How wide should Compute Crafter stay?</b></p>
+<table>
+<tr><th>Option</th><th>What it means</th></tr>
+<tr><td>A. Stay narrow <span class="ok">(recommended)</span></td><td>Free tiers and flat plans for the two desktop apps. The catalog stays in its own repo.</td></tr>
+<tr><td>B. Add self-hosted and API lanes</td><td>Guides for running open weights yourself. This grows the page count and the re-read load.</td></tr>
+<tr><td>C. Fold into the catalog repo</td><td>One repo for plans and guides. The desktop-app wiring loses its own home.</td></tr>
+</table>
+<p>Why A: the repo already scores near the top on a narrow scope, and every new lane adds guides that need a vendor-page re-read each cycle.</p>
+</div>
+
+<h2>Decided already</h2>
+<table>
+<tr><th>Decision</th><th>Source</th></tr>
+<tr><td>OpenCode Desktop App first, Claude Desktop App second</td><td>README</td></tr>
+<tr><td>Never pay-per-use; a Claude Code Project stays on its flat plan</td><td>docs/claude-code-projects-spend.md</td></tr>
+<tr><td>Plan rows are edited upstream by pull request</td><td>AGENTS.md</td></tr>
+<tr><td>Public history is not rewritten</td><td>Issue 234</td></tr>
+</table>
+</main>
+</body>
+</html>
