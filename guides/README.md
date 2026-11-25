@@ -22,6 +22,7 @@ flowchart LR
 | [Together AI](together.md) | 🧠 Inference | ✅ | ✅ | ✅ | Prepaid per-token open-weight models |
 | [Cloudflare Workers AI](cloudflare-workers-ai.md) | 🧠 Inference | ✅ | ❔ | ❔ | Free daily Neurons, hosted MCP servers |
 | [Claude API](claude-api.md) | 🧠 Inference | ❔ | ➖ | ➖ | API credits in Max, Ultra and Team plans, keyless CI |
+| [Claude Code Projects](claude-code-projects.md) | 🧠 Inference | ❔ | ➖ | ➖ | Plan limits against the monthly API credit, Projects facts, setup in four steps |
 | [Modal](modal.md) | ⚡ GPU | ✅ | ❔ | ❔ | Serverless GPUs, Model APIs |
 | [RunPod](runpod.md) | ⚡ GPU | ✅ | ✅ | ❔ | Prepaid pods and Serverless endpoints, RunPod MCP server |
 | [AMD](amd.md) | ⚡ GPU | ❔ | ❔ | ❔ | ROCm, one-time AMD Developer Cloud credit |
