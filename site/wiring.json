@@ -329,9 +329,9 @@
         "inference"
       ],
       "tagline": "Cloud threads in the plan; the monthly API credit covers the API and Agent SDK, not Desktop.",
-      "free": "Cloud threads are included in a Pro, Max or Ultra plan. The monthly API credit does not cover the Desktop app or the Claude Code GitHub Action (Anthropic support, monthly API credits, read 2026-11-25).",
-      "signin": "The Claude Desktop App, signed in to a Pro, Max or Ultra plan.",
-      "key": "No key. CI that needs Claude uses the Agent SDK over federation, in `claude-api`.",
+      "free": "Cloud threads are included in a Pro, Max or Ultra plan. The monthly API credit does not cover the Desktop app or the Claude Code GitHub Action ([Anthropic support, monthly API credits](https://support.claude.com/en/articles/17154008-monthly-api-credits-for-max-ultra-and-team-plans), read 2026-11-25).",
+      "signin": "claude.ai/code or the Claude Desktop App, signed in to a Pro, Max or Ultra plan.",
+      "key": "CI: the Agent SDK over federation, no stored key (see `claude-api`). Elsewhere an API key from the linked Console organization.",
       "wires": {
         "opencode": {
           "kind": "provider",
@@ -346,7 +346,7 @@
         "cowork": {
           "kind": null,
           "mark": "➖",
-          "how": "Not available. The monthly API credit excludes the Claude apps (Anthropic support, monthly API credits, read 2026-11-25)."
+          "how": "Not available. The monthly API credit excludes the Claude apps ([Anthropic support, monthly API credits](https://support.claude.com/en/articles/17154008-monthly-api-credits-for-max-ultra-and-team-plans), read 2026-11-25)."
         }
       }
     },
