@@ -145,6 +145,7 @@ function identity(spec, system, reg) {
     label: spec.name ?? system?.name ?? reg?.name ?? spec.id,
     lane: spec.lane ?? reg?.lane ?? system?.lane ?? null,
     pool: Boolean(spec.pool),
+    paid: Boolean(spec.paid ?? reg?.price_month > 0),
     resets: spec.resets ?? reg?.resets ?? null,
     could_take_over: spec.could_take_over ?? '',
   };

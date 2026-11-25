@@ -39,8 +39,8 @@ rows() {
 
 ICONS='{"use":"🟢 use","idle":"💤 idle","want":"⭐ want","skip":"⏭️ skip","stops":"🛑 stops","bills":"💸 bills"}'
 
-# One table cell, printed as text: a pipe or a line break would split the row, and < & \ ` * _ ~ [ ] would render as markup.
-CELL='def cell: tostring | gsub("[|\r\n]"; " ") | gsub("&"; "&amp;") | gsub("<"; "&lt;") | gsub("(?<c>[\\\\`*_~\\[\\]])"; "\\\(.c)");'
+# One table cell, printed as text: a pipe or a line break would split the row, and < & \ ` * _ ~ $ [ ] would render as markup.
+CELL='def cell: tostring | gsub("[|\r\n]"; " ") | gsub("&"; "&amp;") | gsub("<"; "&lt;") | gsub("(?<c>[\\\\`*_~$\\[\\]])"; "\\\(.c)");'
 
 # The Markdown sheet: a count line, then one table row per plan.
 table() {

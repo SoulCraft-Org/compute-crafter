@@ -7,6 +7,9 @@
   },
   {
     "id": "security.headers",
+    "goal": 1,
+    "near": 0.5,
+    "goal_source": "The host sets the ceiling: GitHub Pages sends Strict-Transport-Security and none of the other three on the live page (HEAD read 2026-11-25). Its docs list no way to set a response header (docs.github.com, GitHub Pages limits, read 2026-11-25), and the request for one is open on GitHub's community board (github.com/orgs/community/discussions/199121, found 2026-11-25). The template goal, 4 of 4 (OWASP Secure Headers Project), returns when the page is served by a host that sets headers: delete goal, near and this source then.",
     "params": {
       "site_url": "https://soulcraft-org.github.io/compute-crafter/"
     }
