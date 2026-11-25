@@ -52,7 +52,7 @@ Copy one folder; its README has the steps.
 | `assets/` | Hero image, social preview |
 | `catalog/` | Pinned plan catalog and sign-in vendors |
 | `collectors/` | The Credits collector and the engine door |
-| `docs/` | Spend notes, handoff notes |
+| `docs/` | Spend notes, handoff notes, the spec |
 | `guides/` | Provider guides, checklist, CI guides |
 | `ideals/` | The Credits tab's ideals |
 | `maps/` | The spend map |
