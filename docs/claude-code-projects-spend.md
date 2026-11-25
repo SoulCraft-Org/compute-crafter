@@ -38,12 +38,6 @@ flowchart LR
 
 The Claude pricing page lists Pro at $20 a month, or $17 a month billed yearly, Max at $100 and Ultra at $200 ([Claude pricing](https://claude.com/pricing), read 2026-11-25). It gives Max five times and Ultra ten times Pro's weekly usage, so every tier costs $20 per Pro-sized unit. The upgrade buys capacity, Fable access and API credits, not a cheaper unit. The credits and their limits are in the [Claude API guide](../guides/claude-api.md).
 
-## Hosts
+## Hosts and sign-in
 
-| Host | Projects | Source |
-| --- | --- | --- |
-| OpenCode Desktop App | ➖ Not available. Threads run with Anthropic as the model provider | [Claude Code docs, Projects](https://code.claude.com/docs/en/claude-projects), read 2026-11-25 |
-| Claude Desktop App, Code tab | ✅ Projects are in the Code tab of the desktop app and at claude.ai/code | [Claude Code docs, Projects](https://code.claude.com/docs/en/claude-projects), read 2026-11-25 |
-| Claude Desktop App, Cowork | ❔ Not confirmed. The page names the Code tab, the website and the mobile app | [Claude Code docs, Projects](https://code.claude.com/docs/en/claude-projects), read 2026-11-25 |
-
-Projects are a beta on Pro, Max and Ultra. They are not offered on Team or Enterprise plans yet ([Claude Code docs, Projects](https://code.claude.com/docs/en/claude-projects), read 2026-11-25).
+Which hosts run a Project, which plans offer it and how to sign in are in the [Claude Code Projects guide](../guides/claude-projects.md).
