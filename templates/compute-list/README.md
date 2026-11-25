@@ -6,7 +6,7 @@ Your own list of the plans you hold, built from [catalog/plans.json](../../catal
 | --- | --- |
 | 1 | Make a private repository and copy this folder into it, with its `.gitignore` |
 | 2 | Run `bash sync.sh`. It copies the catalog at a Compute Crafter commit into `vendor/plans.json` and writes that commit to `vendor/PIN` |
-| 3 | Copy `mine.example.json` to `mine.json`: one row per plan, with the catalog `id` |
+| 3 | Copy `mine.example.json` to `mine.json`: one row per plan, with the catalog `id`, a `lane` and a `rung` |
 | 4 | Put one `<!-- sheet:start -->` line in your README, and one `<!-- sheet:end -->` line after it. Then run the sheet. If the markers are missing, repeated or out of order, `--write` exits 2 and leaves the file alone |
 | 5 | Build `board.json`, open `board.html` in a browser and pick `board.json` |
 

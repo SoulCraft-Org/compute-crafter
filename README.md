@@ -6,21 +6,22 @@ Wire open-weight compute into the OpenCode Desktop App first and the Claude Desk
 
 ## [📊 Open the live score page](https://soulcraft-org.github.io/compute-crafter/)
 
-[![170 plans](https://img.shields.io/badge/plans-170-0b5fc4)](catalog/README.md) ![6 lanes](https://img.shields.io/badge/lanes-6-0b5fc4) [![66 sign-in vendors](https://img.shields.io/badge/sign--in_vendors-66-0b5fc4)](catalog/logins.json) ![166 verified](https://img.shields.io/badge/verified-166-2ea44f) [![4 starters](https://img.shields.io/badge/starters-4-c4572b)](#starters) [![Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-555)](LICENSE)
+[![170 plans](https://img.shields.io/badge/plans-170-0b5fc4)](catalog/README.md) ![6 lanes](https://img.shields.io/badge/lanes-6-0b5fc4) [![66 sign-in vendors](https://img.shields.io/badge/sign--in_vendors-66-0b5fc4)](catalog/logins.json) ![166 verified](https://img.shields.io/badge/verified-166-2ea44f) [![5 starters](https://img.shields.io/badge/starters-5-c4572b)](#starters) [![Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-555)](LICENSE)
 
 ```mermaid
 flowchart LR
   G[Pick a provider guide] --> S[Sign in] --> C[Set the spend stop] --> W[Wire into the OpenCode Desktop App or the Claude Desktop App] --> Q[Score it]
 ```
 
-## Quickstart: use it from a Code Project
+## Quickstart: use it from a Code Project, 3 steps
 
 | # | Do | Where |
 |---|---|---|
-| 1 | Make a private repo for your plans. Attach it to a Code Project, with this repo read-only | [Code Projects](https://code.claude.com/docs/en/claude-projects) |
-| 2 | Copy the compute-list starter into your private repo and run `bash sync.sh` | [templates/compute-list](templates/compute-list/README.md) |
-| 3 | List the plans you hold in `mine.json`, give each a `lane` and a `rung`, and write its spend guard in `notes` | [Ladders](templates/compute-list/README.md#ladders) |
-| 4 | Run `bash sheet.sh vendor/plans.json mine.json --ladders`. Use the first rung with room. A paid rung waits for your yes | the same page |
+| 1 | Make a private repo for your plans and attach it to a Code Project, with this repo read-only. Copy the files of the compute-list and pools starters into its root, then run `bash sync.sh` | [Code Projects](https://code.claude.com/docs/en/claude-projects), [compute-list](templates/compute-list/README.md) |
+| 2 | Copy `mine.example.json` to `mine.json`, list the plans you hold, then run `bash sheet.sh vendor/plans.json mine.json --ladders`. Use the first rung with room. A paid rung waits for your yes | [Ladders](templates/compute-list/README.md#ladders) |
+| 3 | Copy `pools.example.json` to `pools.json`, give each pool its limit and use, then run `bash route.sh vendor/plans.json pools.json`. It names the next pool per lane, with a token budget table and the paid plans in use | [pools](templates/pools/README.md) |
+
+Steps 2 and 3 were run as written in an empty folder on 2026-11-25. Step 1's `sync.sh` needs `gh` and the network, so the run copied `catalog/plans.json` to `vendor/plans.json` instead.
 
 ## Provider guides
 
@@ -35,7 +36,8 @@ Copy one folder; its README has the steps.
 | 🗂️ [compute-list](templates/compute-list/README.md) | A sheet and board of your plans |
 | 🔐 [logins](templates/logins/README.md) | A sheet and board of your sign-ins |
 | 📈 [quality](templates/quality/README.md) | Your Quality, Speed and Consumption page, pinned to this pack |
-| 🗺️ [process](templates/process/README.md) | The five-step Spend map on your Process page |
+| 🗺️ [process](templates/process/README.md) | The six-step Spend map on your Process page |
+| 🧭 [pools](templates/pools/README.md) | Pool routing, a token budget table and the paid and in use dashboard |
 
 ## Three doors
 
@@ -59,7 +61,7 @@ Copy one folder; its README has the steps.
 | `quality/` | Quality page config, targets, process maps |
 | `site/` | The wiring map page |
 | `targets/` | The Credits tab's targets |
-| `templates/` | The four starters |
+| `templates/` | The five starters |
 | `tests/` | Pin, bridge, logins and pack tests |
 | `tools/` | Voice lint and the private-terms scan |
 

@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Paid and in use</title>
+<!-- Your paid and in use dashboard. Open this file in a browser, then pick dashboard.json (from: bash route.sh
+     vendor/plans.json pools.json --json > dashboard.json). Nothing is uploaded: the page reads the file in this tab only, and loads nothing. -->
+<style>
+  :root { --bg: #f6fbff; --panel: #e3f0fb; --fg: #10202e; --muted: #546a7c; --line: #c7dcee; --ok: #1f7a4d;
+    --todo: #b42318; --warn: #9a5b00; --na: #8a9db0; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #0e1620; --panel: #172433; --fg: #e4eef8; --muted: #9db3c8;
+    --line: #28394b; --ok: #5fcf95; --todo: #ff8a7a; --warn: #f0b24b; --na: #5d7185; } }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.5 system-ui, sans-serif; }
+  main { max-width: 1100px; margin: 0 auto; padding: 16px; }
+  h1 { font-size: 22px; font-weight: 600; margin: 8px 0 16px; }
+  h2 { font-size: 17px; margin: 20px 0 8px; }
+  .pick { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; padding: 12px; border: 1px dashed var(--line);
+    border-radius: 12px; margin-bottom: 16px; }
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 16px; }
+  .tile { background: var(--panel); border-radius: 12px; padding: 12px; }
+  .tile .k { color: var(--muted); font-size: 13px; }
+  .tile .v { font-size: 26px; font-weight: 600; }
+  .meter { display: inline-block; width: 120px; height: 8px; background: var(--line); border-radius: 4px; overflow: hidden; vertical-align: middle; }
+  .meter > i { display: block; height: 100%; background: var(--ok); }
+  .meter.stop > i { background: var(--todo); }
+  .wrap { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; }
+  th, td { padding: 6px 8px; border-bottom: 1px solid var(--line); text-align: left; white-space: nowrap; }
+  .ok { color: var(--ok); } .todo { color: var(--todo); } .warn { color: var(--warn); } .na { color: var(--na); }
+  .empty { color: var(--muted); padding: 24px 0; }
+</style>
+</head>
+<body>
+<main>
+  <h1>💳 Paid and in use</h1>
+  <div class="pick">
+    <label for="file">📂 Pick dashboard.json</label>
+    <input id="file" type="file" accept=".json,application/json">
+    <span id="msg" class="na">Nothing leaves this tab.</span>
+  </div>
+  <div class="tiles" id="tiles"></div>
+  <h2 id="h-paid" hidden>Paid plans you hold</h2>
+  <div class="wrap"><table id="paid"></table></div>
+  <h2 id="h-pools" hidden>Pools and their stop</h2>
+  <div class="wrap"><table id="pools"></table></div>
+  <p class="empty" id="empty">Pick a file to see your pools.</p>
+</main>
+<script>
+(() => {
+  let rows = [];
+  const el = (tag, text, cls) => { const e = document.createElement(tag); if (text != null) e.textContent = text; if (cls) e.className = cls; return e; };
+  const price = (r) => (!r.known ? '·' : r.price_month == null ? '?' : r.price_month === 0 ? 'free' : `${r.currency || ''} ${r.price_month}`.trim());
+  const pct = (r) => (r.used_pct == null ? '·' : `${r.used_pct}%`);
+  const name = (r) => (r.known ? r.name : `❔ ${r.id}`);
+
+  function tile(key, label, value) {
+    const t = el('div', null, 'tile');
+    t.append(el('div', `${key} ${label}`, 'k'), el('div', String(value), 'v'));
+    return t;
+  }
+
+  function meter(r) {
+    const m = el('span', null, r.room ? 'meter' : 'meter stop'), fill = el('i');
+    fill.style.width = `${Math.min(r.used_pct || 0, 100)}%`;
+    m.append(fill);
+    return m;
+  }
+
+  function table(id, heads, lines) {
+    const t = document.getElementById(id);
+    t.replaceChildren();
+    const head = el('tr');
+    for (const h of heads) head.append(el('th', h));
+    t.append(head);
+    for (const cells of lines) {
+      const tr = el('tr');
+      for (const c of cells) tr.append(c instanceof Node ? (() => { const td = el('td'); td.append(c); return td; })() : el('td', c.text, c.cls));
+      t.append(tr);
+    }
+  }
+
+  function draw() {
+    const held = rows.filter((r) => r.paid && r.have);
+    const used = held.filter((r) => r.used > 0);
+    document.getElementById('empty').hidden = rows.length > 0;
+    document.getElementById('h-paid').hidden = document.getElementById('h-pools').hidden = rows.length === 0;
+    const tiles = document.getElementById('tiles');
+    tiles.replaceChildren();
+    if (!rows.length) { document.getElementById('paid').replaceChildren(); document.getElementById('pools').replaceChildren(); return; }
+    tiles.append(tile('💳', 'Paid plans held', held.length), tile('🟢', 'In use', used.length),
+      tile('💤', 'Idle: pause or drop', held.length - used.length), tile('🛑', 'Pools at the stop', rows.filter((r) => r.have && !r.room).length));
+    table('paid', ['Plan', 'Price', 'Used', 'State'], held.map((r) => [{ text: name(r) }, { text: price(r) }, { text: pct(r) },
+      r.used > 0 ? { text: '🟢 in use', cls: 'ok' } : { text: '💤 idle', cls: 'warn' }]));
+    table('pools', ['Lane', 'Rung', 'Pool', 'Used', 'Limit', 'Route'], rows.map((r) => [{ text: r.lane }, { text: String(r.rung) }, { text: name(r) }, meter(r),
+      { text: r.limit == null ? '·' : `${r.limit} ${r.unit} per ${r.per}` },
+      !r.have ? { text: '⏸ not held', cls: 'na' } : !r.room ? { text: '🛑 at the stop', cls: 'todo' } : r.next ? { text: '👉 next', cls: 'ok' } : { text: '✅ room' }]));
+  }
+
+  document.getElementById('file').addEventListener('change', async (e) => {
+    const msg = document.getElementById('msg');
+    try {
+      const data = JSON.parse(await e.target.files[0].text());
+      if (!Array.isArray(data) || data.some((r) => typeof r !== 'object' || r === null || typeof r.id !== 'string' || typeof r.known !== 'boolean' || typeof r.room !== 'boolean')) throw new Error('not a dashboard.json');
+      rows = data; msg.textContent = `${rows.length} pools`; msg.className = 'ok';
+    } catch (err) {
+      rows = []; msg.textContent = `Could not read that file: ${err.message}`; msg.className = 'todo';
+    }
+    draw();
+  });
+  draw();
+})();
+</script>
+</body>
+</html>

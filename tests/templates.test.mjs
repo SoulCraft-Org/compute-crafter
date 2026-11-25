@@ -1,5 +1,5 @@
-// The four public starters in templates/: the quality starter's example files measure all seven Credits metrics in a local
-// collect, the process starter draws the Spend map's five steps, the compute-list tools build a sheet and copy the catalog
+// The five public starters in templates/: the quality starter's example files measure all seven Credits metrics in a local
+// collect, the process starter draws the Spend map's six steps, the compute-list tools build a sheet and copy the catalog
 // at a commit, the logins sync copies three files at a commit, and every starter README links only to files that exist and names every file in its folder.
 // No test here starts a network call: sync.sh runs against a stand-in gh.
 import assert from 'node:assert/strict';
@@ -15,7 +15,7 @@ import { textProblems } from './privacy.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const TEMPLATES = join(ROOT, 'templates');
-const STARTERS = ['compute-list', 'logins', 'process', 'quality'];
+const STARTERS = ['compute-list', 'logins', 'pools', 'process', 'quality'];
 const CATALOG = join(ROOT, 'catalog', 'plans.json');
 const LOGINS = join(ROOT, 'catalog', 'logins.json');
 const read = (...p) => readFileSync(join(ROOT, ...p), 'utf8');
@@ -30,7 +30,7 @@ const filesUnder = (dir, base = dir) => readdirSync(dir, { withFileTypes: true }
 const packTargets = () => json('targets', 'credits.json');
 const noFences = (text) => text.replace(/```[\s\S]*?```/g, '');
 
-test('the starters are the four folders in templates/, each with a README', () => {
+test('the starters are the five folders in templates/, each with a README', () => {
   assert.deepEqual(readdirSync(TEMPLATES).sort(), STARTERS);
   for (const s of STARTERS) assert.ok(existsSync(join(TEMPLATES, s, 'README.md')), s);
 });
@@ -148,12 +148,12 @@ test('quality starter: every input file is fake, from example.com', () => {
 
 // ---- process starter -------------------------------------------------------------------------------------------------------
 
-test('process starter: the Spend map\'s five steps, each scored by a Credits metric the quality starter measures', () => {
+test('process starter: the Spend map\'s six steps, each scored by a Credits metric the quality starter measures', () => {
   const config = json('templates', 'process', 'config.json');
   assert.deepEqual(config.maps, [{ use: 'spend' }]);
   assert.equal(config.docs.maps, 'quality/process/config.json');
   const map = json('maps', 'spend.json');
-  assert.deepEqual(map.steps.map((s) => s.id), ['fresh', 'free', 'read', 'pool', 'idle']);
+  assert.deepEqual(map.steps.map((s) => s.id), ['fresh', 'free', 'read', 'pool', 'paid', 'idle']);
   assert.deepEqual(map.critical_path, map.steps.map((s) => s.id));
   const ids = new Set(packTargets().map((t) => t.id));
   const readme = read('templates', 'process', 'README.md');
@@ -162,6 +162,56 @@ test('process starter: the Spend map\'s five steps, each scored by a Credits met
     assert.ok(readme.includes(`\`${s.metric}\``), `README does not name ${s.metric}`);
     assert.ok(readme.includes(s.name), `README does not name step ${s.name}`);
   }
+});
+
+// ---- pools starter ---------------------------------------------------------------------------------------------------------
+
+const POOLS = join(TEMPLATES, 'pools');
+const route = (...args) => spawnSync('bash', [join(POOLS, 'route.sh'), ...args], { encoding: 'utf8' });
+const example = (mode) => route(CATALOG, join(POOLS, 'pools.example.json'), ...(mode ? [mode] : []));
+
+test('pools starter: every example pool is a catalog row, and no example names an account or a key', () => {
+  const ids = new Set(json('catalog', 'plans.json').rows.map((r) => r.id));
+  const file = json('templates', 'pools', 'pools.example.json');
+  assert.match(file.comment, /Fake example data/);
+  for (const p of file.pools) assert.ok(ids.has(p.id), p.id);
+});
+
+test('pools starter: route.sh picks the first held pool under its stop in each lane', () => {
+  const out = example();
+  assert.equal(out.status, 0, out.stderr);
+  const rows = JSON.parse(example('--json').stdout);
+  assert.deepEqual(rows.filter((r) => r.next).map((r) => [r.lane, r.id]).sort(), [
+    ['ci', 'github-actions-free'], ['gpu', 'hf-zerogpu-free'], ['inference', 'nvidia-build-free'], ['tools', 'copilot-pro'],
+  ]);
+  const cf = rows.find((r) => r.id === 'cloudflare-workers-ai-free');
+  assert.deepEqual([cf.room, cf.next, cf.used_pct], [false, false, 90]);
+  assert.equal(rows.find((r) => r.id === 'opencode-go').room, false, 'a pool you do not hold has no room');
+  assert.match(out.stdout, /\| inference \| 2 \| Cloudflare Workers AI free daily allocation \| free \| 💸 bills \| 10000 neurons per day \| 90% \| 🛑 at the stop \|/);
+});
+
+test('pools starter: the budget and paid tables are in the README, and count paid plans held and in use', () => {
+  const text = read('templates', 'pools', 'README.md');
+  for (const mode of ['--budget', '--paid']) {
+    const out = example(mode);
+    assert.equal(out.status, 0, out.stderr);
+    for (const line of out.stdout.trim().split('\n')) assert.ok(text.includes(line), `README lacks: ${line}`);
+  }
+  assert.match(example('--paid').stdout, /^\*\*2 paid plans held\*\* · 🟢 in use 1 · 💤 idle 1/);
+  const row = JSON.parse(example('--json').stdout).find((r) => r.id === 'ollama-pro');
+  assert.deepEqual([row.stop_at, row.per_day], [48, 1.6]);
+});
+
+test('pools starter: route.sh flags an unknown id, escapes cells and refuses bad input', () => {
+  const dir = mkdtempSync(join(tmpdir(), 'pools-'));
+  const pools = join(dir, 'pools.json');
+  writeFileSync(pools, JSON.stringify({ version: 1, pools: [{ id: 'no-such-pool', lane: 'gpu', rung: 1, have: true, notes: 'a | <b>' }] }));
+  const out = route(CATALOG, pools);
+  assert.equal(out.status, 0, out.stderr);
+  assert.match(out.stdout, /\| gpu \| 1 \| ❔ no-such-pool \| · \| · \| · \| · \| 👉 next \| a {3}&lt;b>/);
+  writeFileSync(pools, JSON.stringify({ pools: [{ id: 'x', limit: 'ten' }] }));
+  assert.equal(route(CATALOG, pools).status, 2);
+  assert.equal(route(CATALOG).status, 2);
 });
 
 // ---- compute-list starter --------------------------------------------------------------------------------------------------
@@ -236,6 +286,10 @@ test('compute-list: the starter example builds against the real catalog, every i
   const rows = JSON.parse(out.stdout);
   assert.equal(rows.length, plans.length);
   assert.deepEqual(rows.filter((r) => !r.known).map((r) => r.id), []);
+  // The quickstart ends on this table (#292): every example row carries a lane and a rung, so it is never "0 ladder plans".
+  const ladders = sheet(CATALOG, join(LIST, 'mine.example.json'), '--ladders');
+  assert.equal(ladders.status, 0, ladders.stderr);
+  assert.equal(ladders.stdout.split('\n').filter((l) => l.startsWith('| ') && !l.startsWith('| Lane')).length, plans.length);
 });
 
 test('compute-list: sheet.sh --write replaces only the part between the markers, and a note cannot forge one', () => {
@@ -380,9 +434,9 @@ test('compute-list: sync.sh refuses a REF that starts with a dash, holds odd cha
   }
 });
 
-test('compute-list and logins: each board loads nothing and writes data as text only', () => {
-  for (const s of ['compute-list', 'logins']) {
-    const html = read('templates', s, 'board.html');
+test('compute-list, logins and pools: each board loads nothing and writes data as text only', () => {
+  for (const [s, file] of [['compute-list', 'board.html'], ['logins', 'board.html'], ['pools', 'dashboard.html']]) {
+    const html = read('templates', s, file);
     for (const bad of [/\bsrc\s*=\s*["']?https?:/i, /<link[^>]+href\s*=\s*["']?https?:/i, /\bfetch\s*\(/, /XMLHttpRequest/, /innerHTML|outerHTML|insertAdjacentHTML|document\.write/])
       assert.doesNotMatch(html, bad, s);
   }

@@ -1,0 +1,3 @@
+# The dashboard's input names your pools and use: it stays on your machine, never in git.
+dashboard.json
+local/
