@@ -41,7 +41,7 @@ flowchart LR
 | Monthly subscription that helps | Allowed. It is a flat fee |
 | Overage or metered extra | Goal of $0: leave usage credits off, auto-reload off, and every spend limit at zero |
 
-Anything else needs one question to the owner and a hard cap.
+Anything else needs one question to the owner and a hard cap first.
 
 ## Plans
 
