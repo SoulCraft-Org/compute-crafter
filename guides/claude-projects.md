@@ -23,3 +23,5 @@ flowchart LR
 | Claude Desktop App, Cowork | Not confirmed. | [Projects](https://code.claude.com/docs/en/claude-projects), read 2026-11-25 |
 
 Set up a Project, and what a cloud thread loads: [Git Crafter projects template](https://github.com/SoulCraft-Org/git-crafter/tree/main/templates/projects), with [limits and cost](https://github.com/SoulCraft-Org/git-crafter/blob/main/templates/projects/threads.md).
+
+What draws on the plan, and the switches that keep the bill flat: [Projects spend guards](../docs/claude-code-projects-spend.md).
