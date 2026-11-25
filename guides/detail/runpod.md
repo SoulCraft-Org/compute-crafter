@@ -2,6 +2,11 @@
 
 What the RunPod guide moved out of its page. Traps and sources: [RunPod traps and sources](runpod-traps.md). The diagram and wiring are in [RunPod](../runpod.md).
 
+```mermaid
+flowchart LR
+  S[Sign up, two-factor on] --> C[Add credit for one run] --> K[Restricted API key] --> R[runpodctl doctor] --> X[Stop and delete each pod]
+```
+
 ## Guard
 
 | Spend | Stop | Source |

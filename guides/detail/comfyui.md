@@ -2,13 +2,18 @@
 
 What the ComfyUI guide moved out of its page. Traps and sources: [ComfyUI traps and sources](comfyui-traps.md). The diagram and wiring are in [ComfyUI](../comfyui.md).
 
+```mermaid
+flowchart LR
+  A[comfy cloud login] --> B[comfy cloud status: read the balance] --> C[Paid run] --> D[comfy cloud status: compare]
+```
+
 ## Guard
 
 | Spend | Stop | Source |
 | --- | --- | --- |
 | Standard plan | $20 a month, or $192 billed yearly with 50,400 credits a year | [Comfy Cloud pricing](https://www.comfy.org/cloud/pricing), read 2026-11-24 |
 | Top-ups | Bought by hand at any time. Plan credits spend first, and top-ups stay valid 1 year | [Comfy Cloud pricing](https://www.comfy.org/cloud/pricing), read 2026-11-24 |
-| Limits | Team spending limits (per user, project and workspace) and auto-recharge are not yet available. Comfy says it is "actively building" them | [Comfy Cloud pricing](https://www.comfy.org/cloud/pricing), read 2026-11-24 |
+| Limits | Comfy Cloud has no team spending limits (per user, project or workspace) and no auto-recharge. Comfy says it is "actively building" them | [Comfy Cloud pricing](https://www.comfy.org/cloud/pricing), read 2026-11-24 |
 | Rule | Read the balance before and after a paid run | [Git Crafter Comfy rules](https://github.com/SoulCraft-Org/git-crafter/blob/main/rules/comfy.md) |
 
 ## Set up

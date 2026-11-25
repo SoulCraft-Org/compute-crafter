@@ -2,6 +2,13 @@
 
 What the Local models guide moved out of its page. Traps and sources: [Local models traps and sources](local-models-traps.md). The diagram and wiring are in [Local models](../local-models.md).
 
+```mermaid
+flowchart LR
+  D[Check free disk] --> T{Tool}
+  T -->|MLX| M[Serve mlx-lm on an explicit port] --> O[Add a custom provider to OpenCode]
+  T -->|LM Studio| L[Open the app once, then download, load and serve] --> P[Set the provider baseURL to your port]
+```
+
 ## Set up
 
 1. Check free disk before any download. A model is several GB, and both tools download on demand. Run one download at a time.
