@@ -29,5 +29,10 @@
   {"id": "docs.runbooks_verified", "drop": true, "goal_source": "Off: the repo keeps no runbooks; its guides are provider pages. Reversal: delete the entry when a runbook folder is added."},
   {"id": "design.font_sizes_off_scale", "drop": true, "goal_source": "Off: the repo has no design token file (params.tokens names none), and the Quality page is generated. Reversal: delete the entry when a design token file is added."},
   {"id": "design.text_colors_off_token", "drop": true, "goal_source": "Off: the repo has no design token file (params.tokens names none), and the Quality page is generated. Reversal: delete the entry when a design token file is added."},
-  {"id": "design.raw_px", "drop": true, "goal_source": "Off: the collector reads a src folder of built-site source (CSS, Astro, HTML) and finds none. The repo's one hand-written page, site/map.html, sits outside it and is not measured. Reversal: delete drop when a src folder is added, or when the collector can read site/."}
+  {"id": "design.raw_px", "drop": true, "goal_source": "Off: the collector reads a src folder of built-site source (CSS, Astro, HTML) and finds none. The repo's one hand-written page, site/map.html, sits outside it and is not measured. Reversal: delete drop when a src folder is added, or when the collector can read site/."},
+  {"id": "usability.task_clicks", "drop": true, "goal_source": "Off: the one page has in-page tabs and no task links, so params.tasks names no task. Reversal: delete the entry when the page gains a linked task."},
+  {"id": "usability.keyboard_task_share", "drop": true, "goal_source": "Off: the one page has in-page tabs and no task links, so params.tasks names no task. Reversal: delete the entry when the page gains a linked task."},
+  {"id": "tests.e2e_routes", "drop": true, "goal_source": "Off: the repo has no end-to-end suite and its one page is generated. Reversal: delete the entry when an e2e suite is added."},
+  {"id": "tests.axe_routes", "drop": true, "goal_source": "Off: the repo has no end-to-end suite and its one page is generated. Reversal: delete the entry when an e2e suite is added."},
+  {"id": "tools.adopters_latest_share", "drop": true, "goal_source": "Off: no repo pins this one, so params.adopters is empty. Reversal: delete the entry when an adopter pins it."}
 ]
