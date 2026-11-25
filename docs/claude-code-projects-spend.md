@@ -41,11 +41,11 @@ flowchart LR
 | Monthly subscription that helps | Allowed. It is a flat fee |
 | Overage or metered extra | Goal of $0: leave usage credits off, auto-reload off, and every spend limit at zero |
 
-Anything else needs one question and a hard cap first.
+Anything else needs one question to the owner and a hard cap.
 
 ## Plans
 
-Pro, Max and Ultra cost $20, $100 and $200 a month, with five and ten times Pro's weekly usage for Max and Ultra ([Claude pricing](https://claude.com/pricing), read 2026-11-25). The upgrade buys capacity, Fable access and API credits. Credits: [Claude API guide](../guides/claude-api.md).
+Pro, Max and Ultra cost $20, $100 and $200 a month, with five and ten times Pro's weekly usage for Max and Ultra ([Claude pricing](https://claude.com/pricing), read 2026-11-25). The upgrade buys capacity, Fable access and API credits, not a cheaper unit.
 
 ## Hosts and sign-in
 
