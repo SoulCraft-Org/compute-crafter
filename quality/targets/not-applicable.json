@@ -14,9 +14,7 @@
   {"id": "tools.majors_behind", "drop": true, "goal_source": "Off: the repo has no package.json or lockfile. Reversal: delete the entry when one is added."},
   {"id": "tools.oldest_update_wait_days", "drop": true, "goal_source": "Off: the repo has no package.json or lockfile. Reversal: delete the entry when one is added."},
   {"id": "tools.npm_ci_seconds", "drop": true, "goal_source": "Off: no CI job installs npm packages. Reversal: delete the entry when one does."},
-  {"id": "tests.axe_routes", "drop": true, "goal_source": "Off: the repo has no src/pages folder of routes. Reversal: delete the entry when a site source is added."},
   {"id": "tests.e2e_shard_p50", "drop": true, "goal_source": "Off: the repo has no end-to-end workflow. Reversal: delete the entry when one is added."},
-  {"id": "design.raw_px", "drop": true, "goal_source": "Off: the repo holds no site source (no src folder); the Quality page is generated into quality/dist after the readings. Reversal: delete the entry when a site source is added."},
   {"id": "practices.directory_blocks", "drop": true, "goal_source": "Off: the repo is not a Claude Code plugin (no .claude-plugin/plugin.json). Reversal: delete the entry when it becomes one."},
   {"id": "practices.directory_holds", "drop": true, "goal_source": "Off: the repo is not a Claude Code plugin (no .claude-plugin/plugin.json). Reversal: delete the entry when it becomes one."},
   {"id": "practices.directory_warnings", "drop": true, "goal_source": "Off: the repo is not a Claude Code plugin (no .claude-plugin/plugin.json). Reversal: delete the entry when it becomes one."},
@@ -26,11 +24,10 @@
   {"id": "practices.skills_without_lift", "drop": true, "goal_source": "Off: the repo is not a Claude Code plugin (no .claude-plugin/plugin.json). Reversal: delete the entry when it becomes one."},
   {"id": "settings.metered_on", "drop": true, "goal_source": "Off: a public repo is not billed for Actions cache or a Copilot review, so nothing here can bill it. Reversal: delete the entry if the repo goes private."},
   {"id": "settings.pages_private", "drop": true, "goal_source": "Off: a public repo publishes a public Pages site, and private Pages needs a private repo on GitHub Enterprise Cloud. Reversal: delete the entry if the repo goes private."},
-  {"id": "settings.general_drift", "params": {"expected_from_setup": true}},
-  {"id": "security.headers", "params": {"site_url": "https://soulcraft-org.github.io/compute-crafter/"}},
   {"id": "usability.form_page_kib", "drop": true, "goal_source": "Off: the site has no form page (params.form_pages names none). Reversal: delete the entry when a form page is added."},
   {"id": "usability.unlabeled_fields", "drop": true, "goal_source": "Off: the site has no form page (params.form_pages names none). Reversal: delete the entry when a form page is added."},
   {"id": "docs.runbooks_verified", "drop": true, "goal_source": "Off: the repo keeps no runbooks; its guides are provider pages. Reversal: delete the entry when a runbook folder is added."},
   {"id": "design.font_sizes_off_scale", "drop": true, "goal_source": "Off: the repo has no design token file (params.tokens names none), and the Quality page is generated. Reversal: delete the entry when a design token file is added."},
-  {"id": "design.text_colors_off_token", "drop": true, "goal_source": "Off: the repo has no design token file (params.tokens names none), and the Quality page is generated. Reversal: delete the entry when a design token file is added."}
+  {"id": "design.text_colors_off_token", "drop": true, "goal_source": "Off: the repo has no design token file (params.tokens names none), and the Quality page is generated. Reversal: delete the entry when a design token file is added."},
+  {"id": "design.raw_px", "drop": true, "goal_source": "Off: the collector reads a src folder of built-site source (CSS, Astro, HTML) and finds none. The repo's one hand-written page, site/map.html, sits outside it and is not measured. Reversal: delete drop when a src folder is added, or when the collector can read site/."}
 ]

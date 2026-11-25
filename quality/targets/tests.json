@@ -22,9 +22,8 @@
           ],
           "role": "suite"
         }
-      ]
-    },
-    "drop": true,
-    "goal_source": "Off: the repo has no src/pages folder of routes. Its params stay, because the other Tests metrics read them. Reversal: delete drop when a site source is added."
+      ],
+      "pages_dir": "site/"
+    }
   }
 ]

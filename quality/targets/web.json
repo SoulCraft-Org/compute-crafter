@@ -2,7 +2,7 @@
   {
     "id": "design.raw_hex",
     "params": {
-      "comment": "The Pages tab reads this repo's public page, the Quality page, at its Pages URL (the live site, built by .github/workflows/pages.yml). origin is the production URL; site_dir stays empty because the build writes quality/dist after the readings.",
+      "comment": "The Pages tab reads this repo's public page, the Quality page, at its Pages URL. origin is the production URL; site_dir stays empty because the build writes quality/dist after the readings.",
       "origin": "https://soulcraft-org.github.io/compute-crafter/",
       "site_dir": "",
       "key_pages": [
@@ -11,7 +11,7 @@
       ]
     },
     "drop": true,
-    "goal_source": "Off: the repo holds no site source (no src folder); the Quality page is generated into quality/dist after the readings. Its params stay, because the other Design metrics read them. Reversal: delete drop when a site source is added."
+    "goal_source": "Off: the collector reads a src folder of built-site source (CSS, Astro, HTML) and finds none. The repo's one hand-written page, site/map.html, sits outside it and is not measured. Its params stay, because the other Design metrics read them. Reversal: delete drop when a src folder is added, or when the collector can read site/."
   },
   {
     "id": "usability.reading_grade",

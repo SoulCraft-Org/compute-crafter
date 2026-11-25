@@ -1,0 +1,8 @@
+[
+  {
+    "id": "settings.general_drift",
+    "params": {
+      "expected_from_setup": true
+    }
+  }
+]

@@ -80,7 +80,7 @@ Copy one folder. Each README has its steps.
 | `guides/` | One guide per provider, a checklist and the CI guides |
 | `ideals/` | The Credits tab's metric ideals |
 | `maps/` | The spend map |
-| `quality/` | The Quality page's config, targets, history and process maps |
+| `quality/` | The Quality page's config, targets and process maps |
 | `site/` | The wiring map page and its data |
 | `targets/` | The Credits tab's metric targets |
 | `templates/` | The starters: compute list, logins, process and quality |
