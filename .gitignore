@@ -7,3 +7,6 @@ quality/dist/
 quality/process/data/
 node_modules/
 .claude/worktrees/
+
+# A local Quality run clones packs here; it is never committed.
+.code-os-packs/
