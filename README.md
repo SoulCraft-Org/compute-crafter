@@ -76,7 +76,7 @@ Copy one folder. Each README has its steps.
 | Free credits, plus flat monthly subscriptions that give a lot of usage or functionality; never pay-per-token or pay-per-use consumption | [Git Crafter compute rules](https://github.com/SoulCraft-Org/git-crafter/blob/main/rules/compute.md) |
 | A session never holds a key value: CLI logins and OAuth first, env var names only | [Git Crafter key rules](https://github.com/SoulCraft-Org/git-crafter/blob/main/rules/keys.md) |
 | Every free-tier figure cites the vendor's own page and the date it was read | [CONTRIBUTING.md](CONTRIBUTING.md) |
-| A Claude Code Project stays on its flat plan: usage credits off or capped, three free ultrareviews | [Projects spend guards](docs/claude-code-projects-spend.md) |
+| A Claude Code Project stays on its flat plan: usage credits off, spend limit at zero, three free ultrareviews | [Projects spend guards](docs/claude-code-projects-spend.md) |
 
 ## Built on
 

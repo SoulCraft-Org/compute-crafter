@@ -42,7 +42,7 @@ Copy the [keyless workflow](../ci/claude-keyless.yml) to `.github/workflows/` an
 | Cap | Where | Value |
 | --- | --- | --- |
 | Run length | `timeout-minutes`, `--max-turns` | In the file |
-| Workspace spend | Claude Console, workspace limit | At or under the monthly credit |
+| Workspace spend | Claude Console, workspace limit | Caps prepaid credit at or under the monthly credit |
 | Auto-reload | Claude Console billing | Off, so requests stop at zero credit |
 
-A flat subscription is fine. Overage and metered extras have a $0 goal.
+A flat subscription is fine. With auto-reload off, nothing bills beyond the prepaid credit, so overage has a $0 goal.
