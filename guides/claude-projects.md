@@ -19,7 +19,7 @@ flowchart LR
 | Host | Plugs in as | Source |
 | --- | --- | --- |
 | OpenCode Desktop App | Not confirmed. A Project is a Claude feature, and its docs name `CLAUDE.md`, not `AGENTS.md`. | [Projects](https://code.claude.com/docs/en/claude-projects), read 2026-11-25 |
-| Claude Desktop App, Code tab | Projects, in the sidebar. A thread can run on your own computer through Remote Control. | [Projects](https://code.claude.com/docs/en/claude-projects), read 2026-11-25 |
+| Claude Desktop App, Code tab | Projects, in the Code tab of the desktop app and at claude.ai/code. A thread can run on your own computer through Remote Control. | [Projects](https://code.claude.com/docs/en/claude-projects), read 2026-11-25 |
 | Claude Desktop App, Cowork | Not confirmed. | [Projects](https://code.claude.com/docs/en/claude-projects), read 2026-11-25 |
 
 Set up a Project, and what a cloud thread loads: [Git Crafter projects template](https://github.com/SoulCraft-Org/git-crafter/tree/main/templates/projects), with [limits and cost](https://github.com/SoulCraft-Org/git-crafter/blob/main/templates/projects/threads.md).
