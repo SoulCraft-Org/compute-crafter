@@ -36,6 +36,6 @@
   {
     "id": "security.claude_review_share",
     "drop": true,
-    "goal_source": "Off because a bot review needs a stored token or a pay-per-use key, which this repo does not use (issue 177). Add it back if a no-secret bot review exists"
+    "goal_source": "Off: a bot security review needs a stored token or a pay-per-use key, which this repo does not use. The workflow also errored before the model ran (issue 177). Add it back if a no-secret bot review exists"
   }
 ]
