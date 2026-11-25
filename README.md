@@ -13,14 +13,22 @@ flowchart LR
   G[Pick a provider guide] --> S[Sign in] --> C[Set the spend stop] --> W[Wire into the OpenCode Desktop App or the Claude Desktop App] --> Q[Score it]
 ```
 
-## Quickstart: use it from a Code Project
+## Quickstart: 3 steps
+
+Re-run end to end in a throwaway private repo on 2026-11-25. The commands in steps 2 and 3 took under a minute. The last one printed a ladder from the example rows.
 
 | # | Do | Where |
 |---|---|---|
 | 1 | Make a private repo for your plans. Attach it to a Code Project, with this repo read-only | [Code Projects](https://code.claude.com/docs/en/claude-projects) |
-| 2 | Copy the compute-list starter into your private repo and run `bash sync.sh` | [templates/compute-list](templates/compute-list/README.md) |
-| 3 | List the plans you hold in `mine.json`, give each a `lane` and a `rung`, and write its spend guard in `notes` | [Ladders](templates/compute-list/README.md#ladders) |
-| 4 | Run `bash sheet.sh vendor/plans.json mine.json --ladders`. Use the first rung with room. A paid rung waits for your yes | the same page |
+| 2 | In your repo, copy the starter, sync the catalog and start your list. `../compute-crafter` is this repo's checkout beside yours | the commands below |
+| 3 | In `mine.json`, replace each example row with a plan you hold: its `id`, a `lane`, a `rung`, and its spend guard in `notes`. Then print your ladders | [Ladders](templates/compute-list/README.md#ladders) |
+
+```bash
+cp -r ../compute-crafter/templates/compute-list/. . && bash sync.sh && cp mine.example.json mine.json   # step 2
+bash sheet.sh vendor/plans.json mine.json --ladders                                              # step 3
+```
+
+Use the first rung with room in each lane. A paid rung waits for your yes.
 
 ## Provider guides
 
