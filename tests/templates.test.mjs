@@ -1,4 +1,4 @@
-// The four public starters in templates/: the quality starter's example files measure all six Credits metrics in a local
+// The four public starters in templates/: the quality starter's example files measure all seven Credits metrics in a local
 // collect, the process starter draws the Spend map's five steps, the compute-list tools build a sheet and copy the catalog
 // at a commit, the logins sync copies three files at a commit, and every starter README links only to files that exist and names every file in its folder.
 // No test here starts a network call: sync.sh runs against a stand-in gh.
@@ -88,21 +88,22 @@ function userRepo() {
 // root is the user's repo and kit the pack's checkout: the starter's paths are from the repo's root.
 const run = ({ dir, kit, params }, mode) => collect({ mode, params, kit, root: dir, home: dir, now: new Date('2026-11-23T12:00:00Z'), lib: { redact: (v) => v } });
 
-test('quality starter: the example files give 6 of 6 Credits metrics measured in a local collect', async () => {
+test('quality starter: the example files give 7 of 7 Credits metrics measured in a local collect', async () => {
   const repo = userRepo();
   const out = await run(repo, 'local');
   const ids = packTargets().map((t) => t.id);
-  assert.equal(ids.length, 6);
+  assert.equal(ids.length, 7);
   assert.deepEqual(Object.keys(out).sort(), [...ids].sort());
   for (const id of ids) {
     assert.equal(out[id].could_not_check, undefined, `${id}: ${out[id].could_not_check}`);
     assert.equal(typeof out[id].value, 'number', id);
   }
-  // The fake data: CI 1450 of 2000 minutes (the pool), GPU 12 of 30 USD, one free tier unclaimed, two of three use figures read.
+  // The fake data: CI 1450 of 2000 minutes (the pool), GPU 12 of 30 USD, one free tier unclaimed, three of four use figures read, and the one paid plan shows use.
   assert.equal(out['credits.actions_pool_used'].value, 72.5);
   assert.equal(out['credits.highest_used_share'].value, 40);
   assert.equal(out['credits.unclaimed_free'].value, 1);
-  assert.equal(out['credits.usage_read_share'].value, 66.7);
+  assert.equal(out['credits.usage_read_share'].value, 75);
+  assert.equal(out['credits.paid_plans_in_use'].value, 100);
   assert.equal(out['credits.idle_replaceable'].value, 0);
 });
 
@@ -198,9 +199,9 @@ test('compute-list: sheet.sh prints one row per plan in your order, and flags an
 });
 
 test('compute-list: sheet.sh prints a note, a name and a lane as text, never as markup (#224)', () => {
-  const dir = fixture([{ id: 'acme-free', have: true, status: 'use', lane: 'C_I', rung: 1, notes: 'see [x](https://example.com) `code` *b* ~~s~~ R&D <i> \\' }]);
+  const dir = fixture([{ id: 'acme-free', have: true, status: 'use', lane: 'C_I', rung: 1, notes: 'see [x](https://example.com) `code` *b* ~~s~~ R&D <i> $5x$ \\' }]);
   const [plans, mine] = [join(dir, 'plans.json'), join(dir, 'mine.json')];
-  const note = String.raw`see \[x\](https://example.com) \`code\` \*b\* \~\~s\~\~ R&amp;D &lt;i> \\`;
+  const note = String.raw`see \[x\](https://example.com) \`code\` \*b\* \~\~s\~\~ R&amp;D &lt;i> \$5x\$ \\`;
   const row = sheet(plans, mine).stdout.split('\n').find((l) => l.startsWith('| Acme Free'));
   assert.equal(row.split(' | ')[7], note);
   const rung = sheet(plans, mine, '--ladders').stdout.trim().split('\n')[2];

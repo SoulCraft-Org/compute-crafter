@@ -54,7 +54,8 @@ Copy one folder. Each README has its steps.
 | `collectors/` | The Credits collector and the engine door |
 | `docs/` | Spend notes, handoff notes |
 | `guides/` | Provider guides, checklist, CI guides |
-| `ideals/`, `targets/` | The Credits tab's ideals and targets |
+| `ideals/` | The Credits tab's ideal state |
+| `targets/` | The Credits tab's metric goals |
 | `maps/` | The spend map |
 | `quality/` | Quality page config, targets, process maps |
 | `site/` | The wiring map page |

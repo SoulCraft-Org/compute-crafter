@@ -2,7 +2,7 @@
  {
   "id": "credits.idle_replaceable",
   "params": {
-   "comment": "Fake example data: replace each file under inputs/ and each allowance below with your own. One entry carries the params for all six Credits metrics, because Git Crafter merges a targets file's params key by key (quality/overlay.mjs). A path starting with pack: is read from the pack's checkout, ~/ is home, any other relative path is from your repo's root, and a path from / is absolute. Every other key: targets/credits.json in the pack.",
+   "comment": "Fake example data: replace each file under inputs/ and each allowance below with your own. One entry carries the params for all seven Credits metrics, because Git Crafter merges a targets file's params key by key (quality/overlay.mjs). A path starting with pack: is read from the pack's checkout, ~/ is home, any other relative path is from your repo's root, and a path from / is absolute. Every other key: targets/credits.json in the pack.",
    "systems_file": "quality/inputs/systems.json",
    "usage_file": "quality/inputs/usage.json",
    "registry": "quality/inputs/registry",
@@ -41,6 +41,26 @@
      "system": "inference-api",
      "registry": "free.json#example-inference-free",
      "usage_why": "its use shows on a web page only"
+    },
+    {
+     "id": "notebook-plan",
+     "name": "Example Pro notebooks",
+     "paid": true,
+     "allowance": {
+      "label": "a month",
+      "value": 20,
+      "unit": "USD",
+      "source": "https://example.com/notebooks/pricing",
+      "read": "2026-11-20"
+     },
+     "used": {
+      "value": 5,
+      "source": "https://example.com/notebooks/usage"
+     },
+     "status_override": {
+      "org_status": "use"
+     },
+     "could_take_over": "notebook runs past the free tier"
     }
    ],
    "pool_metrics": {

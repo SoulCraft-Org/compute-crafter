@@ -20,6 +20,7 @@ export function metricsFrom(rows, { p, src, now }) {
     'credits.highest_used_share': highestMetric(ctx),
     'credits.unclaimed_free': unclaimedMetric(ctx),
     'credits.usage_read_share': readShareMetric(ctx),
+    'credits.paid_plans_in_use': paidMetric(ctx),
     'credits.registry_age_days': ageMetric(ctx),
   };
 }
@@ -81,6 +82,22 @@ function readShareMetric({ rows, src, readAt }) {
       { label: 'No reader yet', value: unread.filter((r) => !r.unreadable && !pending.includes(r)).length, unit: 'allowances' },
     ],
     source: `${src}; claimed allowances whose use this cycle is read. Not read: ${unread.map((r) => `${r.label} (${r.claim_needs || r.usage_note || 'no reader'})`).join('; ') || 'none'}`,
+    read_at: readAt,
+  };
+}
+
+// The paid plans the org holds, by whether this cycle's use is read above 0. Counts only: no plan's name or price.
+function paidMetric({ rows, src, readAt }) {
+  const held = rows.filter((r) => r.paid && r.claimed);
+  if (!held.length) return cnc('no paid plan is held in params.allowances', src);
+  const read = held.filter((r) => finite(r.used) && (r.used > 0 || !r.used_floor));
+  if (!read.length) return cnc(`${held.length} paid plans held, none with use read`, src);
+  const used = read.filter((r) => r.used > 0).length;
+  const part = (label, value) => ({ label, value, unit: 'plans' });
+  return {
+    value: round((used / read.length) * 100),
+    detail: [part('In use', used), part('Idle', read.length - used), part('Use not read', held.length - read.length)],
+    source: `${src}; paid plans the org holds whose use this cycle is read, the share with use above 0, counts only`,
     read_at: readAt,
   };
 }
