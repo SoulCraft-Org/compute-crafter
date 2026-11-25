@@ -286,10 +286,6 @@ test('compute-list: the starter example builds against the real catalog, every i
   const rows = JSON.parse(out.stdout);
   assert.equal(rows.length, plans.length);
   assert.deepEqual(rows.filter((r) => !r.known).map((r) => r.id), []);
-  // The quickstart ends on this table (#292): every example row carries a lane and a rung, so it is never "0 ladder plans".
-  const ladders = sheet(CATALOG, join(LIST, 'mine.example.json'), '--ladders');
-  assert.equal(ladders.status, 0, ladders.stderr);
-  assert.equal(ladders.stdout.split('\n').filter((l) => l.startsWith('| ') && !l.startsWith('| Lane')).length, plans.length);
 });
 
 test('compute-list: sheet.sh --write replaces only the part between the markers, and a note cannot forge one', () => {

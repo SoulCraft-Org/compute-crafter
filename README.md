@@ -13,15 +13,14 @@ flowchart LR
   G[Pick a provider guide] --> S[Sign in] --> C[Set the spend stop] --> W[Wire into the OpenCode Desktop App or the Claude Desktop App] --> Q[Score it]
 ```
 
-## Quickstart: use it from a Code Project, 3 steps
+## Quickstart: use it from a Code Project
 
 | # | Do | Where |
 |---|---|---|
-| 1 | Make a private repo for your plans and attach it to a Code Project, with this repo read-only. Copy the files of the compute-list and pools starters into its root, then run `bash sync.sh` | [Code Projects](https://code.claude.com/docs/en/claude-projects), [compute-list](templates/compute-list/README.md) |
-| 2 | Copy `mine.example.json` to `mine.json`, list the plans you hold, then run `bash sheet.sh vendor/plans.json mine.json --ladders`. Use the first rung with room. A paid rung waits for your yes | [Ladders](templates/compute-list/README.md#ladders) |
-| 3 | Copy `pools.example.json` to `pools.json`, give each pool its limit and use, then run `bash route.sh vendor/plans.json pools.json`. It names the next pool per lane, with a token budget table and the paid plans in use | [pools](templates/pools/README.md) |
-
-Steps 2 and 3 were run as written in an empty folder on 2026-11-25. Step 1's `sync.sh` needs `gh` and the network, so the run copied `catalog/plans.json` to `vendor/plans.json` instead.
+| 1 | Make a private repo for your plans. Attach it to a Code Project, with this repo read-only | [Code Projects](https://code.claude.com/docs/en/claude-projects) |
+| 2 | Copy the compute-list starter into your private repo and run `bash sync.sh` | [templates/compute-list](templates/compute-list/README.md) |
+| 3 | List the plans you hold in `mine.json`, give each a `lane` and a `rung`, and write its spend guard in `notes` | [Ladders](templates/compute-list/README.md#ladders) |
+| 4 | Run `bash sheet.sh vendor/plans.json mine.json --ladders`. Use the first rung with room. A paid rung waits for your yes | the same page |
 
 ## Provider guides
 
