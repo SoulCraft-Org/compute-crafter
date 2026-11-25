@@ -63,6 +63,7 @@ jobs:
           cache-dependency-path: tools/requirements-claude-review.txt
 
       - name: Fetch the GitHub OIDC token
+        shell: bash
         run: |
           echo "ANTHROPIC_IDENTITY_TOKEN_FILE=$RUNNER_TEMP/oidc-jwt" >> "$GITHUB_ENV"
           curl -sSf -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
