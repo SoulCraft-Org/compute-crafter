@@ -44,7 +44,7 @@ flowchart LR
 | `plans[].have` | `true` when you hold the plan |
 | `plans[].status` | `use` (work runs on it), `idle` (held, unused), `want` (to claim) or `skip` |
 | `plans[].notes` | Your words. The sheet prints them as text, never as markup |
-| `plans[].lane`, `plans[].rung` | Optional. A ladder plan: its lane (`GPU`, `Inference`, `CI`, `CPU`, `Agents`) and its place in that lane, 1 first. `--ladders` prints them |
+| `plans[].lane`, `plans[].rung` | Optional. A ladder plan: its lane (`CI`, `CPU`, `GPU`, `Inference`, `Hosting`, `Tools`, the catalog's six lanes) and its place in that lane, 1 first. `--ladders` prints them |
 
 ## Ladders
 
