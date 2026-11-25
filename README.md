@@ -69,6 +69,24 @@ Copy one folder. Each README has its steps.
 | 💳 [compute-credits](https://github.com/Colorado-Compute/compute-credits) | The plan catalog and its Credits Explorer. [catalog/](catalog/README.md) here is a pinned copy |
 | 🚀 [startup-credits](https://github.com/Colorado-Startups/startup-credits) | Startup programs |
 
+## Folder map
+
+| Folder | Holds |
+|---|---|
+| `assets/` | The hero image and the social preview |
+| `catalog/` | The checked copy of the plan catalog, its pin and the sign-in vendor list |
+| `collectors/` | The Credits collector and the engine's one door (`lib/`) |
+| `docs/` | Claude Code Projects spend notes and the handoff notes |
+| `guides/` | One guide per provider, a checklist and the CI guides |
+| `ideals/` | The Credits tab's metric ideals |
+| `maps/` | The spend map |
+| `quality/` | The Quality page's config, targets and process maps |
+| `site/` | The wiring map page and its data |
+| `targets/` | The Credits tab's metric targets |
+| `templates/` | The starters: compute list, logins, process and quality |
+| `tests/` | The pin, bridge, logins and pack tests |
+| `tools/` | The voice lint, its rules and the private-terms scan |
+
 ## Rules every page follows
 
 | Rule | Source |

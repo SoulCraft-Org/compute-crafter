@@ -25,13 +25,23 @@
    "use": "board"
   },
   {
-   "use": "adopt"
+   "use": "adopt",
+   "steps": {
+    "update": {
+     "drop": true
+    }
+   }
   },
   {
    "use": "measure"
   },
   {
-   "use": "code"
+   "use": "code",
+   "steps": {
+    "delete": {
+     "drop": true
+    }
+   }
   },
   {
    "use": "secure"
@@ -61,9 +71,6 @@
      "rule_ref": "https://code.claude.com/docs/en/plugins/loading"
     }
    }
-  },
-  {
-   "use": "publish"
   },
   {
    "use": "visibility"
