@@ -21,6 +21,7 @@ flowchart LR
 | The coordinator | Its own tokens, reading what threads report | [Claude Code docs, Projects](https://code.claude.com/docs/en/claude-projects), read 2026-11-25 |
 | A thread watching a pull request | An idle thread wakes when CI fails or a review comment arrives | [Claude Code docs, Projects](https://code.claude.com/docs/en/claude-projects), read 2026-11-25 |
 | A thread idle over an hour | The cache lasts an hour on Pro, Max and Ultra within plan limits. After that the thread re-reads its whole conversation | [Claude Code docs, Projects](https://code.claude.com/docs/en/claude-projects), read 2026-11-25 |
+| The monthly API credit | Threads never spend it. They draw on the plan's usage limits. What the credit pays for: [Claude API](../guides/claude-api.md) | [Claude Code docs, Projects](https://code.claude.com/docs/en/claude-projects), read 2026-11-25; [Credits](https://support.claude.com/en/articles/17154008-monthly-api-credits-for-max-ultra-and-team-plans), read 2026-11-25 |
 
 ## Guards
 
@@ -32,18 +33,6 @@ flowchart LR
 | Model and effort | Pick a smaller model or a lower effort level for threads that do not need the largest model | [Claude Code docs, Projects](https://code.claude.com/docs/en/claude-projects), read 2026-11-25 |
 | Pull request watching | Ask the thread to stop watching once the pull request merges | [Claude Code docs, Projects](https://code.claude.com/docs/en/claude-projects), read 2026-11-25 |
 | New work | Start a fresh thread instead of reviving a large old one | [Claude Code docs, Projects](https://code.claude.com/docs/en/claude-projects), read 2026-11-25 |
-
-## The monthly API credit
-
-Max and Ultra plans include a monthly API credit once a Console organization is linked. It does not pay for Projects.
-
-| Surface | Draws on | Source |
-| --- | --- | --- |
-| Claude API, Console Playground, Managed Agents | The monthly API credit | [Credits](https://support.claude.com/en/articles/17154008-monthly-api-credits-for-max-ultra-and-team-plans), read 2026-11-25 |
-| Agent SDK, and `claude -p` run with an API key from the linked organization | The monthly API credit | Same page |
-| Projects threads, interactive Claude Code, the Desktop app, an IDE extension, the Claude Code GitHub Action | Plan usage limits. The credit does not cover them | Same page |
-
-Max gets $100 a month and Ultra $200, with no rollover. Claim it after seven days on the plan ([Credits](https://support.claude.com/en/articles/17154008-monthly-api-credits-for-max-ultra-and-team-plans), read 2026-11-25). API use stops at the credit only when you hold and buy no extra credit. Keyless CI with the Agent SDK: [Claude API CI](../guides/detail/claude-api-ci.md).
 
 ## Plans
 
