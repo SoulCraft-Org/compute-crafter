@@ -167,6 +167,20 @@ test('collect: a pool used up makes its lane over budget; its idle and unclaimed
   assert.equal(out['credits.registry_age_days'].value, 14, 'the GPU limit was read on 2026-10-20');
 });
 
+test('collect: paid plans in use are counted, never named or priced', async () => {
+  const paid = async (allowances) => (await collect({ ...base, params: { ...params, allowances } }))['credits.paid_plans_in_use'];
+  const held = await paid(params.allowances);
+  assert.equal(held.value, 100, 'the CI and GPU plans are paid by their registry rows, and both show use');
+  assert.deepEqual(held.detail.map((d) => [d.label, d.value, d.unit]), [['In use', 2, 'plans'], ['Idle', 0, 'plans'], ['Use not read', 0, 'plans']]);
+  const spec = (id, extra) => ({ id, name: `Plan ${id}`, paid: true, status_override: { org_status: 'use' }, ...extra });
+  const all = await paid([...params.allowances, spec('idle', { used: { value: 0, source: 'billing' } }), spec('unread')]);
+  assert.equal(all.value, 66.7, 'two of the three read plans show use; the unread one is shown, never counted');
+  assert.deepEqual(all.detail.map((d) => d.value), [2, 1, 1]);
+  assert.doesNotMatch(JSON.stringify(all), /Plan idle|Plan unread|Hosted CI|GPU plan|\b21\b/, 'no name and no price');
+  assert.match((await paid(params.allowances.filter((a) => a.id === 'llm'))).could_not_check, /no paid plan is held/);
+  assert.match((await paid([spec('unread')])).could_not_check, /1 paid plans held, none with use read/);
+});
+
 test('collect: an allowance no API reads counts as unreadable, never as pending a key', async () => {
   const before = await collect(base);
   const buckets = (out) => Object.fromEntries(out['credits.usage_read_share'].detail.map((d) => [d.label, d.value]));

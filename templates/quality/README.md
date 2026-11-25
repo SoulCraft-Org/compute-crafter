@@ -13,7 +13,7 @@ Your own Quality, Speed and Consumption page for the free tiers and credits you 
 ```mermaid
 flowchart LR
   I[inputs/<br/>limits, use, free tiers] --> T[targets/credits.json<br/>your allowances]
-  T --> L[Local run<br/>all 6 metrics]
+  T --> L[Local run<br/>all 7 metrics]
   P[config.json<br/>pins the pack] --> C[CI run<br/>registry_age_days only]
   L --> D[data/local.json]
   D --> G[Your page<br/>Credits tab]
@@ -29,9 +29,10 @@ flowchart LR
 | `credits.highest_used_share` | quality | `inputs/systems.json`, `inputs/usage.json` | local |
 | `credits.actions_pool_used` | consumption | `inputs/systems.json`, `inputs/usage.json` | local |
 | `credits.usage_read_share` | speed | `inputs/usage.json` | local |
+| `credits.paid_plans_in_use` | consumption | `inputs/systems.json`, `inputs/usage.json` | local |
 | `credits.registry_age_days` | speed | the read dates in `inputs/`, and the pack's `catalog/plans.json` | CI and local |
 
-A CI run reads no file of yours, so five metrics stay "not measured" there until a local run feeds them. `targets/credits.json` is one entry: Git Crafter merges a targets file's params key by key, so it feeds all six.
+A CI run reads no file of yours, so six metrics stay "not measured" there until a local run feeds them. `targets/credits.json` is one entry: Git Crafter merges a targets file's params key by key, so it feeds all seven.
 
 ## Readers
 
