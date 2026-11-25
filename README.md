@@ -2,7 +2,7 @@
 
 ![Open-weight models flow through a guide, a sign-in and a spend stop into the OpenCode and Claude Desktop Apps](assets/hero.svg)
 
-Wire open-weight compute into the OpenCode Desktop App first and the Claude Desktop App second, on free credits and flat subscriptions. Then keep your own list, sign-ins and score page.
+Wire open-weight compute into the OpenCode Desktop App first and the Claude Desktop App second, on free credits and flat subscriptions. Then keep your list, sign-ins and score page.
 
 ## [📊 Open the live score page](https://soulcraft-org.github.io/compute-crafter/)
 
@@ -34,7 +34,7 @@ Copy one folder. Each README has its steps.
 | --- | --- |
 | 🗂️ [compute-list](templates/compute-list/README.md) | A sheet and board of your plans |
 | 🔐 [logins](templates/logins/README.md) | A sheet and board of your sign-ins |
-| 📈 [quality](templates/quality/README.md) | Your own Quality, Speed and Consumption page, pinned to this pack |
+| 📈 [quality](templates/quality/README.md) | Your Quality, Speed and Consumption page, pinned to this pack |
 | 🗺️ [process](templates/process/README.md) | The five-step Spend map on your Process page |
 
 ## Three doors
@@ -68,8 +68,8 @@ Copy one folder. Each README has its steps.
 | --- | --- |
 | Free credits, plus flat monthly subscriptions that give a lot of usage or functionality; never pay-per-token or pay-per-use | [Compute rules](https://github.com/SoulCraft-Org/git-crafter/blob/main/rules/compute.md) |
 | No key value in a session: CLI logins and OAuth first, env var names only | [Key rules](https://github.com/SoulCraft-Org/git-crafter/blob/main/rules/keys.md) |
-| Every free-tier figure cites the vendor's page and the date read | [CONTRIBUTING.md](CONTRIBUTING.md) |
-| A Claude Code Project stays on its flat plan: usage credits off, spend limit at zero | [Spend guards](docs/claude-code-projects-spend.md) |
+| Every free-tier figure cites the vendor's own page and the date read | [CONTRIBUTING.md](CONTRIBUTING.md) |
+| A Claude Code Project stays on its flat plan: usage credits off, spend limit at zero, three free ultrareviews | [Spend guards](docs/claude-code-projects-spend.md) |
 
 ## Built on
 
