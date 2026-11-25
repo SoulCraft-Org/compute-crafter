@@ -1,6 +1,6 @@
 # Claude Code Projects spend guards
 
-A Claude Code Project runs many cloud sessions on one flat plan. This page lists what draws on the plan and the switches that keep the bill flat.
+A Claude Code Project runs many cloud sessions on one flat plan. This page lists what draws on it and the switches that keep the bill flat.
 
 ```mermaid
 flowchart LR
@@ -27,17 +27,25 @@ flowchart LR
 
 | Guard | Do | Source |
 | --- | --- | --- |
-| Usage credits | Leave them off, or set a monthly spend limit before turning them on. They bill anything past the plan limit | [Claude Code docs, costs](https://code.claude.com/docs/en/costs), read 2026-11-25 |
-| Continue after a limit | Project settings, General, "Continue threads automatically when usage limits reset" is on by default. Turn it off to stop work from spilling into the next window | [Claude Code docs, Projects](https://code.claude.com/docs/en/claude-projects), read 2026-11-25 |
-| Ultrareview | Three free runs on Pro, Max and Ultra. Later runs bill as usage credits, so decline the paid prompt | [Claude Code docs, ultrareview](https://code.claude.com/docs/en/ultrareview), read 2026-11-25 |
+| Usage credits | Leave them off and keep the spend limit at zero. They bill anything past the plan limit | [Claude Code docs, costs](https://code.claude.com/docs/en/costs), read 2026-11-25 |
+| Continue after a limit | Project settings, General, "Continue threads automatically when usage limits reset" is on by default. Turn it off to stop spill into the next window | [Claude Code docs, Projects](https://code.claude.com/docs/en/claude-projects), read 2026-11-25 |
+| Ultrareview | Three free runs. Later runs bill as usage credits, so decline the paid prompt | [Claude Code docs, ultrareview](https://code.claude.com/docs/en/ultrareview), read 2026-11-25 |
 | Model and effort | Pick a smaller model or a lower effort level for threads that do not need the largest model | [Claude Code docs, Projects](https://code.claude.com/docs/en/claude-projects), read 2026-11-25 |
 | Pull request watching | Ask the thread to stop watching once the pull request merges | [Claude Code docs, Projects](https://code.claude.com/docs/en/claude-projects), read 2026-11-25 |
-| New work | Start a fresh thread instead of reviving a large old one | [Claude Code docs, Projects](https://code.claude.com/docs/en/claude-projects), read 2026-11-25 |
+
+## Billing rule
+
+| Spend kind | Rule |
+| --- | --- |
+| Monthly subscription that helps | Allowed. It is a flat fee |
+| Overage or metered extra | Goal of $0: leave usage credits off, auto-reload off, and every spend limit at zero |
+
+Anything else is one question to the owner, with a hard cap, before it is turned on.
 
 ## Plans
 
-The Claude pricing page lists Pro at $20 a month, or $17 a month billed yearly, Max at $100 and Ultra at $200 ([Claude pricing](https://claude.com/pricing), read 2026-11-25). It gives Max five times and Ultra ten times Pro's weekly usage, so every tier costs $20 per Pro-sized unit. The upgrade buys capacity, Fable access and API credits, not a cheaper unit. The credits and their limits are in the [Claude API guide](../guides/claude-api.md).
+Pro, Max and Ultra cost $20, $100 and $200 a month, five and ten times Pro's weekly usage for Max and Ultra ([Claude pricing](https://claude.com/pricing), read 2026-11-25). The upgrade buys capacity, Fable access and API credits, not a cheaper unit. Credits and limits: [Claude API guide](../guides/claude-api.md).
 
 ## Hosts and sign-in
 
-Which hosts run a Project, which plans offer it and how to sign in are in the [Claude Code Projects guide](../guides/claude-projects.md).
+Hosts, plans and sign-in: [Claude Code Projects guide](../guides/claude-projects.md).
