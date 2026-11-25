@@ -3,6 +3,7 @@
     "id": "issues.open_bugs",
     "params": {
       "comment": "security.claude_review_share counts only merged PRs that change a file claude-review.yml reviews; keep this list equal to its on.pull_request.paths (git-crafter #838: reviews run on sensitive paths only, to save subscription tokens).",
+      "project_title": "Compute Crafter",
       "review_paths": [
         "**/*.mjs",
         "**/*.js",
