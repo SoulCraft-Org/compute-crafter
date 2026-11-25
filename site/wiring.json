@@ -321,6 +321,36 @@
       }
     },
     {
+      "id": "claude-projects",
+      "name": "Claude Code Projects",
+      "guide": "guides/claude-projects.md",
+      "detail": null,
+      "lanes": [
+        "tools"
+      ],
+      "tagline": "Cloud threads from one conversation, on a Claude plan.",
+      "free": "No separate free tier. Threads draw on the plan's usage limits, 500 new threads a day (Projects docs, read 2026-11-25).",
+      "signin": "A Claude Pro, Max or Ultra plan, with the Claude GitHub App on each repository.",
+      "key": "The Claude sign-in. No key to store.",
+      "wires": {
+        "opencode": {
+          "kind": null,
+          "mark": "❔",
+          "how": "Not confirmed. A Project is a Claude feature. Both read the repository's AGENTS.md."
+        },
+        "code": {
+          "kind": "link",
+          "mark": "✅",
+          "how": "Projects in the sidebar. A thread can run on your own computer through Remote Control."
+        },
+        "cowork": {
+          "kind": null,
+          "mark": "❔",
+          "how": "Not confirmed."
+        }
+      }
+    },
+    {
       "id": "local-models",
       "name": "Local models",
       "guide": "guides/local-models.md",
