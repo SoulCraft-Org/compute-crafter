@@ -67,7 +67,7 @@ Copy one folder; its README has the steps.
 
 | Rule | Source |
 | --- | --- |
-| Free credits and flat monthly plans that give a lot of usage; never pay per token or per use | [Compute rules](https://github.com/SoulCraft-Org/git-crafter/blob/main/rules/compute.md) |
+| Free credits and flat monthly plans with a lot of usage; never pay-per-use | [Compute rules](https://github.com/SoulCraft-Org/git-crafter/blob/main/rules/compute.md) |
 | No key value in a session: CLI logins and OAuth first, env var names only | [Key rules](https://github.com/SoulCraft-Org/git-crafter/blob/main/rules/keys.md) |
 | Every free-tier figure cites the vendor's own page and the date read | [CONTRIBUTING.md](CONTRIBUTING.md) |
 | A Claude Code Project stays on its flat plan: usage credits off, spend limit at zero, three free ultrareviews | [Spend guards](docs/claude-code-projects-spend.md) |
