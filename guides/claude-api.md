@@ -24,12 +24,12 @@ flowchart LR
 
 ## Worked example: a doc re-read agent
 
-A weekly job re-reads stale pages and pushes a branch for review. Limits from its [source](https://github.com/Colorado-Compute/compute-credits/blob/main/tools/reread_agent.py), read 2026-11-25.
+A weekly job re-reads stale pages and pushes a branch for review. Limits from its [script](https://github.com/Colorado-Compute/compute-credits/blob/main/tools/reread_agent.py) and [workflow](https://github.com/Colorado-Compute/compute-credits/blob/main/.github/workflows/catalog-reread.yml), read 2026-11-25.
 
 | Part | Setting |
 | --- | --- |
 | Sign-in | The job's OIDC token, no stored key |
-| Reads | `catalog/**`, `AGENTS.md`, up to 10 source pages |
+| Reads | `catalog/**` and `AGENTS.md`. Its prompt caps the pages it fetches at 10 |
 | Writes | One file. The workflow, not the agent, pushes the branch |
 | Caps | 60 turns, a $3 budget per run, a 30 minute job |
 | Never | Merges, or runs git |
