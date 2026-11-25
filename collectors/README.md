@@ -12,4 +12,4 @@ flowchart LR
   E[Git Crafter engine] --> L[collectors/lib] --> C[collectors/credits] --> P[Credits tab]
 ```
 
-Run one test file at a time: `node --test collectors/credits/<file>.test.mjs`, with `GIT_CRAFTER` set to an engine checkout ([AGENTS.md](../AGENTS.md)).
+Run one test file at a time: `GIT_CRAFTER=<engine checkout> node --import ./tests/engine-lib.mjs --test collectors/credits/<file>.test.mjs` ([AGENTS.md](../AGENTS.md)).

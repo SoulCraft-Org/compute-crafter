@@ -4,7 +4,7 @@ What the RunPod guide moved out of its page. Traps and sources: [RunPod traps an
 
 ```mermaid
 flowchart LR
-  S[Sign up, two-factor on] --> C[Add credit for one run] --> K[Restricted API key] --> R[Run the pod] --> X[Stop and delete the pod]
+  S[Sign up, two-factor on] --> C[Add credit for one run] --> K[Restricted API key] --> R[runpodctl doctor] --> X[Stop and delete each pod]
 ```
 
 ## Guard
