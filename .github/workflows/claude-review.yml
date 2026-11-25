@@ -9,7 +9,7 @@ name: claude-review
 # (guides/detail/claude-api-ci.md). Do not add ANTHROPIC_API_KEY: a static key wins over federation. Recipe: Anthropic
 # workload identity federation, GitHub Actions page, read 2026-11-25.
 #
-# The Claude plan cannot pay for this. It spends the monthly API credit, one call of at most 1,500 output tokens per push.
+# The Claude plan cannot pay for this. It spends the monthly API credit, one call of at most 6,000 output tokens (thinking included) per push.
 # No pull_request_target: a pull request's code never runs with an outside secret. The script sends the diff as data.
 on:
   pull_request:
@@ -44,12 +44,6 @@ jobs:
       contents: read
       pull-requests: write
       id-token: write
-    env:
-      ANTHROPIC_FEDERATION_RULE_ID: ${{ secrets.ANTHROPIC_FEDERATION_RULE_ID }}
-      ANTHROPIC_ORGANIZATION_ID: ${{ secrets.ANTHROPIC_ORGANIZATION_ID }}
-      ANTHROPIC_SERVICE_ACCOUNT_ID: ${{ secrets.ANTHROPIC_SERVICE_ACCOUNT_ID }}
-      GH_TOKEN: ${{ github.token }}
-      PR_NUMBER: ${{ github.event.pull_request.number }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -70,7 +64,16 @@ jobs:
             "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=https://api.anthropic.com" \
             | jq -r .value > "$RUNNER_TEMP/oidc-jwt"
 
-      - name: Review the pull request
+      - name: Install the review client
         run: |
-          python3 -m pip install --quiet -r tools/requirements-claude-review.txt
+          python3 -m pip install --quiet --only-binary=:all: -r tools/requirements-claude-review.txt
+
+      - name: Review the pull request
+        env:
+          ANTHROPIC_FEDERATION_RULE_ID: ${{ secrets.ANTHROPIC_FEDERATION_RULE_ID }}
+          ANTHROPIC_ORGANIZATION_ID: ${{ secrets.ANTHROPIC_ORGANIZATION_ID }}
+          ANTHROPIC_SERVICE_ACCOUNT_ID: ${{ secrets.ANTHROPIC_SERVICE_ACCOUNT_ID }}
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
           python3 -I tools/claude_review.py
