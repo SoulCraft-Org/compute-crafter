@@ -25,6 +25,7 @@ th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);verti
 th{color:var(--mut);font-weight:600}
 tr:last-child td{border-bottom:0}
 .ok{color:var(--ok)} .warn{color:var(--warn)}
+.scroll{overflow-x:auto}
 svg{width:100%;height:auto;display:block}
 svg text{fill:var(--fg);font:13px system-ui,sans-serif}
 svg .b{fill:var(--card);stroke:var(--line)}
@@ -36,7 +37,7 @@ a{color:var(--acc)}
 <body>
 <main>
 <h1>Compute Crafter spec</h1>
-<p class="sub">One page: what this repo is for, how it works, where it stands, and the the one decision that was the owner's. <span class="pill">Decided</span><span class="pill">Read 2026-11-25</span></p>
+<p class="sub">One page: what this repo is for, how it works, where it stands, and the one decision that was the owner's. <span class="pill">Decided</span><span class="pill">Read 2026-11-25</span></p>
 
 <h2>Purpose</h2>
 <p>Compute Crafter wires open-weight compute into the OpenCode Desktop App first and the Claude Desktop App second. It runs on free credits and flat monthly plans. It never uses pay-per-use billing.</p>
@@ -51,14 +52,14 @@ a{color:var(--acc)}
 </table>
 
 <h2>How it works</h2>
-<svg viewBox="0 0 820 120" role="img" aria-label="Pick a guide, sign in, set the spend stop, wire into a desktop app, score it">
+<div class="scroll"><svg style="min-width:640px" viewBox="0 0 820 120" role="img" aria-label="Pick a guide, sign in, set the spend stop, wire into a desktop app, score it">
 <rect class="b" x="6" y="30" width="136" height="56" rx="8"/><text x="74" y="62" text-anchor="middle">Pick a guide</text>
 <rect class="b" x="170" y="30" width="136" height="56" rx="8"/><text x="238" y="62" text-anchor="middle">Sign in</text>
 <rect class="b" x="334" y="30" width="136" height="56" rx="8"/><text x="402" y="62" text-anchor="middle">Set spend stop</text>
 <rect class="b" x="498" y="30" width="150" height="56" rx="8"/><text x="573" y="55" text-anchor="middle">Wire into the</text><text x="573" y="72" text-anchor="middle">desktop app</text>
 <rect class="b" x="676" y="30" width="136" height="56" rx="8"/><text x="744" y="62" text-anchor="middle">Score it</text>
 <path class="a" d="M142 58H170M306 58H334M470 58H498M648 58H676"/>
-</svg>
+</svg></div>
 <p>The plan catalog is owned by the <a href="https://github.com/Colorado-Compute/compute-credits">compute-credits</a> repo. This repo reads it and pins a checked copy. It never edits it.</p>
 
 <h2>What is in scope</h2>
@@ -83,11 +84,11 @@ a{color:var(--acc)}
 <table>
 <tr><th>Gap</th><th>Why it matters</th><th>Issue</th></tr>
 <tr><td>Quickstart ends on "0 ladder plans"</td><td>The first run looks broken</td><td>292</td></tr>
-<tr><td>Words before first action are 121, goal 50</td><td>Readers leave before they act</td><td>285, 286</td></tr>
+<tr><td>Words before first action are 121, goal 50 (issue 285 is closed; the miss remains)</td><td>Readers leave before they act</td><td>286</td></tr>
 <tr><td>Re-read guide cites older than 2026-11-24</td><td>A figure without a fresh date is not verified</td><td>208, 209</td></tr>
 <tr><td>Pushes per merged PR is above 2</td><td>Wasted CI</td><td>232</td></tr>
 <tr><td>Claude security review follow-ups</td><td>Install order, hashed pins</td><td>290</td></tr>
-<tr><td>Two personal emails in public history</td><td>Not rewritten by decision; privacy switches are on</td><td>234</td></tr>
+<tr><td>One personal email in public history (two before PR 237 stopped counting a no-reply domain)</td><td>History is not rewritten; the last one waits on an owner decision</td><td>234</td></tr>
 </table>
 
 <h2 id="question">The owner's decision, made 2026-11-25</h2>
@@ -109,7 +110,7 @@ a{color:var(--acc)}
 <tr><td>OpenCode Desktop App first, Claude Desktop App second</td><td>README</td></tr>
 <tr><td>Never pay-per-use; a Claude Code Project stays on its flat plan</td><td>docs/claude-code-projects-spend.md</td></tr>
 <tr><td>Plan rows are edited upstream by pull request</td><td>AGENTS.md</td></tr>
-<tr><td>Public history is not rewritten</td><td>Issue 234</td></tr>
+<tr><td>Public history is not rewritten</td><td>Issue 234 and the setup plan's decision, 2026-11-25</td></tr>
 <tr><td>Stay narrow on free tiers and flat plans for the two desktop apps</td><td>The owner, 2026-11-25</td></tr>
 </table>
 </main>
