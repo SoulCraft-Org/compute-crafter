@@ -6,7 +6,7 @@ Claude Code Projects run on your Claude plan's usage limits. The monthly API cre
 flowchart LR
   A[1 Plan limits<br/>Claude Code Projects,<br/>interactive Claude Code] --> B[2 Free lanes<br/>free tiers in the catalog]
   B --> C[3 Capped subsidised plan<br/>monthly API credit,<br/>Agent SDK in CI]
-  C --> R{{Rule: every paid lane stops at its limit,<br/>none bills past it unless you buy credit}}
+  C --> R{{Rule: every paid lane stops at its limit,<br/>none bills past it unless you hold or buy credit}}
 ```
 
 | Account | Free tier | Login or key | Claude connector | OpenCode | Guard |
@@ -53,7 +53,7 @@ Run the Agent SDK in GitHub Actions over workload identity federation. The job h
 | --- | --- | --- |
 | 1 | Link one Console organization from Billing settings on claude.ai, as the subscriber on Max or Ultra. Wait seven days on the plan first. | [Credits](https://support.claude.com/en/articles/17154008-monthly-api-credits-for-max-ultra-and-team-plans), read 2026-11-25 |
 | 2 | Claim the monthly credit. It is spent before any purchased credit. Amounts: Max $100 and Ultra $200 per the credits page. | Same page |
-| 3 | Set Extra usage off, and keep usage credits off. Buy no extra credit, so API use stops when the monthly credit runs out. | [Projects](https://code.claude.com/docs/en/claude-projects), read 2026-11-25 |
+| 3 | Set Extra usage off, and keep usage credits off. Hold and buy no extra credit, so API use stops when the monthly credit runs out. | [Projects](https://code.claude.com/docs/en/claude-projects), read 2026-11-25 |
 | 4 | Run the setup check in [Projects README](https://github.com/SoulCraft-Org/git-crafter/blob/main/templates/projects/README.md). | Linked page |
 
 ## Prices
