@@ -321,6 +321,36 @@
       }
     },
     {
+      "id": "claude-code-projects",
+      "name": "Claude Code Projects",
+      "guide": "guides/claude-code-projects.md",
+      "detail": null,
+      "lanes": [
+        "inference"
+      ],
+      "tagline": "Cloud threads in the plan; the monthly API credit covers the API and Agent SDK, not Desktop.",
+      "free": "Cloud threads are included in a Pro, Max or Ultra plan. The monthly API credit does not cover the Desktop app or the Claude Code GitHub Action (Anthropic support, monthly API credits, read 2026-11-25).",
+      "signin": "The Claude Desktop App, signed in to a Pro, Max or Ultra plan.",
+      "key": "No key. CI that needs Claude uses the Agent SDK over federation, in `claude-api`.",
+      "wires": {
+        "opencode": {
+          "kind": "provider",
+          "mark": "❔",
+          "how": "Not confirmed. OpenCode's providers page names no Projects feature."
+        },
+        "code": {
+          "kind": null,
+          "mark": "➖",
+          "how": "Not available as a connection. Projects is the Code tab's own feature, so there is nothing to wire."
+        },
+        "cowork": {
+          "kind": null,
+          "mark": "➖",
+          "how": "Not available. The monthly API credit excludes the Claude apps (Anthropic support, monthly API credits, read 2026-11-25)."
+        }
+      }
+    },
+    {
       "id": "local-models",
       "name": "Local models",
       "guide": "guides/local-models.md",
