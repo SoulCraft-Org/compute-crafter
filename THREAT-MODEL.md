@@ -34,7 +34,7 @@ flowchart LR
 | Credits collectors | Key lands in a log or page | Redaction tests; keys named by variable; gitleaks (`secret-scan.yml`) | A new collector may skip redaction |
 | Claude cost read | Token theft or reuse | Workload identity federation: no stored key, a short-lived token. The Console rule pins the workflow file | A merged workflow edit can widen the claim |
 | Pages | Raw reading reaches the page | Privacy gate on the run file and the build folder | A collector bug |
-| Workflows | Fork code gets secrets | Read-only default token; writes on named jobs; no `pull_request_target` | Job-level writers: `wiki` (`contents: write`). `pages` deploy (`pages: write`, `id-token: write`). `scorecard` (`id-token: write`). `gemini-review` (`pull-requests: write`, `id-token: write`). The rest are read-only |
+| Workflows | Fork code gets secrets | Read-only default token; writes on named jobs; no `pull_request_target` | Job-level writers: `wiki` (`contents: write`). `pages` deploy (`pages: write`, `id-token: write`). `scorecard` (`id-token: write`). `gemini-review` (`pull-requests: write`, `id-token: write`). `claude-review` (`pull-requests: write`, `id-token: write`). The rest are read-only |
 | Wiki | A branch run publishes its `wiki/` | The `wiki` job runs on `main` only; the wiki is edited by PR | The wiki's own web editor, limited to collaborators |
 | Workflows | Action tag moves | Full-SHA pins in `actions.lock`; 14-day cooldown | `ossf/scorecard-action` pulls its image by tag |
 | `main` | Unreviewed change lands | PR rulesets, `ci / ci-ok`, DCO sign-off | One human |
