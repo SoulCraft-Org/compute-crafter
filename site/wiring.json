@@ -321,32 +321,32 @@
       }
     },
     {
-      "id": "claude-code-projects",
+      "id": "claude-projects",
       "name": "Claude Code Projects",
-      "guide": "guides/claude-code-projects.md",
+      "guide": "guides/claude-projects.md",
       "detail": null,
       "lanes": [
-        "inference"
+        "tools"
       ],
-      "tagline": "Cloud threads in the plan; the monthly API credit covers the API and Agent SDK, not Desktop.",
-      "free": "Cloud threads are included in a Pro, Max or Ultra plan. The monthly API credit does not cover the Desktop app or the Claude Code GitHub Action ([Anthropic support, monthly API credits](https://support.claude.com/en/articles/17154008-monthly-api-credits-for-max-ultra-and-team-plans), read 2026-11-25).",
-      "signin": "claude.ai/code or the Claude Desktop App, signed in to a Pro, Max or Ultra plan.",
-      "key": "CI: the Agent SDK over federation, no stored key (see `claude-api`). Elsewhere an API key from the linked Console organization.",
+      "tagline": "Cloud threads from one conversation, on a Claude plan.",
+      "free": "No separate free tier. Threads draw on the plan's usage limits, 500 new threads a day (Projects docs, read 2026-11-25).",
+      "signin": "A Claude Pro, Max or Ultra plan, with the Claude GitHub App on each repository.",
+      "key": "The Claude sign-in. No key to store.",
       "wires": {
         "opencode": {
-          "kind": "provider",
+          "kind": null,
           "mark": "❔",
-          "how": "Not confirmed. OpenCode's providers page names no Projects feature."
+          "how": "Not confirmed. A Project is a Claude feature, and its docs name CLAUDE.md, not AGENTS.md."
         },
         "code": {
-          "kind": null,
-          "mark": "➖",
-          "how": "Not available as a connection. Projects is the Code tab's own feature, so there is nothing to wire."
+          "kind": "link",
+          "mark": "✅",
+          "how": "Projects in the sidebar. A thread can run on your own computer through Remote Control."
         },
         "cowork": {
           "kind": null,
-          "mark": "➖",
-          "how": "Not available. The monthly API credit excludes the Claude apps ([Anthropic support, monthly API credits](https://support.claude.com/en/articles/17154008-monthly-api-credits-for-max-ultra-and-team-plans), read 2026-11-25)."
+          "mark": "❔",
+          "how": "Not confirmed."
         }
       }
     },

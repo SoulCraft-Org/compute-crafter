@@ -13,6 +13,15 @@ flowchart LR
   G[Pick a provider guide] --> S[Sign in] --> C[Set the spend stop] --> W[Wire into the OpenCode Desktop App or the Claude Desktop App] --> Q[Score it]
 ```
 
+## Quickstart: use it from a Code Project
+
+| # | Do | Where |
+|---|---|---|
+| 1 | Make a private repo for your plans. Attach it to a Code Project in the Claude desktop app or claude.ai/code, with this repo read-only | [Code Projects](https://code.claude.com/docs/en/claude-projects) |
+| 2 | Copy the compute-list starter into your private repo and run `bash sync.sh` | [templates/compute-list](templates/compute-list/README.md) |
+| 3 | List the plans you hold in `mine.json`, give each a `lane` and a `rung`, and write its spend guard in `notes` | [Ladders](templates/compute-list/README.md#ladders) |
+| 4 | Run `bash sheet.sh vendor/plans.json mine.json --ladders`. Use the first rung with room. A paid rung waits for your yes | the same page |
+
 ## Provider guides
 
 Each opens with one table: account, free tier, login or key, Claude connector, OpenCode, guard. [All guides](guides/README.md).
@@ -67,6 +76,7 @@ Copy one folder. Each README has its steps and a fake example.
 | Free credits, plus flat monthly subscriptions that give a lot of usage or functionality; never pay-per-token or pay-per-use consumption | [Git Crafter compute rules](https://github.com/SoulCraft-Org/git-crafter/blob/main/rules/compute.md) |
 | A session never holds a key value: CLI logins and OAuth first, env var names only | [Git Crafter key rules](https://github.com/SoulCraft-Org/git-crafter/blob/main/rules/keys.md) |
 | Every free-tier figure cites the vendor's own page and the date it was read | [CONTRIBUTING.md](CONTRIBUTING.md) |
+| A Claude Code Project stays on its flat plan: usage credits off or capped, three free ultrareviews | [Projects spend guards](docs/claude-code-projects-spend.md) |
 
 ## Built on
 

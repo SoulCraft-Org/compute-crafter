@@ -197,6 +197,27 @@ test('compute-list: sheet.sh prints one row per plan in your order, and flags an
   assert.deepEqual(json.map((r) => [r.id, r.known]), [['acme-gpu', true], ['no-such-plan', false], ['acme-free', true]]);
 });
 
+test('compute-list: sheet.sh --ladders lists each lane\'s rungs in order and leaves the sheet table as it was', () => {
+  const dir = fixture([
+    { id: 'acme-gpu', have: false, status: 'want', lane: 'GPU', rung: 2, notes: 'paid, on my yes' },
+    { id: 'acme-free', have: true, status: 'use', lane: 'GPU', rung: 1 },
+    { id: 'no-such-plan', have: true },
+  ]);
+  const [plans, mine] = [join(dir, 'plans.json'), join(dir, 'mine.json')];
+  const out = sheet(plans, mine, '--ladders');
+  assert.equal(out.status, 0, out.stderr);
+  const lines = out.stdout.trim().split('\n');
+  assert.equal(lines.length, 4, 'header, rule, two rungs; a plan with no lane is not a rung');
+  assert.match(lines[2], /^\| GPU \| 1 \| Acme Free \| ✅ \| 🟢 use \| 🛑 stops \| {2}\|$/);
+  assert.match(lines[3], /^\| GPU \| 2 \| Acme GPU \| · \| ⭐ want \| 💸 bills \| paid, on my yes \|$/);
+  assert.equal(sheet(plans, mine).stdout.includes('rung'), false, 'the sheet table gains no column');
+  assert.deepEqual(JSON.parse(sheet(plans, mine, '--json').stdout).map((r) => [r.lane, r.rung]), [['GPU', 2], ['GPU', 1], [null, null]]);
+  writeFileSync(mine, JSON.stringify({ version: 1, plans: [{ id: 'acme-free', lane: 'GPU', rung: 'one' }] }));
+  assert.equal(sheet(plans, mine, '--ladders').status, 2, 'a rung must be a number');
+  writeFileSync(mine, JSON.stringify({ version: 1, plans: [{ id: 'acme-free' }] }));
+  assert.equal(sheet(plans, mine, '--ladders').stdout.trim(), '**0 ladder plans**');
+});
+
 test('compute-list: the starter example builds against the real catalog, every id known', () => {
   const out = sheet(CATALOG, join(LIST, 'mine.example.json'), '--json');
   assert.equal(out.status, 0, out.stderr);
