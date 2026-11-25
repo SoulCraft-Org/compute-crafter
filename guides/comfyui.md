@@ -1,6 +1,6 @@
 # ComfyUI
 
-ComfyUI runs open-weight image and video workflows. Comfy Cloud's MCP server lets the Claude Desktop App drive it, and a local one drives a ComfyUI on your own machine.
+ComfyUI runs open-weight image and video workflows. Comfy Cloud's MCP server lets the Claude Desktop App drive it, and a local one drives a ComfyUI on your own machine. Installer: [comfyui-base](https://github.com/SoulCraft-Org/comfyui-base).
 
 ```mermaid
 flowchart LR

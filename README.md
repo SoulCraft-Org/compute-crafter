@@ -1,8 +1,8 @@
 # Compute Crafter
 
-![Open-weight models flow through a guide, a sign-in and a spend stop into the OpenCode Desktop App first and the Claude Desktop App second](assets/hero.svg)
+![Open-weight models flow through a guide, a sign-in and a spend stop into the OpenCode and Claude Desktop Apps](assets/hero.svg)
 
-Wire open-weight compute into the OpenCode Desktop App first and the Claude Desktop App second, on free credits and flat subscriptions. Then keep your own list, sign-ins and score page.
+Wire open-weight compute into the OpenCode Desktop App first and the Claude Desktop App second, on free credits and flat subscriptions. Then keep your list, sign-ins and score page.
 
 ## [📊 Open the live score page](https://soulcraft-org.github.io/compute-crafter/)
 
@@ -24,31 +24,7 @@ flowchart LR
 
 ## Provider guides
 
-Each opens with one table of account, free tier, login, connector and guard. [All guides](guides/README.md).
-
-| Guide | Lane |
-| --- | --- |
-| 🤗 [Hugging Face](guides/hugging-face.md) | Inference, GPU |
-| 🟩 [NVIDIA](guides/nvidia.md) | Inference |
-| ⚡ [Groq](guides/groq.md) | Inference |
-| 🔀 [OpenRouter](guides/openrouter.md) | Inference |
-| 🤝 [Together AI](guides/together.md) | Inference |
-| ☁️ [Cloudflare Workers AI](guides/cloudflare-workers-ai.md) | Inference |
-| 🦙 [Ollama](guides/ollama.md) | Inference |
-| 🧠 [Claude API](guides/claude-api.md) | Inference |
-| 🧱 [Modal](guides/modal.md) | GPU |
-| 🖥️ [RunPod](guides/runpod.md) | GPU |
-| 🔴 [AMD](guides/amd.md) | GPU |
-| 🌐 [Google Cloud](guides/google-cloud.md) | CPU, GPU |
-| 🎨 [ComfyUI](guides/comfyui.md) | GPU |
-| 🧊 [Meshy](guides/meshy.md) | 3D |
-| 🧩 [Claude Desktop MCP](guides/claude-desktop-mcp.md) | Client |
-| 🐙 [GitHub](guides/github.md) | CI, tools |
-| 💻 [Local models](guides/local-models.md) | Local |
-| 🔑 [Logins](guides/logins.md) | Accounts |
-| 🏋️ [Training](guides/training.md) | GPU |
-| ✏️ [Zed](guides/zed.md) | Client |
-| 🪿 [Goose](guides/goose.md) | Client |
+One guide per provider, each opening with one table of account, free tier, login, connector and guard. [All guides](guides/README.md).
 
 ## Starters
 
@@ -58,7 +34,7 @@ Copy one folder. Each README has its steps.
 | --- | --- |
 | 🗂️ [compute-list](templates/compute-list/README.md) | A sheet and board of your plans |
 | 🔐 [logins](templates/logins/README.md) | A sheet and board of your sign-ins |
-| 📈 [quality](templates/quality/README.md) | Your own Quality, Speed and Consumption page, pinned to this pack |
+| 📈 [quality](templates/quality/README.md) | Your Quality, Speed and Consumption page, pinned to this pack |
 | 🗺️ [process](templates/process/README.md) | The five-step Spend map on your Process page |
 
 ## Three doors
@@ -73,31 +49,30 @@ Copy one folder. Each README has its steps.
 
 | Folder | Holds |
 |---|---|
-| `assets/` | The hero image and the social preview |
-| `catalog/` | The checked copy of the plan catalog, its pin and the sign-in vendor list |
-| `collectors/` | The Credits collector and the engine's one door (`lib/`) |
-| `docs/` | Claude Code Projects spend notes and the handoff notes |
-| `guides/` | One guide per provider, a checklist and the CI guides |
-| `ideals/` | The Credits tab's metric ideals |
+| `assets/` | Hero image, social preview |
+| `catalog/` | Pinned plan catalog and sign-in vendors |
+| `collectors/` | The Credits collector and the engine door |
+| `docs/` | Spend notes, handoff notes |
+| `guides/` | Provider guides, checklist, CI guides |
+| `ideals/`, `targets/` | The Credits tab's ideals and targets |
 | `maps/` | The spend map |
-| `quality/` | The Quality page's config, targets and process maps |
-| `site/` | The wiring map page and its data |
-| `targets/` | The Credits tab's metric targets |
-| `templates/` | The starters: compute list, logins, process and quality |
-| `tests/` | The pin, bridge, logins and pack tests |
-| `tools/` | The voice lint, its rules and the private-terms scan |
+| `quality/` | Quality page config, targets, process maps |
+| `site/` | The wiring map page |
+| `templates/` | The four starters |
+| `tests/` | Pin, bridge, logins and pack tests |
+| `tools/` | Voice lint and the private-terms scan |
 
 ## Rules every page follows
 
 | Rule | Source |
 | --- | --- |
-| Free credits, plus flat monthly subscriptions that give a lot of usage or functionality; never pay-per-token or pay-per-use consumption | [Git Crafter compute rules](https://github.com/SoulCraft-Org/git-crafter/blob/main/rules/compute.md) |
-| A session never holds a key value: CLI logins and OAuth first, env var names only | [Git Crafter key rules](https://github.com/SoulCraft-Org/git-crafter/blob/main/rules/keys.md) |
-| Every free-tier figure cites the vendor's own page and the date it was read | [CONTRIBUTING.md](CONTRIBUTING.md) |
-| A Claude Code Project stays on its flat plan: usage credits off, spend limit at zero, three free ultrareviews | [Projects spend guards](docs/claude-code-projects-spend.md) |
+| Free credits, plus flat monthly subscriptions that give a lot of usage or functionality; never pay-per-token or pay-per-use | [Compute rules](https://github.com/SoulCraft-Org/git-crafter/blob/main/rules/compute.md) |
+| No key value in a session: CLI logins and OAuth first, env var names only | [Key rules](https://github.com/SoulCraft-Org/git-crafter/blob/main/rules/keys.md) |
+| Every free-tier figure cites the vendor's own page and the date read | [CONTRIBUTING.md](CONTRIBUTING.md) |
+| A Claude Code Project stays on its flat plan: usage credits off, spend limit at zero, three free ultrareviews | [Spend guards](docs/claude-code-projects-spend.md) |
 
 ## Built on
 
-[Git Crafter](https://github.com/SoulCraft-Org/git-crafter) supplies the CI standard and the Claude rules. The Credits pack (`pack.json`) moved from it ([NOTICE](NOTICE)). [pages.yml](.github/workflows/pages.yml) builds the Quality and Process pages after the [privacy gate](tests/privacy.mjs). The [ComfyUI guide](guides/comfyui.md) links the [comfyui-base](https://github.com/SoulCraft-Org/comfyui-base) installer.
+[Git Crafter](https://github.com/SoulCraft-Org/git-crafter) supplies the CI standard and the Claude rules, and the Credits pack (`pack.json`) moved from it ([NOTICE](NOTICE)). [pages.yml](.github/workflows/pages.yml) builds the Quality and Process pages after the [privacy gate](tests/privacy.mjs).
 
 Published by [SoulCraft-Org](https://github.com/SoulCraft-Org) under [Apache-2.0](LICENSE).
