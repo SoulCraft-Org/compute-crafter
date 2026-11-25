@@ -22,6 +22,18 @@ flowchart LR
 | Claude Desktop App, Code tab | Not available. The credits cover the API, Managed Agents, the Agent SDK and the Playground. Its "Doesn’t cover" row lists Claude Code. | [API credits](https://platform.claude.com/docs/en/about-claude/api-credits-for-subscribers), read 2026-11-24 |
 | Claude Desktop App, Cowork | Not available. Its "Doesn’t cover" row reads "Claude Code, extra usage in the Claude apps." | [API credits](https://platform.claude.com/docs/en/about-claude/api-credits-for-subscribers), read 2026-11-24 |
 
+## Worked example: a doc re-read agent
+
+A weekly job re-reads stale pages and pushes a branch for review. Limits from its [source](https://github.com/Colorado-Compute/compute-credits/blob/main/tools/reread_agent.py), read 2026-11-25.
+
+| Part | Setting |
+| --- | --- |
+| Sign-in | The job's OIDC token, no stored key |
+| Reads | `catalog/**`, `AGENTS.md`, up to 10 source pages |
+| Writes | One file. The workflow, not the agent, pushes the branch |
+| Caps | 60 turns, a $3 budget per run, a 30 minute job |
+| Never | Merges, or runs git |
+
 <details>
 <summary>Commands</summary>
 
