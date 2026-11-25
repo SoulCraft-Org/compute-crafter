@@ -23,7 +23,10 @@
           "role": "suite"
         }
       ],
-      "pages_dir": "site/"
-    }
+      "pages_dir": "site/",
+      "comment": "The e2e metrics read these suites. None is marked e2e, because the repo has no end-to-end suite."
+    },
+    "drop": true,
+    "goal_source": "Off: the repo has no end-to-end suite and its one page is generated. Its params stay, because tests.axe_routes reads them. Reversal: delete drop when an e2e suite is added."
   }
 ]
