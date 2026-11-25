@@ -11,6 +11,6 @@
       "site_url": "https://soulcraft-org.github.io/compute-crafter/"
     },
     "drop": true,
-    "goal_source": "Off: GitHub Pages sends no custom response headers. This page is built in CI from collected data and its build output is never committed (AGENTS.md), so serving it from Cloudflare Pages needs a CI deploy with a stored token, and any host change needs a second production URL, for the +0.2 points the live work queue shows (read 2026-11-25) (issue 249). Its params stay. Delete the drop if the site moves to a host that sets headers"
+    "goal_source": "Off: GitHub Pages sends no custom response headers. Cloudflare Pages could send them from a `_headers` file. This page is built in CI with secrets (.github/workflows/pages.yml), so Cloudflare would need those secrets in its build or a CI deploy with a stored token. Either route also needs a second production URL. The live work queue shows +0.2 points for the metric (read 2026-11-25). Issue 249. Its params stay. Delete the drop if the site moves to a host that sets headers"
   }
 ]
