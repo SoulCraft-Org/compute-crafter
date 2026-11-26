@@ -1,6 +1,6 @@
 # Provider guides
 
-One page per provider. Each opens with a diagram, then one table: account, free tier, login or key, OpenCode, guard. A Wiring table follows for the OpenCode Desktop App. Three topic pages open with their own table or text: [Local models](local-models.md), [Logins](logins.md) and [Training](training.md). Every guide covers open-weight models or the compute and tools around them. Closed-model providers have no guide here.
+One page per provider. Each opens with a diagram, then one table: account, free tier, login or key, OpenCode, guard. A Wiring table follows for the OpenCode Desktop App. Three topic pages open with their own table or text: [Local models](local-models.md), [Logins](logins.md) and [Training](training.md). Every guide covers open-weight models or the compute and tools around them. Closed-model providers have no guide here. OpenCode is first. Zed and Goose are short "also works with" pages, listed last among the clients.
 
 ```mermaid
 flowchart LR
@@ -27,8 +27,8 @@ flowchart LR
 | [ComfyUI](comfyui.md) | ⚡ GPU | ✅ | Comfy Cloud, comfy-cli, [comfyui-base](https://github.com/SoulCraft-Org/comfyui-base) installer |
 | [Training](training.md) | ⚡ GPU | ❔ | LoRA, then RL such as GRPO, on free credits |
 | [GitHub](github.md) | 🔧 CI, tools | ❔ | Actions, `gh` login, MCP server, App manifest |
-| [Zed](zed.md) | 🔌 Client | ❔ | Editor on your keys, agents over ACP |
-| [Goose](goose.md) | 🔌 Client | ❔ | Open-source agent, keys in the keyring |
+| [Zed](zed.md) | 🔌 Client, also works with | ❔ | Open-source editor, runs OpenCode over ACP |
+| [Goose](goose.md) | 🔌 Client, also works with | ❔ | Open-source agent, keys in the keyring |
 | [Local models](local-models.md) | 🏠 Local | ✅ | MLX and LM Studio on your own port |
 | [Logins](logins.md) | 🔑 Accounts | ❔ | One sign-in order, passkeys, logins catalog |
 

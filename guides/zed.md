@@ -1,16 +1,15 @@
 # Zed
 
-Zed is a free editor that runs open-weight models on your own provider keys. It runs OpenCode and Goose as external agents over the Agent Client Protocol (ACP).
+Also works with OpenCode: Zed is an open-source editor (GPL-3.0-or-later, [README](https://github.com/zed-industries/zed), read 2026-11-26) that runs `opencode acp` as an external agent over the Agent Client Protocol (ACP). OpenCode is the way in. This page is a short secondary note, and it covers open-weight models on your own keys only.
 
 ```mermaid
 flowchart LR
-  P[Zed editor] --> S[Sign in<br/>none for the editor,<br/>keys in the keychain] --> G[Spend stop<br/>Zed Free bills nothing,<br/>Pro spend limit]
-  G -.-> O[OpenCode Desktop App<br/>not confirmed]
+  O[OpenCode<br/>first choice] -.->|opencode acp| P[Zed editor<br/>also works]
 ```
 
 | Account | Free tier | Login or key | OpenCode | Guard |
 | --- | --- | --- | --- | --- |
-| None for the editor. A Zed sign-in is needed only for Zed-hosted models ([Plans & Pricing](https://zed.dev/docs/ai/plans-and-usage), read 2026-11-24). | Zed Free is $0 forever, with unlimited use of your own API keys or external agents ([Pricing](https://zed.dev/pricing), read 2026-11-24). | Keys saved in **Settings > AI > LLM Providers** go to the keychain, not `settings.json` ([Use API Access](https://zed.dev/docs/ai/use-api-access), read 2026-11-24). | Not confirmed for the Desktop App. Zed runs `opencode acp` ([OpenCode ACP](https://opencode.ai/docs/cli/acp), read 2026-11-24). | On Free, Zed bills nothing. On Pro, the spend limit defaults to $10 and accepts $0 ([Plans & Pricing](https://zed.dev/docs/ai/plans-and-usage), read 2026-11-24). [More](detail/zed.md#guard). See [Git Crafter compute rules](https://github.com/SoulCraft-Org/git-crafter/blob/main/rules/compute.md). |
+| None for the editor with your own keys ([Plans & Pricing](https://zed.dev/docs/ai/plans-and-usage), read 2026-11-24). | Zed Free is $0 forever, with unlimited use of your own API keys or external agents ([Pricing](https://zed.dev/pricing), read 2026-11-24). | Keys saved in **Settings > AI > LLM Providers** go to the keychain, not `settings.json` ([Use API Access](https://zed.dev/docs/ai/use-api-access), read 2026-11-24). | Not confirmed for the Desktop App. Zed runs `opencode acp` ([OpenCode ACP](https://opencode.ai/docs/cli/acp), read 2026-11-24). | Sign in to nothing in Zed. The spend stop is your provider's, from its guide. See [Git Crafter compute rules](https://github.com/SoulCraft-Org/git-crafter/blob/main/rules/compute.md). |
 
 ## Wiring
 
@@ -31,4 +30,4 @@ opencode auth login
 
 </details>
 
-Providers, guard and agents: [Zed detail](detail/zed.md). Traps and sources: [Zed traps and sources](detail/zed-traps.md).
+Set up: [Zed detail](detail/zed.md). Traps and sources: [Zed traps and sources](detail/zed-traps.md).
