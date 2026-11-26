@@ -2,7 +2,7 @@
 
 ![Open-weight models flow through a guide, a sign-in and a spend stop into the OpenCode Desktop App](assets/hero.svg)
 
-Wire open-weight compute into the OpenCode Desktop App, on free credits and flat subscriptions. Then keep your list, sign-ins and score. This repo promotes only open weights and OpenCode.
+Wire open-weight compute into the OpenCode Desktop App, on free credits and flat subscriptions. Then keep your list, sign-ins and score page. The starters work with any client. This repo promotes only open weights and OpenCode.
 
 ## [📊 Open the live score page](https://soulcraft-org.github.io/compute-crafter/)
 
@@ -20,9 +20,9 @@ flowchart LR
 | 1 | Copy the compute-list starter, with its `.gitignore`, into a private repo. Keep this repo beside it, read-only | [Starter](templates/compute-list/README.md) |
 | 2 | In the copy, with `gh` signed in and `jq` installed, run `bash sync.sh "$(gh release view -R SoulCraft-Org/compute-crafter --json tagName -q .tagName)" && cp mine.example.json mine.json && bash sheet.sh vendor/plans.json mine.json` | [Starter](templates/compute-list/README.md) |
 
-The release tag keeps the copy still until you sync again. `bash sync.sh` alone follows main. It uses `gh api` REST only, so it runs in a Claude cloud session too.
+The newest release tag keeps the copy still until you sync again. `bash sync.sh` alone follows main. It uses `gh api` REST only, so it runs in a Claude cloud session, where GraphQL is refused.
 
-Replace the example rows in `mine.json` with your plans. Give each a `lane` and a `rung`, add `--ladders` to the sheet command, and use the first rung with room. A paid rung waits for your yes. Put each spend guard in `notes`. [Ladders](templates/compute-list/README.md#ladders)
+Replace the example rows in `mine.json` with your plans. Give each a `lane` and a `rung`, add `--ladders` to the sheet command, and use the first rung with room. A paid rung waits for your yes. Write each plan's spend guard in `notes`. [Ladders](templates/compute-list/README.md#ladders)
 
 ## Provider guides
 
@@ -30,7 +30,7 @@ One guide per provider, opening with a table of account, free tier, login and gu
 
 ## Starters
 
-Copy one folder and follow its README.
+Copy one folder.
 
 | Starter | You get |
 | --- | --- |
@@ -43,7 +43,7 @@ Copy one folder and follow its README.
 
 | Door | Holds |
 | --- | --- |
-| 🔌 [compute-crafter](https://github.com/SoulCraft-Org/compute-crafter) | This repo: guides, sign-ins, starters, score pages |
+| 🔌 [compute-crafter](https://github.com/SoulCraft-Org/compute-crafter) | This repo |
 | 💳 [compute-credits](https://github.com/Colorado-Compute/compute-credits) | The plan catalog and its Credits Explorer. [catalog/](catalog/README.md) here is a pinned copy |
 | 🚀 [startup-credits](https://github.com/Colorado-Startups/startup-credits) | Startup programs |
 
@@ -52,18 +52,18 @@ Copy one folder and follow its README.
 | Folder | Holds |
 |---|---|
 | `assets/` | Hero image, social preview |
-| `catalog/` | Pinned plans and sign-in vendors |
-| `collectors/` | Credits collector, engine door |
-| `docs/` | Spend notes, handoffs, the spec |
+| `catalog/` | Pinned plans, sign-ins |
+| `collectors/` | Credits collector |
+| `docs/` | Spend notes, handoffs, spec |
 | `guides/` | Provider guides, checklist, CI guides |
 | `ideals/` | The Credits tab's ideals |
 | `maps/` | The spend map |
-| `quality/` | Quality page config and targets |
+| `quality/` | Quality config, targets, process maps |
 | `site/` | The wiring map page |
 | `targets/` | The Credits tab's targets |
 | `templates/` | The four starters |
 | `tests/` | Pin, logins, pack tests |
-| `tools/` | Voice lint, private-terms scan |
+| `tools/` | Lint and private-terms scan |
 
 ## Rules every page follows
 
