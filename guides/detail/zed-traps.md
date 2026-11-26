@@ -11,7 +11,6 @@ What goes wrong with Zed, and the pages this guide read. The steps are in [Zed d
 | Ollama's small context | Zed asks Ollama for 4,096 tokens of context unless you set `context_window` or a model's `max_tokens` ([Use a Local Model](https://zed.dev/docs/ai/use-a-local-model), read 2026-11-20). A coding agent needs far more |
 | `opencode` not found | A graphical client may not see your shell's `PATH`. Set `command` to the path `which opencode` prints ([OpenCode ACP](https://opencode.ai/docs/cli/acp), read 2026-11-24) |
 | Looks stuck | `opencode acp` waits for input. Never run it by hand ([OpenCode ACP](https://opencode.ai/docs/cli/acp), read 2026-11-24) |
-| Pro overage | Tokens past the included $5 bill at API list price plus 10%, at month end or every $10 ([Pricing](https://zed.dev/pricing), read 2026-11-24). A $0 spend limit caps Pro at its fee ([Plans & Pricing](https://zed.dev/docs/ai/plans-and-usage), read 2026-11-24) |
 | Remote projects | Keys saved in Zed come from the local keychain, even in an SSH project ([Use API Access](https://zed.dev/docs/ai/use-api-access), read 2026-11-24) |
 
 ## Sources
@@ -21,8 +20,8 @@ What goes wrong with Zed, and the pages this guide read. The steps are in [Zed d
 
 | Page | Read |
 | --- | --- |
+| [README](https://github.com/zed-industries/zed) | 2026-11-26 |
 | [Pricing](https://zed.dev/pricing) | 2026-11-24 |
-| [Plans & Pricing](https://zed.dev/docs/ai/plans-and-usage) | 2026-11-24 |
 | [External Agents](https://zed.dev/docs/ai/external-agents) | 2026-11-24 |
 | [OpenCode ACP](https://opencode.ai/docs/cli/acp) | 2026-11-24 |
 | [Use API Access](https://zed.dev/docs/ai/use-api-access) | 2026-11-24 |

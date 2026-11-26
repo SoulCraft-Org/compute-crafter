@@ -376,7 +376,7 @@
       "lanes": [
         "tools"
       ],
-      "tagline": "An open-source coding agent, CLI and desktop app.",
+      "tagline": "Also works with OpenCode: an open-source agent, CLI and desktop app.",
       "free": "Goose costs nothing. Models bill through the provider you pick (aaif-goose/goose, read 2026-11-20).",
       "signin": "None. Each model provider has its own account.",
       "key": "`goose configure` stores a provider key in the system keyring.",
@@ -387,7 +387,7 @@
           "how": "Not confirmed. Goose's pages name no OpenCode link. Both run as ACP agents."
         }
       },
-      "note": "Goose and OpenCode are peer agents. Both run in Zed."
+      "note": "OpenCode is first. Goose is a secondary option."
     },
     {
       "id": "zed",
@@ -397,9 +397,9 @@
       "lanes": [
         "tools"
       ],
-      "tagline": "An editor on your own provider keys, with coding agents over ACP.",
+      "tagline": "Also works with OpenCode: an open-source editor that runs it over ACP.",
       "free": "Zed Free is $0 forever, with unlimited use of your own API keys or external agents (Zed Pricing, read 2026-11-20).",
-      "signin": "None for the editor. A Zed sign-in is only for Zed-hosted models.",
+      "signin": "None for the editor with your own keys.",
       "key": "Keys saved in the editor's LLM Providers settings go to the system keychain.",
       "wires": {
         "opencode": {
