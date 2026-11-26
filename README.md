@@ -2,7 +2,7 @@
 
 ![Open-weight models flow through a guide, a sign-in and a spend stop into the OpenCode Desktop App](assets/hero.svg)
 
-Wire open-weight compute into the OpenCode Desktop App, on free credits and flat subscriptions. Then keep your list, sign-ins and score page. The starters work with any client, but this repo promotes only open weights and OpenCode.
+Wire open-weight compute into the OpenCode Desktop App, on free credits and flat subscriptions. Then keep your list, sign-ins and score. This repo promotes only open weights and OpenCode.
 
 ## [📊 Open the live score page](https://soulcraft-org.github.io/compute-crafter/)
 
@@ -20,9 +20,9 @@ flowchart LR
 | 1 | Copy the compute-list starter, with its `.gitignore`, into a private repo. Keep this repo beside it, read-only | [Starter](templates/compute-list/README.md) |
 | 2 | In the copy, with `gh` signed in and `jq` installed, run `bash sync.sh "$(gh release view -R SoulCraft-Org/compute-crafter --json tagName -q .tagName)" && cp mine.example.json mine.json && bash sheet.sh vendor/plans.json mine.json` | [Starter](templates/compute-list/README.md) |
 
-The newest release tag keeps the copy still until you sync again. `bash sync.sh` alone follows main. `sync.sh` uses `gh api` REST only, so it also runs in a Claude cloud session, where GraphQL is refused.
+The release tag keeps the copy still until you sync again. `bash sync.sh` alone follows main. It uses `gh api` REST only, so it runs in a Claude cloud session too.
 
-Then replace the example rows in `mine.json` with your plans. Give each a `lane` and a `rung`, and add `--ladders` to the sheet command. Use the first rung with room. A paid rung waits for your yes. Write each plan's spend guard in its `notes`. [Ladders](templates/compute-list/README.md#ladders)
+Replace the example rows in `mine.json` with your plans. Give each a `lane` and a `rung`, add `--ladders` to the sheet command, and use the first rung with room. A paid rung waits for your yes. Put each spend guard in `notes`. [Ladders](templates/compute-list/README.md#ladders)
 
 ## Provider guides
 
@@ -30,7 +30,7 @@ One guide per provider, opening with a table of account, free tier, login and gu
 
 ## Starters
 
-Copy one folder; its README has the steps.
+Copy one folder and follow its README.
 
 | Starter | You get |
 | --- | --- |
@@ -52,18 +52,18 @@ Copy one folder; its README has the steps.
 | Folder | Holds |
 |---|---|
 | `assets/` | Hero image, social preview |
-| `catalog/` | Pinned plan catalog and sign-in vendors |
-| `collectors/` | The Credits collector and the engine door |
-| `docs/` | Spend notes, handoff notes, the spec |
+| `catalog/` | Pinned plans and sign-in vendors |
+| `collectors/` | Credits collector, engine door |
+| `docs/` | Spend notes, handoffs, the spec |
 | `guides/` | Provider guides, checklist, CI guides |
 | `ideals/` | The Credits tab's ideals |
 | `maps/` | The spend map |
-| `quality/` | Quality page config, targets, process maps |
+| `quality/` | Quality page config and targets |
 | `site/` | The wiring map page |
 | `targets/` | The Credits tab's targets |
 | `templates/` | The four starters |
-| `tests/` | Pin, logins and pack tests |
-| `tools/` | Voice lint and the private-terms scan |
+| `tests/` | Pin, logins, pack tests |
+| `tools/` | Voice lint, private-terms scan |
 
 ## Rules every page follows
 
@@ -75,6 +75,6 @@ Copy one folder; its README has the steps.
 
 ## Built on
 
-[Git Crafter](https://github.com/SoulCraft-Org/git-crafter) supplies the CI standard and the Claude rules, and the Credits pack (`pack.json`) moved from it ([NOTICE](NOTICE)). [pages.yml](.github/workflows/pages.yml) builds the Quality and Process pages after the [privacy gate](tests/privacy.mjs).
+[Git Crafter](https://github.com/SoulCraft-Org/git-crafter) supplies the CI standard and Claude rules. The Credits pack (`pack.json`) moved from it ([NOTICE](NOTICE)). [pages.yml](.github/workflows/pages.yml) builds the Quality and Process pages after the [privacy gate](tests/privacy.mjs).
 
 Published by [SoulCraft-Org](https://github.com/SoulCraft-Org) under [Apache-2.0](LICENSE).
