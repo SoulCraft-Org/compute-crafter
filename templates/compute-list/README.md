@@ -60,4 +60,4 @@ bash sheet.sh vendor/plans.json mine.json --ladders
 | GPU | 2 | A subscription with a GPU quota | ✅ | 🟢 use | 🛑 stops | Buy no extra credits |
 | GPU | 3 | A paid plan | · | ⭐ want | 💸 bills | Only after rungs 1 and 2 run out, on your yes |
 
-Put each plan's guard in its notes: a limit, a budget, or "buy no credits". `--json` rows carry `lane` and `rung`.
+Put each plan's guard in its notes: a limit, a budget, or "buy no credits". `--json` rows carry `lane` and `rung`, or null.
