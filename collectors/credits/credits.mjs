@@ -12,7 +12,7 @@
 //     resets, card and the org's claim status only: the field
 //     params.status_field names, default org_status)
 //   - catalog_file: a committed plan catalog ({ rows: [{ provider, name,
-//     checked }] }, the shape of Compute Crafter catalog/plans.json). Its
+//     checked, models }] }, the shape of Compute Crafter catalog/plans.json; a row whose models is closed or mixed is not counted). Its
 //     read dates join credits.registry_age_days in CI and in a --local run
 // A relative path is from the pack checkout this file runs from; ~/ is
 // home. Each is optional. The allowances to show, what each could take over
