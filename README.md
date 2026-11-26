@@ -18,7 +18,9 @@ flowchart LR
 | # | Do | Where |
 |---|---|---|
 | 1 | Copy the compute-list starter, with its `.gitignore`, into a private repo. Keep this repo beside it, read-only | [Starter](templates/compute-list/README.md) |
-| 2 | In the copy, with `gh` signed in and `jq` installed, run `bash sync.sh && cp mine.example.json mine.json && bash sheet.sh vendor/plans.json mine.json` | [Starter](templates/compute-list/README.md) |
+| 2 | In the copy, with `gh` signed in and `jq` installed, run `bash sync.sh "$(gh release view -R SoulCraft-Org/compute-crafter --json tagName -q .tagName)" && cp mine.example.json mine.json && bash sheet.sh vendor/plans.json mine.json` | [Starter](templates/compute-list/README.md) |
+
+The newest release tag keeps the copy still until you sync again. `bash sync.sh` alone follows main. `sync.sh` uses `gh api` REST only, so it also runs in a Claude cloud session, where GraphQL is refused.
 
 Then replace the example rows in `mine.json` with your plans. Give each a `lane` and a `rung`, and add `--ladders` to the sheet command. Use the first rung with room. A paid rung waits for your yes. Write each plan's spend guard in its `notes`. [Ladders](templates/compute-list/README.md#ladders)
 

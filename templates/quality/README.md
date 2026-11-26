@@ -5,7 +5,7 @@ Your own Quality, Speed and Consumption page for the free tiers and credits you 
 | Step | Do |
 | --- | --- |
 | 1 | Copy this folder to `<your repo>/quality/`, with its `.gitignore`. Add `.code-os-packs/` to your repo's root `.gitignore` |
-| 2 | Check the pin in `config.json`: `SoulCraft-Org/compute-crafter@<40-hex sha>`. To move to a newer commit, paste its full SHA. A tag or branch is refused, because a pack runs in CI |
+| 2 | Check the pin in `config.json`: `SoulCraft-Org/compute-crafter@<40-hex sha>`. Pin the commit of the newest release tag: `gh api repos/SoulCraft-Org/compute-crafter/commits/<tag> -q .sha`. A tag or branch is refused, because a pack runs in CI. Dependabot never moves this pin. Move it on each release |
 | 3 | Replace the fake data: `inputs/systems.json` (limits), `inputs/usage.json` (use this cycle) and `inputs/registry/free.json` (free tiers). Then list your allowances in `targets/credits.json` |
 | 4 | Run it on your machine: clone the pack at the pinned SHA into `.code-os-packs/SoulCraft-Org/compute-crafter`, then run `node <git-crafter>/quality/collect.mjs --local --only credits` from your repo's root |
 | 5 | Copy Git Crafter's [`pages.yml`](https://github.com/SoulCraft-Org/git-crafter/blob/main/templates/ci/pages.yml) and the [process starter](../process/README.md). A push to main builds your page |
