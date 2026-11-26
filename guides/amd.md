@@ -1,6 +1,6 @@
 # AMD
 
-AMD gives ROCm, its open-source GPU stack for open-weight models, and a one-time AMD Developer Cloud credit on Instinct MI300X. It names no connector for either Desktop app.
+AMD gives ROCm, its open-source GPU stack for open-weight models, and a one-time AMD Developer Cloud credit on Instinct MI300X. It names no connector for the OpenCode Desktop App.
 
 ```mermaid
 flowchart LR

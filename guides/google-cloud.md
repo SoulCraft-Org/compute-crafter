@@ -1,6 +1,6 @@
 # Google Cloud
 
-Google Cloud gives a Free Trial credit for CPUs and storage, which Google's Free Trial page ([Free cloud features](https://docs.cloud.google.com/free/docs/free-cloud-features), read 2026-11-24) sets at $300. It does not pay for Gemini models, so it wires to neither Desktop app as inference.
+Google Cloud gives a Free Trial credit for CPUs and storage, which Google's Free Trial page ([Free cloud features](https://docs.cloud.google.com/free/docs/free-cloud-features), read 2026-11-24) sets at $300. It does not pay for Gemini models, so it does not wire to the OpenCode Desktop App as inference.
 
 ```mermaid
 flowchart LR

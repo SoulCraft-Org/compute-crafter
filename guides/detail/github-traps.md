@@ -6,7 +6,7 @@ What goes wrong with GitHub and the pages read. The steps are in [GitHub detail]
 
 | Trap | What happens |
 | --- | --- |
-| GitHub Models | Retired on July 30, 2026: the playground, catalog, inference API and BYOK are gone for every customer ([GitHub Models is now retired](https://github.blog/changelog/2026-07-30-github-models-is-now-retired/), read 2026-11-12). Use Copilot or another provider |
+| GitHub Models | Retired on July 30, 2026: the playground, catalog, inference API and BYOK are gone for every customer ([GitHub Models is now retired](https://github.blog/changelog/2026-07-30-github-models-is-now-retired/), read 2026-11-12). Use another provider |
 | Larger runners | The free public-repo rule names standard runners only ([Actions billing](https://docs.github.com/en/billing/concepts/product-billing/github-actions), read 2026-11-24) |
 | Private repo CI | It spends the included compute; public repositories on standard runners do not |
 | Copilot cloud sandboxes | Billing starts on November 23, 2026, from the included Actions entitlement ([Copilot cloud experience](https://github.blog/changelog/2026-10-28-work-from-anywhere-with-a-new-connected-copilot-cloud-experience/), read 2026-11-20) |

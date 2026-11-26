@@ -24,7 +24,7 @@ Then replace the example rows in `mine.json` with your plans. Give each a `lane`
 
 ## Provider guides
 
-One guide per provider, opening with a table of account, free tier, login, connector and guard. [All guides](guides/README.md).
+One guide per provider, opening with a table of account, free tier, login and guard. [All guides](guides/README.md).
 
 ## Starters
 
