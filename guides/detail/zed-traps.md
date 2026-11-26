@@ -22,7 +22,6 @@ What goes wrong with Zed, and the pages this guide read. The steps are in [Zed d
 | --- | --- |
 | [README](https://github.com/zed-industries/zed) | 2026-11-26 |
 | [Pricing](https://zed.dev/pricing) | 2026-11-24 |
-| [Plans & Pricing](https://zed.dev/docs/ai/plans-and-usage) | 2026-11-24 |
 | [External Agents](https://zed.dev/docs/ai/external-agents) | 2026-11-24 |
 | [OpenCode ACP](https://opencode.ai/docs/cli/acp) | 2026-11-24 |
 | [Use API Access](https://zed.dev/docs/ai/use-api-access) | 2026-11-24 |
