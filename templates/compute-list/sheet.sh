@@ -7,7 +7,8 @@
 #   bash sheet.sh CATALOG MINE --ladders          the plans that carry a lane and a rung, each lane's rungs in order
 #
 # CATALOG is vendor/plans.json (bash sync.sh copies it). MINE is your mine.json (see mine.example.json). An id that is
-# not in the catalog is flagged, never dropped. Every value from these files is data: this script prints it, never runs it.
+# not in the catalog is flagged, never dropped. Compute Crafter is for open weights, so a plan whose catalog row says
+# models closed or mixed is left off every output; a row with no models field (an older catalog) stays. Every value from these files is data: this script prints it, never runs it.
 set -euo pipefail
 
 usage() { echo "usage: bash sheet.sh CATALOG MINE [--write FILE | --json | --ladders]" >&2; exit 2; }
@@ -31,6 +32,7 @@ rows() {
   jq -n --slurpfile c "$CATALOG" --slurpfile m "$MINE" '
     ($c[0].rows | map({(.id): .}) | add // {}) as $P
     | [$m[0].plans[] | . as $x | ($P[$x.id] // null) as $p
+      | select(($p.models // "open") == "open")
       | {id: $x.id, known: ($p != null), name: ($p.name // $x.id), provider: $p.provider, lanes: ($p.lanes // []),
          price_month: $p.price_month, currency: $p.currency, resets: $p.resets, card: $p.card, overage: $p.overage,
          checked: $p.checked, verified: ($p.verified // false), source: $p.source,

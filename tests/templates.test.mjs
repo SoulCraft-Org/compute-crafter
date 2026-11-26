@@ -198,6 +198,15 @@ test('compute-list: sheet.sh prints one row per plan in your order, and flags an
   assert.deepEqual(json.map((r) => [r.id, r.known]), [['acme-gpu', true], ['no-such-plan', false], ['acme-free', true]]);
 });
 
+test('compute-list: sheet.sh leaves off a plan whose catalog row is closed or mixed, and keeps a row with no models field', () => {
+  const dir = fixture([{ id: 'acme-free', have: true }, { id: 'acme-closed', have: true }, { id: 'acme-mixed', have: true }, { id: 'acme-open', have: true }]);
+  const rows = JSON.parse(readFileSync(join(dir, 'plans.json'), 'utf8')).rows;
+  const make = (id, models) => ({ ...rows[0], id, name: id, models });
+  writeFileSync(join(dir, 'plans.json'), JSON.stringify({ version: 1, rows: [rows[0], make('acme-closed', 'closed'), make('acme-mixed', 'mixed'), make('acme-open', 'open')] }));
+  const json = JSON.parse(sheet(join(dir, 'plans.json'), join(dir, 'mine.json'), '--json').stdout);
+  assert.deepEqual(json.map((r) => r.id), ['acme-free', 'acme-open']);
+});
+
 test('compute-list: sheet.sh prints a note, a name and a lane as text, never as markup (#224)', () => {
   const dir = fixture([{ id: 'acme-free', have: true, status: 'use', lane: 'C_I', rung: 1, notes: 'see [x](https://example.com) `code` *b* ~~s~~ R&D <i> $5x$ \\' }]);
   const [plans, mine] = [join(dir, 'plans.json'), join(dir, 'mine.json')];

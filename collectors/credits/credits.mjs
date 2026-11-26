@@ -367,7 +367,7 @@ function withCatalogAge(out, p, { rows, home, kit, root, now }) {
   const src = `${p.catalog_file} (each row's checked date)`;
   let catalog;
   try {
-    catalog = (readJson(resolveFrom(p.catalog_file, home, { root, kit })).rows ?? []).map((r) => ({ label: `${r.provider}: ${r.name}`, checked: r.checked ?? null }));
+    catalog = (readJson(resolveFrom(p.catalog_file, home, { root, kit })).rows ?? []).filter((r) => (r.models ?? 'open') === 'open').map((r) => ({ label: `${r.provider}: ${r.name}`, checked: r.checked ?? null }));
   } catch (err) {
     return { ...out, 'credits.registry_age_days': cnc(`the catalog is missing or unreadable (${String(err.message).split('\n')[0].slice(0, 160)})`, src) };
   }

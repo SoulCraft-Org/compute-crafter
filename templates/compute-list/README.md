@@ -40,7 +40,7 @@ flowchart LR
 
 | Key | Holds |
 | --- | --- |
-| `plans[].id` | A catalog plan `id`. One not in the catalog is flagged with a ❔ and never dropped |
+| `plans[].id` | A catalog plan `id`. One not in the catalog is flagged with a ❔ and never dropped. One whose catalog row has `models` `closed` or `mixed` is left off the sheet, the board and the ladders, because Compute Crafter lists open weights only |
 | `plans[].have` | `true` when you hold the plan |
 | `plans[].status` | `use` (work runs on it), `idle` (held, unused), `want` (to claim) or `skip` |
 | `plans[].notes` | Your words. The sheet prints them as text, never as markup |
