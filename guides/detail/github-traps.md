@@ -25,9 +25,7 @@ What goes wrong with GitHub and the pages read. The steps are in [GitHub detail]
 | Page | Read |
 | --- | --- |
 | [GitHub Actions billing](https://docs.github.com/en/billing/concepts/product-billing/github-actions) | 2026-11-24 |
-| [Install GitHub MCP Server in Claude](https://github.com/github/github-mcp-server/blob/main/docs/installation-guides/install-claude.md) | 2026-11-24 |
 | [OpenCode providers](https://opencode.ai/docs/providers) | 2026-11-24 |
-| [Claude Desktop docs](https://code.claude.com/docs/en/desktop) | 2026-11-24 |
 | [Generating an installation access token](https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/generating-an-installation-access-token-for-a-github-app) | 2026-11-12 |
 | [Deciding when to build a GitHub App](https://docs.github.com/en/apps/creating-github-apps/about-creating-github-apps/deciding-when-to-build-a-github-app) | 2026-11-12 |
 | [About authentication with a GitHub App](https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/about-authentication-with-a-github-app) | 2026-11-12 |

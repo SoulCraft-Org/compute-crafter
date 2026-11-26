@@ -6,21 +6,17 @@ AMD gives ROCm, its open-source GPU stack for open-weight models, and a one-time
 flowchart LR
   P[AMD] --> S[Sign in<br/>AMD AI Developer Program] --> G[Spend stop<br/>$100 credit, no card on file]
   G -.-> O[OpenCode Desktop App<br/>custom provider on your own droplet]
-  G -.-> C[Claude Desktop App, Code tab<br/>not confirmed]
-  G -.-> W[Claude Desktop App, Cowork<br/>not confirmed]
 ```
 
-| Account | Free tier | Login or key | Claude connector | OpenCode | Guard |
-| --- | --- | --- | --- | --- | --- |
-| An AMD AI Developer Program member, which is "free to join" ([Program](https://www.amd.com/en/developer/ai-dev-program.html), read 2026-11-24). Credit goes to "independent developers and open-source project contributors" on your use case ([AMD Developer Cloud](https://www.amd.com/en/developer/resources/cloud-access/amd-developer-cloud.html), read 2026-11-24). | $100 credit, expiring 30 days after deposit unless your email says otherwise ([AMD Developer Cloud](https://www.amd.com/en/developer/resources/cloud-access/amd-developer-cloud.html), read 2026-11-24). One use per account ([DigitalOcean AMD credits](https://docs.digitalocean.com/products/amd/details/credits/), read 2026-11-24). | AMD sign-on to the Developer Cloud console. ROCm needs no key. | None found. | None for ROCm. A model you serve yourself is a custom provider ([OpenCode providers](https://opencode.ai/docs/providers), read 2026-11-24). | With no card, the VM and its data are destroyed at expiry. A card removes the stop. [Guard detail](detail/amd.md#guard). See [Git Crafter compute rules](https://github.com/SoulCraft-Org/git-crafter/blob/main/rules/compute.md). |
+| Account | Free tier | Login or key | OpenCode | Guard |
+| --- | --- | --- | --- | --- |
+| An AMD AI Developer Program member, which is "free to join" ([Program](https://www.amd.com/en/developer/ai-dev-program.html), read 2026-11-24). Credit goes to "independent developers and open-source project contributors" on your use case ([AMD Developer Cloud](https://www.amd.com/en/developer/resources/cloud-access/amd-developer-cloud.html), read 2026-11-24). | $100 credit, expiring 30 days after deposit unless your email says otherwise ([AMD Developer Cloud](https://www.amd.com/en/developer/resources/cloud-access/amd-developer-cloud.html), read 2026-11-24). One use per account ([DigitalOcean AMD credits](https://docs.digitalocean.com/products/amd/details/credits/), read 2026-11-24). | AMD sign-on to the Developer Cloud console. ROCm needs no key. | None for ROCm. A model you serve yourself is a custom provider ([OpenCode providers](https://opencode.ai/docs/providers), read 2026-11-24). | With no card, the VM and its data are destroyed at expiry. A card removes the stop. [Guard detail](detail/amd.md#guard). See [Git Crafter compute rules](https://github.com/SoulCraft-Org/git-crafter/blob/main/rules/compute.md). |
 
 ## Wiring
 
 | Host | Plugs in as | Source, read 2026-11-24 |
 | --- | --- | --- |
 | OpenCode Desktop App | Not confirmed. AMD's page names no OpenCode step. A model you serve on the droplet with an OpenAI-compatible server fits a custom provider. | [AMD Developer Cloud](https://www.amd.com/en/developer/resources/cloud-access/amd-developer-cloud.html), [OpenCode providers](https://opencode.ai/docs/providers) |
-| Claude Desktop App, Code tab | Not confirmed. AMD's pages name no MCP server or connector. | [AMD Developer Cloud](https://www.amd.com/en/developer/resources/cloud-access/amd-developer-cloud.html) |
-| Claude Desktop App, Cowork | Not confirmed. AMD's pages name no MCP server or connector. | [AMD Developer Cloud](https://www.amd.com/en/developer/resources/cloud-access/amd-developer-cloud.html) |
 
 <details>
 <summary>Commands</summary>

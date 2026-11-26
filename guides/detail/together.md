@@ -19,6 +19,5 @@ What the Together AI guide moved out of its page. The diagram and wiring are in 
 | 2. Balance | Buy the smallest balance you need, with auto-recharge off. A purchase is spend: clear it under your own money rule first |
 | 3. Key | Create it in Together's settings and keep it in a password manager |
 | 4. OpenCode | Paste the key at the hidden prompt ([OpenCode 2](../README.md#opencode-2)). Other tools use base URL `https://api.together.ai/v1` ([OpenAI compatibility](https://docs.together.ai/docs/openai-api-compatibility), read 2026-11-12) |
-| 5. Claude Desktop App | Install Together Link, run `togetherlink configure`, then `togetherlink claude-desktop`. It needs macOS or Linux, and the app in `/Applications` or `~/Applications` ([Together Link](https://docs.together.ai/docs/togetherlink), read 2026-11-24). `configure` validates the key at a prompt before it stores it. Each launch uses a temporary config and leaves your normal config files alone ([Together Link](https://docs.together.ai/docs/togetherlink), read 2026-11-12) |
 
 Traps and sources: [Together AI traps and sources](together-traps.md).

@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 400" width="1280" height="400" role="img" aria-labelledby="hero-title hero-desc">
   <title id="hero-title">Compute Crafter</title>
-  <desc id="hero-desc">Open-weight models flow through a provider guide, a sign-in and a spend stop into the OpenCode Desktop App first and the Claude Desktop App (Code and Cowork) second.</desc>
+  <desc id="hero-desc">Open-weight models flow through a provider guide, a sign-in and a spend stop into the OpenCode Desktop App.</desc>
   <style>
     .bg { fill: #f6f7f9; }
     .ink { fill: #12161d; }
@@ -11,14 +11,10 @@
     .mid-t { fill: #12161d; }
     .oc { fill: #0b5fc4; }
     .oc-t { fill: #ffffff; }
-    .cc { fill: #ffffff; stroke: #c4572b; stroke-width: 3; }
-    .cc-t { fill: #12161d; }
     .flow { stroke: #7b8696; }
     .head { fill: #7b8696; }
     .flow-oc { stroke: #0b5fc4; }
     .head-oc { fill: #0b5fc4; }
-    .flow-cc { stroke: #c4572b; }
-    .head-cc { fill: #c4572b; }
     @media (prefers-color-scheme: dark) {
       .bg { fill: #0e1218; }
       .ink { fill: #eef1f6; }
@@ -29,22 +25,17 @@
       .mid-t { fill: #eef1f6; }
       .oc { fill: #4d94f0; }
       .oc-t { fill: #08101c; }
-      .cc { fill: #181e28; stroke: #e38a62; }
-      .cc-t { fill: #eef1f6; }
       .flow { stroke: #6a7587; }
       .head { fill: #6a7587; }
       .flow-oc { stroke: #4d94f0; }
       .head-oc { fill: #4d94f0; }
-      .flow-cc { stroke: #e38a62; }
-      .head-cc { fill: #e38a62; }
     }
     text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
-    .flow, .flow-oc, .flow-cc { fill: none; stroke-width: 3; stroke-linecap: round; }
+    .flow, .flow-oc { fill: none; stroke-width: 3; stroke-linecap: round; }
   </style>
   <defs>
     <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="head" d="M0 0 10 5 0 10z"/></marker>
     <marker id="a-oc" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="head-oc" d="M0 0 10 5 0 10z"/></marker>
-    <marker id="a-cc" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="head-cc" d="M0 0 10 5 0 10z"/></marker>
   </defs>
   <rect class="bg" width="1280" height="400"/>
 
@@ -70,18 +61,12 @@
     <text class="mid-t" x="624" y="316" font-size="24" font-weight="700">Spend stop</text>
   </g>
 
-  <path class="flow-oc" d="M782 262 C 840 262 850 210 906 210" marker-end="url(#a-oc)"/>
-  <path class="flow-cc" d="M782 298 C 840 298 850 316 906 316" marker-end="url(#a-cc)"/>
+  <path class="flow-oc" d="M782 278 C 840 278 850 278 906 278" marker-end="url(#a-oc)"/>
 
-  <rect class="oc" x="914" y="146" width="302" height="128" rx="20"/>
+  <rect class="oc" x="914" y="214" width="302" height="128" rx="20"/>
   <g text-anchor="middle">
-    <text class="oc-t" x="1065" y="198" font-size="32" font-weight="700">OpenCode</text>
-    <text class="oc-t" x="1065" y="234" font-size="22">Desktop App, first</text>
+    <text class="oc-t" x="1065" y="266" font-size="32" font-weight="700">OpenCode</text>
+    <text class="oc-t" x="1065" y="302" font-size="22">Desktop App</text>
   </g>
 
-  <rect class="cc" x="914" y="288" width="302" height="84" rx="20"/>
-  <g text-anchor="middle">
-    <text class="cc-t" x="1065" y="326" font-size="26" font-weight="700">Claude Desktop App</text>
-    <text class="muted" x="1065" y="354" font-size="20">Code and Cowork, second</text>
-  </g>
 </svg>

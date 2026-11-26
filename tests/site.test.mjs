@@ -55,11 +55,11 @@ test('every lane, host and wire kind a node names is defined', () => {
       assert.ok(wire.mark !== '➖' || wire.kind === null, `${n.id} to ${host}: a ➖ cell has no wire, so no kind`);
       assert.ok(MARKS.includes(wire.mark), `${n.id} to ${host}: unknown mark ${wire.mark}`);
       assert.ok(wire.how.trim().split(/\s+/).length <= 20, `${n.id} to ${host}: how is over 20 words`);
-      assert.doesNotMatch(wire.how, /ANTHROPIC_BASE_URL|`claude\b|\bclaude (mcp|--|code)\b|Claude Code CLI/i, `${n.id} to ${host}: no Claude Code CLI recipe`);
+      assert.doesNotMatch(wire.how, /ANTHROPIC_BASE_URL|\bclaude\b|cowork/i, `${n.id} to ${host}: no closed-model client recipe`);
     }
   }
   assert.deepEqual(data.marks.map((m) => [m.mark, m.line]), [['✅', 'solid'], ['❔', 'dotted'], ['➖', 'none']]);
-  assert.deepEqual(data.hosts.map((h) => h.id), ['opencode', 'code', 'cowork'], 'OpenCode first, then the Code tab and Cowork');
+  assert.deepEqual(data.hosts.map((h) => h.id), ['opencode'], 'OpenCode is the only host');
 });
 
 test('each node marks match its row in guides/README.md', () => {
@@ -68,7 +68,7 @@ test('each node marks match its row in guides/README.md', () => {
   for (const n of data.nodes) {
     const cells = rows.get(n.guide);
     assert.ok(cells, `${n.id}: no row in guides/README.md`);
-    assert.deepEqual(data.hosts.map((h) => n.wires[h.id].mark), cells.slice(3, 6), `${n.id}: marks differ from the README row`);
+    assert.deepEqual(data.hosts.map((h) => n.wires[h.id].mark), cells.slice(3, 4), `${n.id}: marks differ from the README row`);
   }
 });
 

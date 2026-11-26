@@ -27,7 +27,6 @@ What goes wrong with Goose, and the pages this guide read. The steps are in [Goo
 | [Providers](https://goose-docs.ai/docs/getting-started/providers) | 2026-11-24 |
 | [Permissions](https://goose-docs.ai/docs/guides/managing-tools/goose-permissions) | 2026-11-24 |
 | [OpenCode ACP](https://opencode.ai/docs/cli/acp) | 2026-11-24 |
-| [Claude Desktop docs](https://code.claude.com/docs/en/desktop) | 2026-11-24 |
 | [config/base.rs](https://github.com/aaif-goose/goose/blob/main/crates/goose/src/config/base.rs) | 2026-11-20 |
 | [Configuration files](https://goose-docs.ai/docs/guides/config-files) | 2026-11-24 |
 | [Project instructions](https://goose-docs.ai/docs/guides/context-engineering/using-goosehints) | 2026-11-20 |

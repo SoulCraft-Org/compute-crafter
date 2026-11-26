@@ -5,8 +5,8 @@ name: claude-review
 # ADVISORY: no ruleset requires this check.
 #
 # Keyless. The job asks GitHub for a short-lived OIDC token and trades it for an Anthropic token through workload
-# identity federation, so no API key or OAuth token is stored. The three ANTHROPIC_* values are identifiers, not keys
-# (guides/detail/claude-api-ci.md). Do not add ANTHROPIC_API_KEY: a static key wins over federation. Recipe: Anthropic
+# identity federation, so no API key or OAuth token is stored. The three ANTHROPIC_* values are identifiers, not keys.
+# Do not add ANTHROPIC_API_KEY: a static key wins over federation. Recipe: Anthropic
 # workload identity federation, GitHub Actions page, read 2026-11-25.
 #
 # The Claude plan cannot pay for this. It spends the monthly API credit, one call of at most 6,000 output tokens (thinking included) per push.

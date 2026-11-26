@@ -44,4 +44,3 @@ What the Zed guide moved out of its page. Traps and sources: [Zed traps and sour
 }
 ```
 
-6. Add Claude Agent from the ACP Registry, open a thread and run `/login`. A key set for the Zed Agent does not configure it ([External Agents](https://zed.dev/docs/ai/external-agents), read 2026-11-24).
