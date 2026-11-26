@@ -20,6 +20,8 @@ flowchart LR
 | tools | 28 | 28 | 9 |
 | **All** | **170** | **166** | **66** |
 
+Every row carries `models`: `open`, `closed` or `mixed`. The compute-list starter and the credits collector's catalog age use only `open` rows. The counts below stay whole-catalog.
+
 Counts are by each row's first lane, from `plans.json` as built on 2026-11-24. Rows were read between 2026-11-20 and 2026-11-24.
 
 ## Commands

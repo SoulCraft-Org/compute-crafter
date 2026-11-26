@@ -19,6 +19,7 @@
    "lanes": [
     "ci"
    ],
+   "models": "open",
    "price_month": 20,
    "currency": "USD",
    "price_note": "$20 per month billed monthly, or $18 per month billed annually.",
@@ -45,6 +46,7 @@
    "lanes": [
     "ci"
    ],
+   "models": "open",
    "price_month": 0,
    "currency": "USD",
    "price_note": "Free forever plan; credit card verification required.",
@@ -72,6 +74,7 @@
     "ci",
     "cpu"
    ],
+   "models": "open",
    "price_month": 0,
    "currency": "USD",
    "price_note": "Free minutes each month, then pay as you go.",
@@ -99,6 +102,7 @@
    "lanes": [
     "ci"
    ],
+   "models": "open",
    "price_month": 0,
    "currency": "USD",
    "price_note": "Free plan; starts with a 30-day all-access trial, no credit card.",
@@ -123,6 +127,7 @@
    "lanes": [
     "ci"
    ],
+   "models": "open",
    "price_month": 0,
    "currency": "USD",
    "price_note": "Free plan, no credit card required.",
@@ -147,6 +152,7 @@
    "lanes": [
     "ci"
    ],
+   "models": "open",
    "price_month": 15,
    "currency": "USD",
    "price_note": "Starting at $15 per month; usage-based credits.",
@@ -171,6 +177,7 @@
    "lanes": [
     "ci"
    ],
+   "models": "open",
    "price_month": 21,
    "currency": "USD",
    "price_note": "USD per user per month. The pricing page says Enterprise now includes access to GitHub Copilot.",
@@ -200,6 +207,7 @@
    "lanes": [
     "ci"
    ],
+   "models": "open",
    "price_month": 0,
    "currency": "USD",
    "price_note": "GitHub Free plan. GitHub Pro is a paid plan with a larger allowance.",
@@ -226,6 +234,7 @@
    "lanes": [
     "ci"
    ],
+   "models": "mixed",
    "price_month": 29,
    "currency": "USD",
    "price_note": "$29 per user per month, billed annually.",
@@ -252,6 +261,7 @@
    "lanes": [
     "ci"
    ],
+   "models": "open",
    "price_month": 0,
    "currency": "USD",
    "price_note": "Free tier on GitLab.com, no credit card required.",
@@ -278,6 +288,7 @@
    "lanes": [
     "ci"
    ],
+   "models": "open",
    "price_month": 0,
    "currency": "USD",
    "price_note": "A 14-day trial.",
@@ -302,6 +313,7 @@
    "lanes": [
     "ci"
    ],
+   "models": "open",
    "price_month": 0,
    "currency": "USD",
    "price_note": "$15 of free credits every month on Semaphore Cloud, then per-minute billing.",
@@ -326,6 +338,7 @@
    "lanes": [
     "cpu"
    ],
+   "models": "open",
    "price_month": 0,
    "currency": "USD",
    "price_note": "Free plan: no charges unless you upgrade to the Paid plan or activate paid-only services. New customers on the Paid plan also get up to $200 in credits.",
@@ -352,6 +365,7 @@
    "lanes": [
     "cpu"
    ],
+   "models": "closed",
    "price_month": 0,
    "currency": "USD",
    "price_note": "No separate charge for the cloud VM. Needs a paid plan: Pro is $20 billed monthly, or $17 per month on an annual subscription ($200 billed up front) (claude.com/pricing). Usage counts toward the plan's limits.",
@@ -379,6 +393,7 @@
    "lanes": [
     "cpu"
    ],
+   "models": "open",
    "price_month": 150,
    "currency": "USD",
    "price_note": "$150 per runner per month. Discounts (mutually exclusive, applied by support): 15% for a 12-month commitment, 50% for non-revenue projects.",
@@ -404,6 +419,7 @@
     "cpu",
     "inference"
    ],
+   "models": "open",
    "price_month": 5,
    "currency": "USD",
    "price_note": "Minimum charge per account per month.",
@@ -430,6 +446,7 @@
    "lanes": [
     "cpu"
    ],
+   "models": "open",
    "price_month": 76.8,
    "currency": "EUR",
    "price_note": "Euro price including VAT, as the page's table lists it; each product group has a 'Get Started for a 24-month term' button. The page's currency picker offers USD, EUR and GBP and says the account is fixed to the currency chosen when ordering.",
@@ -454,6 +471,7 @@
    "lanes": [
     "cpu"
    ],
+   "models": "open",
    "price_month": 20.0,
    "currency": "EUR",
    "price_note": "Euro price including VAT, as the page's table lists it; each product group has a 'Get Started for a 24-month term' button. The page's currency picker offers USD, EUR and GBP and says the account is fixed to the currency chosen when ordering.",
@@ -478,6 +496,7 @@
    "lanes": [
     "cpu"
    ],
+   "models": "open",
    "price_month": 29.6,
    "currency": "EUR",
    "price_note": "Euro price including VAT, as the page's table lists it; each product group has a 'Get Started for a 24-month term' button. The page's currency picker offers USD, EUR and GBP and says the account is fixed to the currency chosen when ordering.",
@@ -502,6 +521,7 @@
    "lanes": [
     "cpu"
    ],
+   "models": "open",
    "price_month": 11.2,
    "currency": "EUR",
    "price_note": "Euro price including VAT, as the page's table lists it; each product group has a 'Get Started for a 24-month term' button. The page's currency picker offers USD, EUR and GBP and says the account is fixed to the currency chosen when ordering.",
@@ -526,6 +546,7 @@
    "lanes": [
     "cpu"
    ],
+   "models": "open",
    "price_month": 0,
    "currency": "USD",
    "price_note": "Forever free with daily limits on usage, one serverless workspace.",
@@ -551,6 +572,7 @@
     "cpu",
     "inference"
    ],
+   "models": "mixed",
    "price_month": 0,
    "currency": "USD",
    "price_note": "Free for two weeks, no card. Access pauses at the end and Databricks does not charge you.",
@@ -575,6 +597,7 @@
    "lanes": [
     "cpu"
    ],
+   "models": "open",
    "price_month": 20,
    "currency": "USD",
    "price_note": "Per month; 7-day trial. Billed monthly on the 1st, prorated in the first month; paid by credit card through Stripe.",
@@ -600,6 +623,7 @@
     "cpu",
     "hosting"
    ],
+   "models": "open",
    "price_month": 0,
    "currency": "USD",
    "price_note": "$1 one-time credit without a card (expires after 7 days); $5 of usage every month once a card is added.",
@@ -627,6 +651,7 @@
     "cpu",
     "tools"
    ],
+   "models": "open",
    "price_month": 0,
    "currency": "USD",
    "price_note": "Free monthly quota for every GitHub personal account; usage above it is billed to the account.",
@@ -651,6 +676,7 @@
    "lanes": [
     "cpu"
    ],
+   "models": "open",
    "price_month": 4,
    "currency": "USD",
    "price_note": "USD per user per month on github.com/pricing. The page lists no first-12-months promotion.",
@@ -680,6 +706,7 @@
    "lanes": [
     "cpu"
    ],
+   "models": "open",
    "price_month": null,
    "currency": "USD",
    "price_note": "Metered per minute, no subscription. Each job rounds up to the next whole minute.",
@@ -706,6 +733,7 @@
    "lanes": [
     "cpu"
    ],
+   "models": "open",
    "price_month": 0,
    "currency": "USD",
    "price_note": "Free up to monthly limits. A separate Free Trial gives $300 of Welcome credit valid for 90 days.",
@@ -730,6 +758,7 @@
    "lanes": [
     "cpu"
    ],
+   "models": "open",
    "price_month": 0,
    "currency": "USD",
    "price_note": "Free Trial billing account: you are not billed during the trial; no automatic charges.",
@@ -754,6 +783,7 @@
    "lanes": [
     "cpu"
    ],
+   "models": "open",
    "price_month": 59,
    "currency": "EUR",
    "price_note": "Excl. VAT. Also shown as EUR 0.0945 per hour.",
@@ -778,6 +808,7 @@
    "lanes": [
     "cpu"
    ],
+   "models": "open",
    "price_month": 79,
    "currency": "EUR",
    "price_note": "Excl. VAT. 'Starting from' EUR 79; the second AX42 type is up to EUR 99 per month. Also shown as EUR 0.1586 per hour.",
@@ -802,6 +833,7 @@
    "lanes": [
     "cpu"
    ],
+   "models": "open",
    "price_month": 29.99,
    "currency": "EUR",
    "price_note": "Excl. VAT, price includes IPv4. EUR 0.0481 per hour with a monthly cap of EUR 29.99. The page marks CX53 (and every other cost-optimized type) 'not available' / 'currently unavailable. Please check back later.'",
@@ -826,6 +858,7 @@
    "lanes": [
     "cpu"
    ],
+   "models": "open",
    "price_month": 25.99,
    "currency": "USD",
    "price_note": "Introductory price for a 24-month term: $623.76 paid today, renews at $49.99/month for the same term (list price $73.99). 30-day money-back guarantee.",
@@ -850,6 +883,7 @@
    "lanes": [
     "cpu"
    ],
+   "models": "open",
    "price_month": 0,
    "currency": "USD",
    "price_note": null,
@@ -874,6 +908,7 @@
    "lanes": [
     "cpu"
    ],
+   "models": "open",
    "price_month": 250,
    "currency": "USD",
    "price_note": "$250 per month billed monthly, or $200 per month billed yearly.",
@@ -899,6 +934,7 @@
     "cpu",
     "hosting"
    ],
+   "models": "open",
    "price_month": 0,
    "currency": "USD",
    "price_note": "$200 credit for 30 days, then pay as you go. Needs a phone number, a non-prepaid credit or debit card and a Microsoft or GitHub account.",
@@ -923,6 +959,7 @@
    "lanes": [
     "cpu"
    ],
+   "models": "open",
    "price_month": 100,
    "currency": "USD",
    "price_note": "$100 per month. 'No credit card required' to get started; new sign-ups get the Developer plan for 30 days.",
@@ -947,6 +984,7 @@
    "lanes": [
     "cpu"
    ],
+   "models": "open",
    "price_month": 67.11,
    "currency": "EUR",
    "price_note": "Incl. 19% VAT, with a 12-month contract. Monthly-term price EUR 77.16; a 24-month term is cheaper.",
@@ -971,6 +1009,7 @@
    "lanes": [
     "cpu"
    ],
+   "models": "open",
    "price_month": 150,
    "currency": "USD",
    "price_note": null,
@@ -995,6 +1034,7 @@
    "lanes": [
     "cpu"
    ],
+   "models": "open",
    "price_month": 0,
    "currency": "USD",
    "price_note": "Always Free resources have no time limit. The Free Tier also adds a US$300 Free Trial credit for up to 30 days, available in select countries.",
@@ -1021,6 +1061,7 @@
    "lanes": [
     "cpu"
    ],
+   "models": "open",
    "price_month": 23.37,
    "currency": "USD",
    "price_note": "'Starting at' price. VPS-4 is now part of the 'VPS 2027' range; OVHcloud notes the configurations of the models have shifted and a new VPS-1 entry model was added.",
@@ -1045,6 +1086,7 @@
    "lanes": [
     "cpu"
    ],
+   "models": "open",
    "price_month": 25,
    "currency": "EUR",
    "price_note": "EUR 300 per year per company (EUR 25 per month computed); checkout in EUR or USD. 15-day free trial with payment details collected at checkout.",
@@ -1069,6 +1111,7 @@
    "lanes": [
     "cpu"
    ],
+   "models": "open",
    "price_month": null,
    "currency": "USD",
    "price_note": "Pay-as-you-go, no minimum commitment, no free trial. Billed per second while the instance is running.",
@@ -1093,6 +1136,7 @@
    "lanes": [
     "cpu"
    ],
+   "models": "open",
    "price_month": 25.18,
    "currency": "EUR",
    "price_note": "EUR 0.0345 per hour; ~EUR 25.18 per month is the page's approximate monthly figure.",
@@ -1120,6 +1164,7 @@
     "cpu",
     "inference"
    ],
+   "models": "mixed",
    "price_month": 0,
    "currency": "USD",
    "price_note": "Sign-up needs no payment information. AI features stay off until you add a credit card, which does not upgrade the trial.",
@@ -1147,6 +1192,7 @@
    "lanes": [
     "cpu"
    ],
+   "models": "open",
    "price_month": 0,
    "currency": "USD",
    "price_note": null,
@@ -1171,6 +1217,7 @@
    "lanes": [
     "cpu"
    ],
+   "models": "open",
    "price_month": null,
    "currency": "USD",
    "price_note": null,
@@ -1195,6 +1242,7 @@
    "lanes": [
     "gpu"
    ],
+   "models": "open",
    "price_month": 0,
    "currency": "USD",
    "price_note": "An initial $100 credit for qualified developers who apply and join the AMD AI Developer Program.",
@@ -1219,6 +1267,7 @@
    "lanes": [
     "gpu"
    ],
+   "models": "open",
    "price_month": 20,
    "currency": "USD",
    "price_note": null,
@@ -1243,6 +1292,7 @@
    "lanes": [
     "gpu"
    ],
+   "models": "open",
    "price_month": 150,
    "currency": "USD",
    "price_note": "Per runner per month, no limit on minutes. 15% annual discount (12-month commitment) or 50% nonprofit discount, mutually exclusive, applied by support.",
@@ -1268,6 +1318,7 @@
     "gpu",
     "inference"
    ],
+   "models": "mixed",
    "price_month": 35,
    "currency": "USD",
    "price_note": "$35 billed monthly, or $28 per month billed yearly ($336 per year, credits granted up front).",
@@ -1297,6 +1348,7 @@
     "gpu",
     "inference"
    ],
+   "models": "mixed",
    "price_month": 20,
    "currency": "USD",
    "price_note": "$20 billed monthly, or $16 per month billed yearly ($192 per year, credits granted up front).",
@@ -1327,6 +1379,7 @@
     "gpu",
     "inference"
    ],
+   "models": "mixed",
    "price_month": 0,
    "currency": "USD",
    "price_note": "Free start for new users. Paid plans: Standard $20 per month ($16 billed yearly), Creator $35 ($28), Pro $100 ($80).",
@@ -1354,6 +1407,7 @@
    "lanes": [
     "gpu"
    ],
+   "models": "open",
    "price_month": null,
    "currency": "USD",
    "price_note": "On-demand per GPU-hour, billed per hour or per second, no minimum commitment. Crusoe has announced new on-demand prices starting Dec 1, 2026: B300 $9.90, B200 $8.50 (now contact sales), H200 $5.40, H100 $4.50 per GPU-hour; the other GPUs are listed as 'No change'.",
@@ -1381,6 +1435,7 @@
    "lanes": [
     "gpu"
    ],
+   "models": "open",
    "price_month": null,
    "currency": "USD",
    "price_note": "On-demand per hour, billed per second with a 5-minute minimum.",
@@ -1408,6 +1463,7 @@
    "lanes": [
     "gpu"
    ],
+   "models": "open",
    "price_month": 0,
    "currency": "USD",
    "price_note": "The Free plan has no hourly or monthly charge listed.",
@@ -1432,6 +1488,7 @@
    "lanes": [
     "gpu"
    ],
+   "models": "open",
    "price_month": 39,
    "currency": "USD",
    "price_note": "Billed $0.0580/hr up to a $39.00 monthly maximum (same for user and team Growth plans).",
@@ -1456,6 +1513,7 @@
    "lanes": [
     "gpu"
    ],
+   "models": "open",
    "price_month": 8,
    "currency": "USD",
    "price_note": "Billed $0.0119/hr up to an $8.00 monthly maximum for a user; Team Pro is $0.0179/hr up to $12.00.",
@@ -1480,6 +1538,7 @@
    "lanes": [
     "gpu"
    ],
+   "models": "open",
    "price_month": null,
    "currency": "USD",
    "price_note": "Metered per minute.",
@@ -1507,6 +1566,7 @@
     "gpu",
     "tools"
    ],
+   "models": "closed",
    "price_month": 19.99,
    "currency": "USD",
    "price_note": "US: $19.99 per month or $199.99 per year.",
@@ -1534,6 +1594,7 @@
    "lanes": [
     "gpu"
    ],
+   "models": "open",
    "price_month": 0,
    "currency": "USD",
    "price_note": "Free. Colab Pro, Pro+ and Pay As You Go are paid options using compute units.",
@@ -1560,6 +1621,7 @@
    "lanes": [
     "gpu"
    ],
+   "models": "open",
    "price_month": 9.99,
    "currency": "USD",
    "price_note": "US price per month.",
@@ -1586,6 +1648,7 @@
    "lanes": [
     "gpu"
    ],
+   "models": "open",
    "price_month": 49.99,
    "currency": "USD",
    "price_note": "US price per month.",
@@ -1612,6 +1675,7 @@
    "lanes": [
     "gpu"
    ],
+   "models": "open",
    "price_month": 409,
    "currency": "USD",
    "price_note": null,
@@ -1636,6 +1700,7 @@
    "lanes": [
     "gpu"
    ],
+   "models": "open",
    "price_month": 214,
    "currency": "EUR",
    "price_note": "EUR 214.00 per month or EUR 0.3429 per hour, excl. VAT, plus EUR 209.00 one-time setup fee.",
@@ -1660,6 +1725,7 @@
    "lanes": [
     "gpu"
    ],
+   "models": "open",
    "price_month": 999,
    "currency": "EUR",
    "price_note": "EUR 999.00 per month or EUR 1.6009 per hour, excl. VAT, plus EUR 999.00 one-time setup fee.",
@@ -1684,6 +1750,7 @@
    "lanes": [
     "gpu"
    ],
+   "models": "open",
    "price_month": null,
    "currency": "USD",
    "price_note": null,
@@ -1708,6 +1775,7 @@
    "lanes": [
     "gpu"
    ],
+   "models": "open",
    "price_month": 9,
    "currency": "USD",
    "price_note": "PRO is $9 per month. Jobs bill per minute against a credit balance.",
@@ -1736,6 +1804,7 @@
     "gpu",
     "inference"
    ],
+   "models": "open",
    "price_month": 9,
    "currency": "USD",
    "price_note": "Per personal account per month.",
@@ -1763,6 +1832,7 @@
    "lanes": [
     "gpu"
    ],
+   "models": "open",
    "price_month": 20,
    "currency": "USD",
    "price_note": "Per user per month, paid by credit card.",
@@ -1790,6 +1860,7 @@
    "lanes": [
     "gpu"
    ],
+   "models": "open",
    "price_month": 0,
    "currency": "USD",
    "price_note": "Free account. PRO, Team and Enterprise get larger quotas.",
@@ -1814,6 +1885,7 @@
    "lanes": [
     "gpu"
    ],
+   "models": "open",
    "price_month": null,
    "currency": "USD",
    "price_note": null,
@@ -1838,6 +1910,7 @@
    "lanes": [
     "gpu"
    ],
+   "models": "open",
    "price_month": 0,
    "currency": "USD",
    "price_note": "Free. The pages say a single NVIDIA Tesla P100 GPU and a TPU v3-8 can be added to a Notebook for free.",
@@ -1865,6 +1938,7 @@
    "lanes": [
     "gpu"
    ],
+   "models": "open",
    "price_month": null,
    "currency": "USD",
    "price_note": "Per GPU-hour, billed by the minute, weekly invoices. Prices exclude sales tax.",
@@ -1893,6 +1967,7 @@
    "lanes": [
     "gpu"
    ],
+   "models": "open",
    "price_month": 0,
    "currency": "USD",
    "price_note": "$0. The page says unused free credits expire in 12 months.",
@@ -1917,6 +1992,7 @@
    "lanes": [
     "gpu"
    ],
+   "models": "open",
    "price_month": 50,
    "currency": "USD",
    "price_note": "The page shows $50 per month and $20 per month with a Save 60% label, and credits of 40 monthly or 240 annually. Read together, $50 is monthly billing and $20 is a month on annual billing.",
@@ -1941,6 +2017,7 @@
    "lanes": [
     "gpu"
    ],
+   "models": "open",
    "price_month": 50,
    "currency": "USD",
    "price_note": null,
@@ -1965,6 +2042,7 @@
    "lanes": [
     "gpu"
    ],
+   "models": "open",
    "price_month": 0,
    "currency": "USD",
    "price_note": "$0 plus compute per month. Usage beyond the included credit is pay as you go.",
@@ -1992,6 +2070,7 @@
    "lanes": [
     "gpu"
    ],
+   "models": "open",
    "price_month": 250,
    "currency": "USD",
    "price_note": "$250 per month plus compute. Unlimited seats.",
@@ -2016,6 +2095,7 @@
    "lanes": [
     "gpu"
    ],
+   "models": "open",
    "price_month": 29.99,
    "currency": "USD",
    "price_note": "$29.99 billed monthly, or $19.99 per month billed yearly ($239.92 per year).",
@@ -2040,6 +2120,7 @@
    "lanes": [
     "gpu"
    ],
+   "models": "open",
    "price_month": null,
    "currency": "USD",
    "price_note": "Prepaid balance, rates shown per hour and per second. Deploying a Pod needs at least one hour's worth of credits.",
@@ -2066,6 +2147,7 @@
    "lanes": [
     "gpu"
    ],
+   "models": "open",
    "price_month": null,
    "currency": "USD",
    "price_note": "Per GPU-hour by priority tier (Lowest to High), billed per second while running; vCPU and RAM included.",
@@ -2090,6 +2172,7 @@
    "lanes": [
     "gpu"
    ],
+   "models": "open",
    "price_month": 0,
    "currency": "USD",
    "price_note": null,
@@ -2114,6 +2197,7 @@
    "lanes": [
     "gpu"
    ],
+   "models": "open",
    "price_month": 29.99,
    "currency": "USD",
    "price_note": "$29.99 billed monthly, or $19.99 per month billed yearly.",
@@ -2138,6 +2222,7 @@
    "lanes": [
     "gpu"
    ],
+   "models": "open",
    "price_month": null,
    "currency": "USD",
    "price_note": "Per million tokens, by model and context length, as of October 19, 2026 per the page. The page names no free credit and no plan fee.",
@@ -2162,6 +2247,7 @@
    "lanes": [
     "gpu"
    ],
+   "models": "open",
    "price_month": null,
    "currency": "USD",
    "price_note": null,
@@ -2186,6 +2272,7 @@
    "lanes": [
     "gpu"
    ],
+   "models": "open",
    "price_month": null,
    "currency": "USD",
    "price_note": null,
@@ -2210,6 +2297,7 @@
    "lanes": [
     "gpu"
    ],
+   "models": "open",
    "price_month": null,
    "currency": "USD",
    "price_note": null,
@@ -2234,6 +2322,7 @@
    "lanes": [
     "inference"
    ],
+   "models": "mixed",
    "price_month": 10,
    "currency": "USD",
    "price_note": "$10 a month for Go. Go Plus is $40 a month. Go Teams is $20 per member per month with a 2-member minimum ($40 a month).",
@@ -2261,6 +2350,7 @@
    "lanes": [
     "inference"
    ],
+   "models": "closed",
    "price_month": null,
    "currency": "USD",
    "price_note": "No subscription. Prepaid usage credits bought in the Claude Console; billed per token at list price.",
@@ -2290,6 +2380,7 @@
    "lanes": [
     "inference"
    ],
+   "models": "closed",
    "price_month": 0,
    "currency": "USD",
    "price_note": "Your first $1.00 of usage is free, and the first request needs no card.",
@@ -2314,6 +2405,7 @@
    "lanes": [
     "inference"
    ],
+   "models": "open",
    "price_month": 15,
    "currency": "USD",
    "price_note": "Core $15, Plus $20, Pro $30 and Max $160 a month; 10% off when paid annually.",
@@ -2338,6 +2430,7 @@
    "lanes": [
     "inference"
    ],
+   "models": "closed",
    "price_month": 0,
    "currency": "USD",
    "price_note": null,
@@ -2362,6 +2455,7 @@
    "lanes": [
     "inference"
    ],
+   "models": "open",
    "price_month": 0,
    "currency": "USD",
    "price_note": "Choose $250 in Dedicated Inference or $100 in Model API credits; the page says they expire in 1 month.",
@@ -2386,6 +2480,7 @@
    "lanes": [
     "inference"
    ],
+   "models": "open",
    "price_month": 0,
    "currency": "USD",
    "price_note": "One-time $5 promotional credit; there is no permanently free tier.",
@@ -2412,6 +2507,7 @@
    "lanes": [
     "inference"
    ],
+   "models": "open",
    "price_month": 10,
    "currency": "USD",
    "price_note": "ENDED. Monthly plans are no longer sold. Existing plans stay active to the end of the current billing period, do not renew, and then bill pay-as-you-go from the account balance. Chutes offers no free tier.",
@@ -2436,6 +2532,7 @@
    "lanes": [
     "inference"
    ],
+   "models": "open",
    "price_month": null,
    "currency": "USD",
    "price_note": "No separate subscription. AI Search billing begins December 1, 2026. Each account gets included usage every month on Workers Free and Workers Paid; usage past it is metered.",
@@ -2460,6 +2557,7 @@
    "lanes": [
     "inference"
    ],
+   "models": "open",
    "price_month": 0,
    "currency": "USD",
    "price_note": "Free on both Workers plans, Free and Paid. Usage above it needs Workers Paid, where it bills.",
@@ -2486,6 +2584,7 @@
    "lanes": [
     "inference"
    ],
+   "models": "open",
    "price_month": 5,
    "currency": "USD",
    "price_note": "Needs the Workers Paid plan, minimum $5 a month per account, then usage. Prepaid AI Gateway credits are an alternative way to pay.",
@@ -2514,6 +2613,7 @@
    "lanes": [
     "inference"
    ],
+   "models": "closed",
    "price_month": 0,
    "currency": "USD",
    "price_note": "By application: direct applicants start at a $1,000 starter offer.",
@@ -2538,6 +2638,7 @@
    "lanes": [
     "inference"
    ],
+   "models": "closed",
    "price_month": 22,
    "currency": "USD",
    "price_note": "$22 a month; annual billing $18.33 a month. Black Friday until December 1, 2026: $8.25 a month for the first year on annual billing ($99 for the year). The FAQ also lists $11 for the first month.",
@@ -2565,6 +2666,7 @@
    "lanes": [
     "inference"
    ],
+   "models": "closed",
    "price_month": 0,
    "currency": "USD",
    "price_note": "$0 per month.",
@@ -2592,6 +2694,7 @@
    "lanes": [
     "inference"
    ],
+   "models": "closed",
    "price_month": 6,
    "currency": "USD",
    "price_note": "$6 a month; annual billing $5 a month (monthly price times 10 per year). The page still shows a 'First month for $1' banner, but it is marked 'Ends September 30', so that promotion has lapsed.",
@@ -2619,6 +2722,7 @@
    "lanes": [
     "inference"
    ],
+   "models": "open",
    "price_month": 25,
    "currency": "USD",
    "price_note": null,
@@ -2643,6 +2747,7 @@
    "lanes": [
     "inference"
    ],
+   "models": "open",
    "price_month": 50,
    "currency": "USD",
    "price_note": "From $50 a month (credit amount selectable), billed per token.",
@@ -2667,6 +2772,7 @@
    "lanes": [
     "inference"
    ],
+   "models": "open",
    "price_month": null,
    "currency": "USD",
    "price_note": "CLOSED TO NEW SUBSCRIPTIONS. Fire Pass is experimental and not open to new subscriptions; only existing users and promo recipients can manage a pass. No price is published.",
@@ -2691,6 +2797,7 @@
    "lanes": [
     "inference"
    ],
+   "models": "closed",
    "price_month": 0,
    "currency": "USD",
    "price_note": "Free input and output tokens on selected models; the Paid tier is pay as you go.",
@@ -2719,6 +2826,7 @@
    "lanes": [
     "inference"
    ],
+   "models": "open",
    "price_month": null,
    "currency": "USD",
    "price_note": "No monthly fee. Pay per token, invoiced monthly in arrears, with early invoices when lifetime usage first crosses $1, $10, $100, $500 and $1,000.",
@@ -2748,6 +2856,7 @@
    "lanes": [
     "inference"
    ],
+   "models": "open",
    "price_month": 0,
    "currency": "USD",
    "price_note": "Free plan; the Developer plan is the paid upgrade.",
@@ -2774,6 +2883,7 @@
    "lanes": [
     "inference"
    ],
+   "models": "open",
    "price_month": 9,
    "currency": "USD",
    "price_note": "$9 a month. The pricing page shows no yearly price.",
@@ -2801,6 +2911,7 @@
    "lanes": [
     "inference"
    ],
+   "models": "mixed",
    "price_month": 29,
    "currency": "USD",
    "price_note": "$29 a month. Pro $79, Max $179. Self-serve first-month money-back guarantee.",
@@ -2825,6 +2936,7 @@
    "lanes": [
     "inference"
    ],
+   "models": "mixed",
    "price_month": 0,
    "currency": "USD",
    "price_note": "Free. The pricing page lists a Free plan and says it includes access to Mistral Studio.",
@@ -2852,6 +2964,7 @@
    "lanes": [
     "inference"
    ],
+   "models": "open",
    "price_month": 0,
    "currency": "USD",
    "price_note": "Free trial access to hosted model endpoints; production use needs a paid subscription.",
@@ -2878,6 +2991,7 @@
    "lanes": [
     "inference"
    ],
+   "models": "open",
    "price_month": 100,
    "currency": "USD",
    "price_note": "$100 a month. The pricing page shows no yearly price for Max.",
@@ -2902,6 +3016,7 @@
    "lanes": [
     "inference"
    ],
+   "models": "open",
    "price_month": 0,
    "currency": "USD",
    "price_note": "$0 a month and no subscription. Every cloud model is paid per token from usage credits you buy.",
@@ -2929,6 +3044,7 @@
    "lanes": [
     "inference"
    ],
+   "models": "open",
    "price_month": 20,
    "currency": "USD",
    "price_note": "$20 a month, or $200 a year ($16.67 a month billed annually).",
@@ -2955,6 +3071,7 @@
    "lanes": [
     "inference"
    ],
+   "models": "mixed",
    "price_month": 40,
    "currency": "USD",
    "price_note": "$40 a month.",
@@ -2982,6 +3099,7 @@
    "lanes": [
     "inference"
    ],
+   "models": "mixed",
    "price_month": 0,
    "currency": "USD",
    "price_note": "Free model variants cost nothing; the daily cap rises after 10 credits purchased (all time).",
@@ -3008,6 +3126,7 @@
    "lanes": [
     "inference"
    ],
+   "models": "mixed",
    "price_month": null,
    "currency": "USD",
    "price_note": "No monthly fee or minimum. A 5.5% fee on credit purchases ($0.80 minimum) on Standard; 5% for crypto payments; the Business plan fee is 8%.",
@@ -3035,6 +3154,7 @@
    "lanes": [
     "inference"
    ],
+   "models": "mixed",
    "price_month": 19.99,
    "currency": "USD",
    "price_note": "The monthly price is not on the docs page read. The $19.99 figure comes from a third-party page (3p) and is unconfirmed: poe.com/premium returned a 404 and the help center refused the read.",
@@ -3059,6 +3179,7 @@
    "lanes": [
     "inference"
    ],
+   "models": "open",
    "price_month": 0,
    "currency": "USD",
    "price_note": "Rate-limited free tier, applied when no payment method is linked.",
@@ -3085,6 +3206,7 @@
    "lanes": [
     "inference"
    ],
+   "models": "mixed",
    "price_month": 0,
    "currency": "USD",
    "price_note": "An introductory trial with $400 in credits, of which $40 is for CoCo inference. After it, a $20 monthly subscription applies.",
@@ -3111,6 +3233,7 @@
    "lanes": [
     "inference"
    ],
+   "models": "open",
    "price_month": 30,
    "currency": "USD",
    "price_note": "Plans: Go $9, Standard $30, Big $90, Bigger $300 a month.",
@@ -3138,6 +3261,7 @@
    "lanes": [
     "inference"
    ],
+   "models": "mixed",
    "price_month": 68,
    "currency": "USD",
    "price_note": null,
@@ -3162,6 +3286,7 @@
    "lanes": [
     "hosting"
    ],
+   "models": "open",
    "price_month": 0,
    "currency": "USD",
    "price_note": "Included in Workers Free.",
@@ -3186,6 +3311,7 @@
    "lanes": [
     "hosting"
    ],
+   "models": "open",
    "price_month": 0,
    "currency": "USD",
    "price_note": "Free monthly allowance on Standard storage; usage above it is billed.",
@@ -3212,6 +3338,7 @@
    "lanes": [
     "hosting"
    ],
+   "models": "open",
    "price_month": 0,
    "currency": "USD",
    "price_note": "Free plan.",
@@ -3238,6 +3365,7 @@
    "lanes": [
     "hosting"
    ],
+   "models": "open",
    "price_month": 0,
    "currency": "USD",
    "price_note": "Free for public repositories on GitHub Free; private repositories need Pro, Team or Enterprise.",
@@ -3264,6 +3392,7 @@
    "lanes": [
     "hosting"
    ],
+   "models": "open",
    "price_month": 0,
    "currency": "USD",
    "price_note": "CPU Basic has no hourly cost, but creating a Gradio or Docker Space now needs a paid plan.",
@@ -3292,6 +3421,7 @@
     "cpu",
     "gpu"
    ],
+   "models": "open",
    "price_month": 29,
    "currency": "USD",
    "price_note": "$29 per month plus compute.",
@@ -3320,6 +3450,7 @@
     "hosting",
     "cpu"
    ],
+   "models": "open",
    "price_month": 0,
    "currency": "USD",
    "price_note": "Free tier, no card needed.",
@@ -3344,6 +3475,7 @@
    "lanes": [
     "hosting"
    ],
+   "models": "open",
    "price_month": 0,
    "currency": "USD",
    "price_note": "Free plan with $1 of usage credits each month, no credit card; new accounts also get a 30-day trial with a one-time $5 credit.",
@@ -3371,6 +3503,7 @@
     "hosting",
     "cpu"
    ],
+   "models": "open",
    "price_month": 5,
    "currency": "USD",
    "price_note": "$5 per month minimum, which includes $5 of usage.",
@@ -3398,6 +3531,7 @@
     "hosting",
     "cpu"
    ],
+   "models": "open",
    "price_month": 20,
    "currency": "USD",
    "price_note": "$20 per month minimum, which includes $20 of usage.",
@@ -3424,6 +3558,7 @@
    "lanes": [
     "hosting"
    ],
+   "models": "open",
    "price_month": 0,
    "currency": "USD",
    "price_note": "Free compute plan for web services, Postgres and Key Value on the $0 Hobby workspace.",
@@ -3451,6 +3586,7 @@
     "hosting",
     "cpu"
    ],
+   "models": "open",
    "price_month": 7,
    "currency": "USD",
    "price_note": "$7 per month for the smallest paid instance, on the $0 Hobby workspace.",
@@ -3475,6 +3611,7 @@
    "lanes": [
     "hosting"
    ],
+   "models": "open",
    "price_month": 0,
    "currency": "USD",
    "price_note": "$0 per month.",
@@ -3501,6 +3638,7 @@
    "lanes": [
     "hosting"
    ],
+   "models": "open",
    "price_month": 25,
    "currency": "USD",
    "price_note": "$25 per month per organization; first project included.",
@@ -3525,6 +3663,7 @@
    "lanes": [
     "hosting"
    ],
+   "models": "open",
    "price_month": 0,
    "currency": "USD",
    "price_note": "$0 per month.",
@@ -3553,6 +3692,7 @@
    "lanes": [
     "hosting"
    ],
+   "models": "open",
    "price_month": 20,
    "currency": "USD",
    "price_note": "$20 per month.",
@@ -3578,6 +3718,7 @@
     "hosting",
     "cpu"
    ],
+   "models": "open",
    "price_month": 0,
    "currency": "USD",
    "price_note": "US$5 worth of free credits a month, forever. You pay only after you exceed them.",
@@ -3603,6 +3744,7 @@
     "hosting",
     "cpu"
    ],
+   "models": "open",
    "price_month": 0,
    "currency": "USD",
    "price_note": "US$250 of credits for 6 months. The page says to add a card to claim them.",
@@ -3627,6 +3769,7 @@
    "lanes": [
     "tools"
    ],
+   "models": "mixed",
    "price_month": 0,
    "currency": "USD",
    "price_note": null,
@@ -3653,6 +3796,7 @@
    "lanes": [
     "tools"
    ],
+   "models": "mixed",
    "price_month": 20,
    "currency": "USD",
    "price_note": "$20 per user per month, excluding tax. First upgrade from Free: the rest of that month is free plus 500 trial credits usable within 12 months (valid credit card required). Fees and credits are prorated to the second.",
@@ -3679,6 +3823,7 @@
    "lanes": [
     "tools"
    ],
+   "models": "closed",
    "price_month": 100,
    "currency": "USD",
    "price_note": "$100 a month, billed monthly only (the pricing page lists no annual option for Max). Web price; mobile pricing may differ.",
@@ -3707,6 +3852,7 @@
    "lanes": [
     "tools"
    ],
+   "models": "closed",
    "price_month": 20,
    "currency": "USD",
    "price_note": "$20 billed monthly, or $17 a month with the annual plan ($200 billed up front). Prices exclude tax.",
@@ -3735,6 +3881,7 @@
    "lanes": [
     "tools"
    ],
+   "models": "closed",
    "price_month": 25,
    "currency": "USD",
    "price_note": "Per standard seat: $25 billed monthly or $20 a month billed annually. Premium seat: $125 monthly or $100 a month billed annually. 2 to 150 seats; seat types can be mixed.",
@@ -3763,6 +3910,7 @@
    "lanes": [
     "tools"
    ],
+   "models": "closed",
    "price_month": 200,
    "currency": "USD",
    "price_note": "$200 a month, billed monthly only. Existing Max 20x subscribers moved to Ultra with no price change.",
@@ -3790,6 +3938,7 @@
    "lanes": [
     "tools"
    ],
+   "models": "open",
    "price_month": 50,
    "currency": "USD",
    "price_note": "Shown as 'sold out' on the Cerebras Code page on 2026-11-23 (the $200 Max tier is also sold out); the page invites visitors to follow for new plans.",
@@ -3816,6 +3965,7 @@
    "lanes": [
     "tools"
    ],
+   "models": "mixed",
    "price_month": 0,
    "currency": "USD",
    "price_note": "$0 a month base, 100M tokens included, no card required.",
@@ -3840,6 +3990,7 @@
    "lanes": [
     "tools"
    ],
+   "models": "mixed",
    "price_month": 20,
    "currency": "USD",
    "price_note": null,
@@ -3864,6 +4015,7 @@
    "lanes": [
     "tools"
    ],
+   "models": "open",
    "price_month": 0,
    "currency": "USD",
    "price_note": "1,000 free credits every month, no credit card required.",
@@ -3888,6 +4040,7 @@
    "lanes": [
     "tools"
    ],
+   "models": "closed",
    "price_month": 0,
    "currency": "USD",
    "price_note": null,
@@ -3914,6 +4067,7 @@
    "lanes": [
     "tools"
    ],
+   "models": "closed",
    "price_month": 100,
    "currency": "USD",
    "price_note": null,
@@ -3940,6 +4094,7 @@
    "lanes": [
     "tools"
    ],
+   "models": "closed",
    "price_month": 10,
    "currency": "USD",
    "price_note": null,
@@ -3966,6 +4121,7 @@
    "lanes": [
     "tools"
    ],
+   "models": "closed",
    "price_month": 39,
    "currency": "USD",
    "price_note": null,
@@ -3992,6 +4148,7 @@
    "lanes": [
     "tools"
    ],
+   "models": "mixed",
    "price_month": 0,
    "currency": "USD",
    "price_note": null,
@@ -4016,6 +4173,7 @@
    "lanes": [
     "tools"
    ],
+   "models": "closed",
    "price_month": 20,
    "currency": "USD",
    "price_note": "$20 billed monthly, or $15 a month billed yearly ($180). Prices exclude tax. No free trial for subscriptions.",
@@ -4040,6 +4198,7 @@
    "lanes": [
     "tools"
    ],
+   "models": "mixed",
    "price_month": 0,
    "currency": "USD",
    "price_note": null,
@@ -4064,6 +4223,7 @@
    "lanes": [
     "tools"
    ],
+   "models": "mixed",
    "price_month": 35,
    "currency": "USD",
    "price_note": "$35 a month billed monthly (offer price in the page's structured data), or $21 a month billed yearly. On 2026-11-23 the page runs a limited-time sale with a countdown ('up to 75% off') and shows $42 as a struck-through reference price.",
@@ -4090,6 +4250,7 @@
    "lanes": [
     "tools"
    ],
+   "models": "closed",
    "price_month": 45,
    "currency": "USD",
    "price_note": "$45 billed monthly, or $33.75 a month billed annually. Prices exclude VAT and local taxes. 30-day refund guarantee.",
@@ -4114,6 +4275,7 @@
    "lanes": [
     "tools"
    ],
+   "models": "closed",
    "price_month": 0,
    "currency": "USD",
    "price_note": "$0 a month, no credit card needed.",
@@ -4143,6 +4305,7 @@
    "lanes": [
     "tools"
    ],
+   "models": "closed",
    "price_month": 20,
    "currency": "USD",
    "price_note": "$20 billed monthly. Premium is $40 billed monthly for 3,000 credits. Time-limited sales are in guides/detail/meshy.md.",
@@ -4172,6 +4335,7 @@
    "lanes": [
     "tools"
    ],
+   "models": "mixed",
    "price_month": 0,
    "currency": "USD",
    "price_note": "Free plan.",
@@ -4196,6 +4360,7 @@
    "lanes": [
     "tools"
    ],
+   "models": "mixed",
    "price_month": 14.99,
    "currency": "USD",
    "price_note": "$14.99 a month excluding tax. Verified students: $5.99 a month for up to 12 months. Subject to fair-usage limits and the Terms of Service.",
@@ -4220,6 +4385,7 @@
    "lanes": [
     "tools"
    ],
+   "models": "closed",
    "price_month": 17,
    "currency": "USD",
    "price_note": "$17 per month when billed annually, as the plan card states. The page text read does not show a month-to-month price.",
@@ -4247,6 +4413,7 @@
     "tools",
     "hosting"
    ],
+   "models": "mixed",
    "price_month": 20,
    "currency": "USD",
    "price_note": "$20 per month, or $18 per month billed annually.",
@@ -4274,6 +4441,7 @@
     "tools",
     "hosting"
    ],
+   "models": "mixed",
    "price_month": 0,
    "currency": "USD",
    "price_note": "Free plan.",
@@ -4300,6 +4468,7 @@
    "lanes": [
     "tools"
    ],
+   "models": "mixed",
    "price_month": 18,
    "currency": "USD",
    "price_note": "$18 a month, or $216 billed yearly.",
@@ -4324,6 +4493,7 @@
    "lanes": [
     "tools"
    ],
+   "models": "closed",
    "price_month": 10,
    "currency": "USD",
    "price_note": "$10 a month. 14-day free trial with $5 of GPT-6 Luna usage, no credit card required; trial ends when the $5 is used or 14 days pass.",

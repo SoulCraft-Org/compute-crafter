@@ -97,7 +97,7 @@ test('targets: one per metric on the Credits tab, each goal cited', () => {
 test('collect: a committed catalog gives credits.registry_age_days its read dates, in CI and locally', async () => {
   const kit = fs.mkdtempSync(path.join(os.tmpdir(), 'credits-catalog-'));
   try {
-    write(path.join(kit, 'catalog', 'plans.json'), { rows: [{ provider: 'P', name: 'Old', checked: '2026-10-25' }, { provider: 'Q', name: 'New', checked: '2026-11-02' }] });
+    write(path.join(kit, 'catalog', 'plans.json'), { rows: [{ provider: 'P', name: 'Old', checked: '2026-10-25' }, { provider: 'Q', name: 'New', checked: '2026-11-02' }, { provider: 'C', name: 'Closed', models: 'closed', checked: '2026-01-01' }, { provider: 'M', name: 'Mixed', models: 'mixed', checked: '2026-01-01' }] });
     const cat = { catalog_file: 'catalog/plans.json' };
     const ci = await collect({ mode: 'ci', now, home, kit, providers: { env: {} }, params: cat });
     assert.equal(ci['credits.registry_age_days'].value, 9, 'read 2026-10-25');

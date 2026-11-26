@@ -12,7 +12,7 @@
 //     resets, card and the org's claim status only: the field
 //     params.status_field names, default org_status)
 //   - catalog_file: a committed plan catalog ({ rows: [{ provider, name,
-//     checked }] }, the shape of Compute Crafter catalog/plans.json). Its
+//     checked, models }] }, the shape of Compute Crafter catalog/plans.json; a row whose models is closed or mixed is not counted). Its
 //     read dates join credits.registry_age_days in CI and in a --local run
 // A relative path is from the pack checkout this file runs from; ~/ is
 // home. Each is optional. The allowances to show, what each could take over
@@ -367,7 +367,7 @@ function withCatalogAge(out, p, { rows, home, kit, root, now }) {
   const src = `${p.catalog_file} (each row's checked date)`;
   let catalog;
   try {
-    catalog = (readJson(resolveFrom(p.catalog_file, home, { root, kit })).rows ?? []).map((r) => ({ label: `${r.provider}: ${r.name}`, checked: r.checked ?? null }));
+    catalog = (readJson(resolveFrom(p.catalog_file, home, { root, kit })).rows ?? []).filter((r) => (r.models ?? 'open') === 'open').map((r) => ({ label: `${r.provider}: ${r.name}`, checked: r.checked ?? null }));
   } catch (err) {
     return { ...out, 'credits.registry_age_days': cnc(`the catalog is missing or unreadable (${String(err.message).split('\n')[0].slice(0, 160)})`, src) };
   }
