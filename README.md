@@ -1,8 +1,8 @@
 # Compute Crafter
 
-![Open-weight models flow through a guide, a sign-in and a spend stop into the OpenCode and Claude Desktop Apps](assets/hero.svg)
+![Open-weight models flow through a guide, a sign-in and a spend stop into the OpenCode Desktop App](assets/hero.svg)
 
-Wire open-weight compute into the OpenCode Desktop App first and the Claude Desktop App second, on free credits and flat subscriptions. Then keep your list, sign-ins and score page.
+Wire open-weight compute into the OpenCode Desktop App, on free credits and flat subscriptions. Then keep your list, sign-ins and score page. The starters work with any client, but this repo promotes only open weights and OpenCode.
 
 ## [📊 Open the live score page](https://soulcraft-org.github.io/compute-crafter/)
 
@@ -10,21 +10,21 @@ Wire open-weight compute into the OpenCode Desktop App first and the Claude Desk
 
 ```mermaid
 flowchart LR
-  G[Pick a provider guide] --> S[Sign in] --> C[Set the spend stop] --> W[Wire into the OpenCode Desktop App or the Claude Desktop App] --> Q[Score it]
+  G[Pick a provider guide] --> S[Sign in] --> C[Set the spend stop] --> W[Wire into the OpenCode Desktop App] --> Q[Score it]
 ```
 
-## Quickstart: use it from a Code Project
+## Quickstart: keep your own list
 
 | # | Do | Where |
 |---|---|---|
-| 1 | Copy the compute-list starter, with its `.gitignore`, into a private repo. Attach that repo to a Code Project, with this repo read-only | [Starter](templates/compute-list/README.md), [Code Projects](https://code.claude.com/docs/en/claude-projects) |
+| 1 | Copy the compute-list starter, with its `.gitignore`, into a private repo. Keep this repo beside it, read-only | [Starter](templates/compute-list/README.md) |
 | 2 | In the copy, with `gh` signed in and `jq` installed, run `bash sync.sh && cp mine.example.json mine.json && bash sheet.sh vendor/plans.json mine.json` | [Starter](templates/compute-list/README.md) |
 
 Then replace the example rows in `mine.json` with your plans. Give each a `lane` and a `rung`, and add `--ladders` to the sheet command. Use the first rung with room. A paid rung waits for your yes. Write each plan's spend guard in its `notes`. [Ladders](templates/compute-list/README.md#ladders)
 
 ## Provider guides
 
-One guide per provider, opening with a table of account, free tier, login, connector and guard. [All guides](guides/README.md).
+One guide per provider, opening with a table of account, free tier, login and guard. [All guides](guides/README.md).
 
 ## Starters
 
@@ -60,7 +60,7 @@ Copy one folder; its README has the steps.
 | `site/` | The wiring map page |
 | `targets/` | The Credits tab's targets |
 | `templates/` | The four starters |
-| `tests/` | Pin, bridge, logins and pack tests |
+| `tests/` | Pin, logins and pack tests |
 | `tools/` | Voice lint and the private-terms scan |
 
 ## Rules every page follows
@@ -70,7 +70,6 @@ Copy one folder; its README has the steps.
 | Free credits and flat monthly plans with a lot of usage; never pay-per-use | [Compute rules](https://github.com/SoulCraft-Org/git-crafter/blob/main/rules/compute.md) |
 | No key value in a session: CLI logins and OAuth first, env var names only | [Key rules](https://github.com/SoulCraft-Org/git-crafter/blob/main/rules/keys.md) |
 | Every free-tier figure cites the vendor's own page and the date read | [CONTRIBUTING.md](CONTRIBUTING.md) |
-| A Claude Code Project stays on its flat plan: usage credits off, spend limit at zero, three free ultrareviews | [Spend guards](docs/claude-code-projects-spend.md) |
 
 ## Built on
 

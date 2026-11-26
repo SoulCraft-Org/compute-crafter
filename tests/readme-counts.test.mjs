@@ -42,11 +42,11 @@ test('catalog/README.md: the lane table matches plans.json, counted by each row\
   assert.equal(plans.rows.filter((r) => !plans.lanes.includes(r.lanes[0])).length, 0, 'every row has a lane in plans.lanes');
 });
 
-test('guides/README.md: the guides that do not open with the provider table are the four it names', () => {
-  const PROVIDER = '| Account | Free tier | Login or key | Claude connector | OpenCode | Guard |';
+test('guides/README.md: the guides that do not open with the provider table are the three it names', () => {
+  const PROVIDER = '| Account | Free tier | Login or key | OpenCode | Guard |';
   const readme = read('guides', 'README.md');
   const named = [...readme.split('\n')[2].matchAll(/\]\(([\w-]+\.md)\)/g)].map((m) => m[1]).sort();
-  assert.equal(named.length, 4, 'line 3 names four guides');
+  assert.equal(named.length, 3, 'line 3 names three guides');
   const listed = [...readme.matchAll(/^\| \[[^\]]+\]\(([\w-]+\.md)\) \| /gm)].map((m) => m[1]).filter((f) => f !== 'CHECKLIST.md');
   for (const file of readdirSync(join(ROOT, 'guides')).filter((f) => f.endsWith('.md') && !['README.md', 'CHECKLIST.md'].includes(f))) {
     assert.ok(listed.includes(file), `guides/README.md does not list ${file}`);

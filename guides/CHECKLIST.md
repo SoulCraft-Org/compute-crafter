@@ -7,7 +7,7 @@ flowchart LR
   P[1 Pick<br/>a catalog plan] --> A[2 Account<br/>no card unless needed]
   A --> G[3 Guard<br/>the vendor's stop]
   G --> K[4 Key<br/>CLI login or hidden prompt]
-  K --> C[5 Connect<br/>Claude Code, OpenCode, Zed, Goose]
+  K --> C[5 Connect<br/>OpenCode, Zed, Goose]
   C --> R[6 Run and read<br/>use read the same day]
 ```
 

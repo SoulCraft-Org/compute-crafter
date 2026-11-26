@@ -9,7 +9,7 @@ flowchart LR
   T[status.json<br/>never in git] --> S
   S --> R[Your sheet<br/>private repo README]
   S --> B[board.html<br/>loads nothing]
-  R -.-> H[Host not confirmed<br/>OpenCode Desktop App, Code tab, Cowork]
+  R -.-> H[Host not confirmed<br/>OpenCode Desktop App]
 ```
 
 | Choice | Starter default | Why |
@@ -25,8 +25,6 @@ flowchart LR
 | Host | Plugs in as | Source, read 2026-11-24 |
 | --- | --- | --- |
 | OpenCode Desktop App | No page read names this host. | [templates/logins](../templates/logins/README.md) |
-| Claude Desktop App, Code tab | No page read names this host. | [templates/logins](../templates/logins/README.md) |
-| Claude Desktop App, Cowork | No page read names this host. | [templates/logins](../templates/logins/README.md) |
 
 ## Where each secret lives
 

@@ -16,7 +16,6 @@ What goes wrong with Hugging Face, and the pages this guide read. The steps are 
 | `HF_TOKEN` in the shell | `hf auth logout` does not log out a session that reads `HF_TOKEN`; unset it in your shell config ([CLI guide](https://huggingface.co/docs/huggingface_hub/guides/cli), read 2026-11-12). |
 | Token in MCP config | The repo's header form puts a token in a config file. Use the connector. |
 | Sleeping Spaces | A Space on free hardware sleeps when unused, and its 50 GB disk does not persist ([Spaces overview](https://huggingface.co/docs/hub/spaces-overview), read 2026-11-12). |
-| Desktop app skips the variables | The router takes Claude Code's Anthropic-format calls, but a local Desktop session sets its own `ANTHROPIC_BASE_URL` ([Desktop docs](https://code.claude.com/docs/en/desktop), read 2026-11-24). |
 
 ## Sources
 
@@ -33,10 +32,7 @@ What goes wrong with Hugging Face, and the pages this guide read. The steps are 
 | [Hugging Face MCP Server](https://huggingface.co/docs/hub/agents-mcp) | 2026-11-24 |
 | [huggingface/hf-mcp-server](https://github.com/huggingface/hf-mcp-server) | 2026-11-24 |
 | [HF: OpenCode](https://huggingface.co/docs/inference-providers/integrations/opencode) | 2026-11-24 |
-| [HF: Claude Code](https://huggingface.co/docs/inference-providers/integrations/claude-code) | 2026-11-24 |
 | [models.dev](https://models.dev) | 2026-11-24 |
 | [OpenCode providers](https://opencode.ai/docs/providers) | 2026-11-24 |
-| [Claude Code MCP](https://code.claude.com/docs/en/mcp) | 2026-11-12 |
-| [Claude Desktop docs](https://code.claude.com/docs/en/desktop) | 2026-11-24 |
 
 </details>

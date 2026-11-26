@@ -17,4 +17,3 @@ flowchart LR
 4. LM Studio: open the app once so `lms` works ([lms CLI](https://lmstudio.ai/docs/cli), read 2026-11-12). Then download, load and serve on your port.
 5. OpenCode with LM Studio: its default is `http://127.0.0.1:1234/v1`. Set `providers.lmstudio.settings.baseURL` to your port, then pick the model in `/models` ([OpenCode providers](https://opencode.ai/docs/providers), read 2026-11-24).
 6. If you turn on **Require Authentication**, LM Studio accepts an `x-api-key` or bearer token. Keep the token in your password manager ([Anthropic compatibility](https://lmstudio.ai/docs/developer/anthropic-compat), read 2026-11-24).
-7. Claude Desktop App: not confirmed. Check the [Gateway page](https://claude.com/docs/third-party/claude-desktop/gateway) before you point Desktop at a local server.
